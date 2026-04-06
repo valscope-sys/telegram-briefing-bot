@@ -46,27 +46,13 @@ GLOBAL_INDICES = {
     "DOW": ".DJI",
 }
 
-# VIX는 차트 API에서 미지원 → 해외주식 현재가 API로 별도 조회
-VIX_CODE = {"exchange": "NAS", "symbol": "VIXY"}  # VIX ETF 대안
+# VIX, DXY, 원자재는 yfinance로 조회 (KIS 미지원)
 
 # 환율 코드 (KIS 차트 API용)
 FX_CODES = {
     "USD/KRW": "FX@KRW",
 }
+# DXY는 yfinance "DX-Y.NYB" 사용 (global_market.py에서 처리)
 
-# DXY는 차트 API에서 미지원 → 해외선물로 대체 가능
-# 원자재도 차트 API 'S' 구분에서 코드 미확인 → 해외선물 API 사용
-
-# 해외선물로 조회할 원자재/DXY 코드 (해외선물종목현재가 API)
-OVERSEAS_FUTURES_CODES = {
-    "WTI": "CLK25",   # WTI 원유 2025년 5월물 (근월물 변경 필요)
-    "금": "GCM25",     # 금 2025년 6월물
-    "구리": "HGK25",   # 구리 2025년 5월물
-}
-
-# 국채 금리 코드 (금리종합 API output1에서 조회)
-BOND_CODES = {
-    "미국 2Y": "Y0203",   # 미국 1년T-BILL (2Y 직접 미제공)
-    "미국 10Y": "Y0202",  # 미국 10년T-NOTE
-    "미국 30Y": "Y0201",  # 미국 30년T-BOND
-}
+# 원자재 yfinance 코드 (global_market.py에서 직접 사용)
+# WTI: "CL=F", 금: "GC=F", 구리: "HG=F"

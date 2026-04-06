@@ -144,15 +144,18 @@ def fetch_new_highlow():
                 "/uapi/domestic-stock/v1/ranking/near-new-highlow",
                 "FHPST01870000",
                 {
-                    "FID_COND_MRKT_DIV_CODE": "J",
-                    "FID_COND_SCR_DIV_CODE": "20187",
-                    "FID_INPUT_ISCD": "0000",
-                    "FID_DIV_CLS_CODE": cls_code,
-                    "FID_TRGT_CLS_CODE": "0",
-                    "FID_TRGT_EXLS_CLS_CODE": "0",
-                    "FID_INPUT_PRICE_1": "",
-                    "FID_INPUT_PRICE_2": "",
-                    "FID_VOL_CNT": "",
+                    "fid_cond_mrkt_div_code": "J",
+                    "fid_cond_scr_div_code": "20187",
+                    "fid_input_iscd": "0000",
+                    "fid_div_cls_code": cls_code,
+                    "fid_trgt_cls_code": "0",
+                    "fid_trgt_exls_cls_code": "0",
+                    "fid_aply_rang_prc_1": "",
+                    "fid_aply_rang_prc_2": "",
+                    "fid_aply_rang_vol": "0",
+                    "fid_input_cnt_1": "0",
+                    "fid_input_cnt_2": "0",
+                    "fid_prc_cls_code": "0",
                 },
             )
             for item in data.get("output", [])[:5]:
@@ -164,7 +167,7 @@ def fetch_new_highlow():
                 })
         except Exception:
             pass
-        time.sleep(0.1)
+        time.sleep(0.2)
     return results
 
 
