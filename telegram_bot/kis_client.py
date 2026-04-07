@@ -6,6 +6,18 @@ from telegram_bot.config import KIS_APP_KEY, KIS_APP_SECRET, KIS_BASE_URL
 
 
 _token_cache = {"token": None, "expires": None}
+_last_call_time = 0  # 마지막 API 호출 시간
+_MIN_INTERVAL = 0.35  # 초당 3건 = 0.33초, 여유 두고 0.35초
+
+
+def _rate_limit_wait():
+    """초당 3건 제한 준수를 위한 자동 대기"""
+    global _last_call_time
+    now = time.time()
+    elapsed = now - _last_call_time
+    if elapsed < _MIN_INTERVAL:
+        time.sleep(_MIN_INTERVAL - elapsed)
+    _last_call_time = time.time()
 
 
 def get_access_token():
@@ -14,6 +26,7 @@ def get_access_token():
     if _token_cache["token"] and _token_cache["expires"] and _token_cache["expires"] > now:
         return _token_cache["token"]
 
+    _rate_limit_wait()
     url = f"{KIS_BASE_URL}/oauth2/tokenP"
     body = {
         "grant_type": "client_credentials",
@@ -43,7 +56,8 @@ def _get_headers(tr_id):
 
 
 def kis_get(url_path, tr_id, params, retry=2):
-    """KIS REST API GET 호출 (rate limit 대응 재시도 포함)"""
+    """KIS REST API GET 호출 (rate limit 자동 대기 포함)"""
+    _rate_limit_wait()
     headers = _get_headers(tr_id)
     url = f"{KIS_BASE_URL}{url_path}"
     for attempt in range(retry + 1):
@@ -52,17 +66,20 @@ def kis_get(url_path, tr_id, params, retry=2):
             data = res.json()
             if data.get("rt_cd") == "0":
                 return data
-            # 초당 호출 제한 초과 시 재시도
             if data.get("msg_cd") == "EGW00201" and attempt < retry:
-                time.sleep(0.5)
+                time.sleep(1)
                 continue
             raise Exception(f"KIS API Error: [{data.get('msg_cd')}] {data.get('msg1')}")
+        if res.status_code == 403 and attempt < retry:
+            time.sleep(2)
+            continue
         res.raise_for_status()
     return {}
 
 
 def kis_post(url_path, tr_id, body):
     """KIS REST API POST 호출"""
+    _rate_limit_wait()
     headers = _get_headers(tr_id)
     url = f"{KIS_BASE_URL}{url_path}"
     res = requests.post(url, headers=headers, json=body, timeout=10)
