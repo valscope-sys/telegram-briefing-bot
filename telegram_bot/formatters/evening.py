@@ -68,8 +68,9 @@ def format_evening_briefing(domestic_data, global_data, commentary, sector_data,
     if program and "error" not in program:
         pgm_val = program.get("합계순매수", 0)
         pgm_eok = pgm_val / 100
-        pgm_str = f"▲ +{pgm_eok:,.0f}억" if pgm_eok >= 0 else f"▼ {pgm_eok:,.0f}억"
-        lines.append(f"프로그램 {pgm_str}")
+        if pgm_eok != 0:
+            pgm_str = f"▲ +{pgm_eok:,.0f}억" if pgm_eok >= 0 else f"▼ {pgm_eok:,.0f}억"
+            lines.append(f"프로그램 {pgm_str}")
     lines.append("")
 
     # 환율 · 원자재
@@ -110,10 +111,10 @@ def format_evening_briefing(domestic_data, global_data, commentary, sector_data,
                 lines.append(f"약세  {name} {info['등락률']:+.1f}%")
             lines.append("")
 
-    # 52주 신고가/신저가
+    # 52주 신고가/신저가 (등락률 0%인 항목은 제외)
     if highlow_data:
-        highs = highlow_data.get("신고가", [])[:2]
-        lows = highlow_data.get("신저가", [])[:2]
+        highs = [h for h in highlow_data.get("신고가", [])[:5] if h.get("등락률", 0) != 0][:2]
+        lows = [l for l in highlow_data.get("신저가", [])[:5] if l.get("등락률", 0) != 0][:2]
         if highs or lows:
             lines.append("*52주*")
             for item in highs:

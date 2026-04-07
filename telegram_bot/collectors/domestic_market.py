@@ -228,13 +228,21 @@ def fetch_new_highlow():
                     "fid_prc_cls_code": "0",
                 },
             )
-            for item in data.get("output", [])[:5]:
+            for item in data.get("output", [])[:10]:
+                rate = _safe_float(item.get("prdy_ctrt", 0))
+                price = _safe_int(item.get("stck_prpr", 0))
+                name = item.get("hts_kor_isnm", "").strip()
+                # 등락률 0%이거나 가격 0이면 무의미한 데이터이므로 스킵
+                if not name or price == 0:
+                    continue
                 results[key].append({
-                    "종목명": item.get("hts_kor_isnm", ""),
-                    "현재가": _safe_int(item.get("stck_prpr", 0)),
-                    "등락률": _safe_float(item.get("prdy_ctrt", 0)),
+                    "종목명": name,
+                    "현재가": price,
+                    "등락률": rate,
                     "부호": _sign_symbol(item.get("prdy_vrss_sign", "3")),
                 })
+                if len(results[key]) >= 5:
+                    break
         except Exception:
             pass
         time.sleep(0.2)
