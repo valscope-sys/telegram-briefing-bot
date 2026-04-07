@@ -1,4 +1,4 @@
-"""경제 일정 수집 (네이버 금융 + 고정 일정 + DART)"""
+"""경제 일정 수집 (고정 일정 + FnGuide 실적 + DART)"""
 import datetime
 import requests
 from bs4 import BeautifulSoup
@@ -44,36 +44,60 @@ def _get_major_events(target_date):
     return [e for e in MAJOR_EVENTS_2026 if e["date"] == date_str]
 
 
-def fetch_naver_economic_calendar(target_date=None):
-    """네이버 금융 경제 캘린더 크롤링"""
+def fetch_fnguide_earnings(target_date=None):
+    """FnGuide 실적 캘린더 크롤링 (잠정실적/실적발표)"""
     if target_date is None:
         target_date = datetime.date.today()
 
-    date_str = target_date.strftime("%Y-%m-%d")
+    month_str = target_date.strftime("%Y%m")
+    target_day = target_date.day
+
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        "Referer": "https://comp.fnguide.com/SVO2/ASP/SVD_comp_calendar.asp",
     }
 
-    events = []
     try:
-        url = f"https://finance.naver.com/marketindex/worldDailyQuote.naver?date={date_str}"
-        res = requests.get(url, headers=headers, timeout=5)
-        if res.status_code == 200:
-            soup = BeautifulSoup(res.text, "lxml")
-            for row in soup.select("table tbody tr"):
-                cols = row.select("td")
-                if len(cols) >= 3:
-                    time_str = cols[0].get_text(strip=True)
-                    country = cols[1].get_text(strip=True)
-                    event_name = cols[2].get_text(strip=True)
-                    events.append({
-                        "시간": time_str,
-                        "국가": country,
-                        "이벤트": event_name,
-                    })
+        url = "https://comp.fnguide.com/SVO2/ASP/svd_comp_calendarData.asp"
+        params = {
+            "gicode": "",
+            "eventType": "all,AN,10;22;23,20,30,52,53;54,40;41,21;24,17,25,50,IR1,IR2",
+            "fromdt": month_str,
+        }
+        res = requests.get(url, params=params, headers=headers, timeout=10)
+        if res.status_code != 200:
+            return []
+
+        soup = BeautifulSoup(res.text, "lxml")
+        earnings = []
+        for td in soup.select("td"):
+            h3 = td.select_one("h3")
+            if not h3:
+                continue
+            day_text = h3.get_text(strip=True)
+            if not day_text.isdigit():
+                continue
+            day = int(day_text)
+            if day != target_day:
+                continue
+
+            for a in td.select("a.ico_01"):  # ico_01 = 잠정실적/실적발표
+                name = a.get_text(strip=True)
+                if name:
+                    # "(연결/분기)" 등 중복 제거 → 기업명만
+                    corp = name.split("(")[0].strip()
+                    earnings.append({"기업명": corp, "보고서명": name})
+
+        # 중복 기업명 제거
+        seen = set()
+        unique = []
+        for e in earnings:
+            if e["기업명"] not in seen:
+                seen.add(e["기업명"])
+                unique.append(e)
+        return unique
     except Exception:
-        pass
-    return events
+        return []
 
 
 def fetch_dart_earnings(target_date=None):
@@ -115,16 +139,11 @@ def fetch_dart_earnings(target_date=None):
         return []
 
 
-def fetch_today_schedule():
-    """오늘 일정 조회"""
-    today = datetime.date.today()
-
-    # 고정 일정
-    major = _get_major_events(today)
-    # 네이버 경제 캘린더
-    naver = fetch_naver_economic_calendar(today)
-    # DART
-    earnings = fetch_dart_earnings(today)
+def _build_schedule(target_date):
+    """일정 통합 조회 (고정 일정 + FnGuide 실적 + DART)"""
+    major = _get_major_events(target_date)
+    fnguide = fetch_fnguide_earnings(target_date)
+    dart = fetch_dart_earnings(target_date)
 
     events = []
     for e in major:
@@ -133,14 +152,25 @@ def fetch_today_schedule():
             "국가": e["country"],
             "이벤트": e["event"],
         })
-    for e in naver:
-        events.append(e)
+
+    # FnGuide + DART 실적 합치기 (중복 제거)
+    all_earnings = fnguide[:]
+    seen = {e["기업명"] for e in fnguide}
+    for e in dart:
+        if e["기업명"] not in seen:
+            all_earnings.append(e)
+            seen.add(e["기업명"])
 
     return {
-        "date": today.strftime("%m월 %d일"),
+        "date": target_date.strftime("%m월 %d일"),
         "events": events,
-        "earnings": earnings,
+        "earnings": all_earnings,
     }
+
+
+def fetch_today_schedule():
+    """오늘 일정 조회"""
+    return _build_schedule(datetime.date.today())
 
 
 def fetch_tomorrow_schedule():
@@ -148,23 +178,4 @@ def fetch_tomorrow_schedule():
     tomorrow = datetime.date.today() + datetime.timedelta(days=1)
     while tomorrow.weekday() >= 5:
         tomorrow += datetime.timedelta(days=1)
-
-    major = _get_major_events(tomorrow)
-    naver = fetch_naver_economic_calendar(tomorrow)
-    earnings = fetch_dart_earnings(tomorrow)
-
-    events = []
-    for e in major:
-        events.append({
-            "시간": e["time"],
-            "국가": e["country"],
-            "이벤트": e["event"],
-        })
-    for e in naver:
-        events.append(e)
-
-    return {
-        "date": tomorrow.strftime("%m월 %d일"),
-        "events": events,
-        "earnings": earnings,
-    }
+    return _build_schedule(tomorrow)
