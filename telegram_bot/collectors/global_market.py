@@ -231,6 +231,24 @@ def fetch_us_major_stocks():
     return results
 
 
+def fetch_korea_proxies():
+    """한국 관련 해외 프록시 지표 (KORU, EWY, 코스피200)"""
+    proxies = {
+        "KORU": ("KORU", "한국3x레버리지"),
+        "EWY": ("EWY", "한국ETF"),
+        "코스피200": ("^KS200", "코스피200"),
+    }
+    results = {}
+    for name, (ticker, desc) in proxies.items():
+        try:
+            data = _yf_quote(ticker)
+            data["설명"] = desc
+            results[name] = data
+        except Exception as e:
+            results[name] = {"현재가": 0, "등락률": 0, "부호": "─", "설명": desc, "error": str(e)}
+    return results
+
+
 def fetch_all_global():
     """글로벌 시장 데이터 전체 조회"""
     indices = fetch_global_indices()
@@ -242,4 +260,5 @@ def fetch_all_global():
         "commodities": fetch_commodities(),
         "us_sectors": fetch_us_sectors(),
         "us_stocks": fetch_us_major_stocks(),
+        "korea_proxies": fetch_korea_proxies(),
     }

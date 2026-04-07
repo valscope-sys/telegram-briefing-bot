@@ -86,6 +86,18 @@ def format_morning_briefing(global_data, domestic_data, morning_commentary=""):
             lines.append(f"{name}  ${d['현재가']:,.2f}  {_fmt_pct(d['등락률'])}")
     lines.append("")
 
+    # 야간 프록시 (KORU, EWY)
+    korea_proxies = global_data.get("korea_proxies", {})
+    proxy_parts = []
+    for name in ["KORU", "EWY"]:
+        d = korea_proxies.get(name, {})
+        if d and "error" not in d and d.get("현재가"):
+            proxy_parts.append(f"{name} {d['현재가']:.2f} {_fmt_pct(d['등락률'])}")
+    if proxy_parts:
+        lines.append("*야간 프록시*")
+        lines.append(" · ".join(proxy_parts))
+        lines.append("")
+
     # 전일 국내 증시
     lines.append("*전일 국내 증시*")
     for name in ["KOSPI", "KOSDAQ"]:

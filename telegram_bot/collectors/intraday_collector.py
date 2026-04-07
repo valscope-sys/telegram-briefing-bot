@@ -83,6 +83,20 @@ def fetch_stock_intraday(stock_code):
         return {}
 
 
+def fetch_foreign_ownership(stock_code):
+    """외국인 소진율 (지분율) 조회"""
+    try:
+        data = kis_get(
+            "/uapi/domestic-stock/v1/quotations/inquire-price",
+            "FHKST01010100",
+            {"FID_COND_MRKT_DIV_CODE": "J", "FID_INPUT_ISCD": stock_code},
+        )
+        o = data["output"]
+        return _safe_float(o.get("hts_frgn_ehrt", 0))
+    except Exception:
+        return 0
+
+
 def fetch_intraday_summary():
     """장중 흐름 요약 데이터 수집"""
     result = {}
@@ -105,6 +119,13 @@ def fetch_intraday_summary():
         stocks[name] = fetch_stock_intraday(code)
         time.sleep(0.05)
     result["주요종목"] = stocks
+
+    # 외국인 지분율 (핵심 종목)
+    frgn_ownership = {}
+    for name, code in [("삼성전자", "005930"), ("SK하이닉스", "000660")]:
+        frgn_ownership[name] = fetch_foreign_ownership(code)
+        time.sleep(0.05)
+    result["외국인지분율"] = frgn_ownership
 
     return result
 
@@ -149,5 +170,13 @@ def format_intraday_for_prompt(intraday_data):
                 open_chg = ((opn - prev) / prev * 100) if prev > 0 else 0
                 close_chg = ((close - prev) / prev * 100) if prev > 0 else 0
                 lines.append(f"  {name}: 시가 {opn:,}({open_chg:+.1f}%) → 종가 {close:,}({close_chg:+.1f}%) | 고가 {high:,} / 저가 {low:,}")
+
+    # 외국인 지분율
+    frgn = intraday_data.get("외국인지분율", {})
+    if frgn:
+        lines.append("\n외국인 지분율:")
+        for name, rate in frgn.items():
+            if rate > 0:
+                lines.append(f"  {name}: {rate:.1f}%")
 
     return "\n".join(lines)
