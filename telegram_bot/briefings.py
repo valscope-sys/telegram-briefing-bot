@@ -22,6 +22,7 @@ from telegram_bot.collectors.investor_trend import (
     fetch_investor_trend_ndays,
     format_investor_trend_for_prompt,
 )
+from telegram_bot.history.briefing_memory import save_briefing, format_previous_for_prompt
 from telegram_bot.formatters.morning import format_morning_briefing
 from telegram_bot.formatters.evening import format_evening_briefing
 from telegram_bot.formatters.news import format_premarket_news, format_postmarket_news
@@ -51,7 +52,13 @@ def run_morning_briefing():
         trend_text = format_investor_trend_for_prompt(trend)
 
         print("[MORNING] 미장 시황 생성 중...")
+        prev_evening = format_previous_for_prompt("evening")
+        if prev_evening:
+            trend_text = trend_text + "\n\n" + prev_evening if trend_text else prev_evening
         morning_commentary = generate_morning_commentary(global_data, filtered_news[:8], trend_text=trend_text)
+        save_briefing("morning", morning_commentary, {
+            "KOSPI": dom_indices.get("KOSPI", {}).get("현재가", 0) if (dom_indices := domestic_data.get("indices", {})) else 0,
+        })
 
         msg1 = format_morning_briefing(global_data, domestic_data, morning_commentary)
         send_message(msg1)
@@ -151,6 +158,11 @@ def run_evening_briefing():
         except Exception:
             pass
 
+        # 이전 모닝 시황 참고
+        prev_morning = format_previous_for_prompt("morning")
+        if prev_morning:
+            trend_text = trend_text + "\n\n" + prev_morning if trend_text else prev_morning
+
         # Claude 시황 해석 생성
         print("[EVENING] 시황 해석 생성 중...")
         commentary = generate_market_commentary(
@@ -159,6 +171,10 @@ def run_evening_briefing():
             trend_text=trend_text,
             consensus_text=consensus_text,
         )
+        save_briefing("evening", commentary, {
+            "KOSPI": domestic_data.get("indices", {}).get("KOSPI", {}).get("현재가", 0),
+            "KOSDAQ": domestic_data.get("indices", {}).get("KOSDAQ", {}).get("현재가", 0),
+        })
 
         sector_data = domestic_data.get("sectors", {})
         highlow_data = domestic_data.get("highlow", {})

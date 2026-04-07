@@ -2,3 +2,4 @@
 __pycache__/
 *.pyc
 token_cache.yaml
+telegram_bot/history/latest_*.json
