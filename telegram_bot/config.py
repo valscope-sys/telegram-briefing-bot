@@ -2,7 +2,15 @@
 import os
 from dotenv import load_dotenv
 
-load_dotenv(os.path.join(os.path.dirname(os.path.dirname(__file__)), ".env"))
+# .env 파일 탐색: 패키지 상위 → 현재 디렉토리 → 절대경로
+_env_candidates = [
+    os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".env"),
+    os.path.join(os.getcwd(), ".env"),
+]
+for _p in _env_candidates:
+    if os.path.exists(_p):
+        load_dotenv(_p, override=True)
+        break
 
 # KIS API
 KIS_APP_KEY = os.getenv("KIS_APP_KEY", "")

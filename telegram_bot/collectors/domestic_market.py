@@ -1,5 +1,6 @@
 """국내 증시 데이터 수집 (KOSPI/KOSDAQ, 수급, 섹터, 52주 신고저 등) - KIS API 사용"""
 import time
+import datetime
 from telegram_bot.kis_client import kis_get
 from telegram_bot.config import SECTOR_ETFS
 
@@ -22,66 +23,135 @@ def _safe_int(val, default=0):
         return default
 
 
+def _prev_business_day(base_date=None):
+    """전 영업일 계산 (주말 건너뜀)"""
+    if base_date is None:
+        base_date = datetime.date.today()
+    d = base_date - datetime.timedelta(days=1)
+    while d.weekday() >= 5:  # 5=토, 6=일
+        d -= datetime.timedelta(days=1)
+    return d
+
+
+def _recent_business_days(count=5, base_date=None):
+    """최근 N 영업일 리스트"""
+    if base_date is None:
+        base_date = datetime.date.today()
+    days = []
+    d = base_date
+    while len(days) < count:
+        d -= datetime.timedelta(days=1)
+        if d.weekday() < 5:
+            days.append(d)
+    return days
+
+
 def fetch_kospi_kosdaq():
-    """KOSPI/KOSDAQ 현재 지수 조회"""
+    """KOSPI/KOSDAQ 지수 (장중이면 현재가, 장전이면 전일 종가)"""
     results = {}
     for name, code in [("KOSPI", "0001"), ("KOSDAQ", "1001")]:
         try:
+            # 현재 지수 조회 (장전에도 전일 종가를 반환함)
             data = kis_get(
                 "/uapi/domestic-stock/v1/quotations/inquire-index-price",
                 "FHPUP02100000",
                 {"FID_COND_MRKT_DIV_CODE": "U", "FID_INPUT_ISCD": code},
             )
             o = data["output"]
+            trade_vol = _safe_int(o.get("acml_tr_pbmn", 0))
+
+            # 장전(거래대금 0)이면 일별 시세에서 전일 데이터 가져오기
+            if trade_vol == 0:
+                prev = _prev_business_day()
+                start = (prev - datetime.timedelta(days=14)).strftime("%Y%m%d")
+                end = prev.strftime("%Y%m%d")
+                daily = kis_get(
+                    "/uapi/domestic-stock/v1/quotations/inquire-daily-indexchartprice",
+                    "FHKUP03500100",
+                    {
+                        "FID_COND_MRKT_DIV_CODE": "U",
+                        "FID_INPUT_ISCD": code,
+                        "FID_INPUT_DATE_1": start,
+                        "FID_INPUT_DATE_2": end,
+                        "FID_PERIOD_DIV_CODE": "D",
+                    },
+                )
+                daily_list = daily.get("output2", [])
+                if len(daily_list) >= 2:
+                    today_d = daily_list[0]   # 전일 (가장 최근)
+                    prev_d = daily_list[1]    # 전전일
+                    close = _safe_float(today_d.get("bstp_nmix_prpr"))
+                    prev_close = _safe_float(prev_d.get("bstp_nmix_prpr"))
+                    diff = close - prev_close
+                    rate = (diff / prev_close * 100) if prev_close > 0 else 0
+                    results[name] = {
+                        "현재가": close,
+                        "전일대비": round(diff, 2),
+                        "등락률": round(rate, 2),
+                        "부호": "▲" if diff > 0 else ("▼" if diff < 0 else "─"),
+                        "거래대금": _safe_int(today_d.get("acml_tr_pbmn", 0)),
+                        "상승": _safe_int(o.get("ascn_issu_cnt", 0)),
+                        "하락": _safe_int(o.get("down_issu_cnt", 0)),
+                        "보합": _safe_int(o.get("stnr_issu_cnt", 0)),
+                        "날짜": today_d.get("stck_bsop_date", ""),
+                    }
+                    continue
+
             results[name] = {
                 "현재가": _safe_float(o["bstp_nmix_prpr"]),
                 "전일대비": _safe_float(o["bstp_nmix_prdy_vrss"]),
                 "등락률": _safe_float(o["bstp_nmix_prdy_ctrt"]),
                 "부호": _sign_symbol(o.get("prdy_vrss_sign", "3")),
-                "거래대금": _safe_int(o.get("acml_tr_pbmn", 0)),
+                "거래대금": trade_vol,
                 "상승": _safe_int(o.get("ascn_issu_cnt", 0)),
                 "하락": _safe_int(o.get("down_issu_cnt", 0)),
                 "보합": _safe_int(o.get("stnr_issu_cnt", 0)),
             }
         except Exception as e:
             results[name] = {"error": str(e)}
-        time.sleep(0.1)
+        time.sleep(0.15)
     return results
 
 
 def fetch_investor_trends(market_code="0001"):
-    """시장별 투자자 매매동향 (외국인/기관/개인)"""
-    import datetime
-    today = datetime.date.today().strftime("%Y%m%d")
+    """시장별 투자자 매매동향 (전 영업일 기준)"""
     market_sym = "KSP" if market_code == "0001" else "KSQ"
-    try:
-        data = kis_get(
-            "/uapi/domestic-stock/v1/quotations/inquire-investor-daily-by-market",
-            "FHPTJ04040000",
-            {
-                "FID_COND_MRKT_DIV_CODE": "U",
-                "FID_INPUT_ISCD": market_code,
-                "FID_INPUT_DATE_1": today,
-                "FID_INPUT_ISCD_1": market_sym,
-                "FID_INPUT_DATE_2": today,
-                "FID_INPUT_ISCD_2": market_code,
-            },
-        )
-        items = data.get("output", [])
-        if not items:
-            return {}
-        # 첫 번째 항목이 가장 최근 데이터
-        latest = items[0] if isinstance(items, list) else items
-        return {
-            "외국인": _safe_int(latest.get("frgn_ntby_qty", 0)),
-            "기관": _safe_int(latest.get("orgn_ntby_qty", 0)),
-            "개인": _safe_int(latest.get("prsn_ntby_qty", 0)),
-            "외국인금액": _safe_int(latest.get("frgn_ntby_tr_pbmn", 0)),
-            "기관금액": _safe_int(latest.get("orgn_ntby_tr_pbmn", 0)),
-            "개인금액": _safe_int(latest.get("prsn_ntby_tr_pbmn", 0)),
-        }
-    except Exception as e:
-        return {"error": str(e)}
+
+    # 최근 5 영업일을 시도 (당일 장전이면 데이터 없으므로)
+    for biz_day in _recent_business_days(5):
+        date_str = biz_day.strftime("%Y%m%d")
+        try:
+            data = kis_get(
+                "/uapi/domestic-stock/v1/quotations/inquire-investor-daily-by-market",
+                "FHPTJ04040000",
+                {
+                    "FID_COND_MRKT_DIV_CODE": "U",
+                    "FID_INPUT_ISCD": market_code,
+                    "FID_INPUT_DATE_1": date_str,
+                    "FID_INPUT_ISCD_1": market_sym,
+                    "FID_INPUT_DATE_2": date_str,
+                    "FID_INPUT_ISCD_2": market_code,
+                },
+            )
+            items = data.get("output", [])
+            if items and isinstance(items, list) and len(items) > 0:
+                latest = items[0]
+                # 실제 데이터가 있는지 확인
+                frgn = _safe_int(latest.get("frgn_ntby_tr_pbmn", 0))
+                if frgn != 0 or _safe_int(latest.get("orgn_ntby_tr_pbmn", 0)) != 0:
+                    return {
+                        "외국인": _safe_int(latest.get("frgn_ntby_qty", 0)),
+                        "기관": _safe_int(latest.get("orgn_ntby_qty", 0)),
+                        "개인": _safe_int(latest.get("prsn_ntby_qty", 0)),
+                        "외국인금액": frgn,
+                        "기관금액": _safe_int(latest.get("orgn_ntby_tr_pbmn", 0)),
+                        "개인금액": _safe_int(latest.get("prsn_ntby_tr_pbmn", 0)),
+                        "날짜": date_str,
+                    }
+        except Exception:
+            pass
+        time.sleep(0.15)
+    return {"error": "최근 5영업일 데이터 없음"}
 
 
 def fetch_program_trade():
