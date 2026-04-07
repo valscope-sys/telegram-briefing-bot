@@ -182,6 +182,55 @@ def fetch_commodities():
     return results
 
 
+def fetch_us_sectors():
+    """미국 S&P 섹터 ETF 등락률 - yfinance"""
+    sector_etfs = {
+        "기술": "XLK",
+        "반도체": "SOXX",
+        "에너지": "XLE",
+        "헬스케어": "XLV",
+        "금융": "XLF",
+        "산업재": "XLI",
+        "소비재": "XLY",
+        "유틸리티": "XLU",
+        "소재": "XLB",
+        "통신": "XLC",
+        "부동산": "XLRE",
+    }
+    results = {}
+    for name, ticker in sector_etfs.items():
+        try:
+            results[name] = _yf_quote(ticker)
+        except Exception as e:
+            results[name] = {"현재가": 0, "등락률": 0, "부호": "─", "error": str(e)}
+    return results
+
+
+def fetch_us_major_stocks():
+    """미국 주요 종목 등락률 - yfinance"""
+    stocks = {
+        "NVDA": "엔비디아",
+        "AAPL": "애플",
+        "MSFT": "마이크로소프트",
+        "GOOGL": "구글",
+        "AMZN": "아마존",
+        "TSLA": "테슬라",
+        "META": "메타",
+        "AVGO": "브로드컴",
+        "TSM": "TSMC",
+        "AMD": "AMD",
+    }
+    results = {}
+    for ticker, name in stocks.items():
+        try:
+            data = _yf_quote(ticker)
+            data["종목명"] = name
+            results[ticker] = data
+        except Exception as e:
+            results[ticker] = {"종목명": name, "현재가": 0, "등락률": 0, "부호": "─", "error": str(e)}
+    return results
+
+
 def fetch_all_global():
     """글로벌 시장 데이터 전체 조회"""
     indices = fetch_global_indices()
@@ -191,4 +240,6 @@ def fetch_all_global():
         "fx": fetch_fx_rates(),
         "bonds": fetch_bond_rates(),
         "commodities": fetch_commodities(),
+        "us_sectors": fetch_us_sectors(),
+        "us_stocks": fetch_us_major_stocks(),
     }

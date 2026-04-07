@@ -274,8 +274,8 @@ def fetch_sector_stocks():
     return results
 
 
-def fetch_volume_rank():
-    """거래량 상위 종목"""
+def fetch_trade_value_rank():
+    """거래대금 상위 30종목"""
     try:
         data = kis_get(
             "/uapi/domestic-stock/v1/quotations/volume-rank",
@@ -285,7 +285,7 @@ def fetch_volume_rank():
                 "FID_COND_SCR_DIV_CODE": "20171",
                 "FID_INPUT_ISCD": "0000",
                 "FID_DIV_CLS_CODE": "0",
-                "FID_BLNG_CLS_CODE": "0",
+                "FID_BLNG_CLS_CODE": "3",   # 3: 거래금액순
                 "FID_TRGT_CLS_CODE": "111111111",
                 "FID_TRGT_EXLS_CLS_CODE": "0000000000",
                 "FID_INPUT_PRICE_1": "",
@@ -295,17 +295,55 @@ def fetch_volume_rank():
             },
         )
         results = []
-        for item in data.get("output", data.get("Output", []))[:10]:
+        for item in data.get("output", data.get("Output", []))[:30]:
             results.append({
                 "종목명": item.get("hts_kor_isnm", ""),
                 "종목코드": item.get("mksc_shrn_iscd", ""),
                 "현재가": _safe_int(item.get("stck_prpr", 0)),
                 "등락률": _safe_float(item.get("prdy_ctrt", 0)),
                 "거래량": _safe_int(item.get("acml_vol", 0)),
+                "거래대금": _safe_int(item.get("acml_tr_pbmn", 0)),
             })
         return results
     except Exception as e:
-        return [{"error": str(e)}]
+        return []
+
+
+def fetch_fluctuation_rank(sort_order="1"):
+    """등락률 상위/하위 30종목 (1:상승률순, 2:하락률순)"""
+    try:
+        data = kis_get(
+            "/uapi/domestic-stock/v1/ranking/fluctuation",
+            "FHPST01700000",
+            {
+                "fid_cond_mrkt_div_code": "J",
+                "fid_cond_scr_div_code": "20170",
+                "fid_input_iscd": "0000",
+                "fid_rank_sort_cls_code": sort_order,
+                "fid_input_cnt_1": "0",
+                "fid_prc_cls_code": "1",         # 1: 보통주만
+                "fid_input_price_1": "1000",      # 1000원 이상
+                "fid_input_price_2": "",
+                "fid_vol_cnt": "10000",           # 거래량 1만주 이상
+                "fid_trgt_cls_code": "0",
+                "fid_trgt_exls_cls_code": "0",
+                "fid_div_cls_code": "0",
+                "fid_rsfl_rate1": "",
+                "fid_rsfl_rate2": "",
+            },
+        )
+        results = []
+        for item in data.get("output", [])[:30]:
+            results.append({
+                "종목명": item.get("hts_kor_isnm", ""),
+                "종목코드": item.get("stck_shrn_iscd", item.get("mksc_shrn_iscd", "")),
+                "현재가": _safe_int(item.get("stck_prpr", 0)),
+                "등락률": _safe_float(item.get("prdy_ctrt", 0)),
+                "거래대금": _safe_int(item.get("acml_tr_pbmn", 0)),
+            })
+        return results
+    except Exception:
+        return []
 
 
 def fetch_all_domestic():
@@ -317,4 +355,7 @@ def fetch_all_domestic():
         "sectors": fetch_sector_performance(),
         "sector_stocks": fetch_sector_stocks(),
         "highlow": fetch_new_highlow(),
+        "trade_value_rank": fetch_trade_value_rank(),
+        "top_gainers": fetch_fluctuation_rank("1"),
+        "top_losers": fetch_fluctuation_rank("2"),
     }

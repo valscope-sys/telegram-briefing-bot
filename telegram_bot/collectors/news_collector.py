@@ -236,6 +236,10 @@ def generate_market_commentary(market_data, news_list):
     indices = market_data.get("indices", {})
     investors = market_data.get("investors", {})
     sectors = market_data.get("sectors", {})
+    sector_stocks = market_data.get("sector_stocks", {})
+    trade_rank = market_data.get("trade_value_rank", [])
+    top_gainers = market_data.get("top_gainers", [])
+    top_losers = market_data.get("top_losers", [])
 
     data_summary = "=== 오늘 시장 데이터 ===\n"
     for name, info in indices.items():
@@ -248,35 +252,154 @@ def generate_market_commentary(market_data, news_list):
         pers = investors.get("개인금액", 0) / 100
         data_summary += f"\n수급: 외국인 {frgn:+,.0f}억 / 기관 {inst:+,.0f}억 / 개인 {pers:+,.0f}억\n"
 
-    data_summary += "\n섹터 등락:\n"
+    data_summary += "\n섹터 ETF 등락:\n"
     for sector, info in sectors.items():
         if isinstance(info, dict) and "error" not in info:
-            data_summary += f"  {sector}: {info.get('등락률', 0):+.2f}%\n"
+            stocks = sector_stocks.get(sector, [])
+            stock_str = ", ".join([f"{s['종목명']}({s['등락률']:+.1f}%)" for s in stocks]) if stocks else ""
+            data_summary += f"  {sector}: {info.get('등락률', 0):+.2f}%  {stock_str}\n"
 
-    headlines = "\n".join([f"- {n.get('summary_title', n['title'])}" for n in news_list[:10]])
-    data_summary += f"\n주요 뉴스:\n{headlines}"
+    if trade_rank:
+        data_summary += "\n거래대금 상위 30종목:\n"
+        for i, item in enumerate(trade_rank):
+            data_summary += f"  {i+1}. {item.get('종목명', '')} {item.get('등락률', 0):+.2f}%\n"
+
+    if top_gainers:
+        data_summary += "\n상승률 상위 종목:\n"
+        for item in top_gainers[:15]:
+            data_summary += f"  {item.get('종목명', '')} {item.get('등락률', 0):+.2f}%\n"
+
+    if top_losers:
+        data_summary += "\n하락률 상위 종목:\n"
+        for item in top_losers[:15]:
+            data_summary += f"  {item.get('종목명', '')} {item.get('등락률', 0):+.2f}%\n"
+
+    # 뉴스 (제목 + 상세 요약 포함)
+    data_summary += "\n주요 뉴스:\n"
+    for n in news_list[:10]:
+        title = n.get('summary_title', n.get('title', ''))
+        detail = n.get('detail', '')
+        data_summary += f"- {title}\n"
+        if detail:
+            data_summary += f"  {detail[:150]}\n"
 
     prompt = f"""{data_summary}
 
-위 데이터를 바탕으로 오늘 시장 시황 해석을 4~6문장으로 작성해주세요.
+위 데이터를 바탕으로 오늘 시장 시황을 작성해주세요.
 
-작성 규칙:
-1. 지수·수급 숫자를 반복 나열하지 마세요 (이미 브리핑 본문에 있음)
-2. "왜" 이렇게 움직였는지 원인과 배경을 설명
-3. 오늘 특징적이었던 흐름 (특정 섹터 쏠림, 수급 반전, 이벤트 반응 등)
-4. 내일 장에 영향을 줄 변수가 있으면 한 줄 언급
-5. 증권사 리서치센터 애널리스트 톤 (객관적, 간결, 전문적)
-6. "~입니다" "~했습니다" 체로 작성
+[구조 - 반드시 이 순서로]
 
-시황 해석만 작성하고 다른 설명은 하지 마세요."""
+1단락: 큰 그림 (2~3문장)
+- 오늘 시장을 한마디로 정의 (예: "실적 시즌 기대감과 지정학 리스크가 충돌한 하루")
+- 현재 시장이 어떤 국면에 있는지 맥락 (예: "외국인 매도 vs 기관 매수 패턴이 N일째 반복", "AI 슈퍼사이클 기대감이 지수를 지탱하는 구간")
+- 글로벌 흐름과 국내 시장의 연결고리
+
+2단락: 섹터·종목 흐름 (3~4문장)
+- 강세/약세 섹터를 종목과 함께 서술 (예: "반도체(+1.8%)에서 삼성전자(+0.2%), SK하이닉스(+0.9%)가...")
+- 거래대금/상승률 상위에서 특이 종목이 있으면 왜 올랐는지 뉴스와 매칭
+- 개별 이슈(급등종목)가 섹터 전체로 확산됐는지, 아니면 단발성인지 판단
+
+3단락: 수급 + 전망 (2~3문장)
+- 수급 주체별 의미 (단순 숫자 나열 X, 의미 해석)
+- 내일/이번 주 핵심 변수와 주목할 포인트
+
+[규칙]
+- 지수 숫자 반복 나열 금지 (이미 브리핑 본문에 있음)
+- 데이터에 없는 사실을 만들어내지 마세요. 추측은 "~가능성", "~전망" 등으로 표현
+- 별표(**), 괄호([]), 제목 등 서식 없이 순수 텍스트만 작성
+- 증권사 리서치 톤, "~입니다" 체
+- 총 8~12문장
+
+시황만 작성하세요."""
 
     try:
         response = client.messages.create(
             model="claude-sonnet-4-20250514",
-            max_tokens=800,
+            max_tokens=1200,
             system=PROMPT_SYSTEM,
             messages=[{"role": "user", "content": prompt}],
         )
         return response.content[0].text.strip()
     except Exception as e:
         return f"시황 해석 생성 실패: {e}"
+
+
+def generate_morning_commentary(global_data, news_list):
+    """Claude API로 전일 미장 시황 해석 생성 (모닝 브리핑용)"""
+    if not ANTHROPIC_API_KEY:
+        return ""
+
+    import anthropic
+    client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+
+    indices = global_data.get("indices", {})
+    us_sectors = global_data.get("us_sectors", {})
+    us_stocks = global_data.get("us_stocks", {})
+    commodities = global_data.get("commodities", {})
+    fx = global_data.get("fx", {})
+
+    data_summary = "=== 전일 미국 증시 데이터 ===\n"
+    for name, info in indices.items():
+        if isinstance(info, dict) and "error" not in info and info.get("현재가"):
+            data_summary += f"{name}: {info['현재가']:,.2f} ({info.get('등락률', 0):+.2f}%)\n"
+
+    data_summary += "\n미국 섹터:\n"
+    for name, info in us_sectors.items():
+        if isinstance(info, dict) and "error" not in info:
+            data_summary += f"  {name}: {info.get('등락률', 0):+.2f}%\n"
+
+    data_summary += "\n주요 종목:\n"
+    for ticker, info in us_stocks.items():
+        if isinstance(info, dict) and "error" not in info:
+            data_summary += f"  {info.get('종목명', ticker)}: ${info.get('현재가', 0):,.2f} ({info.get('등락률', 0):+.2f}%)\n"
+
+    data_summary += "\n원자재/환율:\n"
+    for name, info in commodities.items():
+        if isinstance(info, dict) and "error" not in info:
+            data_summary += f"  {name}: ${info.get('현재가', 0):,.2f} ({info.get('등락률', 0):+.2f}%)\n"
+    usdkrw = fx.get("USD/KRW", {})
+    if usdkrw and "error" not in usdkrw:
+        data_summary += f"  USD/KRW: {usdkrw.get('현재가', 0):,.1f} ({usdkrw.get('전일대비', 0):+.2f})\n"
+
+    headlines = "\n".join([f"- {n.get('summary_title', n['title'])}" for n in news_list[:8]])
+    data_summary += f"\n주요 뉴스:\n{headlines}"
+
+    prompt = f"""{data_summary}
+
+위 데이터를 바탕으로 전일 미국 증시 마감 리뷰 + 오늘 한국 증시 전망을 작성해주세요.
+
+[구조 - 반드시 이 순서로]
+
+1단락: 미장 큰 그림 (2~3문장)
+- 전일 미장을 한마디로 정의
+- 시장을 움직인 핵심 동인 (매크로 이벤트, 실적, 지정학 등)
+- 현재 월가의 분위기/흐름 맥락
+
+2단락: 섹터·종목 흐름 (2~3문장)
+- 강세/약세 섹터를 종목과 함께 자연스럽게 서술
+- 특이 종목의 급등/급락 이유를 뉴스와 매칭
+
+3단락: 한국 증시 영향 + 전망 (2~3문장)
+- 미장 흐름이 오늘 한국 장에 미칠 구체적 영향 (동조 상승/하락, 수혜 섹터)
+- 오늘 주목할 이벤트/변수
+- 환율, 유가 등 매크로 변수의 영향
+
+[규칙]
+- 지수 숫자 반복 나열 금지 (이미 브리핑 본문에 있음)
+- 데이터에 없는 사실을 만들어내지 마세요
+- 별표(**), 괄호([]), 제목 등 서식 없이 순수 텍스트만 작성
+- 증권사 리서치 톤, "~입니다" 체
+- 총 7~10문장
+
+시황만 작성하세요."""
+
+    try:
+        response = client.messages.create(
+            model="claude-sonnet-4-20250514",
+            max_tokens=1200,
+            system=PROMPT_SYSTEM,
+            messages=[{"role": "user", "content": prompt}],
+        )
+        return response.content[0].text.strip()
+    except Exception as e:
+        return f"미장 시황 생성 실패: {e}"

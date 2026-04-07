@@ -8,6 +8,7 @@ from telegram_bot.collectors.news_collector import (
     fetch_rss_news,
     filter_news_with_claude,
     generate_market_commentary,
+    generate_morning_commentary,
 )
 from telegram_bot.collectors.schedule_collector import (
     fetch_today_schedule,
@@ -34,7 +35,11 @@ def run_morning_briefing():
         print("[MORNING] 국내 데이터 수집 중...")
         domestic_data = fetch_all_domestic()
 
-        msg1 = format_morning_briefing(global_data, domestic_data)
+        print("[MORNING] 미장 시황 해석 생성 중...")
+        raw_news = fetch_rss_news()
+        morning_commentary = generate_morning_commentary(global_data, raw_news[:8])
+
+        msg1 = format_morning_briefing(global_data, domestic_data, morning_commentary)
         send_message(msg1)
         print("[MORNING] 모닝 브리핑 발송 완료")
     except Exception as e:

@@ -11,24 +11,21 @@ def _arrow(value):
 
 
 def _fmt_pct(value):
-    """등락률 포맷: ▲ +1.23%"""
     return f"{_arrow(value)} {value:+.2f}%"
 
 
 def _fmt_diff(value):
-    """전일대비 포맷: ▲ +3.20"""
     return f"{_arrow(value)} {value:+.2f}"
 
 
 def _fmt_inv(val_million):
-    """수급 금액 포맷 (백만원 → 억원 변환)"""
-    val_eok = val_million / 100  # 백만원 → 억원
+    val_eok = val_million / 100
     if val_eok >= 0:
         return f"▲ +{val_eok:,.0f}억"
     return f"▼ {val_eok:,.0f}억"
 
 
-def format_morning_briefing(global_data, domestic_data):
+def format_morning_briefing(global_data, domestic_data, morning_commentary=""):
     """모닝 브리핑 메시지 생성"""
     now = datetime.datetime.now()
     date_str = now.strftime("%m월 %d일")
@@ -37,11 +34,13 @@ def format_morning_briefing(global_data, domestic_data):
     fx = global_data.get("fx", {})
     bonds = global_data.get("bonds", {})
     commodities = global_data.get("commodities", {})
+    us_sectors = global_data.get("us_sectors", {})
+    us_stocks = global_data.get("us_stocks", {})
     dom_indices = domestic_data.get("indices", {})
     investors = domestic_data.get("investors", {})
 
     lines = []
-    lines.append(f"🌐 *모닝 브리핑*")
+    lines.append("🌐 *모닝 브리핑*")
     lines.append(f"{date_str} · 07:00 기준")
     lines.append("")
 
@@ -55,6 +54,12 @@ def format_morning_briefing(global_data, domestic_data):
     if vix and "error" not in vix and vix.get("현재가"):
         lines.append(f"VIX  {vix['현재가']:.2f}  {_fmt_pct(vix['등락률'])}")
     lines.append("")
+
+    # 미장 마감 리뷰 (섹터 + 종목 통합)
+    if morning_commentary:
+        lines.append("*미장 마감 리뷰*")
+        lines.append(morning_commentary)
+        lines.append("")
 
     # 환율 · 금리
     lines.append("*환율 · 금리*")
