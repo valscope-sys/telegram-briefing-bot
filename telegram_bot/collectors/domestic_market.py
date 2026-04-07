@@ -2,7 +2,7 @@
 import time
 import datetime
 from telegram_bot.kis_client import kis_get
-from telegram_bot.config import SECTOR_ETFS
+from telegram_bot.config import SECTOR_ETFS, SECTOR_STOCKS
 
 
 def _sign_symbol(sign_code):
@@ -249,6 +249,31 @@ def fetch_new_highlow():
     return results
 
 
+def fetch_sector_stocks():
+    """섹터별 대표 종목 시세 조회"""
+    results = {}
+    for sector_name, stocks in SECTOR_STOCKS.items():
+        sector_results = []
+        for stock_name, code in stocks:
+            try:
+                data = kis_get(
+                    "/uapi/domestic-stock/v1/quotations/inquire-price",
+                    "FHKST01010100",
+                    {"FID_COND_MRKT_DIV_CODE": "J", "FID_INPUT_ISCD": code},
+                )
+                o = data["output"]
+                sector_results.append({
+                    "종목명": stock_name,
+                    "현재가": _safe_int(o.get("stck_prpr", 0)),
+                    "등락률": _safe_float(o.get("prdy_ctrt", 0)),
+                })
+            except Exception:
+                pass
+            time.sleep(0.05)
+        results[sector_name] = sector_results
+    return results
+
+
 def fetch_volume_rank():
     """거래량 상위 종목"""
     try:
@@ -290,5 +315,6 @@ def fetch_all_domestic():
         "investors": fetch_investor_trends(),
         "program": fetch_program_trade(),
         "sectors": fetch_sector_performance(),
+        "sector_stocks": fetch_sector_stocks(),
         "highlow": fetch_new_highlow(),
     }

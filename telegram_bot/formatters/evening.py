@@ -30,6 +30,7 @@ def format_evening_briefing(domestic_data, global_data, commentary, sector_data,
     """이브닝 브리핑 메시지 생성"""
     now = datetime.datetime.now()
     date_str = now.strftime("%m월 %d일")
+    sector_stocks = domestic_data.get("sector_stocks", {})
 
     indices = domestic_data.get("indices", {})
     investors = domestic_data.get("investors", {})
@@ -98,17 +99,25 @@ def format_evening_briefing(domestic_data, global_data, commentary, sector_data,
             key=lambda x: x[1]["등락률"],
             reverse=True,
         )
-        strong = [s for s in sorted_sectors if s[1]["등락률"] > 0][:3]
-        weak = [s for s in sorted_sectors if s[1]["등락률"] < 0]
+        strong = [s for s in sorted_sectors if s[1]["등락률"] > 0.3][:3]
+        weak = [s for s in sorted_sectors if s[1]["등락률"] < -0.3]
         weak = weak[-3:] if len(weak) > 3 else weak
         weak.reverse()
 
         if strong or weak:
             lines.append("*섹터*")
             for name, info in strong:
+                stocks = sector_stocks.get(name, [])
+                stock_str = ", ".join([f"{s['종목명']} {s['등락률']:+.1f}%" for s in stocks]) if stocks else ""
                 lines.append(f"강세  {name} {info['등락률']:+.1f}%")
+                if stock_str:
+                    lines.append(f"   └ {stock_str}")
             for name, info in weak:
+                stocks = sector_stocks.get(name, [])
+                stock_str = ", ".join([f"{s['종목명']} {s['등락률']:+.1f}%" for s in stocks]) if stocks else ""
                 lines.append(f"약세  {name} {info['등락률']:+.1f}%")
+                if stock_str:
+                    lines.append(f"   └ {stock_str}")
             lines.append("")
 
     # 52주 신고가/신저가 (등락률 0%인 항목은 제외)

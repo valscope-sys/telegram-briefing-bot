@@ -2,7 +2,6 @@
 import datetime
 
 
-NUM = ["①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧", "⑨", "⑩"]
 DIR_EMOJI = {"긍정": "🟢", "부정": "🔴", "중립": "⚪"}
 
 
@@ -17,17 +16,16 @@ def _format_news_list(title_prefix, news_list):
         link = item.get("link", "")
         sector = item.get("sector", "")
         direction = item.get("direction", "")
-        num = NUM[i] if i < len(NUM) else f"{i+1}."
 
         # 섹터 + 방향 태그
         dir_dot = DIR_EMOJI.get(direction, "")
         tag = f"[{sector}] {dir_dot}" if sector else ""
 
-        # 제목 (링크 포함)
+        # 제목 (링크 포함) + 신문 이모지
         if link:
-            lines.append(f"{num} {tag} [{title}]({link})")
+            lines.append(f"📌 {tag} [{title}]({link})")
         else:
-            lines.append(f"{num} {tag} {title}")
+            lines.append(f"📌 {tag} {title}")
 
         # 상세 요약
         if detail:
@@ -36,7 +34,7 @@ def _format_news_list(title_prefix, news_list):
         lines.append("")  # 뉴스 간 빈줄
 
     body = "\n".join(lines).strip()
-    return f"📰 *{title_prefix}*\n{date_str}\n\n{body}"
+    return f"🗞 *{title_prefix}*\n{date_str}\n\n{body}"
 
 
 def format_premarket_news(news_list):

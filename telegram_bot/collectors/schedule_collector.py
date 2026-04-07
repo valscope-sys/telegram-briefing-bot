@@ -84,9 +84,12 @@ def fetch_fnguide_earnings(target_date=None):
             for a in td.select("a.ico_01"):  # ico_01 = 잠정실적/실적발표
                 name = a.get_text(strip=True)
                 if name:
-                    # "(연결/분기)" 등 중복 제거 → 기업명만
                     corp = name.split("(")[0].strip()
-                    earnings.append({"기업명": corp, "보고서명": name})
+                    # popuplayerannounce 클래스가 있으면 잠정실적
+                    classes = " ".join(a.get("class", []))
+                    is_provisional = "announce" in classes
+                    label = f"(잠정) {corp}" if is_provisional else corp
+                    earnings.append({"기업명": label, "보고서명": name})
 
         # 중복 기업명 제거
         seen = set()
