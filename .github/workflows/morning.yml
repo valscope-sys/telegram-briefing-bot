@@ -1,0 +1,24 @@
+name: Morning Briefing
+
+on:
+  schedule:
+    - cron: '0 22 * * 0-4'  # 일~목 UTC 22:00 = 월~금 KST 07:00
+  workflow_dispatch:
+
+jobs:
+  morning:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r telegram_bot/requirements.txt
+      - name: Run Morning Briefing
+        env:
+          KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
+          KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python -m telegram_bot.main morning

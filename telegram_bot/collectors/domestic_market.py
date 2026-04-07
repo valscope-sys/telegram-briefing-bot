@@ -114,11 +114,15 @@ def fetch_kospi_kosdaq():
 
 
 def fetch_investor_trends(market_code="0001"):
-    """시장별 투자자 매매동향 (전 영업일 기준)"""
+    """시장별 투자자 매매동향 (당일 우선, 없으면 전영업일)"""
     market_sym = "KSP" if market_code == "0001" else "KSQ"
 
-    # 최근 5 영업일을 시도 (당일 장전이면 데이터 없으므로)
-    for biz_day in _recent_business_days(5):
+    # 당일 포함해서 시도 (16:00 이후면 당일 데이터가 있음)
+    today = datetime.date.today()
+    dates_to_try = [today]  # 당일 먼저 시도
+    dates_to_try.extend(_recent_business_days(5))  # 없으면 이전 영업일
+
+    for biz_day in dates_to_try:
         date_str = biz_day.strftime("%Y%m%d")
         try:
             data = kis_get(
