@@ -1,0 +1,55 @@
+name: Daily Briefing
+
+on:
+  schedule:
+    # UTC 기준 (한국시간 -9시간)
+    # 모닝 브리핑: 한국시간 07:00 = UTC 22:00 (전날)
+    - cron: '0 22 * * 0-4'  # 일~목 22:00 UTC = 월~금 07:00 KST
+    # 이브닝 브리핑: 한국시간 16:00 = UTC 07:00
+    - cron: '0 7 * * 1-5'   # 월~금 07:00 UTC = 월~금 16:00 KST
+  workflow_dispatch:  # 수동 실행 가능
+    inputs:
+      briefing_type:
+        description: 'morning or evening'
+        required: true
+        default: 'morning'
+
+jobs:
+  briefing:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r telegram_bot/requirements.txt
+
+      - name: Run Morning Briefing
+        if: github.event.schedule == '0 22 * * 0-4' || github.event.inputs.briefing_type == 'morning'
+        env:
+          KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
+          KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
+          KIS_ACCOUNT_NO: ${{ secrets.KIS_ACCOUNT_NO }}
+          KIS_IS_PAPER: 'false'
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python -m telegram_bot.main morning
+
+      - name: Run Evening Briefing
+        if: github.event.schedule == '0 7 * * 1-5' || github.event.inputs.briefing_type == 'evening'
+        env:
+          KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
+          KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
+          KIS_ACCOUNT_NO: ${{ secrets.KIS_ACCOUNT_NO }}
+          KIS_IS_PAPER: 'false'
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python -m telegram_bot.main evening
