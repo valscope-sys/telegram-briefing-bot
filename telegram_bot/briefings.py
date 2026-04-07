@@ -127,6 +127,17 @@ def run_evening_briefing():
         trend = fetch_investor_trend_ndays()
         trend_text = format_investor_trend_for_prompt(trend)
 
+        # 밸류에이션
+        print("[EVENING] 밸류에이션 수집 중...")
+        try:
+            from telegram_bot.collectors.valuation_collector import fetch_market_valuation, format_valuation_for_prompt
+            val_data = fetch_market_valuation()
+            val_text = format_valuation_for_prompt(val_data)
+            if val_text:
+                trend_text = trend_text + "\n\n" + val_text if trend_text else val_text
+        except Exception:
+            pass
+
         # 컨센서스 (오늘 실적 발표 종목이 있으면)
         consensus_text = ""
         try:
