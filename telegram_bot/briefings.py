@@ -23,7 +23,7 @@ from telegram_bot.collectors.investor_trend import (
     format_investor_trend_for_prompt,
 )
 from telegram_bot.history.briefing_memory import save_briefing, format_previous_for_prompt
-from telegram_bot.collectors.market_context import get_market_context_for_prompt
+from telegram_bot.collectors.market_context import get_market_context_for_prompt, update_market_context
 from telegram_bot.formatters.morning import format_morning_briefing
 from telegram_bot.formatters.evening import format_evening_briefing
 from telegram_bot.formatters.news import format_premarket_news, format_postmarket_news
@@ -191,6 +191,10 @@ def run_evening_briefing():
             "KOSPI": domestic_data.get("indices", {}).get("KOSPI", {}).get("현재가", 0),
             "KOSDAQ": domestic_data.get("indices", {}).get("KOSDAQ", {}).get("현재가", 0),
         })
+
+        # 시장 컨텍스트 업데이트 (이브닝 후에만)
+        print("[EVENING] 시장 컨텍스트 업데이트 중...")
+        update_market_context(commentary)
 
         sector_data = domestic_data.get("sectors", {})
         highlow_data = domestic_data.get("highlow", {})
