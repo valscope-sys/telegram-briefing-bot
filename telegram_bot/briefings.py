@@ -23,6 +23,7 @@ from telegram_bot.collectors.investor_trend import (
     format_investor_trend_for_prompt,
 )
 from telegram_bot.history.briefing_memory import save_briefing, format_previous_for_prompt
+from telegram_bot.collectors.market_context import get_market_context_for_prompt
 from telegram_bot.formatters.morning import format_morning_briefing
 from telegram_bot.formatters.evening import format_evening_briefing
 from telegram_bot.formatters.news import format_premarket_news, format_postmarket_news
@@ -51,10 +52,13 @@ def run_morning_briefing():
         trend = fetch_investor_trend_ndays()
         trend_text = format_investor_trend_for_prompt(trend)
 
+        print("[MORNING] 시장 컨텍스트 수집 중...")
+        market_ctx = get_market_context_for_prompt()
+
         print("[MORNING] 미장 시황 생성 중...")
         prev_evening = format_previous_for_prompt("evening")
-        if prev_evening:
-            trend_text = trend_text + "\n\n" + prev_evening if trend_text else prev_evening
+        extra_context = "\n\n".join(filter(None, [trend_text, prev_evening, market_ctx]))
+        trend_text = extra_context if extra_context else trend_text
         morning_commentary = generate_morning_commentary(global_data, filtered_news[:8], trend_text=trend_text)
         save_briefing("morning", morning_commentary, {
             "KOSPI": dom_indices.get("KOSPI", {}).get("현재가", 0) if (dom_indices := domestic_data.get("indices", {})) else 0,
@@ -169,10 +173,11 @@ def run_evening_briefing():
         except Exception:
             pass
 
-        # 이전 모닝 시황 참고
+        # 시장 컨텍스트 + 이전 모닝 시황 참고
+        market_ctx = get_market_context_for_prompt()
         prev_morning = format_previous_for_prompt("morning")
-        if prev_morning:
-            trend_text = trend_text + "\n\n" + prev_morning if trend_text else prev_morning
+        extra_context = "\n\n".join(filter(None, [trend_text, prev_morning, market_ctx]))
+        trend_text = extra_context if extra_context else trend_text
 
         # Claude 시황 해석 생성
         print("[EVENING] 시황 해석 생성 중...")
