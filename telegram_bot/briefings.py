@@ -23,6 +23,7 @@ from telegram_bot.collectors.investor_trend import (
     format_investor_trend_for_prompt,
 )
 from telegram_bot.history.briefing_memory import save_briefing, format_previous_for_prompt
+from telegram_bot.postprocess import postprocess_commentary
 from telegram_bot.collectors.market_context import get_market_context_for_prompt, update_market_context
 from telegram_bot.formatters.morning import format_morning_briefing
 from telegram_bot.formatters.evening import format_evening_briefing
@@ -72,6 +73,7 @@ def run_morning_briefing():
         if morning_commentary:
             import datetime
             date_str = datetime.datetime.now().strftime("%m월 %d일")
+            morning_commentary = postprocess_commentary(morning_commentary)
             commentary_msg = f"📋 *미장 마감 리뷰*\n{date_str}\n\n{morning_commentary}"
             time.sleep(2)
             send_message(commentary_msg)
@@ -218,6 +220,7 @@ def run_evening_briefing():
         if commentary:
             import datetime
             date_str = datetime.datetime.now().strftime("%m월 %d일")
+            commentary = postprocess_commentary(commentary)
             commentary_msg = f"📋 *오늘 시장*\n{date_str}\n\n{commentary}"
             time.sleep(2)
             send_message(commentary_msg)
