@@ -7,10 +7,14 @@ def postprocess_commentary(text):
     if not text:
         return text
 
-    # 1. 화살표(→) 제거 — 자연어로 변환
+    # 1. 화살표(→) 제거 — 자연어로 변환 (하이픈 보존)
     text = text.replace(" → ", ", ")
     text = text.replace("→ ", ", ")
     text = text.replace(" →", ",")
+
+    # 1-1. 하이픈 누락 복원 (미-이란, 미-중 등)
+    text = text.replace("미이란", "미-이란")
+    text = text.replace("미중", "미-중")
 
     # 2. 전환어 앞에 빈 줄
     transition_words = [
