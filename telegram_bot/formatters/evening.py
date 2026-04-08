@@ -85,15 +85,12 @@ def format_evening_briefing(domestic_data, global_data, commentary, sector_data,
             lines.append(f"{name}  ${d['현재가']:,.2f}  {_fmt_pct(d['등락률'])}")
     lines.append("")
 
-    # 52주 신고가/신저가 (등락률 0%인 항목은 제외)
+    # 52주 신고가
     if highlow_data:
-        highs = [h for h in highlow_data.get("신고가", [])[:5] if h.get("등락률", 0) != 0][:2]
-        lows = [l for l in highlow_data.get("신저가", [])[:5] if l.get("등락률", 0) != 0][:2]
-        if highs or lows:
-            lines.append("*52주*")
+        highs = [h for h in highlow_data.get("신고가", []) if h.get("현재가", 0) > 0][:3]
+        if highs:
+            lines.append("*52주 신고가*")
             for item in highs:
-                lines.append(f"신고가  {item['종목명']} {item['현재가']:,}  {_fmt_pct(item['등락률'])}")
-            for item in lows:
-                lines.append(f"신저가  {item['종목명']} {item['현재가']:,}  {_fmt_pct(item['등락률'])}")
+                lines.append(f"  {item['종목명']} {item['현재가']:,}  {_fmt_pct(item['등락률'])}")
 
     return "\n".join(lines).strip()
