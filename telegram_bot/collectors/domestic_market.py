@@ -208,63 +208,124 @@ def fetch_sector_performance():
     return results
 
 
+def _fetch_condition_search_list():
+    """종목조건검색 목록 조회 (HTS에서 저장한 조건식 목록)"""
+    try:
+        data = kis_get(
+            "/uapi/domestic-stock/v1/quotations/psearch-title",
+            "HHKST03900300",
+            {"user_id": ""},
+        )
+        return data.get("output2", [])
+    except Exception:
+        return []
+
+
+def _fetch_condition_search_result(seq_no):
+    """종목조건검색 결과 조회 (최대 100종목)"""
+    try:
+        data = kis_get(
+            "/uapi/domestic-stock/v1/quotations/psearch-result",
+            "HHKST03900400",
+            {"user_id": "", "seq": seq_no},
+        )
+        return data.get("output2", [])
+    except Exception:
+        return []
+
+
 def fetch_new_highlow():
-    """52주 신고가 종목 (근접 API + 현재가 >= 52주최고가 필터)
-    KOSPI(J) + KOSDAQ(Q) 각각 30건씩 = 최대 60건 후보에서 필터
+    """52주 신고가 종목 조회
+
+    1차: 종목조건검색 API — HTS에 '52주신고가' 조건식이 등록돼 있으면 최대 100건
+    2차(폴백): 근접 API (KOSPI+KOSDAQ 각 30건) + 현재가>=52주최고가 필터
     """
     results = {"신고가": []}
-    seen = set()  # 중복 방지
+    seen = set()
 
-    for market in ["J", "Q"]:  # KOSPI + KOSDAQ
-        try:
-            data = kis_get(
-                "/uapi/domestic-stock/v1/ranking/near-new-highlow",
-                "FHPST01870000",
-                {
-                    "fid_cond_mrkt_div_code": market,
-                    "fid_cond_scr_div_code": "20187",
-                    "fid_input_iscd": "0000",
-                    "fid_div_cls_code": "1",  # 신고가 근접
-                    "fid_trgt_cls_code": "0",
-                    "fid_trgt_exls_cls_code": "0",
-                    "fid_aply_rang_prc_1": "",
-                    "fid_aply_rang_prc_2": "",
-                    "fid_aply_rang_vol": "0",
-                    "fid_input_cnt_1": "0",
-                    "fid_input_cnt_2": "0",
-                    "fid_prc_cls_code": "0",
-                },
-            )
-            for item in data.get("output", []):
+    # ── 1차: 종목조건검색 API ──
+    try:
+        conditions = _fetch_condition_search_list()
+        time.sleep(0.35)
+        # '52주신고가' 또는 '신고가' 조건식 찾기
+        seq_no = None
+        for cond in conditions:
+            cond_name = cond.get("condition_nm", "")
+            if "52주" in cond_name and "신고" in cond_name:
+                seq_no = cond.get("seq", "")
+                break
+            if "신고가" in cond_name:
+                seq_no = cond.get("seq", "")
+                # 더 정확한 이름이 있을 수 있으니 계속 탐색
+        if seq_no:
+            items = _fetch_condition_search_result(seq_no)
+            time.sleep(0.35)
+            for item in items:
+                name = item.get("stck_shrn_iscd", "")  # 종목코드
+                kor_name = item.get("hts_kor_isnm", "").strip()
                 price = _safe_int(item.get("stck_prpr", 0))
-                new_hg = _safe_int(item.get("new_hgpr", 0))
                 rate = _safe_float(item.get("prdy_ctrt", 0))
-                name = item.get("hts_kor_isnm", "").strip()
-                code = item.get("stck_shrn_iscd", "")
-
-                # 실제 52주 신고가 달성: 현재가 >= 52주 최고가
-                if not name or price == 0 or new_hg == 0:
+                if not kor_name or price == 0 or name in seen:
                     continue
-                if price < new_hg:
-                    continue
-                if code in seen:
-                    continue
-                seen.add(code)
-
+                seen.add(name)
                 results["신고가"].append({
-                    "종목명": name,
-                    "종목코드": code,
+                    "종목명": kor_name,
+                    "종목코드": name,
                     "현재가": price,
                     "등락률": rate,
                     "부호": _sign_symbol(item.get("prdy_vrss_sign", "3")),
                 })
-        except Exception:
-            pass
-        time.sleep(0.35)
+    except Exception:
+        pass
 
-    # 등락률 높은 순으로 정렬, 최대 5건
+    # ── 2차(폴백): 근접 API ──
+    if not results["신고가"]:
+        for market in ["J", "Q"]:
+            try:
+                data = kis_get(
+                    "/uapi/domestic-stock/v1/ranking/near-new-highlow",
+                    "FHPST01870000",
+                    {
+                        "fid_cond_mrkt_div_code": market,
+                        "fid_cond_scr_div_code": "20187",
+                        "fid_input_iscd": "0000",
+                        "fid_div_cls_code": "1",
+                        "fid_trgt_cls_code": "0",
+                        "fid_trgt_exls_cls_code": "0",
+                        "fid_aply_rang_prc_1": "",
+                        "fid_aply_rang_prc_2": "",
+                        "fid_aply_rang_vol": "0",
+                        "fid_input_cnt_1": "0",
+                        "fid_input_cnt_2": "0",
+                        "fid_prc_cls_code": "0",
+                    },
+                )
+                for item in data.get("output", []):
+                    price = _safe_int(item.get("stck_prpr", 0))
+                    new_hg = _safe_int(item.get("new_hgpr", 0))
+                    rate = _safe_float(item.get("prdy_ctrt", 0))
+                    name = item.get("hts_kor_isnm", "").strip()
+                    code = item.get("stck_shrn_iscd", "")
+                    if not name or price == 0 or new_hg == 0:
+                        continue
+                    if price < new_hg:
+                        continue
+                    if code in seen:
+                        continue
+                    seen.add(code)
+                    results["신고가"].append({
+                        "종목명": name,
+                        "종목코드": code,
+                        "현재가": price,
+                        "등락률": rate,
+                        "부호": _sign_symbol(item.get("prdy_vrss_sign", "3")),
+                    })
+            except Exception:
+                pass
+            time.sleep(0.35)
+
+    # 등락률 높은 순 정렬
     results["신고가"].sort(key=lambda x: x["등락률"], reverse=True)
-    results["신고가"] = results["신고가"][:5]
 
     return results
 
