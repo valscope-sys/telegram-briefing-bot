@@ -22,3 +22,10 @@ jobs:
           TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: python -m telegram_bot.main evening
+      - name: Save brain (market context + briefing memory)
+        run: |
+          git config user.name "noderesearch-bot"
+          git config user.email "bot@noderesearch.com"
+          git add telegram_bot/history/
+          git diff --cached --quiet || git commit -m "auto: update market context [$(date +%Y-%m-%d)]"
+          git push
