@@ -55,12 +55,6 @@ def format_morning_briefing(global_data, domestic_data, morning_commentary=""):
         lines.append(f"VIX  {vix['현재가']:.2f}  {_fmt_pct(vix['등락률'])}")
     lines.append("")
 
-    # 미장 마감 리뷰 (섹터 + 종목 통합)
-    if morning_commentary:
-        lines.append("*미장 마감 리뷰*")
-        lines.append(morning_commentary)
-        lines.append("")
-
     # 환율 · 금리
     lines.append("*환율 · 금리*")
     usdkrw = fx.get("USD/KRW", {})

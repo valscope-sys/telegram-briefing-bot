@@ -85,12 +85,6 @@ def format_evening_briefing(domestic_data, global_data, commentary, sector_data,
             lines.append(f"{name}  ${d['현재가']:,.2f}  {_fmt_pct(d['등락률'])}")
     lines.append("")
 
-    # 시황 해석 (섹터 + 종목 통합)
-    if commentary:
-        lines.append("*오늘 시장*")
-        lines.append(commentary)
-        lines.append("")
-
     # 52주 신고가/신저가 (등락률 0%인 항목은 제외)
     if highlow_data:
         highs = [h for h in highlow_data.get("신고가", [])[:5] if h.get("등락률", 0) != 0][:2]

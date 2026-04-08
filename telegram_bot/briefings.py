@@ -66,7 +66,16 @@ def run_morning_briefing():
 
         msg1 = format_morning_briefing(global_data, domestic_data, morning_commentary)
         send_message(msg1)
-        print("[MORNING] 모닝 브리핑 발송 완료")
+        print("[MORNING] 모닝 데이터 발송 완료")
+
+        # 시황 별도 메시지
+        if morning_commentary:
+            import datetime
+            date_str = datetime.datetime.now().strftime("%m월 %d일")
+            commentary_msg = f"📋 *미장 마감 리뷰*\n{date_str}\n\n{morning_commentary}"
+            time.sleep(2)
+            send_message(commentary_msg)
+            print("[MORNING] 미장 리뷰 발송 완료")
     except Exception as e:
         print(f"[MORNING] 모닝 브리핑 실패: {e}")
         traceback.print_exc()
@@ -203,7 +212,16 @@ def run_evening_briefing():
             domestic_data, global_data, commentary, sector_data, highlow_data
         )
         send_message(msg1)
-        print("[EVENING] 이브닝 브리핑 발송 완료")
+        print("[EVENING] 이브닝 데이터 발송 완료")
+
+        # 시황 별도 메시지
+        if commentary:
+            import datetime
+            date_str = datetime.datetime.now().strftime("%m월 %d일")
+            commentary_msg = f"📋 *오늘 시장*\n{date_str}\n\n{commentary}"
+            time.sleep(2)
+            send_message(commentary_msg)
+            print("[EVENING] 시황 리뷰 발송 완료")
     except Exception as e:
         print(f"[EVENING] 이브닝 브리핑 실패: {e}")
         traceback.print_exc()
