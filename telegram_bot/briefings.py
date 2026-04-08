@@ -9,6 +9,7 @@ from telegram_bot.collectors.news_collector import (
     filter_news_with_claude,
     generate_market_commentary,
     generate_morning_commentary,
+    enrich_news_bodies,
 )
 from telegram_bot.collectors.schedule_collector import (
     fetch_today_schedule,
@@ -48,6 +49,9 @@ def run_morning_briefing():
         print("[MORNING] 뉴스 수집 중...")
         raw_news = fetch_rss_news()
         filtered_news = filter_news_with_claude(raw_news, context="장전 브리핑")
+
+        print("[MORNING] 뉴스 본문 스크래핑 중...")
+        filtered_news = enrich_news_bodies(filtered_news)
 
         print("[MORNING] 수급 트렌드 수집 중...")
         trend = fetch_investor_trend_ndays()
@@ -133,6 +137,9 @@ def run_evening_briefing():
         raw_news = fetch_rss_news()
         filtered_news = filter_news_with_claude(raw_news, context="시황 분석용")
 
+        print("[EVENING] 뉴스 본문 스크래핑 중...")
+        filtered_news = enrich_news_bodies(filtered_news)
+
         # 추가 데이터 수집
         print("[EVENING] 장중 흐름 수집 중...")
         intraday = fetch_intraday_summary()
@@ -197,6 +204,7 @@ def run_evening_briefing():
             intraday_text=intraday_text,
             trend_text=trend_text,
             consensus_text=consensus_text,
+            global_data=global_data,
         )
         save_briefing("evening", commentary, {
             "KOSPI": domestic_data.get("indices", {}).get("KOSPI", {}).get("현재가", 0),

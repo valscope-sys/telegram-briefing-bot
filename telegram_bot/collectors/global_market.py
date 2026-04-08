@@ -249,6 +249,62 @@ def fetch_korea_proxies():
     return results
 
 
+def fetch_sentiment_indicators():
+    """시장 심리 지표 수집 (Fear & Greed Index, Put/Call Ratio)"""
+    result = {}
+
+    # CNN Fear & Greed Index
+    try:
+        import requests
+        headers = {"User-Agent": "Mozilla/5.0"}
+        res = requests.get(
+            "https://production.dataviz.cnn.io/index/fearandgreed/graphdata",
+            headers=headers, timeout=5,
+        )
+        data = res.json()
+        fg = data.get("fear_and_greed", {})
+        score = fg.get("score", 0)
+        rating = fg.get("rating", "")
+        # rating: Extreme Fear, Fear, Neutral, Greed, Extreme Greed
+        rating_kr = {
+            "Extreme Fear": "극단적 공포",
+            "Fear": "공포",
+            "Neutral": "중립",
+            "Greed": "탐욕",
+            "Extreme Greed": "극단적 탐욕",
+        }.get(rating, rating)
+        result["Fear & Greed"] = {
+            "점수": round(score),
+            "등급": rating_kr,
+            "원문": rating,
+        }
+    except Exception as e:
+        result["Fear & Greed"] = {"error": str(e)}
+
+    # CBOE Put/Call Ratio (VIX 옵션 비율 → yfinance)
+    try:
+        import yfinance as yf
+        # Total equity put/call ratio는 직접 API 없음, VIX로 대체 가능
+        # 대신 CBOE 사이트에서 직접 가져오기
+        import requests
+        res = requests.get(
+            "https://cdn.cboe.com/api/global/us_indices/daily_prices/PCALL.json",
+            headers={"User-Agent": "Mozilla/5.0"}, timeout=5,
+        )
+        data = res.json()
+        latest = data.get("data", [{}])[-1] if data.get("data") else {}
+        pc_ratio = latest.get("close", 0)
+        result["Put/Call Ratio"] = {
+            "비율": round(pc_ratio, 2) if pc_ratio else 0,
+            "해석": "풋 우세 (약세 심리)" if pc_ratio and pc_ratio > 1.0 else "콜 우세 (강세 심리)" if pc_ratio else "",
+        }
+    except Exception:
+        # 폴백: 생략
+        pass
+
+    return result
+
+
 def fetch_all_global():
     """글로벌 시장 데이터 전체 조회"""
     indices = fetch_global_indices()
@@ -261,4 +317,5 @@ def fetch_all_global():
         "us_sectors": fetch_us_sectors(),
         "us_stocks": fetch_us_major_stocks(),
         "korea_proxies": fetch_korea_proxies(),
+        "sentiment": fetch_sentiment_indicators(),
     }
