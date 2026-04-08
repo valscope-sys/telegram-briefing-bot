@@ -2,7 +2,7 @@ name: Morning Briefing
 
 on:
   schedule:
-    - cron: '0 22 * * 0-4'  # 일~목 UTC 22:00 = 월~금 KST 07:00
+    - cron: '30 22 * * 0-4'  # 일~목 UTC 22:30 = 월~금 KST 07:30
   workflow_dispatch:
 
 jobs:
