@@ -36,11 +36,14 @@ def postprocess_commentary(text):
         text = text.replace(f".\n{phrase}", f".\n\n{phrase}")
 
     # 4. 국면 정의 첫 문장 뒤 빈 줄
-    first_period = text.find(".")
-    if first_period > 0 and first_period < 100:
-        after = text[first_period + 1:first_period + 3]
+    # "~습니다." "~입니다." 등 한국어 서술형 마침표 뒤에서만 줄바꿈
+    # 숫자 뒤 마침표(0.08%)나 영문 약어(S&P) 등에서 잘리지 않도록
+    match = re.search(r'[가-힣]\.\s', text[:200])
+    if match:
+        pos = match.start() + 1  # 마침표 위치
+        after = text[pos + 1:pos + 3]
         if after and not after.startswith("\n\n"):
-            text = text[:first_period + 1] + "\n\n" + text[first_period + 1:].lstrip("\n ")
+            text = text[:pos + 1] + "\n\n" + text[pos + 1:].lstrip("\n ")
 
     # 5. 중복 빈 줄 정리 (3줄 이상 → 2줄로)
     text = re.sub(r'\n{3,}', '\n\n', text)
