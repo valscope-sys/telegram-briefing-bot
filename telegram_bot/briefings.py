@@ -1,6 +1,21 @@
 """브리핑 실행 로직 (데이터 수집 → 포맷 → 발송)"""
 import time
+import datetime
 import traceback
+
+
+def _wait_until(hour, minute, label):
+    """KST 기준 지정 시각까지 대기. 이미 지났으면 즉시 진행."""
+    import pytz
+    kst = pytz.timezone("Asia/Seoul")
+    now = datetime.datetime.now(kst)
+    target = now.replace(hour=hour, minute=minute, second=0, microsecond=0)
+    if now < target:
+        wait_sec = (target - now).total_seconds()
+        print(f"[WAIT] 현재 KST {now.strftime('%H:%M')}, {label} {hour:02d}:{minute:02d}까지 {wait_sec:.0f}초 대기")
+        time.sleep(wait_sec)
+    else:
+        print(f"[WAIT] 현재 KST {now.strftime('%H:%M')}, {label} 시간 경과 — 즉시 진행")
 
 from telegram_bot.collectors.global_market import fetch_all_global
 from telegram_bot.collectors.domestic_market import fetch_all_domestic
@@ -38,6 +53,7 @@ def run_morning_briefing():
     장전 브리핑 실행 (07:00)
     메시지 3개: 모닝 브리핑 → 장전 뉴스 → 오늘 일정
     """
+    _wait_until(6, 30, "미장 마감 데이터 확정")
     print("[MORNING] 모닝 브리핑 시작...")
 
     try:
@@ -121,6 +137,7 @@ def run_evening_briefing():
     장후 브리핑 실행 (16:00)
     메시지 3개: 이브닝 브리핑 → 장중 뉴스 → 내일 일정
     """
+    _wait_until(15, 45, "장 마감 데이터 확정")
     print("[EVENING] 이브닝 브리핑 시작...")
 
     domestic_data = {}
