@@ -2,7 +2,7 @@ name: Evening Briefing
 
 on:
   schedule:
-    - cron: '0 4 * * 1-5'  # 월~금 UTC 04:00 → 지연 감안 실제 KST 16:00~17:00 도착 목표
+    - cron: '30 5 * * 1-5'  # 월~금 UTC 05:30 (KST 14:30) + 지연 = KST 16:00~17:30 도착. 장마감(15:30) 이후 보장
   workflow_dispatch:
 permissions:
   contents: write

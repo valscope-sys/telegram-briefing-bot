@@ -2,7 +2,7 @@ name: Morning Briefing
 
 on:
   schedule:
-    - cron: '30 19 * * 0-4'  # 일~목 UTC 19:30 → 지연 감안 실제 KST 07:00~08:00 도착 목표
+    - cron: '30 20 * * 0-4'  # 일~목 UTC 20:30 (KST 05:30) + 지연 = KST 07:00~09:00 도착. 미장 마감 후 보장
   workflow_dispatch:
 
 jobs:
