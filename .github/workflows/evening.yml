@@ -2,7 +2,7 @@ name: Evening Briefing
 
 on:
   schedule:
-    - cron: '0 7 * * 1-5'  # 월~금 UTC 07:00 = KST 16:00 + 시간가드로 장마감 후 보장
+    # - cron: '0 7 * * 1-5'  # AWS Lightsail로 이전 — cron 비활성화
   workflow_dispatch:
 permissions:
   contents: write

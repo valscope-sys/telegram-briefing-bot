@@ -1,9 +1,9 @@
 name: Morning Briefing
 
 on:
-  schedule:
-    - cron: '0 22 * * 0-4'  # 일~목 UTC 22:00 = KST 07:00 + 시간가드로 미장 마감 후 보장
-  workflow_dispatch:
+  # schedule:
+  #   - cron: '0 22 * * 0-4'  # AWS Lightsail로 이전 — cron 비활성화
+  workflow_dispatch:  # 수동 실행은 유지
 
 jobs:
   morning:
