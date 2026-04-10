@@ -101,14 +101,6 @@ def main():
         name="모닝 브리핑",
     )
 
-    # [임시 테스트] — 확인 후 삭제
-    scheduler.add_job(
-        morning_job,
-        CronTrigger(hour=16, minute=40, day_of_week="mon-fri", timezone=KST),
-        id="test_morning",
-        name="테스트 모닝",
-    )
-
     # 이브닝 브리핑: 평일 16:00 KST
     scheduler.add_job(
         evening_job,
