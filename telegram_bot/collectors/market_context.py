@@ -5,10 +5,11 @@ import requests
 from bs4 import BeautifulSoup
 
 CONTEXT_FILE = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "history", "market_context.txt")
+ANALYST_FILE = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "history", "analyst_raw.txt")
 
 
 def _fetch_latest_analyst_comment():
-    """한지영 채널에서 가장 최근 코멘트 1개만 가져오기 (크롤링)"""
+    """한지영 채널에서 가장 최근 코멘트 1개만 가져오기 (크롤링) + 자동 누적 저장"""
     try:
         url = "https://t.me/s/hedgecat0301"
         headers = {"User-Agent": "Mozilla/5.0"}
@@ -23,10 +24,31 @@ def _fetch_latest_analyst_comment():
         if messages:
             latest = messages[-1].get_text(strip=True)
             if len(latest) > 200:  # 의미 있는 코멘트만
+                # analyst_raw.txt에 누적 저장 (중복 방지)
+                _save_analyst_comment(latest)
                 return latest[:2000]
         return ""
     except Exception:
         return ""
+
+
+def _save_analyst_comment(comment):
+    """한지영 코멘트를 analyst_raw.txt에 누적 저장 (중복 방지)"""
+    try:
+        existing = ""
+        if os.path.exists(ANALYST_FILE):
+            with open(ANALYST_FILE, "r", encoding="utf-8") as f:
+                existing = f.read()
+
+        # 첫 50자로 중복 체크 (같은 글이면 저장 안 함)
+        check = comment[:50]
+        if check in existing:
+            return
+
+        with open(ANALYST_FILE, "a", encoding="utf-8") as f:
+            f.write(f"\n---\n\n{comment}\n")
+    except Exception:
+        pass
 
 
 def get_market_context_for_prompt():
