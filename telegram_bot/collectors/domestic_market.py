@@ -234,28 +234,45 @@ def _fetch_condition_search_result(seq_no):
         return []
 
 
-def _get_sector_name(stock_code):
-    """KIS API로 종목의 업종명 조회"""
+def _classify_themes_with_claude(stock_names):
+    """Claude API로 종목명 → 투자 테마 분류"""
+    from telegram_bot.config import ANTHROPIC_API_KEY
+    if not ANTHROPIC_API_KEY or not stock_names:
+        return {name: "기타" for name in stock_names}
+
+    import anthropic
+    import json
+    client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+
+    names_str = ", ".join(stock_names)
+    prompt = f"""다음 한국 주식 종목들을 투자 테마별로 분류해주세요.
+
+종목: {names_str}
+
+테마 예시: 반도체, 광통신, 2차전지, 방산, 화장품/K-뷰티, 바이오/제약, AI/소프트웨어, 자동차, 조선, 원전/전력, 건설/재건, 철강/소재, 금속/비철, 에너지, 금융, 게임, 음식료, 로봇, 기타
+- 위 테마에 없으면 적절한 새 테마를 만들어도 됩니다 (예: 광통신이 부각되면 광통신 테마 사용)
+- 종목의 실제 사업 내용 기준으로 분류. KRX 업종이 아니라 투자자 관점의 테마입니다.
+- 예: 에이피알은 화학이 아니라 "화장품/K-뷰티", 웨이브일렉트로는 "방산"
+
+JSON만 출력하세요:
+{{"종목명": "테마", "종목명2": "테마2", ...}}"""
+
     try:
-        data = kis_get(
-            "/uapi/domestic-stock/v1/quotations/inquire-price",
-            "FHKST01010100",
-            {"FID_COND_MRKT_DIV_CODE": "J", "FID_INPUT_ISCD": stock_code},
+        response = client.messages.create(
+            model="claude-sonnet-4-20250514",
+            max_tokens=1000,
+            messages=[{"role": "user", "content": prompt}],
         )
-        return data["output"].get("bstp_kor_isnm", "기타")
-    except Exception:
-        return "기타"
+        text = response.content[0].text.strip()
+        # JSON 추출
+        if "{" in text:
+            start = text.find("{")
+            end = text.rfind("}") + 1
+            return json.loads(text[start:end])
+    except Exception as e:
+        print(f"[THEME] Claude 테마 분류 실패: {e}")
 
-
-# KIS 업종명 → 우리 섹터명 매핑
-_SECTOR_MAP = {
-    "반도체": "반도체", "전기·전자": "전기전자", "IT 서비스": "IT",
-    "통신": "광통신/IT", "기계·장비": "기계/장비", "금속": "금속/소재",
-    "철강": "철강", "화학": "화학", "제약": "바이오/제약",
-    "의료·정밀기기": "방산/정밀", "건설": "건설", "운송": "운송/물류",
-    "유통": "유통", "금융": "금융", "보험": "금융",
-    "음식료": "음식료", "섬유·의류": "의류/뷰티", "전기·가스": "에너지/전력",
-}
+    return {name: "기타" for name in stock_names}
 
 
 def fetch_new_highlow():
@@ -289,6 +306,7 @@ def fetch_new_highlow():
             "인프라", "액티브",
         ]
 
+        filtered_stocks = []
         for item in stocks:
             name = item.get("stk_nm", "").strip()
             code = item.get("stk_cd", "")
@@ -305,19 +323,22 @@ def fetch_new_highlow():
             if price == 0:
                 continue
 
-            # KIS로 업종 조회
-            raw_sector = _get_sector_name(code)
-            sector = _SECTOR_MAP.get(raw_sector, raw_sector)
-            time.sleep(0.35)
-
-            results["신고가"].append({
+            filtered_stocks.append({
                 "종목명": name,
                 "종목코드": code,
                 "현재가": price,
                 "등락률": rate,
                 "부호": "▲" if rate > 0 else ("▼" if rate < 0 else "─"),
-                "섹터": sector,
             })
+
+        # Claude API로 테마 분류 (한 번에 전체)
+        if filtered_stocks:
+            stock_names = [s["종목명"] for s in filtered_stocks]
+            print(f"[THEME] {len(stock_names)}종목 테마 분류 중...")
+            theme_map = _classify_themes_with_claude(stock_names)
+            for s in filtered_stocks:
+                s["섹터"] = theme_map.get(s["종목명"], "기타")
+                results["신고가"].append(s)
 
     except Exception as e:
         print(f"[KIWOOM] 52주 신고가 조회 실패: {e}")
