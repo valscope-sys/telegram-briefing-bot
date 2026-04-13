@@ -1,10 +1,23 @@
 """뉴스 수집 (RSS + 크롤링) + Claude API 분석/필터링"""
+import os
 import json
 import datetime
 import feedparser
 import requests
 from bs4 import BeautifulSoup
 from telegram_bot.config import ANTHROPIC_API_KEY
+
+# 시황 생성 모델 선택 (환경변수 또는 기본값)
+# COMMENTARY_MODEL=opus → claude-opus-4-20250514
+# COMMENTARY_MODEL=sonnet (기본) → claude-sonnet-4-20250514
+_MODEL_MAP = {
+    "opus": "claude-opus-4-20250514",
+    "sonnet": "claude-sonnet-4-20250514",
+}
+COMMENTARY_MODEL = _MODEL_MAP.get(
+    os.environ.get("COMMENTARY_MODEL", "sonnet").lower(),
+    "claude-sonnet-4-20250514"
+)
 
 
 # ── RSS 피드 목록 ──
@@ -544,9 +557,10 @@ def generate_market_commentary(market_data, news_list, intraday_text="", trend_t
 
 시황만 작성하세요."""
 
+    print(f"[COMMENTARY] 이브닝 시황 모델: {COMMENTARY_MODEL}")
     try:
         response = client.messages.create(
-            model="claude-sonnet-4-20250514",
+            model=COMMENTARY_MODEL,
             max_tokens=2000,
             system=PROMPT_SYSTEM,
             messages=[{"role": "user", "content": prompt}],
@@ -691,16 +705,17 @@ def generate_morning_commentary(global_data, news_list, trend_text=""):
 - 뉴스 데이터에 없는 제품명, 기술명, 이벤트를 만들어내지 마세요. 뉴스 목록에 있는 내용만 언급.
 - 컨텍스트에 있는 과거 이벤트(예: 삼성전자 실적)가 이미 수일 전 반영된 것이면 "기대감을 높이고 있다"처럼 현재형으로 쓰지 마세요.
 - 이 시황은 07:00(장 개장 전)에 발송됩니다. 한국 장은 09:00에 열립니다. "장 초반 상승세를 보이고 있다", "이미 강세를 보이고 있다" 같은 장중 묘사는 불가능합니다. 절대 쓰지 마세요.
-- "~예상됩니다", "~전망입니다" 같은 예측 표현을 최소화하세요. "~가능성이 있습니다", "~요인으로 작용할 수 있습니다" 정도로.
+- "~예상됩니다"는 전체 시황에서 1~2회 이내로. 매 문단마다 쓰면 리딩이 됩니다. 나머지는 "~가능성이 있습니다", "~요인으로 작용할 수 있습니다"로 대체.
 - 서식 없이 텍스트만
 - 마무리에 긍정만 쓰지 말고 리스크 요인도 한 줄 포함
 - 총 12~16문장
 
 시황만 작성하세요."""
 
+    print(f"[COMMENTARY] 모닝 시황 모델: {COMMENTARY_MODEL}")
     try:
         response = client.messages.create(
-            model="claude-sonnet-4-20250514",
+            model=COMMENTARY_MODEL,
             max_tokens=2000,
             system=PROMPT_SYSTEM,
             messages=[{"role": "user", "content": prompt}],
