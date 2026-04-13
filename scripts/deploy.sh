@@ -4,8 +4,6 @@ cd /home/ubuntu/telegram-briefing-bot
 # 1. 뇌(market_context + briefing history) 변경사항 커밋+푸시
 git add telegram_bot/history/ 2>/dev/null
 git diff --cached --quiet || {
-    git config user.name "noderesearch-bot"
-    git config user.email "bot@noderesearch.com"
     git commit -m "auto: save brain [$(date +%Y-%m-%d\ %H:%M)]"
     git push
 }

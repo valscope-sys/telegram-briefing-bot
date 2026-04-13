@@ -324,6 +324,22 @@ def fetch_new_highlow():
                 pass
             time.sleep(0.35)
 
+    # ETF/스팩/우선주/리츠 제외
+    exclude_keywords = ["ETF", "KODEX", "TIGER", "KBSTAR", "HANARO", "SOL", "ARIRANG",
+                        "ACE", "KOSEF", "스팩", "SPAC", "리츠", "인프라"]
+    filtered = []
+    for item in results["신고가"]:
+        name = item["종목명"]
+        code = item.get("종목코드", "")
+        # 우선주 제외 (코드 끝자리 5 또는 K)
+        if code and (code[-1] in ("5", "K")):
+            continue
+        # ETF/스팩 키워드 제외
+        if any(kw in name for kw in exclude_keywords):
+            continue
+        filtered.append(item)
+    results["신고가"] = filtered
+
     # 등락률 높은 순 정렬
     results["신고가"].sort(key=lambda x: x["등락률"], reverse=True)
 

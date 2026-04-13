@@ -155,7 +155,7 @@ def format_intraday_for_prompt(intraday_data):
                 high_gap = ((high - opn) / opn * 100) if opn > 0 else 0
                 low_gap = ((low - opn) / opn * 100) if opn > 0 else 0
 
-                lines.append(f"{name}: 시가 {opn:.2f} → 고가 {high:.2f}(시가 대비 {high_gap:+.2f}%) → 저가 {low:.2f}(시가 대비 {low_gap:+.2f}%) → 종가 {close:.2f}")
+                lines.append(f"{name}: 시가 {opn:.2f}, 고가 {high:.2f}(시가 대비 {high_gap:+.2f}%), 저가 {low:.2f}(시가 대비 {low_gap:+.2f}%), 종가 {close:.2f}")
 
     stocks = intraday_data.get("주요종목", {})
     if stocks:
@@ -169,7 +169,7 @@ def format_intraday_for_prompt(intraday_data):
                 prev = d.get("기준가", opn)
                 open_chg = ((opn - prev) / prev * 100) if prev > 0 else 0
                 close_chg = ((close - prev) / prev * 100) if prev > 0 else 0
-                lines.append(f"  {name}: 시가 {opn:,}({open_chg:+.1f}%) → 종가 {close:,}({close_chg:+.1f}%) | 고가 {high:,} / 저가 {low:,}")
+                lines.append(f"  {name}: 시가 {opn:,}({open_chg:+.1f}%), 종가 {close:,}({close_chg:+.1f}%) | 고가 {high:,} / 저가 {low:,}")
 
     # 외국인 지분율
     frgn = intraday_data.get("외국인지분율", {})

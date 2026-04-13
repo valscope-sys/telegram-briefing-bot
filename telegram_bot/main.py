@@ -93,20 +93,17 @@ def main():
 
     scheduler = BlockingScheduler(timezone=KST)
 
+    # misfire_grace_time: 재시작 후 15분 이내면 놓친 스케줄 보충 실행
+    # deploy.sh가 코드 pull 후 재시작해도 스케줄이 누락되지 않음
+    GRACE = 900  # 15분
+
     # 모닝 브리핑: 평일 07:00 KST
     scheduler.add_job(
         morning_job,
         CronTrigger(hour=7, minute=0, day_of_week="mon-fri", timezone=KST),
         id="morning_briefing",
         name="모닝 브리핑",
-    )
-
-    # [임시 테스트] 17:10 — 확인 후 삭제
-    scheduler.add_job(
-        morning_job,
-        CronTrigger(hour=17, minute=10, day_of_week="mon-fri", timezone=KST),
-        id="test_morning",
-        name="테스트 모닝",
+        misfire_grace_time=GRACE,
     )
 
     # 이브닝 브리핑: 평일 16:00 KST
@@ -115,6 +112,7 @@ def main():
         CronTrigger(hour=16, minute=0, day_of_week="mon-fri", timezone=KST),
         id="evening_briefing",
         name="이브닝 브리핑",
+        misfire_grace_time=GRACE,
     )
 
     try:
