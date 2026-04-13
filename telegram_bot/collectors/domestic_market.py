@@ -234,54 +234,98 @@ def _fetch_condition_search_result(seq_no):
         return []
 
 
-def fetch_new_highlow():
-    """52주 신고가 종목 조회
+def _get_sector_name(stock_code):
+    """KIS API로 종목의 업종명 조회"""
+    try:
+        data = kis_get(
+            "/uapi/domestic-stock/v1/quotations/inquire-price",
+            "FHKST01010100",
+            {"FID_COND_MRKT_DIV_CODE": "J", "FID_INPUT_ISCD": stock_code},
+        )
+        return data["output"].get("bstp_kor_isnm", "기타")
+    except Exception:
+        return "기타"
 
-    1차: 종목조건검색 API — HTS에 '52주신고가' 조건식이 등록돼 있으면 최대 100건
-    2차(폴백): 근접 API (KOSPI+KOSDAQ 각 30건) + 현재가>=52주최고가 필터
+
+# KIS 업종명 → 우리 섹터명 매핑
+_SECTOR_MAP = {
+    "반도체": "반도체", "전기·전자": "전기전자", "IT 서비스": "IT",
+    "통신": "광통신/IT", "기계·장비": "기계/장비", "금속": "금속/소재",
+    "철강": "철강", "화학": "화학", "제약": "바이오/제약",
+    "의료·정밀기기": "방산/정밀", "건설": "건설", "운송": "운송/물류",
+    "유통": "유통", "금융": "금융", "보험": "금융",
+    "음식료": "음식료", "섬유·의류": "의류/뷰티", "전기·가스": "에너지/전력",
+}
+
+
+def fetch_new_highlow():
+    """52주 신고가 종목 조회 — 키움 REST API (ka10016)
+    종가기준 + 우선주제외 + 거래량 1만주 이상
+    KIS API로 섹터 분류 추가
     """
     results = {"신고가": []}
-    seen = set()
 
-    # ── 1차: 종목조건검색 API ──
     try:
-        conditions = _fetch_condition_search_list()
-        time.sleep(0.35)
-        # '52주신고가' 또는 '신고가' 조건식 찾기
-        seq_no = None
-        for cond in conditions:
-            cond_name = cond.get("condition_nm", "")
-            if "52주" in cond_name and "신고" in cond_name:
-                seq_no = cond.get("seq", "")
-                break
-            if "신고가" in cond_name:
-                seq_no = cond.get("seq", "")
-                # 더 정확한 이름이 있을 수 있으니 계속 탐색
-        if seq_no:
-            items = _fetch_condition_search_result(seq_no)
-            time.sleep(0.35)
-            for item in items:
-                name = item.get("stck_shrn_iscd", "")  # 종목코드
-                kor_name = item.get("hts_kor_isnm", "").strip()
-                price = _safe_int(item.get("stck_prpr", 0))
-                rate = _safe_float(item.get("prdy_ctrt", 0))
-                if not kor_name or price == 0 or name in seen:
-                    continue
-                seen.add(name)
-                results["신고가"].append({
-                    "종목명": kor_name,
-                    "종목코드": name,
-                    "현재가": price,
-                    "등락률": rate,
-                    "부호": _sign_symbol(item.get("prdy_vrss_sign", "3")),
-                })
-    except Exception:
-        pass
+        from telegram_bot.kiwoom_client import kiwoom_post
 
-    # ── 2차(폴백): 근접 API ──
-    if not results["신고가"]:
-        for market in ["J", "Q"]:
-            try:
+        data = kiwoom_post("ka10016", {
+            "mrkt_tp": "000",           # 전체 (코스피+코스닥)
+            "ntl_tp": "1",              # 신고가
+            "high_low_close_tp": "2",   # 종가기준
+            "stk_cnd": "3",             # 우선주제외
+            "trde_qty_tp": "00010",     # 만주이상
+            "crd_cnd": "0",             # 전체
+            "updown_incls": "0",        # 상하한 미포함
+            "dt": "250",               # 250일 = 52주
+            "stex_tp": "1",             # KRX
+        })
+
+        stocks = data.get("ntl_pric", [])
+
+        # ETF/리츠/머니마켓 필터
+        exclude_kw = [
+            "TIGER", "KODEX", "KBSTAR", "HANARO", "SOL", "ARIRANG", "ACE", "KOSEF",
+            "스팩", "SPAC", "리츠", "KOFR", "RISE", "KIWOOM", "머니마켓", "1Q ",
+            "인프라", "액티브",
+        ]
+
+        for item in stocks:
+            name = item.get("stk_nm", "").strip()
+            code = item.get("stk_cd", "")
+            if not name or not code:
+                continue
+            if any(kw in name for kw in exclude_kw):
+                continue
+
+            rate_str = item.get("flu_rt", "0")
+            rate = _safe_float(rate_str.replace("+", "").replace("%", ""))
+            price_str = item.get("cur_prc", "0")
+            price = _safe_int(price_str.replace("+", "").replace("-", "").replace(",", ""))
+
+            if price == 0:
+                continue
+
+            # KIS로 업종 조회
+            raw_sector = _get_sector_name(code)
+            sector = _SECTOR_MAP.get(raw_sector, raw_sector)
+            time.sleep(0.35)
+
+            results["신고가"].append({
+                "종목명": name,
+                "종목코드": code,
+                "현재가": price,
+                "등락률": rate,
+                "부호": "▲" if rate > 0 else ("▼" if rate < 0 else "─"),
+                "섹터": sector,
+            })
+
+    except Exception as e:
+        print(f"[KIWOOM] 52주 신고가 조회 실패: {e}")
+        import traceback
+        traceback.print_exc()
+        # 폴백: KIS 근접 API (기존 로직)
+        try:
+            for market in ["J", "Q"]:
                 data = kis_get(
                     "/uapi/domestic-stock/v1/ranking/near-new-highlow",
                     "FHPST01870000",
@@ -300,49 +344,27 @@ def fetch_new_highlow():
                         "fid_prc_cls_code": "0",
                     },
                 )
+                seen = set()
                 for item in data.get("output", []):
-                    price = _safe_int(item.get("stck_prpr", 0))
-                    new_hg = _safe_int(item.get("new_hgpr", 0))
-                    rate = _safe_float(item.get("prdy_ctrt", 0))
-                    name = item.get("hts_kor_isnm", "").strip()
-                    code = item.get("stck_shrn_iscd", "")
-                    if not name or price == 0 or new_hg == 0:
+                    p = _safe_int(item.get("stck_prpr", 0))
+                    hg = _safe_int(item.get("new_hgpr", 0))
+                    r = _safe_float(item.get("prdy_ctrt", 0))
+                    n = item.get("hts_kor_isnm", "").strip()
+                    c = item.get("stck_shrn_iscd", "")
+                    if not n or p == 0 or hg == 0 or p < hg or c in seen:
                         continue
-                    if price < new_hg:
-                        continue
-                    if code in seen:
-                        continue
-                    seen.add(code)
+                    seen.add(c)
                     results["신고가"].append({
-                        "종목명": name,
-                        "종목코드": code,
-                        "현재가": price,
-                        "등락률": rate,
-                        "부호": _sign_symbol(item.get("prdy_vrss_sign", "3")),
+                        "종목명": n, "종목코드": c, "현재가": p,
+                        "등락률": r, "부호": _sign_symbol(item.get("prdy_vrss_sign", "3")),
+                        "섹터": "기타",
                     })
-            except Exception:
-                pass
-            time.sleep(0.35)
-
-    # ETF/스팩/우선주/리츠 제외
-    exclude_keywords = ["ETF", "KODEX", "TIGER", "KBSTAR", "HANARO", "SOL", "ARIRANG",
-                        "ACE", "KOSEF", "스팩", "SPAC", "리츠", "인프라"]
-    filtered = []
-    for item in results["신고가"]:
-        name = item["종목명"]
-        code = item.get("종목코드", "")
-        # 우선주 제외 (코드 끝자리 5 또는 K)
-        if code and (code[-1] in ("5", "K")):
-            continue
-        # ETF/스팩 키워드 제외
-        if any(kw in name for kw in exclude_keywords):
-            continue
-        filtered.append(item)
-    results["신고가"] = filtered
+                time.sleep(0.35)
+        except Exception:
+            pass
 
     # 등락률 높은 순 정렬
     results["신고가"].sort(key=lambda x: x["등락률"], reverse=True)
-
     return results
 
 

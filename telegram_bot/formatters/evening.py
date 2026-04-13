@@ -30,21 +30,21 @@ def format_evening_briefing(domestic_data, global_data, commentary, sector_data,
     """이브닝 브리핑 메시지 생성"""
     now = datetime.datetime.now()
     date_str = now.strftime("%m월 %d일")
-    sector_stocks = domestic_data.get("sector_stocks", {})
 
     indices = domestic_data.get("indices", {})
     investors = domestic_data.get("investors", {})
     program = domestic_data.get("program", {})
     fx = global_data.get("fx", {})
     commodities = global_data.get("commodities", {})
+    sectors = domestic_data.get("sectors", {})
 
     lines = []
     lines.append("📋 *이브닝 브리핑*")
     lines.append(f"{date_str} · 16:00 기준")
     lines.append("")
 
-    # 당일 증시
-    lines.append("*당일 증시*")
+    # 📊 당일 증시
+    lines.append("📊 *당일 증시*")
     for name in ["KOSPI", "KOSDAQ"]:
         d = indices.get(name, {})
         if "error" in d:
@@ -58,13 +58,13 @@ def format_evening_briefing(domestic_data, global_data, commentary, sector_data,
         lines.append(f"상승 {kospi.get('상승', 0)} · 하락 {kospi.get('하락', 0)} · 보합 {kospi.get('보합', 0)}")
     lines.append("")
 
-    # 수급
+    # 💰 수급 (개인을 같은 줄로 압축)
+    lines.append("💰 *수급*")
     if investors and "error" not in investors:
         frgn = investors.get("외국인금액", 0)
         inst = investors.get("기관금액", 0)
         pers = investors.get("개인금액", 0)
-        lines.append(f"외국인 {_fmt_inv(frgn)} · 기관 {_fmt_inv(inst)}")
-        lines.append(f"개인 {_fmt_inv(pers)}")
+        lines.append(f"외국인 {_fmt_inv(frgn)} · 기관 {_fmt_inv(inst)} · 개인 {_fmt_inv(pers)}")
 
     if program and "error" not in program:
         pgm_val = program.get("합계순매수", 0)
@@ -74,8 +74,8 @@ def format_evening_briefing(domestic_data, global_data, commentary, sector_data,
             lines.append(f"프로그램 {pgm_str}")
     lines.append("")
 
-    # 환율 · 원자재
-    lines.append("*환율 · 원자재*")
+    # 💱 환율 · 원자재
+    lines.append("💱 *환율 · 원자재*")
     usdkrw = fx.get("USD/KRW", {})
     if usdkrw and "error" not in usdkrw and usdkrw.get("현재가"):
         lines.append(f"USD/KRW  {usdkrw['현재가']:,.1f}  {_fmt_diff(usdkrw['전일대비'])}")
@@ -85,12 +85,37 @@ def format_evening_briefing(domestic_data, global_data, commentary, sector_data,
             lines.append(f"{name}  ${d['현재가']:,.2f}  {_fmt_pct(d['등락률'])}")
     lines.append("")
 
-    # 52주 신고가 (전 종목)
+    # 🏷 섹터 (상위3 · 하위3)
+    if sectors:
+        sector_list = []
+        for name, data in sectors.items():
+            if isinstance(data, dict) and "error" not in data and data.get("등락률") is not None:
+                sector_list.append((name, data["등락률"]))
+        if sector_list:
+            sector_list.sort(key=lambda x: x[1], reverse=True)
+            top3 = sector_list[:3]
+            bottom3 = sector_list[-3:]
+            lines.append("🏷 *섹터*")
+            top_str = " · ".join(f"{n} {v:+.2f}%" for n, v in top3)
+            bot_str = " · ".join(f"{n} {v:+.2f}%" for n, v in bottom3)
+            lines.append(f"▲ {top_str}")
+            lines.append(f"▼ {bot_str}")
+            lines.append("")
+
+    # 🔺 52주 신고가 — 섹터별 그룹핑
     if highlow_data:
         highs = [h for h in highlow_data.get("신고가", []) if h.get("현재가", 0) > 0]
         if highs:
-            lines.append(f"*52주 신고가* ({len(highs)}종목)")
+            lines.append(f"🔺 *52주 신고가* ({len(highs)}종목)")
+            # 섹터별 그룹핑
+            sector_groups = {}
             for item in highs:
-                lines.append(f"  {item['종목명']} {item['현재가']:,}  {_fmt_pct(item['등락률'])}")
+                sector = item.get("섹터", "기타")
+                if sector not in sector_groups:
+                    sector_groups[sector] = []
+                sector_groups[sector].append(item["종목명"])
+            # 종목 수 많은 섹터부터
+            for sector, names in sorted(sector_groups.items(), key=lambda x: -len(x[1])):
+                lines.append(f"({sector}) {', '.join(names)}")
 
     return "\n".join(lines).strip()

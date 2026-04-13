@@ -33,6 +33,10 @@ DART_API_KEY = os.getenv("DART_API_KEY", "")
 # Anthropic
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
 
+# Kiwoom (52주 신고가 전용)
+KIWOOM_APP_KEY = os.getenv("KIWOOM_APP_KEY", "")
+KIWOOM_APP_SECRET = os.getenv("KIWOOM_APP_SECRET", "")
+
 # 섹터 ETF 코드
 SECTOR_ETFS = {
     "반도체": "091160",

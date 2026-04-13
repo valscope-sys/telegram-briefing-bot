@@ -35,17 +35,17 @@ def format_morning_briefing(global_data, domestic_data, morning_commentary=""):
     bonds = global_data.get("bonds", {})
     commodities = global_data.get("commodities", {})
     us_sectors = global_data.get("us_sectors", {})
-    us_stocks = global_data.get("us_stocks", {})
     dom_indices = domestic_data.get("indices", {})
     investors = domestic_data.get("investors", {})
+    sentiment = global_data.get("sentiment", {})
 
     lines = []
     lines.append("🌐 *모닝 브리핑*")
     lines.append(f"{date_str} · 07:00 기준")
     lines.append("")
 
-    # 미국 증시
-    lines.append("*미국 증시*")
+    # 📊 미국 증시
+    lines.append("📊 *미국 증시*")
     for name in ["S&P 500", "NASDAQ", "DOW"]:
         d = indices.get(name, {})
         if "error" not in d and d.get("현재가"):
@@ -55,8 +55,26 @@ def format_morning_briefing(global_data, domestic_data, morning_commentary=""):
         lines.append(f"VIX  {vix['현재가']:.2f}  {_fmt_pct(vix['등락률'])}")
     lines.append("")
 
-    # 환율 · 금리
-    lines.append("*환율 · 금리*")
+    # 🏷 미국 섹터 (상위3 · 하위3)
+    if us_sectors:
+        # 등락률 기준 정렬
+        sector_list = []
+        for name, data in us_sectors.items():
+            if isinstance(data, dict) and "error" not in data and data.get("등락률") is not None:
+                sector_list.append((name, data["등락률"]))
+        if sector_list:
+            sector_list.sort(key=lambda x: x[1], reverse=True)
+            top3 = sector_list[:3]
+            bottom3 = sector_list[-3:]
+            lines.append("🏷 *미국 섹터*")
+            top_str = " · ".join(f"{n} {v:+.2f}%" for n, v in top3)
+            bot_str = " · ".join(f"{n} {v:+.2f}%" for n, v in bottom3)
+            lines.append(f"▲ {top_str}")
+            lines.append(f"▼ {bot_str}")
+            lines.append("")
+
+    # 💱 환율 · 금리
+    lines.append("💱 *환율 · 금리*")
     usdkrw = fx.get("USD/KRW", {})
     if usdkrw and "error" not in usdkrw and usdkrw.get("현재가"):
         lines.append(f"USD/KRW  {usdkrw['현재가']:,.1f}  {_fmt_diff(usdkrw['전일대비'])}")
@@ -70,30 +88,46 @@ def format_morning_briefing(global_data, domestic_data, morning_commentary=""):
         rate_10y = us_10y.get("금리", 0)
         spread = int((rate_10y - rate_2y) * 100)  # 10Y-2Y (양수=정상, 음수=역전)
         lines.append(f"미국채 2Y {rate_2y:.2f}% / 10Y {rate_10y:.2f}%  (스프레드 {spread:+d}bp)")
+    # 국고채
+    kr_3y = bonds.get("국고채 3Y", {})
+    kr_10y = bonds.get("국고채 10Y", {})
+    kr_parts = []
+    if kr_3y and kr_3y.get("금리"):
+        kr_parts.append(f"3Y {kr_3y['금리']:.2f}%")
+    if kr_10y and kr_10y.get("금리"):
+        kr_parts.append(f"10Y {kr_10y['금리']:.2f}%")
+    if kr_parts:
+        lines.append(f"국고채 {' / '.join(kr_parts)}")
     lines.append("")
 
-    # 원자재
-    lines.append("*원자재*")
+    # 🛢 원자재
+    lines.append("🛢 *원자재*")
     for name in ["WTI", "금", "구리"]:
         d = commodities.get(name, {})
         if "error" not in d and d.get("현재가"):
             lines.append(f"{name}  ${d['현재가']:,.2f}  {_fmt_pct(d['등락률'])}")
     lines.append("")
 
-    # 야간 프록시 (KORU, EWY)
-    korea_proxies = global_data.get("korea_proxies", {})
-    proxy_parts = []
-    for name in ["KORU", "EWY"]:
-        d = korea_proxies.get(name, {})
-        if d and "error" not in d and d.get("현재가"):
-            proxy_parts.append(f"{name} {d['현재가']:.2f} {_fmt_pct(d['등락률'])}")
-    if proxy_parts:
-        lines.append("*야간 프록시*")
-        lines.append(" · ".join(proxy_parts))
+    # 😱 심리지표 (Fear & Greed만)
+    fg = sentiment.get("Fear & Greed", {})
+    if fg and fg.get("value") is not None:
+        fg_val = fg["value"]
+        fg_label = fg.get("label", "")
+        label_str = f" ({fg_label})" if fg_label else ""
+        lines.append(f"😱 *심리지표*")
+        lines.append(f"Fear & Greed  {fg_val}{label_str}")
         lines.append("")
 
-    # 전일 국내 증시
-    lines.append("*전일 국내 증시*")
+    # 🌙 야간 프록시 (KORU만)
+    korea_proxies = global_data.get("korea_proxies", {})
+    koru = korea_proxies.get("KORU", {})
+    if koru and "error" not in koru and koru.get("현재가"):
+        lines.append("🌙 *야간 프록시*")
+        lines.append(f"KORU {koru['현재가']:.2f} {_fmt_pct(koru['등락률'])}")
+        lines.append("")
+
+    # 🇰🇷 전일 국내 증시 (수급 포함)
+    lines.append("🇰🇷 *전일 국내 증시*")
     for name in ["KOSPI", "KOSDAQ"]:
         d = dom_indices.get(name, {})
         if "error" in d:
@@ -108,14 +142,12 @@ def format_morning_briefing(global_data, domestic_data, morning_commentary=""):
     flat = kospi.get("보합", 0) if kospi and "error" not in kospi else 0
     if up + down + flat > 0:
         lines.append(f"상승 {up} · 하락 {down} · 보합 {flat}")
-    lines.append("")
 
-    # 수급
+    # 수급 (전일 국내 증시 섹션에 합침)
     if investors and "error" not in investors:
         frgn = investors.get("외국인금액", 0)
         inst = investors.get("기관금액", 0)
         pers = investors.get("개인금액", 0)
-        lines.append(f"외국인 {_fmt_inv(frgn)} · 기관 {_fmt_inv(inst)}")
-        lines.append(f"개인 {_fmt_inv(pers)}")
+        lines.append(f"외국인 {_fmt_inv(frgn)} · 기관 {_fmt_inv(inst)} · 개인 {_fmt_inv(pers)}")
 
     return "\n".join(lines).strip()
