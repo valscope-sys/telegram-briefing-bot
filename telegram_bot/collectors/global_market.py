@@ -22,12 +22,23 @@ def _safe_float(val, default=0.0):
 
 
 def _yf_quote(ticker):
-    """yfinance로 단일 종목 현재가 조회"""
+    """yfinance로 단일 종목 현재가 조회 (선물 등락률 정확도 개선)"""
     import yfinance as yf
     t = yf.Ticker(ticker)
-    info = t.fast_info
-    last = info.last_price
-    prev = info.previous_close
+    # history 기반 계산 (선물의 fast_info.previous_close 부정확 문제 해결)
+    try:
+        hist = t.history(period="5d")
+        if len(hist) >= 2:
+            last = float(hist["Close"].iloc[-1])
+            prev = float(hist["Close"].iloc[-2])
+        else:
+            info = t.fast_info
+            last = info.last_price
+            prev = info.previous_close
+    except Exception:
+        info = t.fast_info
+        last = info.last_price
+        prev = info.previous_close
     diff = last - prev if prev else 0
     rate = (diff / prev * 100) if prev else 0
     sign = "▲" if diff > 0 else ("▼" if diff < 0 else "─")
@@ -208,18 +219,8 @@ def fetch_us_sectors():
 
 def fetch_us_major_stocks():
     """미국 주요 종목 등락률 - yfinance"""
-    stocks = {
-        "NVDA": "엔비디아",
-        "AAPL": "애플",
-        "MSFT": "마이크로소프트",
-        "GOOGL": "구글",
-        "AMZN": "아마존",
-        "TSLA": "테슬라",
-        "META": "메타",
-        "AVGO": "브로드컴",
-        "TSM": "TSMC",
-        "AMD": "AMD",
-    }
+    from telegram_bot.config import US_MAJOR_STOCKS
+    stocks = US_MAJOR_STOCKS
     results = {}
     for ticker, name in stocks.items():
         try:

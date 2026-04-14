@@ -1,0 +1,2814 @@
+[
+  {
+    "date": "2026-04-01",
+    "endDate": "2026-04-30",
+    "time": "",
+    "category": "미국실적",
+    "title": "테슬라 1Q 실적발표 (예상)",
+    "source": "news",
+    "auto": true,
+    "undated": true,
+    "month": "2026-04"
+  },
+  {
+    "date": "2026-04-14",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "지엔코 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A065060"
+  },
+  {
+    "date": "2026-04-14",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "위즈코프 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A038620"
+  },
+  {
+    "date": "2026-04-14",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "SG글로벌 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A001385"
+  },
+  {
+    "date": "2026-04-14",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "와이씨켐 액면분할",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A112290"
+  },
+  {
+    "date": "2026-04-14",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "인화정공 액면분할",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A101930"
+  },
+  {
+    "date": "2026-04-14",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "인포바인 액면분할",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A115310"
+  },
+  {
+    "date": "2026-04-14",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "레이저쎌 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A412350"
+  },
+  {
+    "date": "2026-04-14",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "알에프텍 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A061040"
+  },
+  {
+    "date": "2026-04-14",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "지놈앤컴퍼니 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A314130"
+  },
+  {
+    "date": "2026-04-14",
+    "time": "09:00",
+    "category": "IR",
+    "title": "한국콜마 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A161890"
+  },
+  {
+    "date": "2026-04-14",
+    "time": "09:00",
+    "category": "IR",
+    "title": "파로스아이바이오 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A388870"
+  },
+  {
+    "date": "2026-04-14",
+    "time": "09:00",
+    "category": "IR",
+    "title": "에이피알 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A278470"
+  },
+  {
+    "date": "2026-04-14",
+    "time": "09:00",
+    "category": "IR",
+    "title": "성광벤드 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A014620"
+  },
+  {
+    "date": "2026-04-14",
+    "time": "09:00",
+    "category": "IR",
+    "title": "현대자동차 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A005380"
+  },
+  {
+    "date": "2026-04-14",
+    "time": "09:00",
+    "category": "IR",
+    "title": "펩트론 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A087010"
+  },
+  {
+    "date": "2026-04-14",
+    "time": "09:00",
+    "category": "한국실적",
+    "title": "팬오션 실적발표",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A028670"
+  },
+  {
+    "date": "2026-04-14",
+    "time": "14:00",
+    "category": "IR",
+    "title": "코스텍시스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A355150"
+  },
+  {
+    "date": "2026-04-14",
+    "time": "14:50",
+    "category": "IR",
+    "title": "슈프리마 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A236200"
+  },
+  {
+    "date": "2026-04-14",
+    "time": "21:30",
+    "category": "경제지표",
+    "title": "미국 CPI (3월)",
+    "source": "fixed",
+    "auto": false,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-04-15",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "남성 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A004270"
+  },
+  {
+    "date": "2026-04-15",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "성안머티리얼스 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A011300"
+  },
+  {
+    "date": "2026-04-15",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "에스코넥 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A096630"
+  },
+  {
+    "date": "2026-04-15",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "로보쓰리에이아이 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A238500"
+  },
+  {
+    "date": "2026-04-15",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "큐로홀딩스 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A051780"
+  },
+  {
+    "date": "2026-04-15",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "파인디앤씨 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A049120"
+  },
+  {
+    "date": "2026-04-15",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "한국화장품제조 액면분할",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A003350"
+  },
+  {
+    "date": "2026-04-15",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "코스모로보틱스 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A439960"
+  },
+  {
+    "date": "2026-04-15",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "압타머사이언스 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A291650"
+  },
+  {
+    "date": "2026-04-15",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "유일에너테크 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A340930"
+  },
+  {
+    "date": "2026-04-15",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "아이티센씨티에스 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A031820"
+  },
+  {
+    "date": "2026-04-15",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "SG세계물산 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A004060"
+  },
+  {
+    "date": "2026-04-15",
+    "time": "09:00",
+    "category": "IR",
+    "title": "농심 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A004370"
+  },
+  {
+    "date": "2026-04-15",
+    "time": "10:00",
+    "category": "IR",
+    "title": "씨에스윈드 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A112610"
+  },
+  {
+    "date": "2026-04-15",
+    "time": "10:00",
+    "category": "IR",
+    "title": "포스코인터내셔널 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A047050"
+  },
+  {
+    "date": "2026-04-15",
+    "time": "14:00",
+    "category": "IR",
+    "title": "머니무브 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A179720"
+  },
+  {
+    "date": "2026-04-15",
+    "time": "15:30",
+    "category": "IR",
+    "title": "티엘비 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A356860"
+  },
+  {
+    "date": "2026-04-16",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "아이퀘스트 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A262840"
+  },
+  {
+    "date": "2026-04-16",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "지니틱스 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A303030"
+  },
+  {
+    "date": "2026-04-16",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "휴마시스 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A205470"
+  },
+  {
+    "date": "2026-04-16",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "앱튼 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A270520"
+  },
+  {
+    "date": "2026-04-16",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "크레오에스지 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A040350"
+  },
+  {
+    "date": "2026-04-16",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "케이바이오 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A038530"
+  },
+  {
+    "date": "2026-04-16",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "인콘 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A083640"
+  },
+  {
+    "date": "2026-04-16",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "유디엠텍 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A389680"
+  },
+  {
+    "date": "2026-04-16",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "케이피엠테크 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A042040"
+  },
+  {
+    "date": "2026-04-16",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "한국미라클피플사 액면분할",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A33166K"
+  },
+  {
+    "date": "2026-04-16",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "포커스에이아이 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A331380"
+  },
+  {
+    "date": "2026-04-16",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "더코디 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A224060"
+  },
+  {
+    "date": "2026-04-16",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "스타코링크 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A060240"
+  },
+  {
+    "date": "2026-04-16",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "HC홈센타 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A060560"
+  },
+  {
+    "date": "2026-04-16",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "DKME 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A015590"
+  },
+  {
+    "date": "2026-04-16",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "빌리언스 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A044480"
+  },
+  {
+    "date": "2026-04-16",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "TS트릴리온 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A317240"
+  },
+  {
+    "date": "2026-04-16",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "경남제약 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A053950"
+  },
+  {
+    "date": "2026-04-16",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "체시스 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A033250"
+  },
+  {
+    "date": "2026-04-16",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "케이엠제약 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A225430"
+  },
+  {
+    "date": "2026-04-16",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "서울리거 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A043710"
+  },
+  {
+    "date": "2026-04-16",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "코디 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A080530"
+  },
+  {
+    "date": "2026-04-16",
+    "time": "09:00",
+    "category": "IR",
+    "title": "압타바이오 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A293780"
+  },
+  {
+    "date": "2026-04-16",
+    "time": "10:00",
+    "category": "통화정책",
+    "title": "한국은행 금통위 금리 결정",
+    "source": "fixed",
+    "auto": false,
+    "country": "🇰🇷"
+  },
+  {
+    "date": "2026-04-16",
+    "time": "14:00",
+    "category": "IR",
+    "title": "블루탑 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A191600"
+  },
+  {
+    "date": "2026-04-16",
+    "time": "16:00",
+    "category": "IR",
+    "title": "대성하이텍 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A129920"
+  },
+  {
+    "date": "2026-04-17",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "한국특강 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A007280"
+  },
+  {
+    "date": "2026-04-17",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "캠시스 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A050110"
+  },
+  {
+    "date": "2026-04-17",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "레이저옵텍 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A199550"
+  },
+  {
+    "date": "2026-04-17",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "성안머티리얼스 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A011300"
+  },
+  {
+    "date": "2026-04-17",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "한울반도체 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A320000"
+  },
+  {
+    "date": "2026-04-17",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "로지스몬 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A223220"
+  },
+  {
+    "date": "2026-04-17",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "오션인더블유 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A052300"
+  },
+  {
+    "date": "2026-04-18",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "에이프로젠 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A007460"
+  },
+  {
+    "date": "2026-04-18",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "텔콘RF제약 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A200230"
+  },
+  {
+    "date": "2026-04-18",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "케이피엠테크 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A042040"
+  },
+  {
+    "date": "2026-04-20",
+    "time": "",
+    "category": "IPO/공모",
+    "title": "채비(구.대영채비) 공모청약 (04/20~04/21)",
+    "source": "38cr",
+    "auto": true
+  },
+  {
+    "date": "2026-04-20",
+    "time": "09:00",
+    "category": "IR",
+    "title": "삼천당제약 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A000250"
+  },
+  {
+    "date": "2026-04-21",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "빌리언스 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A044480"
+  },
+  {
+    "date": "2026-04-21",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "버킷스튜디오 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A066410"
+  },
+  {
+    "date": "2026-04-21",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "사토시홀딩스 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A223310"
+  },
+  {
+    "date": "2026-04-21",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "뉴로핏 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A380555"
+  },
+  {
+    "date": "2026-04-21",
+    "time": "14:00",
+    "category": "IR",
+    "title": "플래티어 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A367000"
+  },
+  {
+    "date": "2026-04-22",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "비트플래닛 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A049470"
+  },
+  {
+    "date": "2026-04-22",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "원풍물산 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A008290"
+  },
+  {
+    "date": "2026-04-22",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "솔트웨어 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A328380"
+  },
+  {
+    "date": "2026-04-22",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "금호건설 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A002990"
+  },
+  {
+    "date": "2026-04-22",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "이오플로우 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A294090"
+  },
+  {
+    "date": "2026-04-22",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "테라사이언스 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A073640"
+  },
+  {
+    "date": "2026-04-22",
+    "time": "09:00",
+    "category": "IR",
+    "title": "한텍 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A098070"
+  },
+  {
+    "date": "2026-04-22",
+    "time": "15:30",
+    "category": "IR",
+    "title": "OCI IR (경영현황)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A456040"
+  },
+  {
+    "date": "2026-04-23",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "네오리진 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A094860"
+  },
+  {
+    "date": "2026-04-23",
+    "time": "09:00",
+    "category": "한국실적",
+    "title": "SK하이닉스 실적발표",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A000660"
+  },
+  {
+    "date": "2026-04-23",
+    "time": "14:00",
+    "category": "IR",
+    "title": "삼성에스디에스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A018260"
+  },
+  {
+    "date": "2026-04-23",
+    "time": "14:00",
+    "category": "한국실적",
+    "title": "LG디스플레이 실적발표",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A034220"
+  },
+  {
+    "date": "2026-04-23",
+    "time": "14:00",
+    "category": "한국실적",
+    "title": "신한지주 실적발표",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A055550"
+  },
+  {
+    "date": "2026-04-23",
+    "time": "15:30",
+    "category": "IR",
+    "title": "OCI홀딩스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A010060"
+  },
+  {
+    "date": "2026-04-23",
+    "time": "16:00",
+    "category": "한국실적",
+    "title": "KB금융 실적발표",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A105560"
+  },
+  {
+    "date": "2026-04-24",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "KB스타리츠 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A432320"
+  },
+  {
+    "date": "2026-04-24",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "채비 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A0011T0"
+  },
+  {
+    "date": "2026-04-24",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "한울앤제주 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A276730"
+  },
+  {
+    "date": "2026-04-24",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "푸드나무 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A290720"
+  },
+  {
+    "date": "2026-04-24",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "인스코비 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A006490"
+  },
+  {
+    "date": "2026-04-24",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "대한제분 액면분할",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A001130"
+  },
+  {
+    "date": "2026-04-24",
+    "time": "10:10",
+    "category": "한국실적",
+    "title": "현대모비스 실적발표",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A012330"
+  },
+  {
+    "date": "2026-04-24",
+    "time": "14:10",
+    "category": "한국실적",
+    "title": "현대로템 실적발표",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A064350"
+  },
+  {
+    "date": "2026-04-25",
+    "time": "",
+    "category": "게임",
+    "title": "몬스터헌터 와일즈 PC (캡콤)",
+    "source": "news",
+    "auto": true
+  },
+  {
+    "date": "2026-04-25",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "애니메디솔루션 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A390110"
+  },
+  {
+    "date": "2026-04-25",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "더코디 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A224060"
+  },
+  {
+    "date": "2026-04-25",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "에스씨엠생명과학 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A298060"
+  },
+  {
+    "date": "2026-04-25",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "엔시트론 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A101400"
+  },
+  {
+    "date": "2026-04-25",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "캔버스엔 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A210120"
+  },
+  {
+    "date": "2026-04-27",
+    "time": "",
+    "category": "IPO/공모",
+    "title": "코스모로보틱스(구.엑소아틀레트아시아) 공모청약 (04/27~04/28)",
+    "source": "38cr",
+    "auto": true
+  },
+  {
+    "date": "2026-04-27",
+    "endDate": "2026-05-03",
+    "time": "",
+    "category": "한국실적",
+    "title": "SK하이닉스 1Q 실적발표 (예상)",
+    "source": "news",
+    "auto": true,
+    "undated": true,
+    "week": "2026-04-W4"
+  },
+  {
+    "date": "2026-04-27",
+    "endDate": "2026-05-03",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "삼성전자 1Q 잠정실적 (예상)",
+    "source": "news",
+    "auto": true,
+    "undated": true,
+    "week": "2026-04-W4"
+  },
+  {
+    "date": "2026-04-27",
+    "time": "11:00",
+    "category": "한국실적",
+    "title": "ISC 실적발표",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A095340"
+  },
+  {
+    "date": "2026-04-27",
+    "time": "14:00",
+    "category": "한국실적",
+    "title": "한화오션 실적발표",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A042660"
+  },
+  {
+    "date": "2026-04-28",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "HLB바이오스텝 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A278650"
+  },
+  {
+    "date": "2026-04-28",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "대원화성 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A024890"
+  },
+  {
+    "date": "2026-04-28",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "마니커 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A027740"
+  },
+  {
+    "date": "2026-04-28",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "앤로보틱스 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A138360"
+  },
+  {
+    "date": "2026-04-28",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "에이프로젠바이오로직스 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A003060"
+  },
+  {
+    "date": "2026-04-28",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "윈팩 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A097800"
+  },
+  {
+    "date": "2026-04-28",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "동국홀딩스 액면분할",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A001230"
+  },
+  {
+    "date": "2026-04-28",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "한세엠케이 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A069640"
+  },
+  {
+    "date": "2026-04-28",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "CNT85 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A056730"
+  },
+  {
+    "date": "2026-04-28",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "딜리 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A131180"
+  },
+  {
+    "date": "2026-04-28",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "웅진씽크빅 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A095720"
+  },
+  {
+    "date": "2026-04-28",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "벨로크 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A424760"
+  },
+  {
+    "date": "2026-04-28",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "SG&G 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A040610"
+  },
+  {
+    "date": "2026-04-28",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "에넥스 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A011090"
+  },
+  {
+    "date": "2026-04-28",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "케이비아이동국실업 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A001620"
+  },
+  {
+    "date": "2026-04-28",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "포인트엔지니어링 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A256630"
+  },
+  {
+    "date": "2026-04-28",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "씨유메디칼 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A115480"
+  },
+  {
+    "date": "2026-04-28",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "신성이엔지 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A011930"
+  },
+  {
+    "date": "2026-04-28",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "앤씨앤 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A092600"
+  },
+  {
+    "date": "2026-04-28",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "엑스플러스 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A373200"
+  },
+  {
+    "date": "2026-04-28",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "대성파인텍 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A104040"
+  },
+  {
+    "date": "2026-04-28",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "비츠로시스 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A054220"
+  },
+  {
+    "date": "2026-04-28",
+    "time": "09:00",
+    "category": "IR",
+    "title": "ISC IR (경영현황)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A095340"
+  },
+  {
+    "date": "2026-04-29",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "플레이그램 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A009810"
+  },
+  {
+    "date": "2026-04-29",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "상보 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A027580"
+  },
+  {
+    "date": "2026-04-29",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "메가터치 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A446540"
+  },
+  {
+    "date": "2026-04-29",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "핑거스토리 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A417180"
+  },
+  {
+    "date": "2026-04-29",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "CS 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A065770"
+  },
+  {
+    "date": "2026-04-29",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "에쎈테크 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A043340"
+  },
+  {
+    "date": "2026-04-29",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "한창제지 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A009460"
+  },
+  {
+    "date": "2026-04-29",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "보해양조 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A000890"
+  },
+  {
+    "date": "2026-04-29",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "서울식품 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A004410"
+  },
+  {
+    "date": "2026-04-29",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "포니링크 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A064800"
+  },
+  {
+    "date": "2026-04-29",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "SBI인베스트먼트 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A019550"
+  },
+  {
+    "date": "2026-04-29",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "모코엠시스 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A333050"
+  },
+  {
+    "date": "2026-04-29",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "디바이스 무상증자",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A187870"
+  },
+  {
+    "date": "2026-04-29",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "모바일어플라이언스 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A087260"
+  },
+  {
+    "date": "2026-04-29",
+    "time": "10:00",
+    "category": "한국실적",
+    "title": "에코프로비엠 실적발표",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A247540"
+  },
+  {
+    "date": "2026-04-29",
+    "time": "14:00",
+    "category": "한국실적",
+    "title": "에코프로머티 실적발표",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A450080"
+  },
+  {
+    "date": "2026-04-29",
+    "time": "14:00",
+    "category": "한국실적",
+    "title": "에코프로에이치엔 실적발표",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A383310"
+  },
+  {
+    "date": "2026-04-29",
+    "time": "14:00",
+    "category": "한국실적",
+    "title": "에코프로 실적발표",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A086520"
+  },
+  {
+    "date": "2026-04-29",
+    "time": "16:00",
+    "category": "한국실적(잠정)",
+    "title": "LG전자 잠정실적발표",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A066570"
+  },
+  {
+    "date": "2026-04-29",
+    "time": "17:00",
+    "category": "한국실적",
+    "title": "하이브 실적발표",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A352820"
+  },
+  {
+    "date": "2026-04-30",
+    "time": "",
+    "category": "IPO/공모",
+    "title": "채비(구.대영채비) 신규상장",
+    "source": "38cr",
+    "auto": true
+  },
+  {
+    "date": "2026-04-30",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "엑스플러스 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A373200"
+  },
+  {
+    "date": "2026-04-30",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "네오이뮨텍 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A950220"
+  },
+  {
+    "date": "2026-04-30",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "우진비앤지 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A018620"
+  },
+  {
+    "date": "2026-04-30",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "주연테크 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A044380"
+  },
+  {
+    "date": "2026-04-30",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "엔케이 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A085310"
+  },
+  {
+    "date": "2026-04-30",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "한국전자홀딩스 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A006200"
+  },
+  {
+    "date": "2026-04-30",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "온타이드 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A00532L"
+  },
+  {
+    "date": "2026-04-30",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "KEC 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A092220"
+  },
+  {
+    "date": "2026-04-30",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "멤레이비티 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A072770"
+  },
+  {
+    "date": "2026-04-30",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "SH에너지화학 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A002365"
+  },
+  {
+    "date": "2026-04-30",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "이스타코 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A015020"
+  },
+  {
+    "date": "2026-04-30",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "국일제지 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A078130"
+  },
+  {
+    "date": "2026-04-30",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "삼보산업 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A009620"
+  },
+  {
+    "date": "2026-04-30",
+    "time": "10:00",
+    "category": "한국실적(잠정)",
+    "title": "삼성전자 잠정실적발표",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A005930"
+  },
+  {
+    "date": "2026-04-30",
+    "time": "10:00",
+    "category": "한국실적(잠정)",
+    "title": "LG에너지솔루션 잠정실적발표",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A373220"
+  },
+  {
+    "date": "2026-04-30",
+    "time": "10:30",
+    "category": "경제지표",
+    "title": "중국 제조업 PMI (4월)",
+    "source": "fixed",
+    "auto": false,
+    "country": "🇨🇳"
+  },
+  {
+    "date": "2026-04-30",
+    "time": "14:00",
+    "category": "한국실적",
+    "title": "LG화학 실적발표",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A051910"
+  },
+  {
+    "date": "2026-05-01",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "루닛 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A328130"
+  },
+  {
+    "date": "2026-05-01",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "에이텀 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A355690"
+  },
+  {
+    "date": "2026-05-01",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "한주라이트메탈 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A198940"
+  },
+  {
+    "date": "2026-05-01",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "페이퍼코리아 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A001020"
+  },
+  {
+    "date": "2026-05-01",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "서울전자통신 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A027040"
+  },
+  {
+    "date": "2026-05-01",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "패션플랫폼 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A225590"
+  },
+  {
+    "date": "2026-05-01",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "파인텍 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A131760"
+  },
+  {
+    "date": "2026-05-01",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "링크드 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A193250"
+  },
+  {
+    "date": "2026-05-01",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "아이톡시 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A052770"
+  },
+  {
+    "date": "2026-05-01",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "알엔티엑스 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A123010"
+  },
+  {
+    "date": "2026-05-01",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "셀레믹스 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A331920"
+  },
+  {
+    "date": "2026-05-01",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "엑스큐어 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A070300"
+  },
+  {
+    "date": "2026-05-01",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "엑시온그룹 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A069920"
+  },
+  {
+    "date": "2026-05-01",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "캐리 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A313760"
+  },
+  {
+    "date": "2026-05-01",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "시큐레터 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A418250"
+  },
+  {
+    "date": "2026-05-01",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "핀텔 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A291810"
+  },
+  {
+    "date": "2026-05-01",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "로지스몬 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A223220"
+  },
+  {
+    "date": "2026-05-01",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "BF랩스 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A139050"
+  },
+  {
+    "date": "2026-05-01",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "퓨쳐메디신 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A341170"
+  },
+  {
+    "date": "2026-05-01",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "엑시큐어하이트론 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A019490"
+  },
+  {
+    "date": "2026-05-01",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "글로벌에스엠 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A900070"
+  },
+  {
+    "date": "2026-05-01",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "폴라리스세원 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A234100"
+  },
+  {
+    "date": "2026-05-01",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "대산F&B 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A065150"
+  },
+  {
+    "date": "2026-05-01",
+    "time": "09:00",
+    "category": "경제지표",
+    "title": "한국 수출입 통계 (4월)",
+    "source": "fixed",
+    "auto": false,
+    "country": "🇰🇷"
+  },
+  {
+    "date": "2026-05-02",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "자연과환경 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A043910"
+  },
+  {
+    "date": "2026-05-02",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "동일스틸럭스 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A023790"
+  },
+  {
+    "date": "2026-05-04",
+    "time": "",
+    "category": "IPO/공모",
+    "title": "폴레드 공모청약 (05/04~05/06)",
+    "source": "38cr",
+    "auto": true
+  },
+  {
+    "date": "2026-05-05",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "삼화네트웍스 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A046390"
+  },
+  {
+    "date": "2026-05-05",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "나노캠텍 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A091970"
+  },
+  {
+    "date": "2026-05-05",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "코퍼스코리아 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A322780"
+  },
+  {
+    "date": "2026-05-05",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "대호에이엘 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A069460"
+  },
+  {
+    "date": "2026-05-06",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "루닛 무상증자",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A328130"
+  },
+  {
+    "date": "2026-05-06",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "오에스피 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A368970"
+  },
+  {
+    "date": "2026-05-06",
+    "time": "04:00",
+    "category": "통화정책",
+    "title": "FOMC 금리 결정",
+    "source": "fixed",
+    "auto": false,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-06",
+    "time": "09:00",
+    "category": "IR",
+    "title": "유니테크노 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A241690"
+  },
+  {
+    "date": "2026-05-06",
+    "time": "10:00",
+    "category": "한국실적",
+    "title": "카카오뱅크 실적발표",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A323410"
+  },
+  {
+    "date": "2026-05-07",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "GRT 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A900290"
+  },
+  {
+    "date": "2026-05-07",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "손오공 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A066910"
+  },
+  {
+    "date": "2026-05-07",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "옵티코어 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A380540"
+  },
+  {
+    "date": "2026-05-07",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "SGA솔루션즈 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A184230"
+  },
+  {
+    "date": "2026-05-07",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "넥스트아이 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A137940"
+  },
+  {
+    "date": "2026-05-07",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "오성첨단소재 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A052420"
+  },
+  {
+    "date": "2026-05-07",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "아우딘퓨쳐스 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A227610"
+  },
+  {
+    "date": "2026-05-07",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "엔투텍 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A227950"
+  },
+  {
+    "date": "2026-05-07",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "알에프텍 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A061040"
+  },
+  {
+    "date": "2026-05-07",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "씨엔플러스 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A115530"
+  },
+  {
+    "date": "2026-05-07",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "다이나믹디자인 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A145210"
+  },
+  {
+    "date": "2026-05-07",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "소프트센 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A032680"
+  },
+  {
+    "date": "2026-05-07",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "소프트캠프 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A258790"
+  },
+  {
+    "date": "2026-05-07",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "본느 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A226340"
+  },
+  {
+    "date": "2026-05-07",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "이원컴포텍 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A088290"
+  },
+  {
+    "date": "2026-05-07",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "카티스 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A140430"
+  },
+  {
+    "date": "2026-05-07",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "큐캐피탈 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A016600"
+  },
+  {
+    "date": "2026-05-07",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "하이퍼코퍼레이션 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A065650"
+  },
+  {
+    "date": "2026-05-07",
+    "time": "14:00",
+    "category": "한국실적",
+    "title": "CJ ENM 실적발표",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A035760"
+  },
+  {
+    "date": "2026-05-08",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "윙입푸드 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A900340"
+  },
+  {
+    "date": "2026-05-08",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "조이웍스앤코 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A309930"
+  },
+  {
+    "date": "2026-05-08",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "엠젠솔루션 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A032790"
+  },
+  {
+    "date": "2026-05-08",
+    "time": "21:30",
+    "category": "경제지표",
+    "title": "미국 비농업 고용 (4월)",
+    "source": "fixed",
+    "auto": false,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-09",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "다보링크 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A340360"
+  },
+  {
+    "date": "2026-05-09",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "폴레드 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A487580"
+  },
+  {
+    "date": "2026-05-09",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "셀피글로벌 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A068940"
+  },
+  {
+    "date": "2026-05-09",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "퓨쳐메디신 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A341170"
+  },
+  {
+    "date": "2026-05-11",
+    "time": "",
+    "category": "IPO/공모",
+    "title": "마키나락스 공모청약 (05/11~05/12)",
+    "source": "38cr",
+    "auto": true
+  },
+  {
+    "date": "2026-05-11",
+    "time": "",
+    "category": "IPO/공모",
+    "title": "스트라드비젼 공모청약 (05/11~05/12)",
+    "source": "38cr",
+    "auto": true
+  },
+  {
+    "date": "2026-05-11",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "웰킵스하이텍 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A043590"
+  },
+  {
+    "date": "2026-05-11",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "알엔티엑스 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A123010"
+  },
+  {
+    "date": "2026-05-11",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "동국홀딩스 액면분할",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A001230"
+  },
+  {
+    "date": "2026-05-11",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "이스트아시아홀딩스 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A900110"
+  },
+  {
+    "date": "2026-05-11",
+    "time": "09:30",
+    "category": "한국실적",
+    "title": "롯데쇼핑 실적발표",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A023530"
+  },
+  {
+    "date": "2026-05-12",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "유일에너테크 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A340930"
+  },
+  {
+    "date": "2026-05-12",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "대양금속 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A009190"
+  },
+  {
+    "date": "2026-05-12",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "블루산업개발 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A006740"
+  },
+  {
+    "date": "2026-05-13",
+    "time": "",
+    "category": "미국실적",
+    "title": "DIS 실적발표 (장후) [EPS est. $1.4988]",
+    "source": "finnhub",
+    "link": "https://finance.yahoo.com/quote/DIS/",
+    "auto": true
+  },
+  {
+    "date": "2026-05-13",
+    "time": "16:00",
+    "category": "IR",
+    "title": "태양기계 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A116100"
+  },
+  {
+    "date": "2026-05-13",
+    "time": "21:30",
+    "category": "경제지표",
+    "title": "미국 CPI (4월)",
+    "source": "fixed",
+    "auto": false,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-14",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "씨엑스아이 액면분할",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A900120"
+  },
+  {
+    "date": "2026-05-14",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "에코볼트 액면분할",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A097780"
+  },
+  {
+    "date": "2026-05-14",
+    "time": "",
+    "category": "만기일",
+    "title": "5월 옵션만기일",
+    "source": "news",
+    "auto": true
+  },
+  {
+    "date": "2026-05-14",
+    "time": "",
+    "category": "미국실적",
+    "title": "WMT 실적발표 [EPS est. $0.6633]",
+    "source": "finnhub",
+    "link": "https://finance.yahoo.com/quote/WMT/",
+    "auto": true
+  },
+  {
+    "date": "2026-05-14",
+    "time": "",
+    "category": "미국실적",
+    "title": "AMAT 실적발표 (장후) [EPS est. $2.7143]",
+    "source": "finnhub",
+    "link": "https://finance.yahoo.com/quote/AMAT/",
+    "auto": true
+  },
+  {
+    "date": "2026-05-15",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "마키나락스 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A477850"
+  },
+  {
+    "date": "2026-05-15",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "넥써쓰 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A205500"
+  },
+  {
+    "date": "2026-05-15",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "골드앤에스 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A035290"
+  },
+  {
+    "date": "2026-05-15",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "아이텍 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A119830"
+  },
+  {
+    "date": "2026-05-19",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "컬러레이 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A900310"
+  },
+  {
+    "date": "2026-05-19",
+    "time": "",
+    "category": "미국실적",
+    "title": "HD 실적발표 [EPS est. $3.5062]",
+    "source": "finnhub",
+    "link": "https://finance.yahoo.com/quote/HD/",
+    "auto": true
+  },
+  {
+    "date": "2026-05-19",
+    "time": "",
+    "category": "산업컨퍼런스",
+    "title": "Google I/O 2026",
+    "source": "news",
+    "auto": true,
+    "endDate": "2026-05-21"
+  },
+  {
+    "date": "2026-05-20",
+    "time": "",
+    "category": "IPO/공모",
+    "title": "마키나락스 신규상장",
+    "source": "38cr",
+    "auto": true
+  },
+  {
+    "date": "2026-05-20",
+    "time": "",
+    "category": "IPO/공모",
+    "title": "피스피스스튜디오 공모청약 (05/20~05/21)",
+    "source": "38cr",
+    "auto": true
+  },
+  {
+    "date": "2026-05-20",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "오가닉티코스메틱 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A900300"
+  },
+  {
+    "date": "2026-05-20",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "한솔테크닉스 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A004710"
+  },
+  {
+    "date": "2026-05-20",
+    "time": "",
+    "category": "미국실적",
+    "title": "NVDA 실적발표 (장후) [EPS est. $1.7911]",
+    "source": "finnhub",
+    "link": "https://finance.yahoo.com/quote/NVDA/",
+    "auto": true
+  },
+  {
+    "date": "2026-05-20",
+    "time": "14:00",
+    "category": "IR",
+    "title": "지에이이노더스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A076340"
+  },
+  {
+    "date": "2026-05-21",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "씨엑스아이 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A900120"
+  },
+  {
+    "date": "2026-05-21",
+    "time": "",
+    "category": "미국실적",
+    "title": "DE 실적발표 (장전) [EPS est. $5.8897]",
+    "source": "finnhub",
+    "link": "https://finance.yahoo.com/quote/DE/",
+    "auto": true
+  },
+  {
+    "date": "2026-05-22",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "이뮨온시아 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A424870"
+  },
+  {
+    "date": "2026-05-22",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "앱튼 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A270520"
+  },
+  {
+    "date": "2026-05-22",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "오리엔트바이오 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A002630"
+  },
+  {
+    "date": "2026-05-23",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "포커스에이아이 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A331380"
+  },
+  {
+    "date": "2026-05-23",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "SKC 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A011790"
+  },
+  {
+    "date": "2026-05-23",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "젬백스 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A082270"
+  },
+  {
+    "date": "2026-05-26",
+    "time": "",
+    "category": "미국실적",
+    "title": "CRM 실적발표 (장후) [EPS est. $3.1478]",
+    "source": "finnhub",
+    "link": "https://finance.yahoo.com/quote/CRM/",
+    "auto": true
+  },
+  {
+    "date": "2026-05-28",
+    "time": "",
+    "category": "미국실적",
+    "title": "COST 실적발표 (장후) [EPS est. $5.0034]",
+    "source": "finnhub",
+    "link": "https://finance.yahoo.com/quote/COST/",
+    "auto": true
+  },
+  {
+    "date": "2026-05-28",
+    "time": "",
+    "category": "에너지",
+    "title": "OPEC+ 회의",
+    "source": "news",
+    "auto": true
+  },
+  {
+    "date": "2026-05-28",
+    "time": "10:00",
+    "category": "통화정책",
+    "title": "한국은행 금통위 금리 결정",
+    "source": "fixed",
+    "auto": false,
+    "country": "🇰🇷"
+  },
+  {
+    "date": "2026-05-29",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "스코넥 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A276040"
+  },
+  {
+    "date": "2026-05-29",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "탑선 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A180060"
+  },
+  {
+    "date": "2026-05-30",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "카카오게임즈 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A293490"
+  },
+  {
+    "date": "2026-05-30",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "애드바이오텍 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A179530"
+  },
+  {
+    "date": "2026-05-30",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "셀레믹스 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A331920"
+  },
+  {
+    "date": "2026-05-30",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "디와이디 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A219550"
+  },
+  {
+    "date": "2026-05-30",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "국보 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A00114U"
+  },
+  {
+    "date": "2026-05-30",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "차백신연구소 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A261780"
+  },
+  {
+    "date": "2026-05-31",
+    "time": "10:30",
+    "category": "경제지표",
+    "title": "중국 제조업 PMI (5월)",
+    "source": "fixed",
+    "auto": false,
+    "country": "🇨🇳"
+  },
+  {
+    "date": "2026-06-01",
+    "time": "",
+    "category": "IPO/공모",
+    "title": "매드업 공모청약 (06/01~06/02)",
+    "source": "38cr",
+    "auto": true
+  },
+  {
+    "date": "2026-06-01",
+    "endDate": "2026-06-30",
+    "time": "",
+    "category": "게임",
+    "title": "닌텐도 스위치2 출시 (예상)",
+    "source": "news",
+    "auto": true,
+    "undated": true,
+    "month": "2026-06"
+  },
+  {
+    "date": "2026-06-01",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "한국첨단소재 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A062970"
+  },
+  {
+    "date": "2026-06-02",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "크리스탈신소재 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A900250"
+  },
+  {
+    "date": "2026-06-03",
+    "time": "",
+    "category": "미국실적",
+    "title": "AVGO 실적발표 (장후) [EPS est. $2.4368]",
+    "source": "finnhub",
+    "link": "https://finance.yahoo.com/quote/AVGO/",
+    "auto": true
+  },
+  {
+    "date": "2026-06-05",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "에스아이리소스 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A065420"
+  },
+  {
+    "date": "2026-06-05",
+    "time": "",
+    "category": "제약/바이오",
+    "title": "ASCO 2026 (미국종양학회)",
+    "source": "news",
+    "auto": true,
+    "endDate": "2026-06-09"
+  },
+  {
+    "date": "2026-06-05",
+    "time": "21:30",
+    "category": "경제지표",
+    "title": "미국 비농업 고용 (5월)",
+    "source": "fixed",
+    "auto": false,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-06-06",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "한탑 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A002680"
+  },
+  {
+    "date": "2026-06-06",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "한국비티비 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A219750"
+  },
+  {
+    "date": "2026-06-08",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "네오펙트 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A290660"
+  },
+  {
+    "date": "2026-06-09",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "씨엔알리서치 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A359090"
+  },
+  {
+    "date": "2026-06-09",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "인디에프 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A014990"
+  },
+  {
+    "date": "2026-06-09",
+    "time": "",
+    "category": "미국실적",
+    "title": "ORCL 실적발표 (장후) [EPS est. $2.0052]",
+    "source": "finnhub",
+    "link": "https://finance.yahoo.com/quote/ORCL/",
+    "auto": true
+  },
+  {
+    "date": "2026-06-09",
+    "time": "",
+    "category": "산업컨퍼런스",
+    "title": "WWDC 2026 (Apple)",
+    "source": "news",
+    "auto": true,
+    "endDate": "2026-06-13"
+  },
+  {
+    "date": "2026-06-09",
+    "time": "",
+    "category": "산업컨퍼런스",
+    "title": "컴퓨텍스 타이베이 2026",
+    "source": "news",
+    "auto": true,
+    "endDate": "2026-06-11"
+  },
+  {
+    "date": "2026-06-10",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "블루산업개발 액면분할",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A006740"
+  },
+  {
+    "date": "2026-06-10",
+    "time": "",
+    "category": "미국실적",
+    "title": "ADBE 실적발표 (장후) [EPS est. $5.9462]",
+    "source": "finnhub",
+    "link": "https://finance.yahoo.com/quote/ADBE/",
+    "auto": true
+  },
+  {
+    "date": "2026-06-10",
+    "time": "21:30",
+    "category": "경제지표",
+    "title": "미국 CPI (5월)",
+    "source": "fixed",
+    "auto": false,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-06-11",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "기가레인 액면병합",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A049080"
+  },
+  {
+    "date": "2026-06-11",
+    "time": "",
+    "category": "만기일",
+    "title": "6월 선물옵션 동시만기 (쿼드러플위칭)",
+    "source": "news",
+    "auto": true
+  },
+  {
+    "date": "2026-06-13",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "이노스페이스 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A462350"
+  },
+  {
+    "date": "2026-06-13",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "케이이엠텍 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true,
+    "link": "https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?gicode=A106080"
+  }
+]

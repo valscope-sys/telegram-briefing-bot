@@ -33,6 +33,9 @@ DART_API_KEY = os.getenv("DART_API_KEY", "")
 # Anthropic
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
 
+# Finnhub
+FINNHUB_API_KEY = os.getenv("FINNHUB_API_KEY", "")
+
 # Kiwoom (52주 신고가 전용)
 KIWOOM_APP_KEY = os.getenv("KIWOOM_APP_KEY", "")
 KIWOOM_APP_SECRET = os.getenv("KIWOOM_APP_SECRET", "")
@@ -68,6 +71,25 @@ FX_CODES = {
 
 # 원자재 yfinance 코드 (global_market.py에서 직접 사용)
 # WTI: "CL=F", 금: "GC=F", 구리: "HG=F"
+
+# 미국 주요 종목 (모닝 시황 프롬프트에 사용, 시장 상황에 따라 수시 업데이트)
+US_MAJOR_STOCKS = {
+    # 빅테크/반도체
+    "NVDA": "엔비디아",
+    "AAPL": "애플",
+    "MSFT": "마이크로소프트",
+    "GOOGL": "구글",
+    "AMZN": "아마존",
+    "TSLA": "테슬라",
+    "META": "메타",
+    "AVGO": "브로드컴",
+    "TSM": "TSMC",
+    "AMD": "AMD",
+    # 시장 주목 종목 (수시 교체 가능)
+    "SNDK": "샌디스크",
+    "INTC": "인텔",
+    "ORCL": "오라클",
+}
 
 # 섹터별 대표 종목 (이브닝 브리핑에 함께 표시)
 SECTOR_STOCKS = {

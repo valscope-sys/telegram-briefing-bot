@@ -278,26 +278,37 @@ JSON만 출력하세요:
 def fetch_new_highlow():
     """52주 신고가 종목 조회 — 키움 REST API (ka10016)
     종가기준 + 우선주제외 + 거래량 1만주 이상
-    KIS API로 섹터 분류 추가
+    Claude API로 테마 분류
+    데이터 미확정 시 60초 대기 후 재시도 (장 마감 직후 데이터 정산 지연 대응)
     """
     results = {"신고가": []}
 
     try:
         from telegram_bot.kiwoom_client import kiwoom_post
 
-        data = kiwoom_post("ka10016", {
-            "mrkt_tp": "000",           # 전체 (코스피+코스닥)
-            "ntl_tp": "1",              # 신고가
-            "high_low_close_tp": "2",   # 종가기준
-            "stk_cnd": "3",             # 우선주제외
-            "trde_qty_tp": "00010",     # 만주이상
-            "crd_cnd": "0",             # 전체
-            "updown_incls": "0",        # 상하한 미포함
-            "dt": "250",               # 250일 = 52주
-            "stex_tp": "1",             # KRX
-        })
+        # 1차 조회
+        def _query_kiwoom():
+            data = kiwoom_post("ka10016", {
+                "mrkt_tp": "000",           # 전체 (코스피+코스닥)
+                "ntl_tp": "1",              # 신고가
+                "high_low_close_tp": "2",   # 종가기준
+                "stk_cnd": "3",             # 우선주제외
+                "trde_qty_tp": "00010",     # 만주이상
+                "crd_cnd": "0",             # 전체
+                "updown_incls": "0",        # 상하한 미포함
+                "dt": "250",               # 250일 = 52주
+                "stex_tp": "1",             # KRX
+            })
+            return data.get("ntl_pric", [])
 
-        stocks = data.get("ntl_pric", [])
+        stocks = _query_kiwoom()
+
+        # 데이터 미확정 대응: 5종목 미만이면 60초 대기 후 재시도
+        if len(stocks) < 5:
+            print(f"[KIWOOM] 52주 신고가 {len(stocks)}종목 — 데이터 미확정 가능, 60초 후 재시도")
+            time.sleep(60)
+            stocks = _query_kiwoom()
+            print(f"[KIWOOM] 재시도 결과: {len(stocks)}종목")
 
         # ETF/리츠/머니마켓 필터
         exclude_kw = [
@@ -320,7 +331,10 @@ def fetch_new_highlow():
             price_str = item.get("cur_prc", "0")
             price = _safe_int(price_str.replace("+", "").replace("-", "").replace(",", ""))
 
-            if price == 0:
+            # 거래정지/거래량0 종목 제외
+            vol_str = item.get("trde_qty", "0")
+            vol = _safe_int(vol_str.replace(",", ""))
+            if price == 0 or vol == 0:
                 continue
 
             filtered_stocks.append({
