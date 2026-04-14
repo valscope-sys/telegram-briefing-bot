@@ -208,18 +208,8 @@ def fetch_us_sectors():
 
 def fetch_us_major_stocks():
     """미국 주요 종목 등락률 - yfinance"""
-    stocks = {
-        "NVDA": "엔비디아",
-        "AAPL": "애플",
-        "MSFT": "마이크로소프트",
-        "GOOGL": "구글",
-        "AMZN": "아마존",
-        "TSLA": "테슬라",
-        "META": "메타",
-        "AVGO": "브로드컴",
-        "TSM": "TSMC",
-        "AMD": "AMD",
-    }
+    from telegram_bot.config import US_MAJOR_STOCKS
+    stocks = US_MAJOR_STOCKS
     results = {}
     for ticker, name in stocks.items():
         try:
