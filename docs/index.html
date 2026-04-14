@@ -18,6 +18,7 @@
                     <button class="view-tab" data-view="day">일</button>
                 </div>
                 <button id="theme-btn" class="btn-theme" title="테마 전환">다크</button>
+                <button id="update-btn" class="btn-update hidden" title="데이터 업데이트">업데이트</button>
                 <button id="admin-btn" class="btn-admin" title="관리자">+</button>
             </div>
         </div>
@@ -89,11 +90,21 @@
                             <option value="한국실적(잠정)">실적(잠정)</option>
                             <option value="미국실적">미국 실적</option>
                             <option value="경제지표">경제지표</option>
+                            <option value="통화정책">통화정책</option>
                             <option value="IPO/공모">IPO/공모</option>
                             <option value="기업이벤트">기업이벤트</option>
                             <option value="IR">IR</option>
-                            <option value="고정이벤트">주요 일정</option>
-                            <option value="산업이벤트">산업이벤트</option>
+                            <option value="정치/외교">정치/외교</option>
+                            <option value="산업컨퍼런스">산업컨퍼런스</option>
+                            <option value="게임">게임</option>
+                            <option value="반도체">반도체</option>
+                            <option value="자동차/배터리">자동차/배터리</option>
+                            <option value="제약/바이오">제약/바이오</option>
+                            <option value="에너지">에너지</option>
+                            <option value="방산">방산</option>
+                            <option value="전시/박람회">전시/박람회</option>
+                            <option value="K-콘텐츠">K-콘텐츠</option>
+                            <option value="부동산">부동산</option>
                             <option value="만기일">만기일</option>
                             <option value="수동">기타</option>
                         </select>
@@ -107,6 +118,27 @@
                         <button id="ev-save" class="btn-primary">저장</button>
                         <button id="ev-delete" class="btn-danger hidden">삭제</button>
                         <button id="ev-cancel" class="btn-secondary">취소</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scrape result modal -->
+    <div id="scrape-overlay" class="modal-overlay hidden">
+        <div class="modal" style="width:600px;max-height:80vh;">
+            <div class="modal-header">
+                <h2 id="scrape-title">데이터 수집</h2>
+                <button class="modal-close" onclick="closeScrape()">&times;</button>
+            </div>
+            <div id="scrape-body" style="padding:16px;overflow-y:auto;max-height:60vh;">
+                <div id="scrape-loading" class="hidden" style="text-align:center;padding:30px;color:var(--dim);">수집 중...</div>
+                <div id="scrape-results"></div>
+                <div id="scrape-actions" class="hidden" style="margin-top:16px;display:flex;gap:8px;justify-content:space-between;align-items:center;">
+                    <label style="font-size:0.8rem;color:var(--dim);cursor:pointer;"><input type="checkbox" id="scrape-select-all" checked onchange="toggleScrapeAll()"> 전체 선택</label>
+                    <div style="display:flex;gap:8px;">
+                        <button class="btn-primary" onclick="applyScrape()">선택 항목 추가</button>
+                        <button class="btn-secondary" onclick="closeScrape()">취소</button>
                     </div>
                 </div>
             </div>

@@ -18,11 +18,12 @@ jobs:
           python-version: '3.12'
 
       - name: Install dependencies
-        run: pip install requests beautifulsoup4 lxml feedparser python-dotenv
+        run: pip install requests beautifulsoup4 lxml feedparser python-dotenv anthropic
 
       - name: Update calendar data
         env:
           FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: python -m cal_data.update --full
 
       - name: Copy to docs

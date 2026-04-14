@@ -126,6 +126,17 @@ def collect_all(from_date: datetime.date, to_date: datetime.date) -> list[dict]:
     except Exception as e:
         print(f"[Calendar] 뉴스이벤트 실패: {e}")
 
+    # 6. AI 뉴스 스캐너 (Claude API)
+    try:
+        from cal_data.collectors.ai_news_scanner import scan_news_for_events
+        ai_events = scan_news_for_events()
+        print(f"[Calendar] AI스캔: {len(ai_events)}건")
+        all_events.extend(ai_events)
+    except ImportError:
+        pass
+    except Exception as e:
+        print(f"[Calendar] AI스캔 실패: {e}")
+
     return all_events
 
 

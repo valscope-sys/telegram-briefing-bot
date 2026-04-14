@@ -140,7 +140,13 @@ function miniClick(y,m,d) {
 // === CATEGORY FILTER ===
 function renderCatFilter() {
     const el = document.getElementById("cat-filter");
-    const usedCats = new Set(events.map(e => e.category));
+    const y = viewDate.getFullYear(), m = viewDate.getMonth();
+    const monthPrefix = `${y}-${String(m+1).padStart(2,"0")}`;
+    const usedCats = new Set(events.filter(e => {
+        if (e.date && e.date.startsWith(monthPrefix)) return true;
+        if (e.endDate && e.date <= monthPrefix + "-31" && e.endDate >= monthPrefix + "-01") return true;
+        return false;
+    }).map(e => e.category));
     const allOn = [...usedCats].every(c => enabledCats.has(c));
     let html = `<div class="cat-header"><h3>카테고리</h3>
         <button class="cat-toggle-btn" onclick="toggleAllCats()">${allOn ? "전체 해제" : "전체 선택"}</button></div>`;
@@ -181,6 +187,7 @@ function renderView() {
     else if (currentView === "week") renderWeek();
     else renderDay();
     updateTitle();
+    renderCatFilter();
 }
 
 function updateTitle() {
@@ -218,17 +225,20 @@ function renderUndatedBanner() {
     banner.style.display = "flex";
     let html = "";
 
+    const adminAttr = isAdmin ? 'style="cursor:pointer"' : '';
     if (monthUndated.length > 0) {
         html += `<span class="undated-banner-label">${m+1}월 중</span>`;
         for (const ev of monthUndated) {
-            html += `<span class="undated-chip" style="border-color:${catColor(ev.category)};color:${catColor(ev.category)}">${ev.title}</span>`;
+            const uc = ev.unconfirmed ? ' [미확인]' : '';
+            html += `<span class="undated-chip${ev.unconfirmed?' unconfirmed-chip':''}" ${adminAttr} style="border-color:${catColor(ev.category)};color:${catColor(ev.category)}" onclick="clickUndated(${JSON.stringify(ev).replace(/"/g,'&quot;')})">${ev.title}${uc}</span>`;
         }
     }
     if (weekUndated.length > 0) {
         for (const ev of weekUndated) {
             const wn = ev.week.split("W")[1];
+            const uc = ev.unconfirmed ? ' [미확인]' : '';
             html += `<span class="undated-banner-label">${m+1}월 ${wn}주차</span>`;
-            html += `<span class="undated-chip" style="border-color:${catColor(ev.category)};color:${catColor(ev.category)}">${ev.title}</span>`;
+            html += `<span class="undated-chip${ev.unconfirmed?' unconfirmed-chip':''}" ${adminAttr} style="border-color:${catColor(ev.category)};color:${catColor(ev.category)}" onclick="clickUndated(${JSON.stringify(ev).replace(/"/g,'&quot;')})">${ev.title}${uc}</span>`;
         }
     }
     banner.innerHTML = html;
@@ -269,6 +279,7 @@ function renderMonth() {
         for (let i=0; i<Math.min(dayEvents.length, MAX_EVENTS); i++) {
             const ev = dayEvents[i];
             let barCls = "event-bar";
+            if (ev.unconfirmed) barCls += " unconfirmed";
             if (ev.endDate && ev.date !== ev.endDate) {
                 if (ds === ev.date) barCls += " range-start";
                 else if (ds === ev.endDate) barCls += " range-end";
@@ -429,6 +440,7 @@ function showDetailPanel(dateStr) {
 }
 
 function closeDetail() { document.getElementById("detail-panel").classList.add("hidden"); }
+function clickUndated(ev) { if (isAdmin) openEditEvent(ev); }
 
 // === NAVIGATION ===
 function navigate(delta) {
@@ -487,6 +499,7 @@ async function doLogin() {
         isAdmin = true;
         document.getElementById("admin-btn").textContent = "+";
         document.getElementById("admin-btn").title = "일정 추가";
+        document.getElementById("update-btn").classList.remove("hidden");
         closeModal();
         renderView();
     } else {
@@ -589,12 +602,154 @@ function showEventDetail(ev) {
     if (isAdmin) openEditEvent(ev);
 }
 
+// === SCRAPE / UPDATE ===
+let scrapeResults = [];
+const FINNHUB_KEY = "d7e8nshr01qkuebjbtg0d7e8nshr01qkuebjbtgg";
+
+async function openScrapeModal() {
+    document.getElementById("scrape-overlay").classList.remove("hidden");
+    document.getElementById("scrape-loading").classList.remove("hidden");
+    document.getElementById("scrape-results").innerHTML = "";
+    document.getElementById("scrape-actions").classList.add("hidden");
+    scrapeResults = [];
+
+    // Finnhub (미국실적) — 브라우저에서 직접 호출 가능
+    const today = fmt(new Date());
+    const future = fmt(new Date(Date.now() + 90*86400000));
+    const tasks = [scrapeFromFinnhub(today, future)];
+
+    const results = await Promise.allSettled(tasks);
+    for (const r of results) {
+        if (r.status === "fulfilled" && r.value) scrapeResults.push(...r.value);
+    }
+
+    // Filter out events already in calendar
+    const existingKeys = new Set(events.map(e => e.date + "|" + e.title));
+    scrapeResults = scrapeResults.filter(e => !existingKeys.has(e.date + "|" + e.title));
+
+    document.getElementById("scrape-loading").classList.add("hidden");
+    renderScrapeResults();
+}
+
+async function scrapeFromFinnhub(from, to) {
+    try {
+        const res = await fetch(`https://finnhub.io/api/v1/calendar/earnings?from=${from}&to=${to}&token=${FINNHUB_KEY}`);
+        if (!res.ok) return [];
+        const data = await res.json();
+        const watchlist = new Set(["NVDA","AAPL","TSLA","MSFT","GOOGL","AMZN","META","NFLX","AVGO","TSM","AMD","INTC","QCOM","MU","ASML","AMAT","LRCX","CRM","ORCL","ADBE"]);
+        const timeMap = {bmo:"장전",amc:"장후"};
+        return (data.earningsCalendar||[]).filter(e => watchlist.has(e.symbol)).map(e => {
+            let t = `${e.symbol} 실적발표`;
+            if (timeMap[e.hour]) t += ` (${timeMap[e.hour]})`;
+            if (e.epsEstimate != null) t += ` [EPS est. $${e.epsEstimate}]`;
+            return {date:e.date, time:"", category:"미국실적", title:t, source:"finnhub", auto:true, _src:"Finnhub"};
+        });
+    } catch(e) { console.log("Finnhub error:", e); return []; }
+}
+
+
+function renderScrapeResults() {
+    const container = document.getElementById("scrape-results");
+    let html = "";
+
+    if (scrapeResults.length > 0) {
+        document.getElementById("scrape-actions").classList.remove("hidden");
+        const bySource = {};
+        for (const e of scrapeResults) {
+            const src = e._src || e.source;
+            if (!bySource[src]) bySource[src] = [];
+            bySource[src].push(e);
+        }
+        html += `<div style="font-size:0.8rem;color:var(--dim);margin-bottom:12px;">${scrapeResults.length}건 발견 (기존 일정과 중복 제외)</div>`;
+        for (const [src, evs] of Object.entries(bySource)) {
+            html += `<div style="font-size:0.8rem;font-weight:600;color:var(--accent);margin:12px 0 6px;">${src} (${evs.length}건)</div>`;
+            for (const ev of evs) {
+                const globalIdx = scrapeResults.indexOf(ev);
+                html += `<label class="scrape-item">
+                    <input type="checkbox" checked data-idx="${globalIdx}">
+                    <span class="scrape-dot" style="background:${catColor(ev.category)}"></span>
+                    <span class="scrape-info">
+                        <span class="scrape-title">${ev.title}</span>
+                        <span class="scrape-meta">${ev.date} · ${CAT_LABELS[ev.category]||ev.category}</span>
+                    </span>
+                </label>`;
+            }
+        }
+    } else {
+        html += `<div style="text-align:center;color:var(--dim);padding:20px;">Finnhub에서 새로 추가할 미국 실적이 없습니다</div>`;
+    }
+
+    // GitHub Actions section (한국실적/IR/기업이벤트/IPO)
+    html += `<div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);">
+        <div style="font-size:0.85rem;font-weight:600;margin-bottom:6px;">한국 데이터 전체 업데이트</div>
+        <div style="font-size:0.75rem;color:var(--dim);margin-bottom:10px;">FnGuide(실적/IR/기업이벤트), 38.co.kr(IPO) 등 한국 소스는 서버에서 수집해야 합니다.<br>아래 버튼을 누르면 GitHub Actions가 실행되고, 2~5분 후 새로고침하면 반영됩니다.</div>
+        <button class="btn-secondary" onclick="triggerGHAction()" style="width:100%;">한국 데이터 전체 업데이트 (GitHub Actions)</button>
+    </div>`;
+
+    container.innerHTML = html;
+}
+
+function toggleScrapeAll() {
+    const checked = document.getElementById("scrape-select-all").checked;
+    document.querySelectorAll("#scrape-results input[type=checkbox]").forEach(cb => cb.checked = checked);
+}
+
+function applyScrape() {
+    const checkboxes = document.querySelectorAll("#scrape-results input[type=checkbox]");
+    let added = 0;
+    checkboxes.forEach(cb => {
+        if (cb.checked) {
+            const idx = parseInt(cb.dataset.idx);
+            const ev = scrapeResults[idx];
+            if (ev) {
+                delete ev._src;
+                events.push(ev);
+                added++;
+            }
+        }
+    });
+    events.sort((a,b) => (a.date+(a.time||"")).localeCompare(b.date+(b.time||"")));
+    saveToStorage();
+    closeScrape();
+    renderView();
+    renderMiniCal();
+    renderCatFilter();
+    alert(`${added}건 추가 완료`);
+}
+
+function closeScrape() {
+    document.getElementById("scrape-overlay").classList.add("hidden");
+}
+
+// Legacy: GitHub Actions trigger (backup)
+const GH_REPO = "valscope-sys/telegram-briefing-bot";
+const GH_WORKFLOW = "calendar.yml";
+async function triggerGHAction() {
+    const token = prompt("GitHub Token (전체 소스 업데이트용)");
+    if (!token) return;
+    try {
+        const res = await fetch(`https://api.github.com/repos/${GH_REPO}/actions/workflows/${GH_WORKFLOW}/dispatches`, {
+            method: "POST",
+            headers: {"Authorization": `token ${token}`, "Accept": "application/vnd.github.v3+json"},
+            body: JSON.stringify({ref: "main"}),
+        });
+        if (res.status === 204) alert("GitHub Actions 트리거 완료! 2~5분 후 새로고침하세요.");
+        else { const err = await res.json(); alert(`실패: ${err.message}`); }
+    } catch (e) {
+        alert(`에러: ${e.message}`);
+        btn.textContent = "업데이트";
+    }
+    btn.classList.remove("loading");
+    setTimeout(() => { btn.textContent = "업데이트"; }, 3000);
+}
+
 // === BIND EVENTS ===
 function bindEvents() {
     document.getElementById("prev-btn").onclick = () => navigate(-1);
     document.getElementById("next-btn").onclick = () => navigate(1);
     document.getElementById("today-btn").onclick = goToday;
     document.getElementById("theme-btn").onclick = cycleTheme;
+    document.getElementById("update-btn").onclick = openScrapeModal;
     document.querySelectorAll(".view-tab").forEach(t => {
         t.onclick = () => switchView(t.dataset.view);
     });

@@ -20,38 +20,43 @@ SOURCES = {
     "전시/박람회": [],
 }
 
-# 증시 관련 산업이벤트 (2026년)
+# 증시 관련 이벤트 (2026년) — 카테고리별 세분화
 KNOWN_INDUSTRY_EVENTS_2026 = [
-    # IT/반도체 컨퍼런스 (반도체·IT주 직접 영향)
-    {"date": "2026-01-06", "endDate": "2026-01-09", "title": "CES 2026", "category": "산업이벤트", "link": "https://www.ces.tech/"},
-    {"date": "2026-01-12", "endDate": "2026-01-15", "title": "JP모건 헬스케어 컨퍼런스", "category": "산업이벤트"},
-    {"date": "2026-02-23", "endDate": "2026-02-26", "title": "MWC 바르셀로나 2026", "category": "산업이벤트", "link": "https://www.mwcbarcelona.com/"},
-    {"date": "2026-03-17", "endDate": "2026-03-21", "title": "GTC 2026 (NVIDIA)", "category": "산업이벤트"},
-    {"date": "2026-05-19", "endDate": "2026-05-21", "title": "Google I/O 2026", "category": "산업이벤트"},
-    {"date": "2026-06-09", "endDate": "2026-06-13", "title": "WWDC 2026 (Apple)", "category": "산업이벤트"},
-    {"date": "2026-06-09", "endDate": "2026-06-11", "title": "컴퓨텍스 타이베이 2026", "category": "산업이벤트"},
-    {"date": "2026-09-09", "title": "Apple 아이폰 발표 (예상)", "category": "산업이벤트"},
-    {"date": "2026-11-03", "endDate": "2026-11-04", "title": "OpenAI DevDay 2026", "category": "산업이벤트"},
-    # 게임쇼 (게임주 직접 영향: 크래프톤, 엔씨, 넷마블, 펄어비스)
-    {"date": "2026-03-16", "endDate": "2026-03-20", "title": "GDC 2026", "category": "산업이벤트"},
-    {"date": "2026-08-20", "endDate": "2026-08-23", "title": "게임스컴 2026", "category": "산업이벤트"},
-    {"date": "2026-09-24", "endDate": "2026-09-26", "title": "도쿄게임쇼 2026", "category": "산업이벤트"},
-    {"date": "2026-11-17", "endDate": "2026-11-19", "title": "G-STAR 2026", "category": "산업이벤트"},
-    # 전시/박람회 (관련 섹터주 영향)
-    {"date": "2026-04-08", "endDate": "2026-04-11", "title": "서울모터쇼 2026", "category": "산업이벤트"},
-    {"date": "2026-06-15", "endDate": "2026-06-19", "title": "파리 에어쇼 2026 (방산)", "category": "산업이벤트"},
-    {"date": "2026-09-07", "endDate": "2026-09-10", "title": "IFA 베를린 2026 (가전)", "category": "산업이벤트"},
-    {"date": "2026-10-06", "endDate": "2026-10-10", "title": "한국전자전 KES 2026", "category": "산업이벤트"},
+    # 산업컨퍼런스
+    {"date": "2026-01-06", "endDate": "2026-01-09", "title": "CES 2026", "category": "산업컨퍼런스", "link": "https://www.ces.tech/"},
+    {"date": "2026-02-23", "endDate": "2026-02-26", "title": "MWC 바르셀로나 2026", "category": "산업컨퍼런스", "link": "https://www.mwcbarcelona.com/"},
+    {"date": "2026-03-17", "endDate": "2026-03-21", "title": "GTC 2026 (NVIDIA)", "category": "산업컨퍼런스"},
+    {"date": "2026-05-19", "endDate": "2026-05-21", "title": "Google I/O 2026", "category": "산업컨퍼런스"},
+    {"date": "2026-06-09", "endDate": "2026-06-13", "title": "WWDC 2026 (Apple)", "category": "산업컨퍼런스"},
+    {"date": "2026-06-09", "endDate": "2026-06-11", "title": "컴퓨텍스 타이베이 2026", "category": "산업컨퍼런스"},
+    {"date": "2026-11-03", "endDate": "2026-11-04", "title": "OpenAI DevDay 2026", "category": "산업컨퍼런스"},
+    # 반도체
+    {"date": "2026-09-09", "title": "Apple 아이폰 발표 (예상)", "category": "반도체"},
+    # 게임
+    {"date": "2026-03-16", "endDate": "2026-03-20", "title": "GDC 2026", "category": "게임"},
+    {"date": "2026-08-20", "endDate": "2026-08-23", "title": "게임스컴 2026", "category": "게임"},
+    {"date": "2026-09-24", "endDate": "2026-09-26", "title": "도쿄게임쇼 2026", "category": "게임"},
+    {"date": "2026-11-17", "endDate": "2026-11-19", "title": "G-STAR 2026", "category": "게임"},
+    # 자동차/배터리
+    {"date": "2026-04-08", "endDate": "2026-04-11", "title": "서울모터쇼 2026", "category": "자동차/배터리"},
+    # 방산
+    {"date": "2026-06-15", "endDate": "2026-06-19", "title": "파리 에어쇼 2026", "category": "방산"},
+    # 전시/박람회
+    {"date": "2026-09-07", "endDate": "2026-09-10", "title": "IFA 베를린 2026 (가전)", "category": "전시/박람회"},
+    {"date": "2026-10-06", "endDate": "2026-10-10", "title": "한국전자전 KES 2026", "category": "전시/박람회"},
     # 제약/바이오
-    {"date": "2026-06-05", "endDate": "2026-06-09", "title": "ASCO 2026 (미국종양학회)", "category": "산업이벤트"},
-    # OPEC
-    {"date": "2026-05-28", "title": "OPEC+ 회의", "category": "산업이벤트"},
-    {"date": "2026-12-03", "title": "OPEC+ 회의", "category": "산업이벤트"},
+    {"date": "2026-01-12", "endDate": "2026-01-15", "title": "JP모건 헬스케어 컨퍼런스", "category": "제약/바이오"},
+    {"date": "2026-06-05", "endDate": "2026-06-09", "title": "ASCO 2026 (미국종양학회)", "category": "제약/바이오"},
+    # 에너지
+    {"date": "2026-05-28", "title": "OPEC+ 회의", "category": "에너지"},
+    {"date": "2026-12-03", "title": "OPEC+ 회의", "category": "에너지"},
+    # 통화정책 (잭슨홀 등 — 고정이벤트 FOMC와 별도)
+    {"date": "2026-08-27", "endDate": "2026-08-29", "title": "잭슨홀 심포지엄", "category": "통화정책"},
 ]
 
 # 주요 게임 출시 (게임주 영향)
 KNOWN_GAME_RELEASES_2026 = [
-    {"date": "2026-04-25", "title": "몬스터헌터 와일즈 PC (캡콤)", "category": "산업이벤트"},
+    {"date": "2026-04-25", "title": "몬스터헌터 와일즈 PC (캡콤)", "category": "게임"},
 ]
 
 # 옵션/선물 만기일 (2026년)
@@ -76,8 +81,8 @@ UNDATED_EVENTS_2026 = [
     {"month": "2026-04", "title": "테슬라 1Q 실적발표 (예상)", "category": "미국실적"},
     {"month": "2026-07", "title": "테슬라 2Q 실적발표 (예상)", "category": "미국실적"},
     {"month": "2026-10", "title": "테슬라 3Q 실적발표 (예상)", "category": "미국실적"},
-    {"month": "2026-06", "title": "닌텐도 스위치2 출시 (예상)", "category": "산업이벤트"},
-    {"month": "2026-09", "title": "Apple 아이폰 18 출시 (예상)", "category": "산업이벤트"},
+    {"month": "2026-06", "title": "닌텐도 스위치2 출시 (예상)", "category": "게임"},
+    {"month": "2026-09", "title": "Apple 아이폰 18 출시 (예상)", "category": "반도체"},
     {"week": "2026-04-W4", "title": "삼성전자 1Q 잠정실적 (예상)", "category": "한국실적(잠정)"},
     {"week": "2026-07-W1", "title": "삼성전자 2Q 잠정실적 (예상)", "category": "한국실적(잠정)"},
     {"week": "2026-04-W4", "title": "SK하이닉스 1Q 실적발표 (예상)", "category": "한국실적"},
