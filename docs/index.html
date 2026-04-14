@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NODE Research 일정 캘린더</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="header-row-top">
+            <span class="logo">NODE Research</span>
+            <div class="header-actions">
+                <div class="view-tabs">
+                    <button class="view-tab active" data-view="month">월</button>
+                    <button class="view-tab" data-view="week">주</button>
+                    <button class="view-tab" data-view="day">일</button>
+                </div>
+                <button id="theme-btn" class="btn-theme" title="테마 전환">다크</button>
+                <button id="admin-btn" class="btn-admin" title="관리자">+</button>
+            </div>
+        </div>
+        <div class="header-row-nav">
+            <button id="prev-btn" class="month-nav-btn">&larr; 이전</button>
+            <button id="today-btn" class="btn-today">오늘</button>
+            <h1 id="title-text">2026년 4월</h1>
+            <button id="next-btn" class="month-nav-btn">다음 &rarr;</button>
+        </div>
+    </header>
+
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside id="sidebar">
+            <div class="mini-calendar" id="mini-cal"></div>
+            <div class="category-filter" id="cat-filter">
+                <h3>카테고리</h3>
+            </div>
+        </aside>
+
+        <!-- Main content -->
+        <main id="main">
+            <!-- Month view -->
+            <div id="month-view" class="view-container">
+                <div class="weekday-header">
+                    <span class="sun">일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span class="sat">토</span>
+                </div>
+                <div id="month-grid" class="month-grid"></div>
+            </div>
+            <!-- Week view -->
+            <div id="week-view" class="view-container hidden">
+                <div id="week-content" class="week-content"></div>
+            </div>
+            <!-- Day view -->
+            <div id="day-view" class="view-container hidden">
+                <div id="day-content" class="day-content"></div>
+            </div>
+        </main>
+
+        <!-- Detail panel -->
+        <div id="detail-panel" class="detail-panel hidden">
+            <div class="detail-header">
+                <h2 id="detail-title"></h2>
+                <button id="detail-close">&times;</button>
+            </div>
+            <div id="detail-body"></div>
+        </div>
+    </div>
+
+    <!-- Admin modal -->
+    <div id="admin-overlay" class="modal-overlay hidden">
+        <div class="modal" id="admin-modal">
+            <div class="modal-header">
+                <h2 id="modal-title">관리자 로그인</h2>
+                <button class="modal-close" id="modal-close">&times;</button>
+            </div>
+            <div id="modal-body">
+                <!-- Login form -->
+                <div id="login-form">
+                    <input type="password" id="admin-pw" placeholder="비밀번호" autocomplete="off">
+                    <button id="login-btn" class="btn-primary">로그인</button>
+                </div>
+                <!-- Event form (hidden until logged in) -->
+                <div id="event-form" class="hidden">
+                    <label>제목 <input type="text" id="ev-title" placeholder="일정 제목"></label>
+                    <label>카테고리
+                        <select id="ev-category">
+                            <option value="한국실적">실적(정식)</option>
+                            <option value="한국실적(잠정)">실적(잠정)</option>
+                            <option value="미국실적">미국 실적</option>
+                            <option value="경제지표">경제지표</option>
+                            <option value="IPO/공모">IPO/공모</option>
+                            <option value="기업이벤트">기업이벤트</option>
+                            <option value="IR">IR</option>
+                            <option value="고정이벤트">주요 일정</option>
+                            <option value="산업이벤트">산업이벤트</option>
+                            <option value="만기일">만기일</option>
+                            <option value="수동">기타</option>
+                        </select>
+                    </label>
+                    <label>시작일 <input type="date" id="ev-date"></label>
+                    <label>종료일 (선택) <input type="date" id="ev-end-date"></label>
+                    <label>시간 (선택) <input type="time" id="ev-time"></label>
+                    <label>링크 (선택) <input type="url" id="ev-link" placeholder="https://..."></label>
+                    <label>요약 (선택) <textarea id="ev-summary" rows="3" placeholder="일정 설명..."></textarea></label>
+                    <div class="form-actions">
+                        <button id="ev-save" class="btn-primary">저장</button>
+                        <button id="ev-delete" class="btn-danger hidden">삭제</button>
+                        <button id="ev-cancel" class="btn-secondary">취소</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <a href="https://t.me/noderesearch" target="_blank">NODE Research 텔레그램</a>
+    </footer>
+
+    <script src="calendar.js"></script>
+</body>
+</html>

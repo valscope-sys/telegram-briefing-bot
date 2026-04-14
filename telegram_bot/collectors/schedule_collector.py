@@ -1,106 +1,37 @@
-"""경제 일정 수집 (고정 일정 + FnGuide 실적 + DART)"""
+"""경제 일정 수집 (calendar.json 기반 + DART 실시간 보완)"""
 import datetime
+import json
 import requests
-from bs4 import BeautifulSoup
+from pathlib import Path
 from telegram_bot.config import DART_API_KEY
 
+CALENDAR_JSON = Path(__file__).resolve().parent.parent.parent / "cal_data" / "calendar.json"
 
-# 2026년 주요 글로벌 경제 일정 (수동 관리, 월 1회 업데이트)
-MAJOR_EVENTS_2026 = [
-    # FOMC 회의
-    {"date": "20260128", "time": "04:00", "country": "🇺🇸", "event": "FOMC 금리 결정"},
-    {"date": "20260318", "time": "04:00", "country": "🇺🇸", "event": "FOMC 금리 결정"},
-    {"date": "20260506", "time": "04:00", "country": "🇺🇸", "event": "FOMC 금리 결정"},
-    {"date": "20260617", "time": "04:00", "country": "🇺🇸", "event": "FOMC 금리 결정"},
-    {"date": "20260729", "time": "04:00", "country": "🇺🇸", "event": "FOMC 금리 결정"},
-    {"date": "20260916", "time": "04:00", "country": "🇺🇸", "event": "FOMC 금리 결정"},
-    {"date": "20261028", "time": "04:00", "country": "🇺🇸", "event": "FOMC 금리 결정"},
-    {"date": "20261216", "time": "04:00", "country": "🇺🇸", "event": "FOMC 금리 결정"},
-    # 미국 CPI (매월 둘째주 화/수)
-    {"date": "20260414", "time": "21:30", "country": "🇺🇸", "event": "미국 CPI (3월)"},
-    {"date": "20260513", "time": "21:30", "country": "🇺🇸", "event": "미국 CPI (4월)"},
-    {"date": "20260610", "time": "21:30", "country": "🇺🇸", "event": "미국 CPI (5월)"},
-    {"date": "20260715", "time": "21:30", "country": "🇺🇸", "event": "미국 CPI (6월)"},
-    # 미국 고용
-    {"date": "20260410", "time": "21:30", "country": "🇺🇸", "event": "미국 비농업 고용 (3월)"},
-    {"date": "20260508", "time": "21:30", "country": "🇺🇸", "event": "미국 비농업 고용 (4월)"},
-    {"date": "20260605", "time": "21:30", "country": "🇺🇸", "event": "미국 비농업 고용 (5월)"},
-    # 한국은행 금통위
-    {"date": "20260416", "time": "10:00", "country": "🇰🇷", "event": "한국은행 금통위 금리 결정"},
-    {"date": "20260528", "time": "10:00", "country": "🇰🇷", "event": "한국은행 금통위 금리 결정"},
-    {"date": "20260716", "time": "10:00", "country": "🇰🇷", "event": "한국은행 금통위 금리 결정"},
-    # 한국 수출입
-    {"date": "20260401", "time": "09:00", "country": "🇰🇷", "event": "한국 수출입 통계 (3월)"},
-    {"date": "20260501", "time": "09:00", "country": "🇰🇷", "event": "한국 수출입 통계 (4월)"},
-    # 중국 PMI
-    {"date": "20260430", "time": "10:30", "country": "🇨🇳", "event": "중국 제조업 PMI (4월)"},
-    {"date": "20260531", "time": "10:30", "country": "🇨🇳", "event": "중국 제조업 PMI (5월)"},
-]
+# 카테고리 → 국가 이모지 매핑
+CATEGORY_COUNTRY = {
+    "고정이벤트": "",     # country 필드 사용
+    "한국실적": "🇰🇷",
+    "미국실적": "🇺🇸",
+    "경제지표": "",       # title에 포함
+    "IPO/공모": "🇰🇷",
+    "배당": "🇰🇷",
+    "유증": "🇰🇷",
+    "IR": "🇰🇷",
+}
 
 
-def _get_major_events(target_date):
-    """고정 일정에서 해당 날짜 이벤트 조회"""
-    date_str = target_date.strftime("%Y%m%d")
-    return [e for e in MAJOR_EVENTS_2026 if e["date"] == date_str]
-
-
-def fetch_fnguide_earnings(target_date=None):
-    """FnGuide 실적 캘린더 크롤링 (잠정실적/실적발표)"""
-    if target_date is None:
-        target_date = datetime.date.today()
-
-    month_str = target_date.strftime("%Y%m")
-    target_day = target_date.day
-
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-        "Referer": "https://comp.fnguide.com/SVO2/ASP/SVD_comp_calendar.asp",
-    }
+def _load_calendar_events(target_date):
+    """calendar.json에서 해당 날짜 이벤트 로드"""
+    if not CALENDAR_JSON.exists():
+        return []
 
     try:
-        url = "https://comp.fnguide.com/SVO2/ASP/svd_comp_calendarData.asp"
-        params = {
-            "gicode": "",
-            "eventType": "all,AN,10;22;23,20,30,52,53;54,40;41,21;24,17,25,50,IR1,IR2",
-            "fromdt": month_str,
-        }
-        res = requests.get(url, params=params, headers=headers, timeout=10)
-        if res.status_code != 200:
-            return []
-
-        soup = BeautifulSoup(res.text, "lxml")
-        earnings = []
-        for td in soup.select("td"):
-            h3 = td.select_one("h3")
-            if not h3:
-                continue
-            day_text = h3.get_text(strip=True)
-            if not day_text.isdigit():
-                continue
-            day = int(day_text)
-            if day != target_day:
-                continue
-
-            for a in td.select("a.ico_01"):  # ico_01 = 잠정실적/실적발표
-                name = a.get_text(strip=True)
-                if name:
-                    corp = name.split("(")[0].strip()
-                    # popuplayerannounce 클래스가 있으면 잠정실적
-                    classes = " ".join(a.get("class", []))
-                    is_provisional = "announce" in classes
-                    label = f"(잠정) {corp}" if is_provisional else corp
-                    earnings.append({"기업명": label, "보고서명": name})
-
-        # 중복 기업명 제거
-        seen = set()
-        unique = []
-        for e in earnings:
-            if e["기업명"] not in seen:
-                seen.add(e["기업명"])
-                unique.append(e)
-        return unique
+        data = json.loads(CALENDAR_JSON.read_text(encoding="utf-8"))
     except Exception:
         return []
+
+    date_str = target_date.isoformat()
+    return [e for e in data if e.get("date") == date_str]
 
 
 def fetch_dart_earnings(target_date=None):
@@ -143,31 +74,58 @@ def fetch_dart_earnings(target_date=None):
 
 
 def _build_schedule(target_date):
-    """일정 통합 조회 (고정 일정 + FnGuide 실적 + DART)"""
-    major = _get_major_events(target_date)
-    fnguide = fetch_fnguide_earnings(target_date)
+    """일정 통합 조회 (calendar.json + DART 실시간)"""
+    cal_events = _load_calendar_events(target_date)
     dart = fetch_dart_earnings(target_date)
 
     events = []
-    for e in major:
-        events.append({
-            "시간": e["time"],
-            "국가": e["country"],
-            "이벤트": e["event"],
-        })
+    earnings = []
 
-    # FnGuide + DART 실적 합치기 (중복 제거)
-    all_earnings = fnguide[:]
-    seen = {e["기업명"] for e in fnguide}
-    for e in dart:
-        if e["기업명"] not in seen:
-            all_earnings.append(e)
-            seen.add(e["기업명"])
+    # 노이즈 필터 (액면분할/병합/유상증자/무상증자 등)
+    noise_keywords = ["액면분할", "액면병합", "유상증자", "무상증자", "기업합병", "주식소각"]
+
+    for e in cal_events:
+        cat = e.get("category", "")
+        title = e.get("title", "")
+
+        # 실적발표
+        if cat in ("한국실적", "미국실적"):
+            earnings.append({
+                "기업명": title.replace(" 실적발표", ""),
+                "보고서명": title,
+            })
+        # 노이즈 제외
+        elif cat == "기업이벤트" and any(kw in title for kw in noise_keywords):
+            continue
+        # 유증/배당 제외
+        elif cat in ("유증", "배당"):
+            continue
+        # IR은 실적에 포함
+        elif cat == "IR":
+            earnings.append({
+                "기업명": title.replace(" IR (경영현황)", "").replace(" IR (실적발표)", ""),
+                "보고서명": title,
+            })
+        # 나머지 (고정이벤트, 경제지표, IPO 등)
+        else:
+            country = e.get("country", "") or CATEGORY_COUNTRY.get(cat, "")
+            events.append({
+                "시간": e.get("time", ""),
+                "국가": country,
+                "이벤트": title,
+            })
+
+    # DART 실시간 보완
+    seen = {e["기업명"] for e in earnings}
+    for d in dart:
+        if d["기업명"] not in seen:
+            earnings.append(d)
+            seen.add(d["기업명"])
 
     return {
         "date": target_date.strftime("%m월 %d일"),
         "events": events,
-        "earnings": all_earnings,
+        "earnings": earnings,
     }
 
 

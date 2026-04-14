@@ -1,6 +1,8 @@
 """일정 메시지 포맷터 (오늘 일정 / 내일 일정)"""
 import datetime
 
+CALENDAR_WEB_URL = "https://valscope-sys.github.io/telegram-briefing-bot/"
+
 COUNTRY_EMOJI = {
     "한국": "🇰🇷", "South Korea": "🇰🇷",
     "미국": "🇺🇸", "United States": "🇺🇸",
@@ -42,6 +44,9 @@ def _format_schedule(title, schedule_data):
 
     if not lines:
         lines.append("주요 일정 없음")
+
+    lines.append("")
+    lines.append(f"[전체 일정 보기]({CALENDAR_WEB_URL})")
 
     return f"📅 *{title}*\n{date_str}\n\n" + "\n".join(lines)
 
