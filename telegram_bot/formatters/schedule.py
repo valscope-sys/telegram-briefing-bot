@@ -24,6 +24,8 @@ LOW_PRIORITY_KEYWORDS = [
     "NBS Press Conference", "Supervisory Board", "Speaks", "발언",
     "Industrial Production (YoY)", "산업생산 (전년비)",
     "Core CPI", "CPI (MoM)", "GDP (QoQ)",
+    "CFTC", "Baker Hughes", "speculative net positions",
+    "StrictlyVC", "Rig Count",
 ]
 
 
