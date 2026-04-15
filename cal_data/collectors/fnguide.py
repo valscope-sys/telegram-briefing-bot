@@ -162,10 +162,34 @@ def fetch_fnguide_month(year: int, month: int) -> list[dict]:
         except Exception as e:
             continue
 
-    # HTML 보조 스크래핑: 잠정실적 판별 (ico_01 + popuplayerannounce)
-    provisional_corps = _fetch_provisional_earnings(year, month)
+    # HTML 스크래핑: ico_01(잠정) + ico_14(실적예정) — JSON에 없는 것 추가
+    html_earnings = _fetch_html_earnings(year, month)
+    provisional_corps = set()
 
-    # _code 필드 제거 + 잠정 태깅
+    # JSON 결과에서 이미 있는 기업+날짜 키
+    existing_keys = {(e["date"], e["title"].replace(" 실적발표","").replace(" 잠정실적발표",""))
+                     for e in events if e is not None}
+
+    for he in html_earnings:
+        if he["type"] == "provisional":
+            provisional_corps.add(he["corp"])
+        # JSON에 없으면 추가
+        key = (he["date"], he["corp"])
+        if key not in existing_keys:
+            cat = "한국실적(잠정)" if he["type"] == "provisional" else "한국실적"
+            title = f"{he['corp']} 잠정실적발표" if he["type"] == "provisional" else f"{he['corp']} 실적발표"
+            events.append({
+                "date": he["date"],
+                "time": "",
+                "category": cat,
+                "title": title,
+                "source": "fnguide",
+                "auto": True,
+                "_code": "html",
+            })
+            existing_keys.add(key)
+
+    # _code 필드 제거 + 잠정 태깅 (JSON IR1 중 잠정인 것)
     result = []
     for e in events:
         if e is not None:
@@ -179,8 +203,8 @@ def fetch_fnguide_month(year: int, month: int) -> list[dict]:
     return result
 
 
-def _fetch_provisional_earnings(year: int, month: int) -> set[str]:
-    """HTML 스크래핑으로 잠정실적 기업명 세트 반환"""
+def _fetch_html_earnings(year: int, month: int) -> list[dict]:
+    """HTML 스크래핑으로 ico_01(잠정) + ico_14(실적예정) 날짜+기업명 추출"""
     from bs4 import BeautifulSoup
     yyyymm = f"{year}{month:02d}"
     try:
@@ -192,17 +216,50 @@ def _fetch_provisional_earnings(year: int, month: int) -> set[str]:
         }
         res = requests.get(url, params=params, headers=HEADERS, timeout=10)
         if res.status_code != 200:
-            return set()
+            return []
         soup = BeautifulSoup(res.text, "lxml")
-        corps = set()
-        for a in soup.select("a.ico_01.popuplayerannounce"):
-            name = a.get_text(strip=True)
-            if name:
+        results = []
+
+        for td in soup.select("td"):
+            h3 = td.select_one("h3")
+            if not h3:
+                continue
+            day_text = h3.get_text(strip=True)
+            if not day_text.isdigit():
+                continue
+            day = int(day_text)
+            ev_date = f"{year}-{month:02d}-{day:02d}"
+
+            # ico_01 = 잠정실적 (popuplayerannounce) 또는 실적발표 완료
+            for a in td.select("a.ico_01"):
+                name = a.get_text(strip=True)
+                if not name:
+                    continue
                 corp = name.split("(")[0].strip()
-                corps.add(corp)
-        return corps
-    except Exception:
-        return set()
+                classes = " ".join(a.get("class", []))
+                is_prov = "announce" in classes
+                results.append({"date": ev_date, "corp": corp, "type": "provisional" if is_prov else "official"})
+
+            # ico_14 = 실적발표 예정
+            for a in td.select("a.ico_14"):
+                name = a.get_text(strip=True)
+                if not name:
+                    continue
+                corp = name.split("(")[0].strip()
+                results.append({"date": ev_date, "corp": corp, "type": "scheduled"})
+
+        # 중복 제거
+        seen = set()
+        unique = []
+        for r in results:
+            key = (r["date"], r["corp"])
+            if key not in seen:
+                seen.add(key)
+                unique.append(r)
+        return unique
+    except Exception as e:
+        print(f"[FnGuide HTML] Error: {e}")
+        return []
 
 
 def fetch_fnguide_range(from_date: datetime.date, to_date: datetime.date) -> list[dict]:

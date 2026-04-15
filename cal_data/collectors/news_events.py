@@ -76,16 +76,14 @@ EXPIRY_DATES_2026 = [
     {"date": "2026-12-10", "title": "12월 선물옵션 동시만기 (쿼드러플위칭)", "category": "만기일"},
 ]
 
-# 날짜 미확정 일정 (월간/주간)
+# 날짜 미확정 일정 (월간/주간) — FnGuide에 확정 날짜 없는 것만
 UNDATED_EVENTS_2026 = [
     {"month": "2026-04", "title": "테슬라 1Q 실적발표 (예상)", "category": "미국실적"},
     {"month": "2026-07", "title": "테슬라 2Q 실적발표 (예상)", "category": "미국실적"},
     {"month": "2026-10", "title": "테슬라 3Q 실적발표 (예상)", "category": "미국실적"},
     {"month": "2026-06", "title": "닌텐도 스위치2 출시 (예상)", "category": "게임"},
     {"month": "2026-09", "title": "Apple 아이폰 18 출시 (예상)", "category": "반도체"},
-    {"week": "2026-04-W4", "title": "삼성전자 1Q 잠정실적 (예상)", "category": "한국실적(잠정)"},
-    {"week": "2026-07-W1", "title": "삼성전자 2Q 잠정실적 (예상)", "category": "한국실적(잠정)"},
-    {"week": "2026-04-W4", "title": "SK하이닉스 1Q 실적발표 (예상)", "category": "한국실적"},
+    # 삼성전자/SK하이닉스는 FnGuide에서 확정 날짜가 자동 수집되므로 제거
 ]
 
 HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
@@ -279,13 +277,5 @@ def fetch_rss_events(from_date: datetime.date, to_date: datetime.date) -> list[d
 
 
 def fetch_news_events(from_date: datetime.date, to_date: datetime.date) -> list[dict]:
-    """뉴스 기반 일정 전체 수집"""
-    all_events = []
-
-    known = fetch_known_events(from_date, to_date)
-    all_events.extend(known)
-
-    rss = fetch_rss_events(from_date, to_date)
-    all_events.extend(rss)
-
-    return all_events
+    """고정 산업이벤트 + 만기일 반환 (RSS 수집은 ai_news_scanner.py에서 담당)"""
+    return fetch_known_events(from_date, to_date)

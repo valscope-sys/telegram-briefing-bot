@@ -176,13 +176,5 @@ def fetch_economic_calendar(from_date: datetime.date, to_date: datetime.date) ->
 
 
 def fetch_finnhub_all(from_date: datetime.date, to_date: datetime.date) -> list[dict]:
-    """Finnhub 전체 수집 (실적 + 경제지표)"""
-    all_events = []
-
-    earnings = fetch_us_earnings(from_date, to_date)
-    all_events.extend(earnings)
-
-    economic = fetch_economic_calendar(from_date, to_date)
-    all_events.extend(economic)
-
-    return all_events
+    """Finnhub 수집 (미국 실적만 — 경제지표는 Investing.com으로 대체)"""
+    return fetch_us_earnings(from_date, to_date)

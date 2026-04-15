@@ -67,6 +67,32 @@ def merge_events(existing: list[dict], new_events: list[dict]) -> list[dict]:
             indexed[key] = ev
 
     result = list(indexed.values())
+
+    # 확정 날짜가 있으면 같은 기업의 undated "예상" 자동 제거
+    # 티커 → 한글명 매핑 (Finnhub은 영문, undated는 한글)
+    TICKER_KR = {
+        "TSLA": "테슬라", "NVDA": "엔비디아", "AAPL": "애플", "MSFT": "마이크로소프트",
+        "GOOGL": "구글", "AMZN": "아마존", "META": "메타", "NFLX": "넷플릭스",
+        "TSM": "TSMC", "AMD": "AMD", "ASML": "ASML", "AVGO": "브로드컴",
+    }
+    confirmed_corps = set()
+    for ev in result:
+        if not ev.get("undated") and ev.get("category", "") in ("한국실적", "한국실적(잠정)", "미국실적"):
+            title = ev.get("title", "")
+            corp = title.split(" 실적발표")[0].split(" 잠정실적발표")[0].strip()
+            if corp:
+                confirmed_corps.add(corp)
+                # 티커에서 한글명도 추가
+                ticker = corp.split("(")[0].strip()
+                if ticker in TICKER_KR:
+                    confirmed_corps.add(TICKER_KR[ticker])
+
+    if confirmed_corps:
+        result = [ev for ev in result if not (
+            ev.get("undated") and
+            any(corp in ev.get("title", "") for corp in confirmed_corps)
+        )]
+
     result.sort(key=lambda e: (e.get("date", ""), e.get("time", ""), e.get("category", "")))
     return result
 
@@ -107,7 +133,7 @@ def collect_all(from_date: datetime.date, to_date: datetime.date) -> list[dict]:
     # 3.5. Investing.com (경제지표)
     try:
         from cal_data.collectors.investing_economic import fetch_investing_economic
-        inv = fetch_investing_economic()
+        inv = fetch_investing_economic(from_date, to_date)
         print(f"[Calendar] 경제지표(Investing): {len(inv)}건")
         all_events.extend(inv)
     except ImportError:

@@ -142,13 +142,15 @@ def fetch_all_ipo() -> list[dict]:
     all_events.extend(listings)
 
     subscriptions = fetch_ipo_subscriptions()
-    # 중복 제거 (같은 기업이 신규상장+공모청약 둘 다 있을 수 있음)
-    listing_names = {e["title"].replace(" 신규상장", "") for e in listings}
-    for sub in subscriptions:
-        base_name = sub["title"].split(" 공모청약")[0]
-        if base_name not in listing_names:
-            all_events.append(sub)
-        else:
-            all_events.append(sub)  # 둘 다 유지 (다른 이벤트)
+    # 신규상장과 공모청약은 날짜가 다르므로 둘 다 유지
+    all_events.extend(subscriptions)
 
-    return all_events
+    # 중복 제거 (같은 날짜 + 같은 제목)
+    seen = set()
+    unique = []
+    for e in all_events:
+        key = (e["date"], e["title"])
+        if key not in seen:
+            seen.add(key)
+            unique.append(e)
+    return unique
