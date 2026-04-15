@@ -519,6 +519,12 @@ function openAddEvent(dateStr) {
     resetEventForm();
     if (dateStr) document.getElementById("ev-date").value = dateStr;
 }
+function toggleDateType() {
+    const type = document.getElementById("ev-date-type").value;
+    document.getElementById("date-exact-fields").classList.toggle("hidden", type !== "exact");
+    document.getElementById("date-month-fields").classList.toggle("hidden", type !== "month");
+    document.getElementById("date-week-fields").classList.toggle("hidden", type !== "week");
+}
 function openEditEvent(ev) {
     if (!isAdmin) return;
     editingEvent = ev;
@@ -529,33 +535,78 @@ function openEditEvent(ev) {
     document.getElementById("ev-delete").classList.remove("hidden");
     document.getElementById("ev-title").value = ev.title || "";
     document.getElementById("ev-category").value = ev.category || "수동";
-    document.getElementById("ev-date").value = ev.date || "";
-    document.getElementById("ev-end-date").value = ev.endDate || "";
-    document.getElementById("ev-time").value = ev.time || "";
     document.getElementById("ev-link").value = ev.link || "";
     document.getElementById("ev-summary").value = ev.summary || "";
+    // 날짜 유형 판별
+    if (ev.undated && ev.week) {
+        document.getElementById("ev-date-type").value = "week";
+        const parts = ev.week.split("-W");
+        document.getElementById("ev-week-month").value = parts[0] || "";
+        document.getElementById("ev-week-num").value = parts[1] || "1";
+    } else if (ev.undated && ev.month) {
+        document.getElementById("ev-date-type").value = "month";
+        document.getElementById("ev-month").value = ev.month || "";
+    } else {
+        document.getElementById("ev-date-type").value = "exact";
+        document.getElementById("ev-date").value = ev.date || "";
+        document.getElementById("ev-end-date").value = ev.endDate || "";
+        document.getElementById("ev-time").value = ev.time || "";
+    }
+    toggleDateType();
 }
 function resetEventForm() {
-    ["ev-title","ev-date","ev-end-date","ev-time","ev-link","ev-summary"].forEach(id => {
-        document.getElementById(id).value = "";
+    ["ev-title","ev-date","ev-end-date","ev-time","ev-link","ev-summary","ev-month","ev-week-month"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = "";
     });
     document.getElementById("ev-category").value = "수동";
+    document.getElementById("ev-date-type").value = "exact";
+    toggleDateType();
 }
 function saveEvent() {
     const title = document.getElementById("ev-title").value.trim();
-    const date = document.getElementById("ev-date").value;
-    if (!title || !date) { alert("제목과 날짜는 필수입니다"); return; }
+    if (!title) { alert("제목은 필수입니다"); return; }
 
+    const dateType = document.getElementById("ev-date-type").value;
     const ev = {
-        date,
-        time: document.getElementById("ev-time").value || "",
         category: document.getElementById("ev-category").value,
         title,
         source: "manual",
         auto: false,
     };
-    const endDate = document.getElementById("ev-end-date").value;
-    if (endDate) ev.endDate = endDate;
+
+    if (dateType === "month") {
+        const month = document.getElementById("ev-month").value;
+        if (!month) { alert("월을 선택하세요"); return; }
+        const [y, m] = month.split("-").map(Number);
+        const lastDay = new Date(y, m, 0).getDate();
+        ev.date = `${y}-${String(m).padStart(2,"0")}-01`;
+        ev.endDate = `${y}-${String(m).padStart(2,"0")}-${lastDay}`;
+        ev.month = month;
+        ev.undated = true;
+        ev.time = "";
+    } else if (dateType === "week") {
+        const weekMonth = document.getElementById("ev-week-month").value;
+        const weekNum = document.getElementById("ev-week-num").value;
+        if (!weekMonth) { alert("월을 선택하세요"); return; }
+        ev.week = `${weekMonth}-W${weekNum}`;
+        ev.undated = true;
+        ev.time = "";
+        // week의 시작일 계산
+        const [y, m] = weekMonth.split("-").map(Number);
+        const startDay = (parseInt(weekNum) - 1) * 7 + 1;
+        const endDay = Math.min(startDay + 6, new Date(y, m, 0).getDate());
+        ev.date = `${y}-${String(m).padStart(2,"0")}-${String(startDay).padStart(2,"0")}`;
+        ev.endDate = `${y}-${String(m).padStart(2,"0")}-${String(endDay).padStart(2,"0")}`;
+    } else {
+        const date = document.getElementById("ev-date").value;
+        if (!date) { alert("날짜를 선택하세요"); return; }
+        ev.date = date;
+        ev.time = document.getElementById("ev-time").value || "";
+        const endDate = document.getElementById("ev-end-date").value;
+        if (endDate) ev.endDate = endDate;
+    }
+
     const link = document.getElementById("ev-link").value.trim();
     if (link) ev.link = link;
     const summary = document.getElementById("ev-summary").value.trim();
