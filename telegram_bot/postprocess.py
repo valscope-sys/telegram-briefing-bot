@@ -57,4 +57,13 @@ def postprocess_commentary(text):
     for old, new in awkward:
         text = text.replace(old, new)
 
+    # 7. 한영 혼용 오타 수정 (Sonnet 한영 전환 버그)
+    import re
+    # "아마zon" → "아마존" 등
+    mixed_fixes = [
+        ("아마zon", "아마존"), ("테슬la", "테슬라"), ("구글le", "구글"),
+    ]
+    for old, new in mixed_fixes:
+        text = text.replace(old, new)
+
     return text.strip()
