@@ -86,7 +86,7 @@ def format_morning_briefing(global_data, domestic_data, morning_commentary=""):
     if us_10y and us_10y.get("금리"):
         rate_2y = us_2y.get("금리", 0)
         rate_10y = us_10y.get("금리", 0)
-        spread = int((rate_10y - rate_2y) * 100)  # 10Y-2Y (양수=정상, 음수=역전)
+        spread = round((rate_10y - rate_2y) * 100)  # 10Y-2Y (양수=정상, 음수=역전)
         lines.append(f"미국채 2Y {rate_2y:.2f}% / 10Y {rate_10y:.2f}%  (스프레드 {spread:+d}bp)")
     # 국고채
     kr_3y = bonds.get("국고채 3Y", {})
