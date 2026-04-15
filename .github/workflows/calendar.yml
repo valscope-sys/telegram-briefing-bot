@@ -1,10 +1,9 @@
 name: Update Calendar
 
 on:
-  # 캘린더 자동 업데이트 — GitHub Secrets 설정 후 활성화
-  # schedule:
-  #   - cron: '0 15 * * *'  # 매일 00:00 KST (15:00 UTC)
-  workflow_dispatch:  # 수동 실행만 유지
+  schedule:
+    - cron: '0 15 * * *'  # 매일 00:00 KST (15:00 UTC)
+  workflow_dispatch:  # 수동 실행
 
 jobs:
   update:
@@ -25,7 +24,6 @@ jobs:
         env:
           FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
         run: python -m cal_data.update --full
 
       - name: Copy to docs
