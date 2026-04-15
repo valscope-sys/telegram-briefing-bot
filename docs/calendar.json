@@ -28953,6 +28953,30 @@
   },
   {
     "date": "2026-04-15",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "서울반도체 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-15",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "서울바이오시스 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-15",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "신영증권 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-15",
     "time": "00:00",
     "category": "통화정책",
     "title": "🇪🇺 ECB President Lagarde Speaks",
@@ -28997,6 +29021,14 @@
     "time": "10:00",
     "category": "IR",
     "title": "파라다이스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-15",
+    "time": "10:00",
+    "category": "IR",
+    "title": "삼양컴텍 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -29104,6 +29136,14 @@
     "source": "investing",
     "auto": true,
     "country": "🇪🇺"
+  },
+  {
+    "date": "2026-04-16",
+    "time": "",
+    "category": "IR",
+    "title": "신세계인터내셔날 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-04-16",
@@ -29397,6 +29437,30 @@
   },
   {
     "date": "2026-04-16",
+    "time": "09:00",
+    "category": "IR",
+    "title": "심텍홀딩스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-16",
+    "time": "09:00",
+    "category": "IR",
+    "title": "심텍 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-16",
+    "time": "09:10",
+    "category": "IR",
+    "title": "신흥에스이씨 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-16",
     "time": "10:00",
     "category": "통화정책",
     "title": "한국은행 금통위 금리 결정",
@@ -29409,6 +29473,14 @@
     "time": "10:30",
     "category": "IR",
     "title": "코미코 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-16",
+    "time": "10:30",
+    "category": "IR",
+    "title": "이노테크 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -29515,6 +29587,14 @@
     "time": "16:00",
     "category": "IR",
     "title": "대성하이텍 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-16",
+    "time": "16:00",
+    "category": "IR",
+    "title": "롯데케미칼 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -29741,6 +29821,15 @@
     "auto": true
   },
   {
+    "category": "정치/외교",
+    "title": "美 IEEPA 관세 환급 시작",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2026-04-20",
+    "time": "",
+    "summary": "미국 IEEPA 관세 환급 절차 시작. 수입업체 및 통관업계에 영향"
+  },
+  {
     "date": "2026-04-20",
     "time": "04:00",
     "category": "경제지표",
@@ -29890,6 +29979,14 @@
     "source": "investing",
     "auto": true,
     "country": "🇺🇸"
+  },
+  {
+    "date": "2026-04-21",
+    "time": "16:00",
+    "category": "IR",
+    "title": "이랜텍 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-04-21",
@@ -30085,6 +30182,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "네오리진 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-23",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "피플바이오 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -30685,6 +30790,22 @@
     "auto": true
   },
   {
+    "date": "2026-04-28",
+    "time": "14:00",
+    "category": "IR",
+    "title": "한화솔루션 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-28",
+    "time": "15:30",
+    "category": "한국실적",
+    "title": "두산밥캣 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-04-29",
     "time": "",
     "category": "IPO/공모",
@@ -30846,6 +30967,14 @@
   },
   {
     "date": "2026-04-29",
+    "time": "09:00",
+    "category": "IR",
+    "title": "두산밥캣 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-29",
     "time": "10:00",
     "category": "한국실적",
     "title": "에코프로비엠 실적발표",
@@ -30873,6 +31002,14 @@
     "time": "14:00",
     "category": "한국실적",
     "title": "에코프로 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-29",
+    "time": "15:30",
+    "category": "한국실적",
+    "title": "넥센타이어 실적발표",
     "source": "fnguide",
     "auto": true
   },
@@ -31080,6 +31217,14 @@
   {
     "date": "2026-04-30",
     "time": "10:00",
+    "category": "IR",
+    "title": "한화에어로스페이스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-30",
+    "time": "10:00",
     "category": "한국실적(잠정)",
     "title": "삼성전자 잠정실적발표",
     "source": "fnguide",
@@ -31101,6 +31246,14 @@
     "source": "fixed",
     "auto": false,
     "country": "🇨🇳"
+  },
+  {
+    "date": "2026-04-30",
+    "time": "14:00",
+    "category": "IR",
+    "title": "한온시스템 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-04-30",
@@ -31295,6 +31448,17 @@
     "auto": true
   },
   {
+    "category": "수동",
+    "title": "5세대 실손보험 출시",
+    "source": "ai_scan",
+    "auto": true,
+    "month": "2026-05",
+    "undated": true,
+    "date": "2026-05-01",
+    "endDate": "2026-05-31",
+    "summary": "보험료 30% 인하한 5세대 실손의료보험 시장 출시. 보험업계 영향"
+  },
+  {
     "date": "2026-05-01",
     "time": "",
     "category": "자동차/배터리",
@@ -31394,6 +31558,14 @@
     "source": "fixed",
     "auto": false,
     "country": ""
+  },
+  {
+    "date": "2026-05-06",
+    "time": "",
+    "category": "IR",
+    "title": "한화에어로스페이스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-05-06",
@@ -31718,6 +31890,14 @@
     "auto": true
   },
   {
+    "date": "2026-05-11",
+    "time": "14:00",
+    "category": "IR",
+    "title": "메디젠휴먼케어 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-05-12",
     "time": "",
     "category": "기업이벤트",
@@ -31746,6 +31926,22 @@
     "time": "",
     "category": "한국실적",
     "title": "펄어비스 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-12",
+    "time": "10:00",
+    "category": "IR",
+    "title": "엑셀세라퓨틱스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-12",
+    "time": "14:00",
+    "category": "IR",
+    "title": "메디쎄이 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -31779,6 +31975,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "씨엑스아이 액면분할",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-14",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "세니젠 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -31819,6 +32023,22 @@
     "time": "",
     "category": "기업이벤트",
     "title": "아이텍 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-15",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "마키나락스 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-15",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "인스코비 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -31876,6 +32096,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "한솔테크닉스 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-20",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "더코디 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -32168,6 +32396,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "크리스탈신소재 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-02",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "애머릿지 액면병합",
     "source": "fnguide",
     "auto": true
   },
@@ -32554,6 +32790,14 @@
     "auto": true
   },
   {
+    "date": "2026-06-27",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "스타코링크 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-06-29",
     "time": "",
     "category": "기업이벤트",
@@ -32843,6 +33087,14 @@
     "auto": true
   },
   {
+    "date": "2026-07-21",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "한울반도체 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-07-23",
     "time": "",
     "category": "기업이벤트",
@@ -33012,6 +33264,14 @@
     "category": "만기일",
     "title": "8월 옵션만기일",
     "source": "news",
+    "auto": true
+  },
+  {
+    "date": "2026-08-13",
+    "time": "",
+    "category": "미국실적",
+    "title": "AMAT 실적발표 (장후) [EPS est. $2.9015]",
+    "source": "finnhub",
     "auto": true
   },
   {
@@ -33434,6 +33694,18 @@
     "country": "🇨🇳"
   },
   {
+    "category": "수동",
+    "title": "실손보험 갈아타기 제도 도입",
+    "source": "ai_scan",
+    "auto": true,
+    "month": "2026-11",
+    "undated": true,
+    "date": "2026-11-01",
+    "endDate": "2026-11-30",
+    "unconfirmed": true,
+    "summary": "구세대 실손보험에서 5세대로 갈아타기 유인책 시행. 보험업계 영향"
+  },
+  {
     "date": "2026-11-01",
     "time": "09:00",
     "category": "경제지표",
@@ -33540,6 +33812,17 @@
     "source": "fixed",
     "auto": false,
     "country": "🇨🇳"
+  },
+  {
+    "category": "에너지",
+    "title": "원유 2.7억 배럴 도입 완료",
+    "source": "ai_scan",
+    "auto": true,
+    "month": "2026-12",
+    "undated": true,
+    "date": "2026-12-01",
+    "endDate": "2026-12-31",
+    "summary": "정부가 사우디, 카자흐스탄 등에서 연말까지 원유 2억7300만 배럴 확보 완료 예정"
   },
   {
     "date": "2026-12-01",
