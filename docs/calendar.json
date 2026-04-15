@@ -33704,25 +33704,5 @@
     "source": "fixed",
     "auto": false,
     "country": "🇨🇳"
-  },
-  {
-    "category": "부동산",
-    "title": "인천가정2지구 B2블록 입주 예정",
-    "source": "ai_scan",
-    "auto": true,
-    "date": "2028-07",
-    "time": "",
-    "unconfirmed": true,
-    "summary": "LH 공공분양 308가구 입주 시작. 관련주: LH, 건설주"
-  },
-  {
-    "category": "부동산",
-    "title": "인천가정2지구 B2블록 공공분양주택 입주",
-    "source": "ai_scan",
-    "auto": true,
-    "date": "2028-07-01",
-    "time": "",
-    "unconfirmed": true,
-    "summary": "LH 공급 308가구 입주 예정. 4년 만의 재개된 분양 사업으로 건설/부동산 관련주 영향"
   }
 ]
