@@ -171,13 +171,16 @@ def _build_schedule(target_date):
 
         # 4. 무조건 포함 카테고리 → events
         if cat in ALWAYS_INCLUDE_CATS:
-            country = e.get("country", "") or CATEGORY_COUNTRY.get(cat, "")
+            # title에 이미 이모지가 포함되어 있으면 country 생략 (중복 방지)
+            has_emoji = any(ord(c) > 0x1F000 for c in title)
+            country = "" if has_emoji else (e.get("country", "") or CATEGORY_COUNTRY.get(cat, ""))
             events.append({"시간": e.get("time", ""), "국가": country, "이벤트": title})
             continue
 
         # 5. 이벤트 카테고리 → events
         if cat in EVENT_CATS:
-            country = e.get("country", "") or CATEGORY_COUNTRY.get(cat, "")
+            has_emoji = any(ord(c) > 0x1F000 for c in title)
+            country = "" if has_emoji else (e.get("country", "") or CATEGORY_COUNTRY.get(cat, ""))
             events.append({"시간": e.get("time", ""), "국가": country, "이벤트": title})
             continue
 
