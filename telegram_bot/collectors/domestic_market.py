@@ -500,6 +500,45 @@ def fetch_fluctuation_rank(sort_order="1"):
         return []
 
 
+def fetch_sector_investor_flow():
+    """업종별 외국인/기관 순매수 — 키움 REST API (ka10051)
+    시황 프롬프트에 "외국인 순매수 상위 업종" 전달용
+    """
+    try:
+        from telegram_bot.kiwoom_client import kiwoom_post
+        import datetime
+
+        today = datetime.date.today().strftime("%Y%m%d")
+        data = kiwoom_post("ka10051", {
+            "mrkt_tp": "0",       # 코스피
+            "amt_qty_tp": "0",    # 금액 기준
+            "base_dt": today,
+            "stex_tp": "1",       # KRX
+        }, url_path="/api/dostk/sect")
+
+        items = data.get("inds_netprps", [])
+        results = []
+        for item in items:
+            name = item.get("inds_nm", "").strip()
+            if not name or "종합" in name or "대형" in name or "중형" in name or "소형" in name:
+                continue
+            frgn = _safe_int(item.get("frgnr_netprps", "0").replace("+", "").replace(",", ""))
+            orgn = _safe_int(item.get("orgn_netprps", "0").replace("+", "").replace(",", ""))
+            # 부호 복원
+            if item.get("frgnr_netprps", "").startswith("-"):
+                frgn = -abs(frgn)
+            if item.get("orgn_netprps", "").startswith("-"):
+                orgn = -abs(orgn)
+            results.append({"업종": name, "외국인": frgn, "기관": orgn})
+
+        # 외국인 순매수 기준 정렬
+        results.sort(key=lambda x: x["외국인"], reverse=True)
+        return results
+    except Exception as e:
+        print(f"[KIWOOM] 업종별 수급 조회 실패: {e}")
+        return []
+
+
 def fetch_all_domestic():
     """국내 시장 데이터 전체 조회"""
     return {
@@ -512,4 +551,5 @@ def fetch_all_domestic():
         "trade_value_rank": fetch_trade_value_rank(),
         "top_gainers": fetch_fluctuation_rank("1"),
         "top_losers": fetch_fluctuation_rank("2"),
+        "sector_investor_flow": fetch_sector_investor_flow(),
     }

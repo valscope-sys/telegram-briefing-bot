@@ -410,6 +410,16 @@ def generate_market_commentary(market_data, news_list, intraday_text="", trend_t
         pers = investors.get("개인금액", 0) / 100
         data_summary += f"\n수급: 외국인 {frgn:+,.0f}억 / 기관 {inst:+,.0f}억 / 개인 {pers:+,.0f}억\n"
 
+    # 업종별 수급 (키움 API)
+    sector_flow = market_data.get("sector_investor_flow", [])
+    if sector_flow:
+        data_summary += "\n업종별 외국인 순매수 (억원):\n"
+        for sf in sector_flow[:5]:
+            data_summary += f"  {sf['업종']}: 외국인 {sf['외국인']:+,}억 / 기관 {sf['기관']:+,}억\n"
+        data_summary += "  ...\n"
+        for sf in sector_flow[-3:]:
+            data_summary += f"  {sf['업종']}: 외국인 {sf['외국인']:+,}억 / 기관 {sf['기관']:+,}억\n"
+
     data_summary += "\n섹터 ETF 등락:\n"
     for sector, info in sectors.items():
         if isinstance(info, dict) and "error" not in info:
