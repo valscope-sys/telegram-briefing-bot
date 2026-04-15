@@ -24839,17 +24839,6 @@
   },
   {
     "date": "2026-04-01",
-    "endDate": "2026-04-30",
-    "time": "",
-    "category": "미국실적",
-    "title": "테슬라 1Q 실적발표 (예상)",
-    "source": "news",
-    "auto": true,
-    "undated": true,
-    "month": "2026-04"
-  },
-  {
-    "date": "2026-04-01",
     "time": "",
     "category": "자동차/배터리",
     "title": "현대차/기아 3월 판매량 발표",
@@ -27114,7 +27103,7 @@
     "auto": true,
     "date": "2026-04-16",
     "time": "",
-    "summary": "일본 도쿄에서 16~18일 개최되는 K-콘텐츠, K-푸드, 뷰티, 라이프스타일 등 한국 산업 전시회. 관련주: 한국무역협회 회원사, K-콘텐츠 관련 기업들"
+    "summary": "한국무역협회 주관으로 일본 도쿄에서 개최되는 K-콘텐츠, K-푸드, 뷰티, 라이프스타일 등 한류 산업 전시회. 16~18일 개최"
   },
   {
     "date": "2026-04-16",
@@ -29112,24 +29101,6 @@
     "auto": true
   },
   {
-    "category": "수동",
-    "title": "KTX-SRT 연결운행 시작",
-    "source": "ai_scan",
-    "auto": true,
-    "date": "2026-05-15",
-    "time": "",
-    "summary": "다음달 15일부터 KTX와 SRT 일부 구간 연결운행 개시. 좌석 공급 확대 및 운임 인하 예상. 관련주: 한국철도공사, SR"
-  },
-  {
-    "category": "수동",
-    "title": "KTX-SRT 연결운행 개시",
-    "source": "ai_scan",
-    "auto": true,
-    "date": "2026-05-15",
-    "time": "",
-    "summary": "다음달 15일부터 KTX와 SRT 일부 구간 연결 운행 시작. 좌석 공급 확대 및 운임 인하. 철도공기업 통합 논의 가속화 전망"
-  },
-  {
     "date": "2026-05-19",
     "time": "",
     "category": "기업이벤트",
@@ -29542,21 +29513,21 @@
   },
   {
     "category": "게임",
-    "title": "Amazon Luna 서비스 변경",
+    "title": "아마존 루나 서드파티 지원 중단",
     "source": "ai_scan",
     "auto": true,
     "date": "2026-06-10",
     "time": "",
-    "summary": "6월 10일부터 Luna에서 서드파티 게임스토어 지원 중단. 아마존 게임 서비스 구조 변화"
+    "summary": "아마존 루나에서 서드파티 게임 스토어, 개별 구매, 외부 구독 지원 중단. 클라우드 게임 시장 재편 예상"
   },
   {
     "category": "게임",
-    "title": "Amazon Luna 서드파티 지원 중단",
+    "title": "Amazon Luna 서드파티 지원 종료",
     "source": "ai_scan",
     "auto": true,
     "date": "2026-06-10",
     "time": "",
-    "summary": "아마존 루나가 서드파티 게임스토어, 개별 구매, 외부 구독 지원을 중단. 클라우드 게임 시장 재편 예상. 관련주: 아마존, 클라우드 게임 관련 기업들"
+    "summary": "아마존 루나가 서드파티 게임 스토어, 개별 구매, 외부 구독 지원 중단. 클라우드 게임 시장 재편 예상"
   },
   {
     "date": "2026-06-10",
@@ -29834,17 +29805,6 @@
     "title": "한화솔루션 유상증자(주주배정)",
     "source": "fnguide",
     "auto": true
-  },
-  {
-    "date": "2026-07-01",
-    "endDate": "2026-07-31",
-    "time": "",
-    "category": "미국실적",
-    "title": "테슬라 2Q 실적발표 (예상)",
-    "source": "news",
-    "auto": true,
-    "undated": true,
-    "month": "2026-07"
   },
   {
     "date": "2026-07-01",
@@ -30392,17 +30352,6 @@
     "source": "fixed",
     "auto": false,
     "country": "🇨🇳"
-  },
-  {
-    "date": "2026-10-01",
-    "endDate": "2026-10-31",
-    "time": "",
-    "category": "미국실적",
-    "title": "테슬라 3Q 실적발표 (예상)",
-    "source": "news",
-    "auto": true,
-    "undated": true,
-    "month": "2026-10"
   },
   {
     "date": "2026-10-01",

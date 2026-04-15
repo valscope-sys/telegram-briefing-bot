@@ -69,13 +69,23 @@ def merge_events(existing: list[dict], new_events: list[dict]) -> list[dict]:
     result = list(indexed.values())
 
     # 확정 날짜가 있으면 같은 기업의 undated "예상" 자동 제거
+    # 티커 → 한글명 매핑 (Finnhub은 영문, undated는 한글)
+    TICKER_KR = {
+        "TSLA": "테슬라", "NVDA": "엔비디아", "AAPL": "애플", "MSFT": "마이크로소프트",
+        "GOOGL": "구글", "AMZN": "아마존", "META": "메타", "NFLX": "넷플릭스",
+        "TSM": "TSMC", "AMD": "AMD", "ASML": "ASML", "AVGO": "브로드컴",
+    }
     confirmed_corps = set()
     for ev in result:
         if not ev.get("undated") and ev.get("category", "") in ("한국실적", "한국실적(잠정)", "미국실적"):
-            # 기업명 추출 (제목에서 실적발표/잠정실적발표 제거)
-            corp = ev.get("title", "").replace(" 실적발표", "").replace(" 잠정실적발표", "").strip()
+            title = ev.get("title", "")
+            corp = title.split(" 실적발표")[0].split(" 잠정실적발표")[0].strip()
             if corp:
                 confirmed_corps.add(corp)
+                # 티커에서 한글명도 추가
+                ticker = corp.split("(")[0].strip()
+                if ticker in TICKER_KR:
+                    confirmed_corps.add(TICKER_KR[ticker])
 
     if confirmed_corps:
         result = [ev for ev in result if not (
