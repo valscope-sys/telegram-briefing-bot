@@ -186,6 +186,9 @@ def _build_schedule(target_date):
 
         # 6. 그 외 제외 (EXCLUDE_CATS 등)
 
+    # 경제지표 후처리: 파생 지표 제거 + 영문→한글 + 중복 병합
+    events = _filter_economic_events(events)
+
     # DART 실시간 보완
     seen = {e["기업명"] for e in earnings}
     for d in dart:
@@ -198,6 +201,102 @@ def _build_schedule(target_date):
         "events": events,
         "earnings": earnings,
     }
+
+
+# 파생/중복 경제지표 제거 키워드
+_DERIVATIVE_KEYWORDS = [
+    "YTD", "QoQ", "Press Conference", "NBS Press",
+    "Chinese GDP YTD", "Chinese Industrial Production YTD",
+    "Core CPI", "Core 소비자물가",  # CPI YoY가 있으면 Core는 파생
+    "CPI (MoM)", "소비자물가 (전월비)",  # YoY가 있으면 MoM은 파생
+    "Supervisory Board", "감독위원",  # ECB 금리 결정 있으면 부속
+    "Publishes Account", "의사록 공개",  # 금리 결정 당일이면 부속
+    "Core PPI", "Core 생산자물가",  # PPI YoY가 있으면 Core는 파생
+    "Continuing Jobless", "연속 실업수당",  # Initial이 메인, Continuing은 파생
+]
+
+# 영문 → 한글 번역 매핑
+_EN_TO_KR = {
+    "GDP (YoY)": "GDP (전년비)",
+    "GDP (QoQ)": "GDP (전분기비)",
+    "Industrial Production (YoY)": "산업생산 (전년비)",
+    "Fixed Asset Investment (YoY)": "고정자산투자 (전년비)",
+    "Unemployment Rate": "실업률",
+    "Retail Sales (MoM)": "소매판매 (전월비)",
+    "Retail Sales (YoY)": "소매판매 (전년비)",
+    "CPI (YoY)": "소비자물가 (전년비)",
+    "CPI (MoM)": "소비자물가 (전월비)",
+    "PPI (YoY)": "생산자물가 (전년비)",
+    "PPI (MoM)": "생산자물가 (전월비)",
+    "Nonfarm Payrolls": "비농업 고용",
+    "Initial Jobless Claims": "신규 실업수당 청구",
+    "Manufacturing PMI": "제조업 PMI",
+    "Services PMI": "서비스업 PMI",
+    "Trade Balance": "무역수지",
+    "ECB Interest Rate Decision": "ECB 금리 결정",
+    "ECB's Lane Speaks": "ECB 렌 수석이코노미스트 발언",
+    "ECB Supervisory Board Member Tuominen Speaks": "ECB 투오미넨 감독위원 발언",
+    "ECB Publishes Account of Monetary Policy Meeting": "ECB 통화정책회의 의사록 공개",
+    "Fed Chair Powell Speaks": "연준 파월 의장 발언",
+    "FOMC Meeting Minutes": "FOMC 의사록 공개",
+    "BOJ Interest Rate Decision": "일본은행 금리 결정",
+    "Building Permits": "건축허가",
+    "Housing Starts": "주택착공",
+    "Empire State Manufacturing Index": "뉴욕 제조업지수",
+    "Philadelphia Fed Manufacturing Index": "필라델피아 제조업지수",
+    "Michigan Consumer Sentiment": "미시간 소비자심리",
+    "Existing Home Sales": "기존주택판매",
+    "New Home Sales": "신규주택판매",
+    "Durable Goods Orders": "내구재주문",
+    "PCE Price Index": "PCE 물가지수",
+    "Core PCE Price Index": "핵심 PCE 물가지수",
+    "Consumer Confidence": "소비자신뢰지수",
+    "ISM Manufacturing PMI": "ISM 제조업 PMI",
+    "ISM Services PMI": "ISM 서비스업 PMI",
+    "Continuing Jobless Claims": "연속 실업수당 청구",
+    "Retail Sales": "소매판매",
+    "Industrial Production": "산업생산",
+    "Capacity Utilization Rate": "설비가동률",
+    "Import Price Index": "수입물가지수",
+    "Export Price Index": "수출물가지수",
+    "Business Inventories": "기업재고",
+    "Crude Oil Inventories": "원유재고",
+}
+
+
+def _filter_economic_events(events):
+    """경제지표 후처리: 파생 제거 + 영문→한글 + 같은 시간 중복 병합"""
+    filtered = []
+    seen_keys = set()  # (시간, 국가, 핵심키워드)
+
+    for ev in events:
+        title = ev.get("이벤트", "")
+        time_str = ev.get("시간", "")
+        country = ev.get("국가", "")
+
+        # 1. 파생 지표 제거
+        if any(kw in title for kw in _DERIVATIVE_KEYWORDS):
+            continue
+
+        # 2. 영문 → 한글 번역
+        for en, kr in _EN_TO_KR.items():
+            if en in title:
+                title = title.replace(en, kr)
+        # "Chinese " 접두어 제거 (이미 국기로 구분)
+        title = title.replace("Chinese ", "")
+        ev["이벤트"] = title
+
+        # 3. 같은 시간 + 같은 국가의 중복 방지
+        # 핵심 키워드 추출 (첫 3단어)
+        key_words = title.split()[:3]
+        dedup_key = (time_str, country, tuple(key_words))
+        if dedup_key in seen_keys:
+            continue
+        seen_keys.add(dedup_key)
+
+        filtered.append(ev)
+
+    return filtered
 
 
 def fetch_today_schedule():
