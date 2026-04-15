@@ -67,6 +67,22 @@ def merge_events(existing: list[dict], new_events: list[dict]) -> list[dict]:
             indexed[key] = ev
 
     result = list(indexed.values())
+
+    # 확정 날짜가 있으면 같은 기업의 undated "예상" 자동 제거
+    confirmed_corps = set()
+    for ev in result:
+        if not ev.get("undated") and ev.get("category", "") in ("한국실적", "한국실적(잠정)", "미국실적"):
+            # 기업명 추출 (제목에서 실적발표/잠정실적발표 제거)
+            corp = ev.get("title", "").replace(" 실적발표", "").replace(" 잠정실적발표", "").strip()
+            if corp:
+                confirmed_corps.add(corp)
+
+    if confirmed_corps:
+        result = [ev for ev in result if not (
+            ev.get("undated") and
+            any(corp in ev.get("title", "") for corp in confirmed_corps)
+        )]
+
     result.sort(key=lambda e: (e.get("date", ""), e.get("time", ""), e.get("category", "")))
     return result
 
