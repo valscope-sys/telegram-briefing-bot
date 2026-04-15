@@ -109,9 +109,25 @@
                             <option value="수동">기타</option>
                         </select>
                     </label>
-                    <label>시작일 <input type="date" id="ev-date"></label>
-                    <label>종료일 (선택) <input type="date" id="ev-end-date"></label>
-                    <label>시간 (선택) <input type="time" id="ev-time"></label>
+                    <label>날짜 유형
+                        <select id="ev-date-type" onchange="toggleDateType()">
+                            <option value="exact">확정 날짜</option>
+                            <option value="month">월중 (미확정)</option>
+                            <option value="week">주차 (미확정)</option>
+                        </select>
+                    </label>
+                    <div id="date-exact-fields">
+                        <label>시작일 <input type="date" id="ev-date"></label>
+                        <label>종료일 (선택) <input type="date" id="ev-end-date"></label>
+                        <label>시간 (선택) <input type="time" id="ev-time"></label>
+                    </div>
+                    <div id="date-month-fields" class="hidden">
+                        <label>월 <input type="month" id="ev-month" placeholder="2026-04"></label>
+                    </div>
+                    <div id="date-week-fields" class="hidden">
+                        <label>월 <input type="month" id="ev-week-month"></label>
+                        <label>주차 <select id="ev-week-num"><option value="1">1주차</option><option value="2">2주차</option><option value="3">3주차</option><option value="4">4주차</option><option value="5">5주차</option></select></label>
+                    </div>
                     <label>링크 (선택) <input type="url" id="ev-link" placeholder="https://..."></label>
                     <label>요약 (선택) <textarea id="ev-summary" rows="3" placeholder="일정 설명..."></textarea></label>
                     <div class="form-actions">

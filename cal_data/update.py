@@ -93,7 +93,7 @@ def collect_all(from_date: datetime.date, to_date: datetime.date) -> list[dict]:
     except Exception as e:
         print(f"[Calendar] FnGuide 실패: {e}")
 
-    # 3. Finnhub (Phase B에서 추가)
+    # 3. Finnhub (미국 실적)
     try:
         from cal_data.collectors.finnhub import fetch_finnhub_all
         finnhub = fetch_finnhub_all(from_date, to_date)
@@ -103,6 +103,17 @@ def collect_all(from_date: datetime.date, to_date: datetime.date) -> list[dict]:
         pass
     except Exception as e:
         print(f"[Calendar] Finnhub 실패: {e}")
+
+    # 3.5. Investing.com (경제지표)
+    try:
+        from cal_data.collectors.investing_economic import fetch_investing_economic
+        inv = fetch_investing_economic()
+        print(f"[Calendar] 경제지표(Investing): {len(inv)}건")
+        all_events.extend(inv)
+    except ImportError:
+        pass
+    except Exception as e:
+        print(f"[Calendar] Investing 실패: {e}")
 
     # 4. 38.co.kr
     try:

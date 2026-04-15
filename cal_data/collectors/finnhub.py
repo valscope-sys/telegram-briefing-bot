@@ -14,13 +14,26 @@ BASE_URL = "https://finnhub.io/api/v1"
 
 # 관심 종목 (시총 상위 + 한국 투자자 관심)
 WATCHLIST = {
+    # 빅테크/AI
     "NVDA", "AAPL", "TSLA", "MSFT", "GOOGL", "AMZN", "META", "NFLX",
+    # 반도체
     "AVGO", "TSM", "AMD", "INTC", "QCOM", "MU", "ASML", "AMAT", "LRCX",
-    "FN", "AAOI", "CRM", "ORCL", "ADBE", "NOW", "PLTR",
-    "JPM", "V", "MA", "BRK.B", "UNH", "JNJ", "PFE", "LLY",
-    "XOM", "CVX", "BA", "CAT", "DE",
-    "WMT", "COST", "HD", "MCD", "SBUX", "NKE",
+    "MRVL", "SNDK", "ON", "KLAC", "TXN",
+    # SW/클라우드
+    "CRM", "ORCL", "ADBE", "NOW", "PLTR", "SNOW", "PANW",
+    # 금융 (실적시즌 핵심)
+    "JPM", "BAC", "WFC", "C", "MS", "GS", "BLK", "SCHW",
+    "V", "MA", "BRK.B",
+    # 헬스케어
+    "UNH", "JNJ", "PFE", "LLY", "ABT", "ABBV", "MRK", "TMO",
+    # 에너지/산업
+    "XOM", "CVX", "BA", "CAT", "DE", "RTX", "LMT", "GE",
+    # 소비재
+    "WMT", "COST", "HD", "MCD", "SBUX", "NKE", "PEP", "KO", "PG",
+    # 미디어/엔터
     "DIS", "CMCSA", "ABNB",
+    # 기타 관심
+    "FN", "AAOI",
 }
 
 EARNINGS_TIME_MAP = {
