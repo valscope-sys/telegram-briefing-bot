@@ -277,13 +277,5 @@ def fetch_rss_events(from_date: datetime.date, to_date: datetime.date) -> list[d
 
 
 def fetch_news_events(from_date: datetime.date, to_date: datetime.date) -> list[dict]:
-    """뉴스 기반 일정 전체 수집"""
-    all_events = []
-
-    known = fetch_known_events(from_date, to_date)
-    all_events.extend(known)
-
-    rss = fetch_rss_events(from_date, to_date)
-    all_events.extend(rss)
-
-    return all_events
+    """고정 산업이벤트 + 만기일 반환 (RSS 수집은 ai_news_scanner.py에서 담당)"""
+    return fetch_known_events(from_date, to_date)

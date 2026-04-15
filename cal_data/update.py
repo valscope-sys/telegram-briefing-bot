@@ -133,7 +133,7 @@ def collect_all(from_date: datetime.date, to_date: datetime.date) -> list[dict]:
     # 3.5. Investing.com (경제지표)
     try:
         from cal_data.collectors.investing_economic import fetch_investing_economic
-        inv = fetch_investing_economic()
+        inv = fetch_investing_economic(from_date, to_date)
         print(f"[Calendar] 경제지표(Investing): {len(inv)}건")
         all_events.extend(inv)
     except ImportError:

@@ -260,8 +260,6 @@ def _fetch_html_earnings(year: int, month: int) -> list[dict]:
     except Exception as e:
         print(f"[FnGuide HTML] Error: {e}")
         return []
-    except Exception:
-        return set()
 
 
 def fetch_fnguide_range(from_date: datetime.date, to_date: datetime.date) -> list[dict]:
