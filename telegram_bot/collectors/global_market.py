@@ -163,26 +163,10 @@ def fetch_bond_rates():
                 "전일대비": _safe_float(item.get("bond_mnrt_prdy_vrss")),
                 "부호": _sign_symbol(item.get("prdy_vrss_sign", "3")),
             }
-        # 미국 2Y: KIS에 없으므로 yfinance에서 조회
-        us_2y = {}
-        try:
-            import yfinance as yf
-            t = yf.Ticker("2YY=F")
-            hist = t.history(period="5d")
-            if len(hist) >= 2:
-                last = float(hist["Close"].iloc[-1])
-                prev = float(hist["Close"].iloc[-2])
-                us_2y = {
-                    "이름": "미국 2년 T-NOTE",
-                    "금리": round(last, 3),
-                    "전일대비": round(last - prev, 3),
-                    "부호": "▲" if last > prev else ("▼" if last < prev else "─"),
-                }
-        except Exception as e:
-            logger.warning(f"yfinance 미국 2Y 조회 실패: {e}")
-
+        # NOTE: yfinance 2YY=F는 stale 데이터 (수일간 동일값) → 신뢰 불가
+        # TODO P1: FRED API (DGS2) 연동으로 정확한 2Y 확보
         result = {
-            "미국 2Y": us_2y,
+            "미국 1Y": overseas.get("Y0203", {}),  # KIS 1년 T-BILL (정확, 매일 업데이트)
             "미국 10Y": overseas.get("Y0202", {}),
             "연방기금금리": overseas.get("Y0204", {}),
             "국고채 3Y": domestic.get("Y0101", {}),
