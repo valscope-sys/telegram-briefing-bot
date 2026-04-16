@@ -24,7 +24,7 @@ from telegram_bot.collectors.investor_trend import (
     fetch_investor_trend_ndays,
     format_investor_trend_for_prompt,
 )
-from telegram_bot.history.briefing_memory import save_briefing, format_previous_for_prompt
+from telegram_bot.history.briefing_memory import save_briefing, format_previous_for_prompt, save_snapshot, load_snapshot
 from telegram_bot.postprocess import postprocess_commentary
 from telegram_bot.collectors.market_context import get_market_context_for_prompt, update_market_context
 from telegram_bot.formatters.morning import format_morning_briefing
@@ -73,10 +73,13 @@ def run_morning_briefing():
         })
 
         msg1 = format_morning_briefing(global_data, domestic_data, morning_commentary)
+        snapshot_msgs = [msg1]
+
         send_message(msg1)
         print("[MORNING] 모닝 데이터 발송 완료")
 
         # 시황 별도 메시지
+        commentary_msg = ""
         if morning_commentary:
             date_str = datetime.datetime.now().strftime("%m월 %d일")
             morning_commentary = postprocess_commentary(morning_commentary)
@@ -84,12 +87,15 @@ def run_morning_briefing():
             time.sleep(2)
             send_message(commentary_msg)
             print("[MORNING] 미장 리뷰 발송 완료")
+        snapshot_msgs.append(commentary_msg)
     except Exception as e:
         print(f"[MORNING] 모닝 브리핑 실패: {e}")
         traceback.print_exc()
+        snapshot_msgs = []
 
     time.sleep(3)
 
+    msg2 = ""
     try:
         print("[MORNING] 장전 뉴스 발송 중...")
         if not raw_news:
@@ -105,6 +111,7 @@ def run_morning_briefing():
 
     time.sleep(3)
 
+    msg3 = ""
     try:
         print("[MORNING] 오늘 일정 수집 중...")
         schedule = fetch_today_schedule()
@@ -114,6 +121,11 @@ def run_morning_briefing():
     except Exception as e:
         print(f"[MORNING] 오늘 일정 실패: {e}")
         traceback.print_exc()
+
+    # 스냅샷 저장 (재발송용)
+    if snapshot_msgs:
+        snapshot_msgs.extend([msg2, msg3])
+        save_snapshot("morning", snapshot_msgs)
 
     print("[MORNING] 모닝 브리핑 전체 완료")
 
@@ -224,10 +236,13 @@ def run_evening_briefing():
         msg1 = format_evening_briefing(
             domestic_data, global_data, commentary, sector_data, highlow_data
         )
+        snapshot_msgs = [msg1]
+
         send_message(msg1)
         print("[EVENING] 이브닝 데이터 발송 완료")
 
         # 시황 별도 메시지
+        commentary_msg = ""
         if commentary:
             date_str = datetime.datetime.now().strftime("%m월 %d일")
             commentary = postprocess_commentary(commentary)
@@ -235,12 +250,15 @@ def run_evening_briefing():
             time.sleep(2)
             send_message(commentary_msg)
             print("[EVENING] 시황 리뷰 발송 완료")
+        snapshot_msgs.append(commentary_msg)
     except Exception as e:
         print(f"[EVENING] 이브닝 브리핑 실패: {e}")
         traceback.print_exc()
+        snapshot_msgs = []
 
     time.sleep(3)
 
+    msg2 = ""
     try:
         print("[EVENING] 장중 뉴스 필터링 중...")
         if not raw_news:
@@ -257,6 +275,7 @@ def run_evening_briefing():
 
     time.sleep(3)
 
+    msg3 = ""
     try:
         print("[EVENING] 내일 일정 수집 중...")
         schedule = fetch_tomorrow_schedule()
@@ -267,4 +286,37 @@ def run_evening_briefing():
         print(f"[EVENING] 내일 일정 실패: {e}")
         traceback.print_exc()
 
+    # 스냅샷 저장 (재발송용)
+    if snapshot_msgs:
+        snapshot_msgs.extend([msg2, msg3])
+        save_snapshot("evening", snapshot_msgs)
+
     print("[EVENING] 이브닝 브리핑 전체 완료")
+
+
+def resend_briefing(briefing_type, date_str=None):
+    """
+    저장된 스냅샷을 그대로 재발송 (재생성 없음)
+    - briefing_type: "morning" or "evening"
+    - date_str: "2026-04-16" 형식. None이면 오늘.
+    """
+    snapshot = load_snapshot(briefing_type, date_str)
+    if not snapshot:
+        target = date_str or datetime.date.today().strftime("%Y-%m-%d")
+        print(f"[RESEND] {target} {briefing_type} 스냅샷이 없습니다. 재생성 없이 종료.")
+        return
+
+    messages = snapshot.get("messages", [])
+    ts = snapshot.get("timestamp", "")
+    print(f"[RESEND] {snapshot['date']} {briefing_type} 스냅샷 로드 (생성: {ts})")
+    print(f"[RESEND] 메시지 {len(messages)}개 재발송 시작...")
+
+    for i, msg in enumerate(messages):
+        if not msg:
+            continue
+        send_message(msg)
+        print(f"[RESEND] 메시지 {i+1}/{len(messages)} 발송 완료")
+        if i < len(messages) - 1:
+            time.sleep(2)
+
+    print(f"[RESEND] {briefing_type} 재발송 완료")

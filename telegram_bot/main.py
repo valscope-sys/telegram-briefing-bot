@@ -5,7 +5,7 @@ import pytz
 from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.triggers.cron import CronTrigger
 
-from telegram_bot.briefings import run_morning_briefing, run_evening_briefing
+from telegram_bot.briefings import run_morning_briefing, run_evening_briefing, resend_briefing
 
 KST = pytz.timezone("Asia/Seoul")
 
@@ -45,6 +45,15 @@ def main():
             print("=== 이브닝 브리핑 수동 실행 ===")
             run_evening_briefing()
             return
+        elif cmd == "resend":
+            if len(sys.argv) < 3:
+                print("사용법: python -m telegram_bot.main resend [morning|evening] [날짜(선택)]")
+                return
+            btype = sys.argv[2]
+            date_arg = sys.argv[3] if len(sys.argv) > 3 else None
+            print(f"=== {btype} 브리핑 재발송 (스냅샷) ===")
+            resend_briefing(btype, date_arg)
+            return
         elif cmd == "test":
             print("=== 테스트 모드: 데이터 수집만 ===")
             from telegram_bot.collectors.global_market import fetch_all_global
@@ -74,9 +83,10 @@ def main():
                         print(f"  {item}")
             return
         else:
-            print(f"사용법: python -m telegram_bot.main [morning|evening|test]")
+            print(f"사용법: python -m telegram_bot.main [morning|evening|resend|test]")
             print(f"  morning  - 모닝 브리핑 즉시 실행")
             print(f"  evening  - 이브닝 브리핑 즉시 실행")
+            print(f"  resend morning [날짜] - 스냅샷 재발송 (재생성 없음)")
             print(f"  test     - 데이터 수집 테스트")
             print(f"  (인자 없음) - 스케줄러 모드로 실행")
             return

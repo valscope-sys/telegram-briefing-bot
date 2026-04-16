@@ -49,6 +49,46 @@ def load_previous_briefing(briefing_type):
         return None
 
 
+def save_snapshot(briefing_type, messages):
+    """
+    발송된 메시지 전체를 스냅샷으로 저장 (재발송용)
+    - briefing_type: "morning" or "evening"
+    - messages: [msg1, msg2, msg3, msg4] 텍스트 리스트
+    """
+    today = datetime.date.today().strftime("%Y-%m-%d")
+    path = os.path.join(HISTORY_DIR, f"snapshot_{briefing_type}_{today}.json")
+    data = {
+        "date": today,
+        "timestamp": datetime.datetime.now().isoformat(),
+        "briefing_type": briefing_type,
+        "messages": messages,
+    }
+    try:
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+        print(f"[SNAPSHOT] {briefing_type} 스냅샷 저장: {path}")
+    except Exception as e:
+        print(f"[SNAPSHOT] 저장 실패: {e}")
+
+
+def load_snapshot(briefing_type, date_str=None):
+    """
+    저장된 스냅샷 로드 (재발송용)
+    - date_str: "2026-04-16" 형식. None이면 오늘 날짜.
+    - 반환: {"date", "timestamp", "messages": [...]} or None
+    """
+    if not date_str:
+        date_str = datetime.date.today().strftime("%Y-%m-%d")
+    path = os.path.join(HISTORY_DIR, f"snapshot_{briefing_type}_{date_str}.json")
+    if not os.path.exists(path):
+        return None
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return None
+
+
 def format_previous_for_prompt(briefing_type):
     """이전 시황을 프롬프트 삽입용 텍스트로 변환"""
     prev = load_previous_briefing(briefing_type)

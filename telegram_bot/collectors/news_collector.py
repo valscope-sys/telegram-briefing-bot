@@ -270,6 +270,7 @@ def filter_news_with_claude(news_list, count=5, context=""):
         response = client.messages.create(
             model="claude-sonnet-4-20250514",
             max_tokens=4000,
+            temperature=0,  # 뉴스 필터 재현성 보장
             system=PROMPT_SYSTEM,
             messages=[{"role": "user", "content": prompt}],
         )
@@ -585,6 +586,7 @@ def generate_market_commentary(market_data, news_list, intraday_text="", trend_t
         response = client.messages.create(
             model=COMMENTARY_MODEL,
             max_tokens=2000,
+            temperature=0.3,  # 시황 일관성 + 최소 창의성
             system=PROMPT_SYSTEM,
             messages=[{"role": "user", "content": prompt}],
         )
@@ -678,6 +680,11 @@ def generate_morning_commentary(global_data, news_list, trend_text=""):
 
 [구조 — 반드시 이 순서와 소제목을 사용]
 
+[정보 cutoff — 반드시 준수]
+- 이 시황은 미국 시장 마감(한국시간 04:00~05:00) 기준 분석입니다.
+- 미국 장 마감 이후에 발표된 경제지표, 뉴스, 이벤트는 '미국 증시 마감 리뷰'에 사용하지 마세요.
+- 오늘 아침에 발표된 데이터(예: 중국 GDP, 아시아 경제지표)는 '오늘 한국 증시 체크포인트' 섹션에서만 언급하세요.
+
 🇺🇸 미국 증시 마감 리뷰
 
 1: 미장 핵심 동인 (2~3문장)
@@ -729,6 +736,7 @@ def generate_morning_commentary(global_data, news_list, trend_text=""):
         response = client.messages.create(
             model=COMMENTARY_MODEL,
             max_tokens=2000,
+            temperature=0.3,  # 시황 일관성 + 최소 창의성
             system=PROMPT_SYSTEM,
             messages=[{"role": "user", "content": prompt}],
         )
