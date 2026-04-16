@@ -1,11 +1,15 @@
 """텔레그램 메시지 발송 모듈"""
+import time
 import requests
 from telegram_bot.config import TELEGRAM_BOT_TOKEN, TELEGRAM_CHANNEL_ID
+
+MAX_RETRY = 3
+RETRY_DELAY = 3  # 초
 
 
 def send_message(text, parse_mode="Markdown"):
     """
-    텔레그램 채널에 메시지 발송
+    텔레그램 채널에 메시지 발송 (최대 3회 재시도)
 
     Args:
         text: 발송할 메시지 (Markdown 지원)
@@ -24,23 +28,28 @@ def send_message(text, parse_mode="Markdown"):
         "disable_web_page_preview": True,
     }
 
-    try:
-        res = requests.post(url, json=payload, timeout=10)
-        result = res.json()
-        if result.get("ok"):
-            print(f"[TELEGRAM] 메시지 발송 성공")
-            return result
-        else:
-            print(f"[TELEGRAM] 발송 실패: {result.get('description', '')}")
-            # Markdown 파싱 실패 시 일반 텍스트로 재시도
-            if "parse" in result.get("description", "").lower():
-                payload["parse_mode"] = None
-                res = requests.post(url, json=payload, timeout=10)
-                return res.json()
-            return result
-    except Exception as e:
-        print(f"[TELEGRAM] 발송 오류: {e}")
-        return None
+    for attempt in range(1, MAX_RETRY + 1):
+        try:
+            res = requests.post(url, json=payload, timeout=30)
+            result = res.json()
+            if result.get("ok"):
+                print(f"[TELEGRAM] 메시지 발송 성공")
+                return result
+            else:
+                print(f"[TELEGRAM] 발송 실패: {result.get('description', '')}")
+                # Markdown 파싱 실패 시 일반 텍스트로 재시도
+                if "parse" in result.get("description", "").lower():
+                    payload["parse_mode"] = None
+                    res = requests.post(url, json=payload, timeout=30)
+                    return res.json()
+                return result
+        except Exception as e:
+            print(f"[TELEGRAM] 발송 오류 (시도 {attempt}/{MAX_RETRY}): {e}")
+            if attempt < MAX_RETRY:
+                time.sleep(RETRY_DELAY)
+            else:
+                print(f"[TELEGRAM] 최종 발송 실패: {MAX_RETRY}회 재시도 모두 실패")
+                return None
 
 
 def send_messages_sequential(messages, delay=2):
