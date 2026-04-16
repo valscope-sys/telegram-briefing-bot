@@ -13,19 +13,24 @@ COUNTRY_EMOJI = {
 
 # 중요도 높은 이벤트 (상단 배치)
 HIGH_PRIORITY_KEYWORDS = [
-    "FOMC", "금통위", "금리 결정", "CPI", "고용", "GDP", "ECB 금리", "BOJ 금리",
-    "비농업", "수출입 통계", "PMI", "옵션만기", "선물옵션", "MSCI", "KOSPI200",
+    "FOMC", "금통위", "금리 결정", "CPI (YoY)", "CPI (전년비)", "고용", "GDP (YoY)", "GDP (전년비)",
+    "ECB 금리", "BOJ 금리", "비농업", "수출입 통계", "PMI",
+    "옵션만기", "선물옵션", "MSCI", "KOSPI200",
+    "Industrial Production (YoY)", "산업생산", "실업률", "Unemployment Rate",
+    "무역수지", "Trade Balance", "수출", "Exports (YoY)", "수입", "Imports (YoY)",
+    "Powell", "파월", "Chair",  # 의장 발언은 중요
 ]
 
 # 중요도 낮은 이벤트 (텔레그램에서 제외)
 LOW_PRIORITY_KEYWORDS = [
     "Balance Sheet", "Crude Oil Stock", "API Weekly", "Continuing Jobless",
     "Philly Fed Employment", "Chinese GDP YTD", "Chinese Industrial Production YTD",
-    "NBS Press Conference", "Supervisory Board", "Speaks", "발언",
-    "Industrial Production (YoY)", "산업생산 (전년비)",
+    "NBS Press Conference", "Supervisory Board",
     "Core CPI", "CPI (MoM)", "GDP (QoQ)",
     "CFTC", "Baker Hughes", "speculative net positions",
     "StrictlyVC", "Rig Count",
+    # 일반 발언은 제외하되 의장급은 HIGH에서 잡힘
+    "Speaks", "발언",
 ]
 
 
@@ -42,7 +47,9 @@ def _is_high_priority(name):
 
 
 def _is_low_priority(name):
-    """저중요 이벤트 여부"""
+    """저중요 이벤트 여부 (단, HIGH_PRIORITY에 해당하면 제외 안 함)"""
+    if _is_high_priority(name):
+        return False
     return any(kw in name for kw in LOW_PRIORITY_KEYWORDS)
 
 
@@ -81,7 +88,7 @@ def _format_schedule(title, schedule_data):
             country = COUNTRY_EMOJI.get(country, country)
 
         if time_str:
-            lines.append(f"{time_str}  {country} {event_name}")
+            lines.append(f"{time_str}(KST)  {country} {event_name}")
         else:
             lines.append(f"{country} {event_name}")
 

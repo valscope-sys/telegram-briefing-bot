@@ -51,7 +51,13 @@ def format_evening_briefing(domestic_data, global_data, commentary, sector_data,
             continue
         trade_val = d.get("거래대금", 0)
         trade_tril = trade_val / 1_000_000 if trade_val > 0 else 0
-        lines.append(f"{name}  {d['현재가']:,.2f}  {_fmt_pct(d['등락률'])}  ({trade_tril:.1f}조)")
+        avg_val = d.get("거래대금_20일평균", 0)
+        avg_str = ""
+        if avg_val > 0 and trade_val > 0:
+            ratio = ((trade_val - avg_val) / avg_val) * 100
+            arrow = "▲" if ratio > 0 else "▼" if ratio < 0 else ""
+            avg_str = f", {arrow}{abs(ratio):.0f}% vs 20d"
+        lines.append(f"{name}  {d['현재가']:,.2f}  {_fmt_pct(d['등락률'])}  ({trade_tril:.1f}조{avg_str})")
 
     kospi = indices.get("KOSPI", {})
     if kospi and "error" not in kospi:
@@ -79,10 +85,12 @@ def format_evening_briefing(domestic_data, global_data, commentary, sector_data,
     usdkrw = fx.get("USD/KRW", {})
     if usdkrw and "error" not in usdkrw and usdkrw.get("현재가"):
         lines.append(f"USD/KRW  {usdkrw['현재가']:,.1f}  {_fmt_diff(usdkrw['전일대비'])}")
+    commodity_unit = {"WTI": "/bbl", "금": "/oz", "구리": "/lb"}
     for name in ["WTI", "금", "구리"]:
         d = commodities.get(name, {})
         if "error" not in d and d.get("현재가"):
-            lines.append(f"{name}  ${d['현재가']:,.2f}  {_fmt_pct(d['등락률'])}")
+            unit = commodity_unit.get(name, "")
+            lines.append(f"{name}  ${d['현재가']:,.2f}{unit}  {_fmt_pct(d['등락률'])}")
     lines.append("")
 
     # 🏷 섹터 (상위3 · 하위3)

@@ -164,7 +164,7 @@ def fetch_bond_rates():
                 "부호": _sign_symbol(item.get("prdy_vrss_sign", "3")),
             }
         result = {
-            "미국 2Y": overseas.get("Y0203", {}),
+            "미국 1Y": overseas.get("Y0203", {}),  # 실제로는 1년 T-BILL
             "미국 10Y": overseas.get("Y0202", {}),
             "연방기금금리": overseas.get("Y0204", {}),
             "국고채 3Y": domestic.get("Y0101", {}),

@@ -113,6 +113,61 @@ def fetch_dart_earnings(target_date=None):
         return []
 
 
+# 영문 → 한글 번역 매핑
+EVENT_TRANSLATIONS = {
+    "GDP (YoY)": "GDP (전년비)",
+    "GDP (QoQ)": "GDP (전분기비)",
+    "CPI (YoY)": "소비자물가 (전년비)",
+    "CPI (MoM)": "소비자물가 (전월비)",
+    "Core CPI (YoY)": "근원 소비자물가 (전년비)",
+    "PPI (YoY)": "생산자물가 (전년비)",
+    "PPI (MoM)": "생산자물가 (전월비)",
+    "Core PPI (MoM)": "근원 생산자물가 (전월비)",
+    "Core PPI (YoY)": "근원 생산자물가 (전년비)",
+    "Industrial Production (YoY)": "산업생산 (전년비)",
+    "Industrial Production (MoM)": "산업생산 (전월비)",
+    "Initial Jobless Claims": "신규 실업수당 청구",
+    "Continuing Jobless Claims": "연속 실업수당 청구",
+    "Unemployment Rate": "실업률",
+    "Retail Sales (MoM)": "소매판매 (전월비)",
+    "Retail Sales (YoY)": "소매판매 (전년비)",
+    "Trade Balance": "무역수지",
+    "Trade Balance (USD)": "무역수지 (USD)",
+    "Exports (YoY)": "수출 (전년비)",
+    "Imports (YoY)": "수입 (전년비)",
+    "Fixed Asset Investment (YoY)": "고정자산투자 (전년비)",
+    "Chinese Unemployment Rate": "실업률",
+    "Philadelphia Fed Manufacturing Index": "필라델피아 제조업지수",
+    "NFIB Small Business Optimism": "NFIB 중소기업낙관지수",
+    "S&P Global Manufacturing PMI": "S&P 제조업 PMI",
+    "S&P Global Services PMI": "S&P 서비스업 PMI",
+    "HCOB Eurozone Manufacturing PMI": "유로존 제조업 PMI",
+    "HCOB Eurozone Services PMI": "유로존 서비스업 PMI",
+    "IEA Monthly Report": "IEA 월간 원유시장 보고서",
+    "IMF Meetings": "IMF 회의",
+    "FOMC Member Williams Speaks": "FOMC 윌리엄스 총재 발언",
+    "FOMC Member Barkin Speaks": "FOMC 바킨 총재 발언",
+    "Fed Vice Chair for Supervision Barr Speaks": "연준 바 부의장 발언",
+    "Fed Chair Powell Speaks": "연준 파월 의장 발언",
+    "Fed Collins Speaks": "연준 콜린스 총재 발언",
+    "Fed Goolsbee Speaks": "연준 굴스비 총재 발언",
+    "ECB's Lane Speaks": "ECB 렌 수석이코노미스트 발언",
+    "ECB's Schnabel Speaks": "ECB 슈나벨 이사 발언",
+    "ECB President Lagarde Speaks": "ECB 라가르드 총재 발언",
+    "ECB Publishes Account of Monetary Policy Meeting": "ECB 통화정책 의사록 공개",
+    "ADP Employment Change Weekly": "ADP 주간 고용변화",
+    "API Weekly Crude Oil Stock": "API 주간 원유재고",
+}
+
+
+def _translate_event(title):
+    """영문 이벤트명을 한글로 번역"""
+    for eng, kor in EVENT_TRANSLATIONS.items():
+        if eng in title:
+            title = title.replace(eng, kor)
+    return title
+
+
 def _extract_corp_name(title):
     """제목에서 기업명 추출"""
     for suffix in [" 실적발표", " 잠정실적발표", " IR (경영현황)", " IR (실적발표)",
@@ -146,7 +201,7 @@ def _build_schedule(target_date):
             continue
 
         cat = e.get("category", "")
-        title = e.get("title", "")
+        title = _translate_event(e.get("title", ""))
         corp = _extract_corp_name(title)
 
         # 1. 실적 → earnings
