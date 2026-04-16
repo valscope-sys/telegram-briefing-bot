@@ -453,16 +453,16 @@ def generate_market_commentary(market_data, news_list, intraday_text="", trend_t
         bonds = global_data.get("bonds", {})
         if bonds and "error" not in bonds:
             data_summary += "\n채권금리:\n"
-            for name in ["미국 1Y", "미국 10Y", "국고채 3Y", "국고채 10Y"]:
+            for name in ["미국 2Y", "미국 10Y", "국고채 3Y", "국고채 10Y"]:
                 b = bonds.get(name, {})
                 if b and "error" not in b:
                     data_summary += f"  {name}: {b.get('금리', 0):.3f}% ({b.get('전일대비', 0):+.3f}%p)\n"
             # 장단기 스프레드
-            us2y = bonds.get("미국 1Y", {}).get("금리", 0)
+            us2y = bonds.get("미국 2Y", {}).get("금리", 0)
             us10y = bonds.get("미국 10Y", {}).get("금리", 0)
             if us2y and us10y:
                 spread = us10y - us2y
-                data_summary += f"  10Y-1Y 스프레드: {spread:+.3f}%p"
+                data_summary += f"  10Y-2Y 스프레드: {spread:+.3f}%p"
                 if spread < 0:
                     data_summary += " (장단기 역전, 경기침체 우려 시그널)"
                 data_summary += "\n"
@@ -624,15 +624,15 @@ def generate_morning_commentary(global_data, news_list, trend_text=""):
     bonds = global_data.get("bonds", {})
     if bonds and "error" not in bonds:
         data_summary += "\n채권금리:\n"
-        for name in ["미국 1Y", "미국 10Y"]:
+        for name in ["미국 2Y", "미국 10Y"]:
             b = bonds.get(name, {})
             if b and "error" not in b:
                 data_summary += f"  {name}: {b.get('금리', 0):.3f}% ({b.get('전일대비', 0):+.3f}%p)\n"
-        us2y = bonds.get("미국 1Y", {}).get("금리", 0)
+        us2y = bonds.get("미국 2Y", {}).get("금리", 0)
         us10y = bonds.get("미국 10Y", {}).get("금리", 0)
         if us2y and us10y:
             spread = us10y - us2y
-            data_summary += f"  10Y-1Y 스프레드: {spread:+.3f}%p"
+            data_summary += f"  10Y-2Y 스프레드: {spread:+.3f}%p"
             if spread < 0:
                 data_summary += " (장단기 역전)"
             data_summary += "\n"
