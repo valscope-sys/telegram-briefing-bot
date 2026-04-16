@@ -110,7 +110,7 @@ def main():
     print(f"시작 시간: {datetime.datetime.now()}")
     print(f"스케줄:")
     print(f"  모닝 브리핑: 평일 07:00")
-    print(f"  이브닝 브리핑: 평일 16:00")
+    print(f"  이브닝 브리핑: 평일 16:30 (정산 완료 후)")
     print("=" * 50)
 
     scheduler = BlockingScheduler(timezone=KST)
@@ -128,10 +128,10 @@ def main():
         misfire_grace_time=GRACE,
     )
 
-    # 이브닝 브리핑: 평일 16:00 KST
+    # 이브닝 브리핑: 평일 16:30 KST (KRX 정산 완료 후 수급 확정치 반영)
     scheduler.add_job(
         evening_job,
-        CronTrigger(hour=16, minute=0, day_of_week="mon-fri", timezone=KST),
+        CronTrigger(hour=16, minute=30, day_of_week="mon-fri", timezone=KST),
         id="evening_briefing",
         name="이브닝 브리핑",
         misfire_grace_time=GRACE,

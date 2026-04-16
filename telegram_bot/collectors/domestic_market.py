@@ -110,12 +110,16 @@ def fetch_kospi_kosdaq():
                     prev_close = _safe_float(prev_d.get("bstp_nmix_prpr"))
                     diff = close - prev_close
                     rate = (diff / prev_close * 100) if prev_close > 0 else 0
+                    # 20일 평균 거래대금도 이 경로에서 함께 조회
+                    avg_vol_daily = _fetch_trade_volume_avg(code)
+                    time.sleep(0.35)
                     results[name] = {
                         "현재가": close,
                         "전일대비": round(diff, 2),
                         "등락률": round(rate, 2),
                         "부호": "▲" if diff > 0 else ("▼" if diff < 0 else "─"),
                         "거래대금": _safe_int(today_d.get("acml_tr_pbmn", 0)),
+                        "거래대금_20일평균": avg_vol_daily,
                         "상승": _safe_int(o.get("ascn_issu_cnt", 0)),
                         "하락": _safe_int(o.get("down_issu_cnt", 0)),
                         "보합": _safe_int(o.get("stnr_issu_cnt", 0)),
