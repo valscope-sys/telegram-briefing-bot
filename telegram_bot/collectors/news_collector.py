@@ -468,6 +468,16 @@ def generate_market_commentary(market_data, news_list, intraday_text="", trend_t
                     data_summary += " (장단기 역전, 경기침체 우려 시그널)"
                 data_summary += "\n"
 
+        # 환율/DXY
+        fx = global_data.get("fx", {})
+        if fx:
+            usdkrw = fx.get("USD/KRW", {})
+            if usdkrw and "error" not in usdkrw:
+                data_summary += f"\n환율:\n  USD/KRW: {usdkrw.get('현재가', 0):,.1f} ({usdkrw.get('전일대비', 0):+.2f})\n"
+            dxy = fx.get("DXY", {})
+            if dxy and "error" not in dxy and dxy.get("현재가"):
+                data_summary += f"  DXY(달러인덱스): {dxy['현재가']:.2f} ({dxy.get('등락률', 0):+.2f}%)\n"
+
         sentiment = global_data.get("sentiment", {})
         if sentiment:
             data_summary += "\n심리지표:\n"
@@ -631,6 +641,27 @@ def generate_morning_commentary(global_data, news_list, trend_text=""):
     usdkrw = fx.get("USD/KRW", {})
     if usdkrw and "error" not in usdkrw:
         data_summary += f"  USD/KRW: {usdkrw.get('현재가', 0):,.1f} ({usdkrw.get('전일대비', 0):+.2f})\n"
+    dxy = fx.get("DXY", {})
+    if dxy and "error" not in dxy and dxy.get("현재가"):
+        data_summary += f"  DXY(달러인덱스): {dxy['현재가']:.2f} ({dxy.get('등락률', 0):+.2f}%)\n"
+
+    # 야간 프록시 (KORU 등)
+    korea_proxies = global_data.get("korea_proxies", {})
+    if korea_proxies:
+        proxy_lines = []
+        for name, info in korea_proxies.items():
+            if isinstance(info, dict) and "error" not in info and info.get("현재가"):
+                pct = info.get("등락률", 0)
+                proxy_lines.append(f"  {name}: ${info['현재가']:.2f} ({pct:+.2f}%)")
+        if proxy_lines:
+            data_summary += "\n야간 프록시 (한국 관련 해외 ETF):\n"
+            data_summary += "\n".join(proxy_lines) + "\n"
+            # KORU 경고 자동 주입
+            koru = korea_proxies.get("KORU", {})
+            if koru and abs(koru.get("등락률", 0)) >= 2:
+                koru_pct = koru["등락률"]
+                implied = koru_pct / 3
+                data_summary += f"  ⚠️ KORU {koru_pct:+.2f}% (3x 레버리지 → 실제 예상 갭 {implied:+.1f}%)\n"
 
     # 채권금리
     bonds = global_data.get("bonds", {})
@@ -723,7 +754,11 @@ def generate_morning_commentary(global_data, news_list, trend_text=""):
 - 모든 종목명은 제공된 데이터에 있어야 합니다. 데이터(뼈) 먼저, 뉴스(살)로 이유.
 - 수치는 종가 데이터만. 뉴스 데이터에 없는 정책명/펀드명 금지.
 - "~예상됩니다" 1~2회 이내. "주목됩니다" 금지.
-- 지수 사상 최고치 경신 시 반드시 명시.
+- 지수 사상 최고치(ATH) 경신 시 "사상 처음 N,000선 돌파", "N월 이후 최고" 등 반드시 역사적 맥락 명시.
+- "전쟁 수혜 섹터/기대감" 부정확한 범주화 금지. 구체적 산업재/방산 등으로 분류.
+- 테슬라의 AI칩/자율주행/로보택시 관련 뉴스는 "전기차 섹터" 아닌 "AI/자율주행" 분류. 뉴스 섹터 태그와 일관성 유지.
+- 수급 해석 시 순매수 "연속"뿐 아니라 금액 규모 변화도 언급. 예: "외국인 2거래일 연속 순매수이나 전일 +4,973억 대비 +46억으로 급감, 사실상 관망 전환."
+- 단일 종목 뉴스(상한가, 성과급 등)를 장세 전체로 확대 해석 금지.
 - 데이터 간 모순(예: 미장 상승인데 KORU 급락) 반드시 지적. 긍정만 골라쓰기 금지.
 - "전쟁 수혜 섹터" 같은 부정확한 범주화 금지.
 - 서식 없이 텍스트만.

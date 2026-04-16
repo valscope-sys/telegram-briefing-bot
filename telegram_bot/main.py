@@ -38,6 +38,16 @@ def main():
     if len(sys.argv) > 1:
         cmd = sys.argv[1]
         if cmd == "morning":
+            # 장중(09:00~15:30) 실행 시 스냅샷 존재하면 경고
+            from telegram_bot.history.briefing_memory import load_snapshot
+            now = datetime.datetime.now()
+            is_market_hours = 9 <= now.hour < 16
+            snapshot = load_snapshot("morning")
+            if is_market_hours and snapshot and "--force" not in sys.argv:
+                print(f"⚠️  장중 재실행 감지! 오늘 모닝 스냅샷이 이미 있습니다 ({snapshot['timestamp']})")
+                print(f"   재발송: python -m telegram_bot.main resend morning")
+                print(f"   강제 재생성: python -m telegram_bot.main morning --force")
+                return
             print("=== 모닝 브리핑 수동 실행 ===")
             run_morning_briefing()
             return
