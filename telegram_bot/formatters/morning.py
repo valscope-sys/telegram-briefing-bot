@@ -138,7 +138,12 @@ def format_morning_briefing(global_data, domestic_data, morning_commentary=""):
             continue
         trade_val = d.get("거래대금", 0)
         trade_tril = trade_val / 1_000_000 if trade_val > 0 else 0
-        lines.append(f"{name}  {d['현재가']:,.2f}  {_fmt_pct(d['등락률'])}  ({trade_tril:.1f}조)")
+        avg_val = d.get("거래대금_20일평균", 0)
+        avg_pct = ""
+        if avg_val > 0 and trade_val > 0:
+            ratio = ((trade_val - avg_val) / avg_val) * 100
+            avg_pct = f" 20일比{ratio:+.0f}%"
+        lines.append(f"{name}  {d['현재가']:,.2f}  {_fmt_pct(d['등락률'])}  ({trade_tril:.1f}조{avg_pct})")
 
     kospi = dom_indices.get("KOSPI", {})
     up = kospi.get("상승", 0) if kospi and "error" not in kospi else 0

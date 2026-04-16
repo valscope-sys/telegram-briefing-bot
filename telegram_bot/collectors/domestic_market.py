@@ -46,6 +46,32 @@ def _recent_business_days(count=5, base_date=None):
     return days
 
 
+def _fetch_trade_volume_avg(code, days=20):
+    """지수의 N일 평균 거래대금 조회"""
+    try:
+        today = datetime.date.today()
+        start = (today - datetime.timedelta(days=days * 2)).strftime("%Y%m%d")
+        end = today.strftime("%Y%m%d")
+        daily = kis_get(
+            "/uapi/domestic-stock/v1/quotations/inquire-daily-indexchartprice",
+            "FHKUP03500100",
+            {
+                "FID_COND_MRKT_DIV_CODE": "U",
+                "FID_INPUT_ISCD": code,
+                "FID_INPUT_DATE_1": start,
+                "FID_INPUT_DATE_2": end,
+                "FID_PERIOD_DIV_CODE": "D",
+            },
+        )
+        daily_list = daily.get("output2", [])
+        volumes = [_safe_int(d.get("acml_tr_pbmn", 0)) for d in daily_list[:days] if _safe_int(d.get("acml_tr_pbmn", 0)) > 0]
+        if volumes:
+            return sum(volumes) // len(volumes)
+    except Exception:
+        pass
+    return 0
+
+
 def fetch_kospi_kosdaq():
     """KOSPI/KOSDAQ 지수 (장중이면 현재가, 장전이면 전일 종가)"""
     results = {}
@@ -97,12 +123,17 @@ def fetch_kospi_kosdaq():
                     }
                     continue
 
+            # 20일 평균 거래대금
+            avg_vol = _fetch_trade_volume_avg(code)
+            time.sleep(0.35)
+
             results[name] = {
                 "현재가": _safe_float(o["bstp_nmix_prpr"]),
                 "전일대비": _safe_float(o["bstp_nmix_prdy_vrss"]),
                 "등락률": _safe_float(o["bstp_nmix_prdy_ctrt"]),
                 "부호": _sign_symbol(o.get("prdy_vrss_sign", "3")),
                 "거래대금": trade_vol,
+                "거래대금_20일평균": avg_vol,
                 "상승": _safe_int(o.get("ascn_issu_cnt", 0)),
                 "하락": _safe_int(o.get("down_issu_cnt", 0)),
                 "보합": _safe_int(o.get("stnr_issu_cnt", 0)),
