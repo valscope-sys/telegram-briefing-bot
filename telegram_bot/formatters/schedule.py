@@ -68,9 +68,8 @@ def _format_schedule(title, schedule_data):
     events = schedule_data.get("events", [])
     earnings = schedule_data.get("earnings", [])
 
-    # 중요도 분류
-    high = []
-    normal = []
+    # 저중요 필터링
+    filtered = []
     for ev in events:
         if not isinstance(ev, dict) or "error" in ev:
             continue
@@ -79,19 +78,14 @@ def _format_schedule(title, schedule_data):
             continue
         if _is_low_priority(event_name):
             continue
-        if _is_high_priority(event_name):
-            high.append(ev)
-        else:
-            normal.append(ev)
+        filtered.append(ev)
 
-    # 중요 → 일반 순서, 각 그룹 내 시간순 정렬, 최대 10건
+    # 전체 시간순 정렬 (중요 이벤트는 ★ 표시로 구분)
     _time_key = lambda ev: ev.get("시간", "") or "99:99"
-    high.sort(key=_time_key)
-    normal.sort(key=_time_key)
-    sorted_events = high + normal
+    filtered.sort(key=_time_key)
     lines = []
 
-    for ev in sorted_events[:10]:
+    for ev in filtered[:10]:
         time_str = ev.get("시간", "").strip()
         event_name = ev.get("이벤트", "").strip()
         country = ev.get("국가", "").strip()
@@ -100,30 +94,32 @@ def _format_schedule(title, schedule_data):
         if country and not country.startswith(("\U0001f1e6", "\U0001f1e8", "\U0001f1ef", "\U0001f1f0", "\U0001f1fa")):
             country = COUNTRY_EMOJI.get(country, country)
 
+        # 중요 이벤트 ★ 표시
+        marker = "★ " if _is_high_priority(event_name) else ""
         if time_str:
-            lines.append(f"{time_str}(KST)  {country} {event_name}")
+            lines.append(f"{time_str}(KST)  {marker}{country} {event_name}")
         else:
-            lines.append(f"{country} {event_name}")
+            lines.append(f"{marker}{country} {event_name}")
 
+    # 실적 발표 — 별도 블록
     if earnings:
-        # 한국 실적 먼저, 미국 실적 나중 (한국=한글, 미국=영문)
         kr_earnings = []
         us_earnings = []
         for e in earnings:
             if not isinstance(e, dict) or not e.get("기업명"):
                 continue
             name = _clean_event_name(e["기업명"])
-            if any(c >= '\uac00' for c in name):  # 한글 포함
+            if any(c >= '\uac00' for c in name):
                 if name not in kr_earnings:
                     kr_earnings.append(name)
             else:
                 if name not in us_earnings:
                     us_earnings.append(name)
-        # 한국 전부 먼저 + 미국 상위 5개
         us_clean = [_clean_event_name(n) for n in us_earnings[:5]]
         all_names = kr_earnings + us_clean
         if all_names:
-            lines.append(f"실적  {', '.join(all_names)}")
+            lines.append("")
+            lines.append(f"📊 실적발표  {', '.join(all_names)}")
 
     if not lines:
         lines.append("주요 일정 없음")

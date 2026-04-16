@@ -95,9 +95,11 @@ def format_morning_briefing(global_data, domestic_data, morning_commentary=""):
     kr_10y = bonds.get("국고채 10Y", {})
     kr_parts = []
     if kr_3y and kr_3y.get("금리"):
-        kr_parts.append(f"3Y {kr_3y['금리']:.2f}%")
+        diff_3y_bp = round(kr_3y.get("전일대비", 0) * 100)
+        kr_parts.append(f"3Y {kr_3y['금리']:.2f}%({diff_3y_bp:+d}bp)")
     if kr_10y and kr_10y.get("금리"):
-        kr_parts.append(f"10Y {kr_10y['금리']:.2f}%")
+        diff_10y_bp = round(kr_10y.get("전일대비", 0) * 100)
+        kr_parts.append(f"10Y {kr_10y['금리']:.2f}%({diff_10y_bp:+d}bp)")
     if kr_parts:
         lines.append(f"국고채 {' / '.join(kr_parts)}")
     lines.append("")
