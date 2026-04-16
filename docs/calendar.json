@@ -1784,15 +1784,6 @@
   },
   {
     "date": "2026-01-22",
-    "time": "21:15",
-    "category": "통화정책",
-    "title": "ECB 금리 결정",
-    "source": "fixed",
-    "auto": false,
-    "country": "🇪🇺"
-  },
-  {
-    "date": "2026-01-22",
     "time": "",
     "category": "한국실적(잠정)",
     "title": "조비 잠정실적발표",
@@ -1894,6 +1885,15 @@
     "title": "삼성에스디에스 IR (경영현황)",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "date": "2026-01-22",
+    "time": "21:15",
+    "category": "통화정책",
+    "title": "ECB 금리 결정",
+    "source": "fixed",
+    "auto": false,
+    "country": "🇪🇺"
   },
   {
     "date": "2026-01-23",
@@ -22385,15 +22385,6 @@
   },
   {
     "date": "2026-03-05",
-    "time": "21:15",
-    "category": "통화정책",
-    "title": "ECB 금리 결정",
-    "source": "fixed",
-    "auto": false,
-    "country": "🇪🇺"
-  },
-  {
-    "date": "2026-03-05",
     "time": "",
     "category": "한국실적(잠정)",
     "title": "한국캐피탈 잠정실적발표",
@@ -22879,6 +22870,15 @@
     "title": "🇪🇺 ECB President Lagarde Speaks",
     "source": "investing",
     "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-03-05",
+    "time": "21:15",
+    "category": "통화정책",
+    "title": "ECB 금리 결정",
+    "source": "fixed",
+    "auto": false,
     "country": "🇪🇺"
   },
   {
@@ -29323,15 +29323,6 @@
   },
   {
     "date": "2026-04-16",
-    "time": "21:15",
-    "category": "통화정책",
-    "title": "ECB 금리 결정",
-    "source": "fixed",
-    "auto": false,
-    "country": "🇪🇺"
-  },
-  {
-    "date": "2026-04-16",
     "time": "05:00",
     "category": "경제지표",
     "title": "🇨🇳 Fixed Asset Investment (YoY)  (Mar)",
@@ -29624,6 +29615,15 @@
     "source": "investing",
     "auto": true,
     "country": "🇺🇸"
+  },
+  {
+    "date": "2026-04-16",
+    "time": "21:15",
+    "category": "통화정책",
+    "title": "ECB 금리 결정",
+    "source": "fixed",
+    "auto": false,
+    "country": "🇪🇺"
   },
   {
     "date": "2026-04-16",
@@ -32235,6 +32235,14 @@
   {
     "date": "2026-05-29",
     "time": "",
+    "category": "IPO/공모",
+    "title": "져스텍 공모청약 (05/29~06/01)",
+    "source": "38cr",
+    "auto": true
+  },
+  {
+    "date": "2026-05-29",
+    "time": "",
     "category": "기업이벤트",
     "title": "스코넥 유상증자(3자배정)",
     "source": "fnguide",
@@ -33036,15 +33044,6 @@
   },
   {
     "date": "2026-07-16",
-    "time": "21:15",
-    "category": "통화정책",
-    "title": "ECB 금리 결정",
-    "source": "fixed",
-    "auto": false,
-    "country": "🇪🇺"
-  },
-  {
-    "date": "2026-07-16",
     "time": "10:00",
     "category": "통화정책",
     "title": "한국은행 금통위 금리 결정",
@@ -33060,6 +33059,15 @@
     "source": "investing",
     "auto": true,
     "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-16",
+    "time": "21:15",
+    "category": "통화정책",
+    "title": "ECB 금리 결정",
+    "source": "fixed",
+    "auto": false,
+    "country": "🇪🇺"
   },
   {
     "date": "2026-07-17",
@@ -33668,21 +33676,21 @@
   },
   {
     "date": "2026-10-29",
-    "time": "21:15",
-    "category": "통화정책",
-    "title": "ECB 금리 결정",
-    "source": "fixed",
-    "auto": false,
-    "country": "🇪🇺"
-  },
-  {
-    "date": "2026-10-29",
     "time": "",
     "category": "통화정책",
     "title": "BOJ 금리 결정",
     "source": "fixed",
     "auto": false,
     "country": "🇯🇵"
+  },
+  {
+    "date": "2026-10-29",
+    "time": "21:15",
+    "category": "통화정책",
+    "title": "ECB 금리 결정",
+    "source": "fixed",
+    "auto": false,
+    "country": "🇪🇺"
   },
   {
     "date": "2026-10-31",
