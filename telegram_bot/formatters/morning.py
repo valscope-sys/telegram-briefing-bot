@@ -81,21 +81,15 @@ def format_morning_briefing(global_data, domestic_data, morning_commentary=""):
     dxy = fx.get("DXY", {})
     if dxy and "error" not in dxy and dxy.get("현재가"):
         lines.append(f"DXY  {dxy['현재가']:.2f}  {_fmt_pct(dxy['등락률'])}")
-    us_2y = bonds.get("미국 2Y", {})
+    us_1y = bonds.get("미국 1Y", {})
     us_10y = bonds.get("미국 10Y", {})
     if us_10y and us_10y.get("금리"):
-        rate_2y = us_2y.get("금리", 0)
+        rate_1y = us_1y.get("금리", 0)
         rate_10y = us_10y.get("금리", 0)
-        diff_2y_bp = round(us_2y.get("전일대비", 0) * 100) if us_2y else 0
+        diff_1y_bp = round(us_1y.get("전일대비", 0) * 100)
         diff_10y_bp = round(us_10y.get("전일대비", 0) * 100)
-        parts = []
-        if rate_2y:
-            parts.append(f"2Y {rate_2y:.2f}%({diff_2y_bp:+d}bp)")
-        parts.append(f"10Y {rate_10y:.2f}%({diff_10y_bp:+d}bp)")
-        if rate_2y:
-            spread = round((rate_10y - rate_2y) * 100)  # 10Y-2Y
-            parts.append(f"스프레드 {spread:+d}bp")
-        lines.append(f"미국채 {' / '.join(parts)}")
+        spread = round((rate_10y - rate_1y) * 100)  # 10Y-1Y
+        lines.append(f"미국채 1Y {rate_1y:.2f}%({diff_1y_bp:+d}bp) / 10Y {rate_10y:.2f}%({diff_10y_bp:+d}bp)  스프레드 {spread:+d}bp")
     # 국고채
     kr_3y = bonds.get("국고채 3Y", {})
     kr_10y = bonds.get("국고채 10Y", {})
