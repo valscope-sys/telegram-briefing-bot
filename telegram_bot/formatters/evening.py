@@ -52,11 +52,12 @@ def format_evening_briefing(domestic_data, global_data, commentary, sector_data,
         trade_val = d.get("거래대금", 0)
         trade_tril = trade_val / 1_000_000 if trade_val > 0 else 0
         avg_val = d.get("거래대금_20일평균", 0)
-        avg_pct = ""
+        avg_str = ""
         if avg_val > 0 and trade_val > 0:
             ratio = ((trade_val - avg_val) / avg_val) * 100
-            avg_pct = f" 20일比{ratio:+.0f}%"
-        lines.append(f"{name}  {d['현재가']:,.2f}  {_fmt_pct(d['등락률'])}  ({trade_tril:.1f}조{avg_pct})")
+            arrow = "▲" if ratio > 0 else "▼" if ratio < 0 else ""
+            avg_str = f", {arrow}{abs(ratio):.0f}% vs 20d"
+        lines.append(f"{name}  {d['현재가']:,.2f}  {_fmt_pct(d['등락률'])}  ({trade_tril:.1f}조{avg_str})")
 
     kospi = indices.get("KOSPI", {})
     if kospi and "error" not in kospi:

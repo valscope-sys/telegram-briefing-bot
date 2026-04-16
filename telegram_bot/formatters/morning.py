@@ -81,15 +81,15 @@ def format_morning_briefing(global_data, domestic_data, morning_commentary=""):
     dxy = fx.get("DXY", {})
     if dxy and "error" not in dxy and dxy.get("현재가"):
         lines.append(f"DXY  {dxy['현재가']:.2f}  {_fmt_pct(dxy['등락률'])}")
-    us_2y = bonds.get("미국 2Y", {})
+    us_1y = bonds.get("미국 1Y", {})
     us_10y = bonds.get("미국 10Y", {})
     if us_10y and us_10y.get("금리"):
-        rate_2y = us_2y.get("금리", 0)
+        rate_1y = us_1y.get("금리", 0)
         rate_10y = us_10y.get("금리", 0)
-        spread = round((rate_10y - rate_2y) * 100)  # 10Y-2Y (양수=정상, 음수=역전)
-        diff_2y = us_2y.get("전일대비", 0)
-        diff_10y = us_10y.get("전일대비", 0)
-        lines.append(f"미국채 2Y {rate_2y:.2f}%({diff_2y:+.2f}) / 10Y {rate_10y:.2f}%({diff_10y:+.2f})  스프레드 {spread:+d}bp")
+        spread = round((rate_10y - rate_1y) * 100)  # 10Y-1Y
+        diff_1y_bp = round(us_1y.get("전일대비", 0) * 100)
+        diff_10y_bp = round(us_10y.get("전일대비", 0) * 100)
+        lines.append(f"미국채 1Y {rate_1y:.2f}%({diff_1y_bp:+d}bp) / 10Y {rate_10y:.2f}%({diff_10y_bp:+d}bp)  스프레드 {spread:+d}bp")
     # 국고채
     kr_3y = bonds.get("국고채 3Y", {})
     kr_10y = bonds.get("국고채 10Y", {})
@@ -139,11 +139,12 @@ def format_morning_briefing(global_data, domestic_data, morning_commentary=""):
         trade_val = d.get("거래대금", 0)
         trade_tril = trade_val / 1_000_000 if trade_val > 0 else 0
         avg_val = d.get("거래대금_20일평균", 0)
-        avg_pct = ""
+        avg_str = ""
         if avg_val > 0 and trade_val > 0:
             ratio = ((trade_val - avg_val) / avg_val) * 100
-            avg_pct = f" 20일比{ratio:+.0f}%"
-        lines.append(f"{name}  {d['현재가']:,.2f}  {_fmt_pct(d['등락률'])}  ({trade_tril:.1f}조{avg_pct})")
+            arrow = "▲" if ratio > 0 else "▼" if ratio < 0 else ""
+            avg_str = f", {arrow}{abs(ratio):.0f}% vs 20d"
+        lines.append(f"{name}  {d['현재가']:,.2f}  {_fmt_pct(d['등락률'])}  ({trade_tril:.1f}조{avg_str})")
 
     kospi = dom_indices.get("KOSPI", {})
     up = kospi.get("상승", 0) if kospi and "error" not in kospi else 0
