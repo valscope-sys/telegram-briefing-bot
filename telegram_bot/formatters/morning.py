@@ -87,7 +87,9 @@ def format_morning_briefing(global_data, domestic_data, morning_commentary=""):
         rate_2y = us_2y.get("금리", 0)
         rate_10y = us_10y.get("금리", 0)
         spread = round((rate_10y - rate_2y) * 100)  # 10Y-2Y (양수=정상, 음수=역전)
-        lines.append(f"미국채 2Y {rate_2y:.2f}% / 10Y {rate_10y:.2f}%  (스프레드 {spread:+d}bp)")
+        diff_2y = us_2y.get("전일대비", 0)
+        diff_10y = us_10y.get("전일대비", 0)
+        lines.append(f"미국채 2Y {rate_2y:.2f}%({diff_2y:+.2f}) / 10Y {rate_10y:.2f}%({diff_10y:+.2f})  스프레드 {spread:+d}bp")
     # 국고채
     kr_3y = bonds.get("국고채 3Y", {})
     kr_10y = bonds.get("국고채 10Y", {})
@@ -102,10 +104,12 @@ def format_morning_briefing(global_data, domestic_data, morning_commentary=""):
 
     # 🛢 원자재
     lines.append("🛢 *원자재*")
+    commodity_unit = {"WTI": "/bbl", "금": "/oz", "구리": "/lb"}
     for name in ["WTI", "금", "구리"]:
         d = commodities.get(name, {})
         if "error" not in d and d.get("현재가"):
-            lines.append(f"{name}  ${d['현재가']:,.2f}  {_fmt_pct(d['등락률'])}")
+            unit = commodity_unit.get(name, "")
+            lines.append(f"{name}  ${d['현재가']:,.2f}{unit}  {_fmt_pct(d['등락률'])}")
     lines.append("")
 
     # 😱 심리지표 (Fear & Greed만)

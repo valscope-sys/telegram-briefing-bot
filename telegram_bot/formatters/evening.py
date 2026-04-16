@@ -79,10 +79,12 @@ def format_evening_briefing(domestic_data, global_data, commentary, sector_data,
     usdkrw = fx.get("USD/KRW", {})
     if usdkrw and "error" not in usdkrw and usdkrw.get("현재가"):
         lines.append(f"USD/KRW  {usdkrw['현재가']:,.1f}  {_fmt_diff(usdkrw['전일대비'])}")
+    commodity_unit = {"WTI": "/bbl", "금": "/oz", "구리": "/lb"}
     for name in ["WTI", "금", "구리"]:
         d = commodities.get(name, {})
         if "error" not in d and d.get("현재가"):
-            lines.append(f"{name}  ${d['현재가']:,.2f}  {_fmt_pct(d['등락률'])}")
+            unit = commodity_unit.get(name, "")
+            lines.append(f"{name}  ${d['현재가']:,.2f}{unit}  {_fmt_pct(d['등락률'])}")
     lines.append("")
 
     # 🏷 섹터 (상위3 · 하위3)

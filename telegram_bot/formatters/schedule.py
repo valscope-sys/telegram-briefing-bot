@@ -81,7 +81,7 @@ def _format_schedule(title, schedule_data):
             country = COUNTRY_EMOJI.get(country, country)
 
         if time_str:
-            lines.append(f"{time_str}  {country} {event_name}")
+            lines.append(f"{time_str}(KST)  {country} {event_name}")
         else:
             lines.append(f"{country} {event_name}")
 
