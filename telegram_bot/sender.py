@@ -4,7 +4,7 @@ import requests
 from telegram_bot.config import TELEGRAM_BOT_TOKEN, TELEGRAM_CHANNEL_ID
 
 MAX_RETRY = 3
-RETRY_DELAY = 3  # 초
+RETRY_DELAYS = [3, 8, 20]  # exponential backoff (초)
 
 
 def send_message(text, parse_mode="Markdown"):
@@ -46,7 +46,7 @@ def send_message(text, parse_mode="Markdown"):
         except Exception as e:
             print(f"[TELEGRAM] 발송 오류 (시도 {attempt}/{MAX_RETRY}): {e}")
             if attempt < MAX_RETRY:
-                time.sleep(RETRY_DELAY)
+                time.sleep(RETRY_DELAYS[attempt - 1])
             else:
                 print(f"[TELEGRAM] 최종 발송 실패: {MAX_RETRY}회 재시도 모두 실패")
                 return None
