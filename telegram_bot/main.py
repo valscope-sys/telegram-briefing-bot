@@ -48,6 +48,8 @@ def main():
                 print(f"   재발송: python -m telegram_bot.main resend morning")
                 print(f"   강제 재생성: python -m telegram_bot.main morning --force")
                 return
+            if "--force" in sys.argv:
+                print("⚠️  --force 모드: 장중 스냅샷 무시하고 재생성합니다")
             print("=== 모닝 브리핑 수동 실행 ===")
             run_morning_briefing()
             return

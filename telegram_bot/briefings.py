@@ -87,6 +87,17 @@ def run_morning_briefing():
             time.sleep(2)
             send_message(commentary_msg)
             print("[MORNING] 미장 리뷰 발송 완료")
+
+            # 자가 점검 로그
+            koru = global_data.get("korea_proxies", {}).get("KORU", {})
+            dxy = global_data.get("fx", {}).get("DXY", {})
+            koru_pct = koru.get("등락률", 0) if koru else 0
+            dxy_val = dxy.get("현재가", 0) if dxy else 0
+            koru_in_review = "KORU" in morning_commentary
+            print(f"[SELFCHECK] KORU={koru_pct:+.2f}% 주입={'✓' if koru else '✗'}, "
+                  f"DXY={dxy_val:.2f} 주입={'✓' if dxy_val else '✗'}, "
+                  f"리뷰에 KORU 언급={'✓' if koru_in_review else '✗'}"
+                  f"{' ⚠️ KORU±2% 경고 누락!' if abs(koru_pct) >= 2 and not koru_in_review else ''}")
         snapshot_msgs.append(commentary_msg)
     except Exception as e:
         print(f"[MORNING] 모닝 브리핑 실패: {e}")
