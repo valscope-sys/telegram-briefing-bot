@@ -29872,6 +29872,22 @@
     "auto": true
   },
   {
+    "date": "2026-04-20",
+    "time": "14:00",
+    "category": "IR",
+    "title": "바이오솔루션 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-21",
+    "time": "",
+    "category": "IR",
+    "title": "미래에셋증권 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-04-21",
     "time": "",
     "category": "기업이벤트",
@@ -29946,6 +29962,14 @@
   },
   {
     "date": "2026-04-21",
+    "time": "15:00",
+    "category": "IR",
+    "title": "부광약품 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-21",
     "time": "15:15",
     "category": "경제지표",
     "title": "🇺🇸 ADP Employment Change Weekly",
@@ -29985,6 +30009,14 @@
     "time": "16:00",
     "category": "IR",
     "title": "이랜텍 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-21",
+    "time": "16:00",
+    "category": "한국실적",
+    "title": "SGC에너지 실적발표",
     "source": "fnguide",
     "auto": true
   },
@@ -30032,6 +30064,14 @@
     "source": "investing",
     "auto": true,
     "country": "🇺🇸"
+  },
+  {
+    "date": "2026-04-22",
+    "time": "",
+    "category": "IR",
+    "title": "SGC에너지 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-04-22",
@@ -30150,6 +30190,22 @@
     "time": "09:00",
     "category": "IR",
     "title": "한텍 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-22",
+    "time": "09:00",
+    "category": "IR",
+    "title": "루미르 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-22",
+    "time": "10:00",
+    "category": "IR",
+    "title": "씨어스 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -30302,9 +30358,33 @@
   },
   {
     "date": "2026-04-23",
+    "time": "13:10",
+    "category": "한국실적",
+    "title": "현대글로비스 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-23",
     "time": "14:00",
     "category": "IR",
     "title": "삼성에스디에스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-23",
+    "time": "14:00",
+    "category": "IR",
+    "title": "LS티라유텍 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-23",
+    "time": "14:00",
+    "category": "IR",
+    "title": "삼성E&A IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -30386,6 +30466,14 @@
     "country": "🇺🇸"
   },
   {
+    "date": "2026-04-23",
+    "time": "17:00",
+    "category": "한국실적",
+    "title": "JB금융지주 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-04-24",
     "time": "",
     "category": "기업이벤트",
@@ -30436,6 +30524,30 @@
   {
     "date": "2026-04-24",
     "time": "",
+    "category": "기업이벤트",
+    "title": "채비 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-24",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "오가닉티코스메틱 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-24",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "셀비온 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-24",
+    "time": "",
     "category": "미국실적",
     "title": "PG 실적발표 (장전) [EPS est. $1.6147]",
     "source": "finnhub",
@@ -30459,9 +30571,65 @@
   },
   {
     "date": "2026-04-24",
+    "time": "13:00",
+    "category": "한국실적",
+    "title": "KG모빌리티 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-24",
+    "time": "14:00",
+    "category": "IR",
+    "title": "이마트 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-24",
+    "time": "14:00",
+    "category": "IR",
+    "title": "신세계푸드 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-24",
+    "time": "14:00",
+    "category": "한국실적",
+    "title": "현대제철 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-24",
+    "time": "14:00",
+    "category": "한국실적",
+    "title": "삼성카드 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-24",
+    "time": "14:00",
+    "category": "한국실적",
+    "title": "HD현대마린솔루션 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-24",
     "time": "14:10",
     "category": "한국실적",
     "title": "현대로템 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-24",
+    "time": "15:00",
+    "category": "한국실적",
+    "title": "하나금융지주 실적발표",
     "source": "fnguide",
     "auto": true
   },
@@ -30550,11 +30718,43 @@
     "auto": true
   },
   {
+    "date": "2026-04-25",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "피플바이오 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-04-27",
     "time": "",
     "category": "IPO/공모",
     "title": "코스모로보틱스(구.엑소아틀레트아시아) 공모청약 (04/27~04/28)",
     "source": "38cr",
+    "auto": true
+  },
+  {
+    "date": "2026-04-27",
+    "time": "",
+    "category": "IR",
+    "title": "SGC에너지 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-27",
+    "time": "09:00",
+    "category": "IR",
+    "title": "현대글로비스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-27",
+    "time": "09:00",
+    "category": "IR",
+    "title": "현대제철 IR (경영현황)",
+    "source": "fnguide",
     "auto": true
   },
   {
@@ -30760,6 +30960,14 @@
   {
     "date": "2026-04-28",
     "time": "",
+    "category": "기업이벤트",
+    "title": "디에스엠 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-28",
+    "time": "",
     "category": "미국실적",
     "title": "V 실적발표 (장후) [EPS est. $3.1543]",
     "source": "finnhub",
@@ -30802,6 +31010,14 @@
     "time": "15:30",
     "category": "한국실적",
     "title": "두산밥캣 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-28",
+    "time": "16:00",
+    "category": "한국실적",
+    "title": "두산로보틱스 실적발표",
     "source": "fnguide",
     "auto": true
   },
@@ -30928,6 +31144,14 @@
   {
     "date": "2026-04-29",
     "time": "",
+    "category": "기업이벤트",
+    "title": "이노테나 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-29",
+    "time": "",
     "category": "미국실적",
     "title": "MSFT 실적발표 (장후) [EPS est. $4.1402]",
     "source": "finnhub",
@@ -30970,6 +31194,14 @@
     "time": "09:00",
     "category": "IR",
     "title": "두산밥캣 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-29",
+    "time": "09:00",
+    "category": "한국실적",
+    "title": "현대건설 실적발표",
     "source": "fnguide",
     "auto": true
   },
@@ -31249,6 +31481,22 @@
   },
   {
     "date": "2026-04-30",
+    "time": "10:30",
+    "category": "한국실적",
+    "title": "LG씨엔에스 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-30",
+    "time": "13:30",
+    "category": "한국실적",
+    "title": "포스코퓨처엠 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-30",
     "time": "14:00",
     "category": "IR",
     "title": "한온시스템 IR (경영현황)",
@@ -31260,6 +31508,38 @@
     "time": "14:00",
     "category": "한국실적",
     "title": "LG화학 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-30",
+    "time": "15:00",
+    "category": "IR",
+    "title": "POSCO홀딩스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-30",
+    "time": "16:00",
+    "category": "한국실적",
+    "title": "케이뱅크 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-30",
+    "time": "16:00",
+    "category": "한국실적",
+    "title": "SOOP 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-30",
+    "time": "16:30",
+    "category": "한국실적",
+    "title": "LG생활건강 실적발표",
     "source": "fnguide",
     "auto": true
   },
@@ -31459,6 +31739,27 @@
     "summary": "보험료 30% 인하한 5세대 실손의료보험 시장 출시. 보험업계 영향"
   },
   {
+    "category": "수동",
+    "title": "진에어·제주항공 유류할증료 인상 적용",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2026-05-01",
+    "time": "",
+    "summary": "5월1일 발권분부터 국제선 유류할증료 대폭 인상 적용. 전월 대비 약 2배, 전쟁 이전 대비 5배 이상 상승. 관련주: 진에어, 제주항공"
+  },
+  {
+    "category": "수동",
+    "title": "국민참여형 국민성장펀드 출시",
+    "source": "ai_scan",
+    "auto": true,
+    "month": "2026-05",
+    "undated": true,
+    "date": "2026-05-01",
+    "endDate": "2026-05-31",
+    "unconfirmed": true,
+    "summary": "5월 출시 예정인 정부 주도 펀드. AI·반도체 등 투자, 최대 1800만원 소득공제. 관련 금융·증권업계 영향"
+  },
+  {
     "category": "에너지",
     "title": "사우디 원유 5000만 배럴 한국 선적",
     "source": "ai_scan",
@@ -31518,6 +31819,14 @@
     "category": "IPO/공모",
     "title": "폴레드 공모청약 (05/04~05/06)",
     "source": "38cr",
+    "auto": true
+  },
+  {
+    "date": "2026-05-04",
+    "time": "14:00",
+    "category": "한국실적",
+    "title": "롯데칠성음료 실적발표",
+    "source": "fnguide",
     "auto": true
   },
   {
@@ -31608,6 +31917,14 @@
     "time": "09:00",
     "category": "IR",
     "title": "유니테크노 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-06",
+    "time": "09:00",
+    "category": "IR",
+    "title": "대덕전자 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -31957,6 +32274,22 @@
     "auto": true
   },
   {
+    "date": "2026-05-12",
+    "time": "16:00",
+    "category": "한국실적",
+    "title": "위메이드 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-13",
+    "time": "09:00",
+    "category": "한국실적",
+    "title": "NC 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-05-13",
     "time": "16:00",
     "category": "IR",
@@ -32188,6 +32521,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "SKC 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-23",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "로지스몬 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -32521,6 +32862,14 @@
     "auto": true
   },
   {
+    "date": "2026-06-08",
+    "time": "09:00",
+    "category": "IR",
+    "title": "삼천당제약 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-06-09",
     "time": "",
     "category": "기업이벤트",
@@ -32577,6 +32926,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "블루산업개발 액면분할",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-10",
+    "time": "11:30",
+    "category": "IR",
+    "title": "엑스게이트 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -32713,6 +33070,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "성안머티리얼스 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-18",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "우성머티리얼스 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -32965,6 +33330,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "금호전기 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-02",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "온코크로스 기업합병",
     "source": "fnguide",
     "auto": true
   },
@@ -33282,6 +33655,22 @@
     "time": "",
     "category": "미국실적",
     "title": "DE 실적발표 (장전) [EPS est. $5.2387]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-08-12",
+    "time": "",
+    "category": "미국실적",
+    "title": "SNDK 실적발표 [EPS est. $20.2337]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-08-12",
+    "time": "",
+    "category": "미국실적",
+    "title": "DE 실적발표 (장전) [EPS est. $5.2447]",
     "source": "finnhub",
     "auto": true
   },
@@ -33636,6 +34025,14 @@
   },
   {
     "date": "2026-10-13",
+    "time": "",
+    "category": "미국실적",
+    "title": "JPM 실적발표 [EPS est. $5.5301]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-10-13",
     "time": "21:30",
     "category": "경제지표",
     "title": "미국 CPI (9월)",
@@ -33660,6 +34057,22 @@
     "auto": true
   },
   {
+    "date": "2026-10-14",
+    "time": "",
+    "category": "미국실적",
+    "title": "BAC 실적발표 (장전) [EPS est. $1.1475]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-10-14",
+    "time": "",
+    "category": "미국실적",
+    "title": "WFC 실적발표 (장전) [EPS est. $1.8335]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
     "date": "2026-10-15",
     "time": "10:00",
     "category": "통화정책",
@@ -33673,6 +34086,14 @@
     "time": "",
     "category": "미국실적",
     "title": "RTX 실적발표 (장전) [EPS est. $1.7873]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-10-19",
+    "time": "",
+    "category": "미국실적",
+    "title": "RTX 실적발표 (장전) [EPS est. $1.7829]",
     "source": "finnhub",
     "auto": true
   },
@@ -33699,6 +34120,14 @@
     "time": "",
     "category": "미국실적",
     "title": "MRK 실적발표 [EPS est. $2.4321]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-10-29",
+    "time": "",
+    "category": "미국실적",
+    "title": "MRK 실적발표 [EPS est. $2.4472]",
     "source": "finnhub",
     "auto": true
   },
