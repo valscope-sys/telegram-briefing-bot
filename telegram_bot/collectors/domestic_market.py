@@ -376,10 +376,20 @@ def fetch_new_highlow():
             price_str = item.get("cur_prc", "0")
             price = _safe_int(price_str.replace("+", "").replace("-", "").replace(",", ""))
 
-            # 거래정지/거래량0 종목 제외
+            # 거래정지/저유동성 종목 제외 (거래량 + 거래대금 + 등락률 동시 체크)
             vol_str = item.get("trde_qty", "0")
             vol = _safe_int(vol_str.replace(",", ""))
             if price == 0 or vol == 0:
+                continue
+            # 거래대금 1억원 미만 제외 (거래정지 종목은 전일 잔존 데이터라 낮음)
+            trade_value = price * vol
+            if trade_value < 100_000_000:
+                continue
+            # 거래량 10만주 미만 제외 (저유동성)
+            if vol < 100_000:
+                continue
+            # 등락률 정확히 0% + 소량 거래는 거래정지 의심 → 제외
+            if rate == 0 and vol < 500_000:
                 continue
 
             filtered_stocks.append({
