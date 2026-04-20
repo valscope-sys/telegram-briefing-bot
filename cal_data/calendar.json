@@ -29843,6 +29843,30 @@
   },
   {
     "date": "2026-04-20",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "주연테크 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-20",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "프로티아 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-20",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "국도화학 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-20",
     "time": "04:00",
     "category": "경제지표",
     "title": "🇨🇳 China Loan Prime Rate 5Y  (Apr)",
@@ -29877,7 +29901,7 @@
   },
   {
     "date": "2026-04-20",
-    "time": "11:00",
+    "time": "13:00",
     "category": "IR",
     "title": "지투지바이오 IR (경영현황)",
     "source": "fnguide",
@@ -29963,6 +29987,14 @@
     "date": "2026-04-21",
     "time": "",
     "summary": "트럼프 대통령이 월요일 파키스탄에서 미국-이란 간 협상 재개 발표. 관련주: 정유사, 방산주, 항공사"
+  },
+  {
+    "date": "2026-04-21",
+    "time": "11:30",
+    "category": "IR",
+    "title": "한화솔루션 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-04-21",
@@ -30427,6 +30459,14 @@
   },
   {
     "date": "2026-04-23",
+    "time": "14:10",
+    "category": "한국실적",
+    "title": "현대자동차 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-23",
     "time": "15:30",
     "category": "IR",
     "title": "OCI홀딩스 IR (경영현황)",
@@ -30648,6 +30688,14 @@
   },
   {
     "date": "2026-04-24",
+    "time": "14:30",
+    "category": "IR",
+    "title": "포스코인터내셔널 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-24",
     "time": "15:00",
     "category": "한국실적",
     "title": "하나금융지주 실적발표",
@@ -30775,6 +30823,14 @@
     "time": "09:00",
     "category": "IR",
     "title": "현대제철 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-27",
+    "time": "10:30",
+    "category": "한국실적",
+    "title": "동양생명 실적발표",
     "source": "fnguide",
     "auto": true
   },
@@ -31511,6 +31567,14 @@
   {
     "date": "2026-04-30",
     "time": "13:30",
+    "category": "IR",
+    "title": "포스코인터내셔널 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-30",
+    "time": "13:30",
     "category": "한국실적",
     "title": "포스코퓨처엠 실적발표",
     "source": "fnguide",
@@ -31553,6 +31617,14 @@
     "time": "16:00",
     "category": "한국실적",
     "title": "SOOP 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-30",
+    "time": "16:00",
+    "category": "한국실적",
+    "title": "삼성중공업 실적발표",
     "source": "fnguide",
     "auto": true
   },
@@ -32138,6 +32210,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "윙입푸드 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-08",
+    "time": "15:00",
+    "category": "IR",
+    "title": "DL IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
