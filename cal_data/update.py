@@ -97,7 +97,7 @@ def merge_events(existing: list[dict], new_events: list[dict]) -> list[dict]:
     return result
 
 
-def collect_all(from_date: datetime.date, to_date: datetime.date) -> list[dict]:
+def collect_all(from_date: datetime.date, to_date: datetime.date, skip_ai: bool = False) -> list[dict]:
     """모든 collector 실행 후 결과 합산"""
     all_events = []
 
@@ -163,16 +163,19 @@ def collect_all(from_date: datetime.date, to_date: datetime.date) -> list[dict]:
     except Exception as e:
         print(f"[Calendar] 뉴스이벤트 실패: {e}")
 
-    # 6. AI 뉴스 스캐너 (Claude API)
-    try:
-        from cal_data.collectors.ai_news_scanner import scan_news_for_events
-        ai_events = scan_news_for_events()
-        print(f"[Calendar] AI스캔: {len(ai_events)}건")
-        all_events.extend(ai_events)
-    except ImportError:
-        pass
-    except Exception as e:
-        print(f"[Calendar] AI스캔 실패: {e}")
+    # 6. AI 뉴스 스캐너 (Claude API) - skip_ai 시 생략 (비용 절감)
+    if skip_ai:
+        print("[Calendar] AI스캔: 생략 (--skip-ai)")
+    else:
+        try:
+            from cal_data.collectors.ai_news_scanner import scan_news_for_events
+            ai_events = scan_news_for_events()
+            print(f"[Calendar] AI스캔: {len(ai_events)}건")
+            all_events.extend(ai_events)
+        except ImportError:
+            pass
+        except Exception as e:
+            print(f"[Calendar] AI스캔 실패: {e}")
 
     return all_events
 
@@ -197,6 +200,7 @@ def main():
     parser = argparse.ArgumentParser(description="캘린더 일정 업데이트")
     parser.add_argument("--full", action="store_true", help="연말까지 전체 업데이트")
     parser.add_argument("--month", type=str, help="특정 월 업데이트 (YYYYMM)")
+    parser.add_argument("--skip-ai", action="store_true", help="AI 뉴스 스캐너 생략 (Claude API 비용 절감)")
     args = parser.parse_args()
 
     today = datetime.date.today()
@@ -219,7 +223,7 @@ def main():
     print(f"[Calendar] 수집 범위: {from_date} ~ {to_date}")
 
     existing = load_existing()
-    new_events = collect_all(from_date, to_date)
+    new_events = collect_all(from_date, to_date, skip_ai=args.skip_ai)
     merged = merge_events(existing, new_events)
     save_calendar(merged)
 

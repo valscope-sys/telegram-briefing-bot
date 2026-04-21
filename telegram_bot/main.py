@@ -25,7 +25,7 @@ def refresh_calendar_pre_briefing():
     try:
         print(f"[SCHEDULER] 캘린더 사전 갱신 시작 ({yyyymm})")
         result = subprocess.run(
-            [sys.executable, "-m", "cal_data.update", "--month", yyyymm],
+            [sys.executable, "-m", "cal_data.update", "--month", yyyymm, "--skip-ai"],
             cwd=PROJECT_ROOT,
             timeout=180,
             check=False,
