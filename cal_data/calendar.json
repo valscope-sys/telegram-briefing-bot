@@ -28942,6 +28942,14 @@
   {
     "date": "2026-04-15",
     "time": "",
+    "category": "기업이벤트",
+    "title": "우성머티리얼스 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-15",
+    "time": "",
     "category": "한국실적(잠정)",
     "title": "코나아이 잠정실적발표",
     "source": "fnguide",
@@ -28984,6 +28992,14 @@
     "time": "",
     "category": "한국실적(잠정)",
     "title": "신영증권 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-15",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "JTC 잠정실적발표",
     "source": "fnguide",
     "auto": true
   },
@@ -29328,9 +29344,25 @@
   {
     "date": "2026-04-16",
     "time": "",
+    "category": "기업이벤트",
+    "title": "케이바이오랩스 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-16",
+    "time": "",
     "category": "미국실적",
     "title": "NFLX 실적발표 (장후) [EPS est. $0.7771]",
     "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-04-16",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "디오 잠정실적발표",
+    "source": "fnguide",
     "auto": true
   },
   {
@@ -29704,6 +29736,14 @@
   },
   {
     "date": "2026-04-17",
+    "time": "10:00",
+    "category": "IR",
+    "title": "코리아에프티 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-17",
     "time": "12:00",
     "category": "경제지표",
     "title": "🇪🇺 Trade Balance  (Feb)",
@@ -29980,6 +30020,30 @@
     "auto": true
   },
   {
+    "date": "2026-04-21",
+    "time": "",
+    "category": "미국실적",
+    "title": "RTX 실적발표 (장전) [EPS est. $1.532]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-04-21",
+    "time": "",
+    "category": "미국실적",
+    "title": "GE 실적발표 (장전) [EPS est. $1.6437]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-04-21",
+    "time": "",
+    "category": "미국실적",
+    "title": "UNH 실적발표 (장전) [EPS est. $6.6491]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
     "category": "정치/외교",
     "title": "트럼프 미-이란 협상 재개 발표",
     "source": "ai_scan",
@@ -29987,6 +30051,30 @@
     "date": "2026-04-21",
     "time": "",
     "summary": "트럼프 대통령이 월요일 파키스탄에서 미국-이란 간 협상 재개 발표. 관련주: 정유사, 방산주, 항공사"
+  },
+  {
+    "date": "2026-04-21",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "LS ELECTRIC 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-21",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "토박스코리아 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-21",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "SGC E&C 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-04-21",
@@ -30010,6 +30098,14 @@
     "time": "14:00",
     "category": "IR",
     "title": "플래티어 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-21",
+    "time": "14:00",
+    "category": "IR",
+    "title": "KSS해운 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -30070,6 +30166,14 @@
     "time": "16:00",
     "category": "한국실적",
     "title": "SGC에너지 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-21",
+    "time": "16:00",
+    "category": "한국실적(잠정)",
+    "title": "SGC에너지 잠정실적발표",
     "source": "fnguide",
     "auto": true
   },
@@ -30217,6 +30321,46 @@
   {
     "date": "2026-04-22",
     "time": "",
+    "category": "미국실적",
+    "title": "TXN 실적발표 (장후) [EPS est. $1.3837]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-04-22",
+    "time": "",
+    "category": "미국실적",
+    "title": "NOW 실적발표 (장후) [EPS est. $0.9733]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-04-22",
+    "time": "",
+    "category": "미국실적",
+    "title": "BA 실적발표 (장전) [EPS est. $-0.8498]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-04-22",
+    "time": "",
+    "category": "미국실적",
+    "title": "LRCX 실적발표 (장후) [EPS est. $1.3845]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-04-22",
+    "time": "",
+    "category": "미국실적",
+    "title": "TSLA 실적발표 (장후) [EPS est. $0.3802]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-04-22",
+    "time": "",
     "category": "한국실적",
     "title": "유니드 실적발표",
     "source": "fnguide",
@@ -30355,6 +30499,46 @@
     "time": "",
     "category": "미국실적",
     "title": "CAT 실적발표 (장전) [EPS est. $4.5998]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-04-23",
+    "time": "",
+    "category": "미국실적",
+    "title": "TMO 실적발표 (장전) [EPS est. $5.281]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-04-23",
+    "time": "",
+    "category": "미국실적",
+    "title": "INTC 실적발표 (장후) [EPS est. $0.0092]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-04-23",
+    "time": "",
+    "category": "미국실적",
+    "title": "LMT 실적발표 (장전) [EPS est. $6.7704]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-04-23",
+    "time": "",
+    "category": "미국실적",
+    "title": "CMCSA 실적발표 (장전) [EPS est. $0.7563]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-04-23",
+    "time": "",
+    "category": "미국실적",
+    "title": "KLAC 실적발표 (장후) [EPS est. $9.3245]",
     "source": "finnhub",
     "auto": true
   },
@@ -30624,6 +30808,14 @@
   },
   {
     "date": "2026-04-24",
+    "time": "",
+    "category": "미국실적",
+    "title": "PG 실적발표 (장전) [EPS est. $1.6034]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-04-24",
     "time": "10:10",
     "category": "한국실적",
     "title": "현대모비스 실적발표",
@@ -30859,6 +31051,22 @@
     "auto": true
   },
   {
+    "date": "2026-04-27",
+    "time": "15:30",
+    "category": "IR",
+    "title": "한화시스템 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-27",
+    "time": "16:00",
+    "category": "한국실적",
+    "title": "HD건설기계 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-04-28",
     "time": "",
     "category": "기업이벤트",
@@ -31045,6 +31253,14 @@
   {
     "date": "2026-04-28",
     "time": "",
+    "category": "기업이벤트",
+    "title": "큐로셀 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-28",
+    "time": "",
     "category": "미국실적",
     "title": "V 실적발표 (장후) [EPS est. $3.1543]",
     "source": "finnhub",
@@ -31060,9 +31276,41 @@
   },
   {
     "date": "2026-04-28",
+    "time": "",
+    "category": "미국실적",
+    "title": "KO 실적발표 (장전) [EPS est. $0.8351]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-04-28",
+    "time": "",
+    "category": "미국실적",
+    "title": "SBUX 실적발표 (장후) [EPS est. $0.4303]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-04-28",
+    "time": "",
+    "category": "미국실적",
+    "title": "V 실적발표 (장후) [EPS est. $3.1587]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-04-28",
     "time": "09:00",
     "category": "IR",
     "title": "ISC IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-28",
+    "time": "09:00",
+    "category": "IR",
+    "title": "HD건설기계 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -31079,6 +31327,14 @@
     "time": "14:00",
     "category": "IR",
     "title": "한화솔루션 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-28",
+    "time": "15:00",
+    "category": "한국실적",
+    "title": "쿠콘 실적발표",
     "source": "fnguide",
     "auto": true
   },
@@ -31268,6 +31524,55 @@
   },
   {
     "date": "2026-04-29",
+    "time": "",
+    "category": "미국실적",
+    "title": "ABBV 실적발표 (장전) [EPS est. $2.6372]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-04-29",
+    "time": "",
+    "category": "미국실적",
+    "title": "GOOGL 실적발표 (장후) [EPS est. $2.7567]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-04-29",
+    "time": "",
+    "category": "미국실적",
+    "title": "META 실적발표 (장후) [EPS est. $6.8579]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-04-29",
+    "time": "",
+    "category": "미국실적",
+    "title": "AMZN 실적발표 (장후) [EPS est. $1.6619]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-04-29",
+    "time": "",
+    "category": "미국실적",
+    "title": "MSFT 실적발표 (장후) [EPS est. $4.1399]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "category": "부동산",
+    "title": "더샵 탕정인피니티시티 3차 단지 상가 입찰 및 계약",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2026-04-29",
+    "time": "",
+    "summary": "충남 아산 탕정지구 더샵 탕정인피니티시티 3차 단지 내 상가 입찰 및 계약 진행. 총 3,517세대 규모 대단지 상권"
+  },
+  {
+    "date": "2026-04-29",
     "time": "09:00",
     "category": "IR",
     "title": "두산밥캣 IR (경영현황)",
@@ -31311,6 +31616,14 @@
     "time": "14:00",
     "category": "한국실적",
     "title": "에코프로 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-29",
+    "time": "15:00",
+    "category": "한국실적",
+    "title": "대한전선 실적발표",
     "source": "fnguide",
     "auto": true
   },
@@ -31487,6 +31800,54 @@
     "time": "",
     "category": "미국실적",
     "title": "SNDK 실적발표 [EPS est. $14.1775]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-04-30",
+    "time": "",
+    "category": "미국실적",
+    "title": "SNDK 실적발표 [EPS est. $14.4591]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-04-30",
+    "time": "",
+    "category": "미국실적",
+    "title": "MRK 실적발표 [EPS est. $-1.5364]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-04-30",
+    "time": "",
+    "category": "미국실적",
+    "title": "LLY 실적발표 [EPS est. $6.9914]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-04-30",
+    "time": "",
+    "category": "미국실적",
+    "title": "MA 실적발표 (장전) [EPS est. $4.5359]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-04-30",
+    "time": "",
+    "category": "미국실적",
+    "title": "CAT 실적발표 (장전) [EPS est. $4.6427]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-04-30",
+    "time": "",
+    "category": "미국실적",
+    "title": "AAPL 실적발표 (장후) [EPS est. $1.9801]",
     "source": "finnhub",
     "auto": true
   },
@@ -32823,6 +33184,18 @@
     "month": "2026-06"
   },
   {
+    "category": "반도체",
+    "title": "첨단 GPU 264장 중소기업 지원 시작",
+    "source": "ai_scan",
+    "auto": true,
+    "month": "2026-06",
+    "undated": true,
+    "date": "2026-06-01",
+    "endDate": "2026-06-30",
+    "unconfirmed": true,
+    "summary": "중소벤처기업부가 첨단 GPU 264장을 중소기업 제조현장과 창업기업에 지원 예정. AI 관련 반도체 수요 증가"
+  },
+  {
     "category": "수동",
     "title": "Amazon Luna 제3자 구독/게임스토어 지원 종료",
     "source": "ai_scan",
@@ -33865,6 +34238,15 @@
     "auto": true,
     "undated": true,
     "month": "2026-09"
+  },
+  {
+    "category": "수동",
+    "title": "Apple CEO 교체 - John Ternus 신임 CEO 취임",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2026-09-01",
+    "time": "",
+    "summary": "Tim Cook이 회장으로 물러나고 John Ternus가 신임 Apple CEO로 취임. Apple 관련주에 영향 예상"
   },
   {
     "date": "2026-09-01",
