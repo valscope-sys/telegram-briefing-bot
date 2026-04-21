@@ -544,9 +544,10 @@ def generate_market_commentary(market_data, news_list, intraday_text="", trend_t
 - 한국시간 오전에 발표된 중국·일본 경제지표 결과
 - 중동 지정학 사건 (유가 급변 원인 등)
 검색 원칙:
-- 공신력 있는 언론(Reuters, Bloomberg, CNBC, 한경, 매경, 연합) 결과만 신뢰
-- 검색 결과에서 확인된 팩트만 인용. 모호하면 사용하지 마라.
-- 불필요한 검색 금지.
+- **기본 전제: 장중 수집된 뉴스·데이터·수급·장중 흐름만으로 충분히 설명되면 검색하지 마라.** 이브닝은 이미 한국 장중 정보가 풍부해서 검색이 필요한 경우가 드물다.
+- 검색은 "뉴스에 빠진 중요 사실"이 있다고 판단될 때만 실행.
+- 공신력 있는 언론(Reuters, Bloomberg, CNBC, 한경, 매경, 연합) 결과만 신뢰.
+- 검색 결과가 모호하면 사용하지 마라.
 
 **3단계: 뉴스는 근거·증거 자료로 배치**
 - 뉴스 섹션은 시황의 주재료가 아니라, 1단계에서 해석한 시장 흐름을 **뒷받침하는 증거**로 사용하라.
@@ -673,15 +674,16 @@ def generate_market_commentary(market_data, news_list, intraday_text="", trend_t
             tools=[{
                 "type": "web_search_20260209",
                 "name": "web_search",
-                "max_uses": 3,  # 호출당 최대 3회 검색
+                "max_uses": 2,  # 이브닝은 장중 데이터 이미 수집돼있어 2회로 제한
+                "allowed_callers": ["direct"],
             }],
             system=PROMPT_SYSTEM,
             messages=[{"role": "user", "content": prompt}],
         )
         # 웹 검색 사용 시 server_tool_use/web_search_tool_result 블록 섞임 → text 블록만 추출
         search_count = sum(1 for b in response.content if b.type == "server_tool_use")
-        if search_count:
-            print(f"[WEB_SEARCH] 이브닝 시황 — 웹 검색 {search_count}회 사용")
+        u = response.usage
+        print(f"[USAGE] 이브닝 시황 — 검색 {search_count}회, input={u.input_tokens}, output={u.output_tokens}")
         text_parts = [b.text for b in response.content if b.type == "text"]
         return "\n".join(text_parts).strip()
     except Exception as e:
@@ -802,9 +804,11 @@ def generate_morning_commentary(global_data, news_list, trend_text=""):
 - 한국시간 새벽에 발생한 지정학 이벤트 (중동 휴전, 정상 통화 등)
 - 중요한 경제지표 발표의 컨센 대비 서프라이즈 방향
 검색 원칙:
-- 공신력 있는 언론(Reuters, Bloomberg, CNBC, WSJ, 한경, 매경) 결과만 신뢰
-- 검색 결과에서 확인된 팩트만 인용. 검색 결과가 모호하면 사용하지 마라.
-- 불필요한 검색 금지. 데이터·뉴스로 충분히 설명되면 검색하지 마라.
+- **기본 전제: 수집된 뉴스와 데이터만으로 시장 움직임이 충분히 설명되면 검색하지 마라.** 매번 의무적으로 쓸 필요 없음.
+- 검색은 "뉴스에 빠진 중요 사실"이 있다고 판단될 때만 실행 (위 목록 기준).
+- 공신력 있는 언론(Reuters, Bloomberg, CNBC, WSJ, 한경, 매경) 결과만 신뢰.
+- 검색 결과가 모호하면 사용하지 마라.
+- 불필요한 검색은 비용만 늘리고 시황 품질에 기여하지 않는다.
 
 **3단계: 뉴스는 근거·증거 자료로 배치**
 - 뉴스 섹션은 시황의 주재료가 아니라, 1단계에서 해석한 시장 흐름을 **뒷받침하는 증거**로 사용하라.
@@ -925,8 +929,8 @@ def generate_morning_commentary(global_data, news_list, trend_text=""):
             messages=[{"role": "user", "content": prompt}],
         )
         search_count = sum(1 for b in response.content if b.type == "server_tool_use")
-        if search_count:
-            print(f"[WEB_SEARCH] 모닝 시황 — 웹 검색 {search_count}회 사용")
+        u = response.usage
+        print(f"[USAGE] 모닝 시황 — 검색 {search_count}회, input={u.input_tokens}, output={u.output_tokens}")
         text_parts = [b.text for b in response.content if b.type == "text"]
         return "\n".join(text_parts).strip()
     except Exception as e:
