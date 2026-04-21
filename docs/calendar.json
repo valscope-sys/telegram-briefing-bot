@@ -26638,6 +26638,17 @@
     "country": "🇰🇷"
   },
   {
+    "category": "전시/박람회",
+    "title": "2026 밀라노 디자인 위크",
+    "source": "ai_scan",
+    "auto": true,
+    "month": "2026-04",
+    "undated": true,
+    "date": "2026-04-01",
+    "endDate": "2026-04-30",
+    "summary": "4월 20-26일 이탈리아 밀라노에서 열리는 세계 최대 디자인 박람회. 삼성전자, LG전자, 현대차 아이오닉3 세계 최초 공개. 관련주: 삼성전자, LG전자, 현대차"
+  },
+  {
     "category": "정치/외교",
     "title": "미국-이란 종전 협상",
     "source": "ai_scan",
@@ -30543,6 +30554,16 @@
     "auto": true
   },
   {
+    "category": "전시/박람회",
+    "title": "2026 우수급식·외식산업전 종료",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2026-04-23",
+    "time": "",
+    "unconfirmed": true,
+    "summary": "서울 코엑스에서 열리는 외식산업 전시회. 자동화 웍 등 전시"
+  },
+  {
     "date": "2026-04-23",
     "time": "",
     "category": "한국실적",
@@ -31638,6 +31659,14 @@
   {
     "date": "2026-04-29",
     "time": "16:00",
+    "category": "한국실적",
+    "title": "LG전자 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-29",
+    "time": "16:00",
     "category": "한국실적(잠정)",
     "title": "LG전자 잠정실적발표",
     "source": "fnguide",
@@ -31889,6 +31918,22 @@
     "time": "10:00",
     "category": "IR",
     "title": "한화에어로스페이스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-30",
+    "time": "10:00",
+    "category": "한국실적",
+    "title": "삼성전자 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-30",
+    "time": "10:00",
+    "category": "한국실적",
+    "title": "LG에너지솔루션 실적발표",
     "source": "fnguide",
     "auto": true
   },
@@ -32273,6 +32318,14 @@
     "category": "IPO/공모",
     "title": "폴레드 공모청약 (05/04~05/06)",
     "source": "38cr",
+    "auto": true
+  },
+  {
+    "date": "2026-05-04",
+    "time": "10:00",
+    "category": "한국실적",
+    "title": "현대오토에버 실적발표",
+    "source": "fnguide",
     "auto": true
   },
   {
@@ -32963,6 +33016,15 @@
     "auto": true
   },
   {
+    "category": "수동",
+    "title": "삼성전자-SK하이닉스 레버리지 ETF 출시",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2026-05-22",
+    "time": "",
+    "summary": "삼성전자와 SK하이닉스 등 단일 종목의 수익률을 2배로 추종하는 레버리지 ETF 출시. 관련주: 삼성전자, SK하이닉스"
+  },
+  {
     "date": "2026-05-23",
     "time": "",
     "category": "기업이벤트",
@@ -33017,6 +33079,22 @@
     "time": "",
     "category": "기업이벤트",
     "title": "피스피스스튜디오 유상증자(일반공모)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-27",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "피스피스스튜디오 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-28",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "조이웍스앤코 무상증자",
     "source": "fnguide",
     "auto": true
   },
@@ -33287,6 +33365,14 @@
   {
     "date": "2026-06-05",
     "time": "",
+    "category": "기업이벤트",
+    "title": "져스텍 유상증자(일반공모)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-05",
+    "time": "",
     "category": "제약/바이오",
     "title": "ASCO 2026 (미국종양학회)",
     "source": "news",
@@ -33326,6 +33412,14 @@
     "source": "fixed",
     "auto": false,
     "country": ""
+  },
+  {
+    "date": "2026-06-07",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "레몬헬스케어 유상증자(일반공모)",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-06-08",
@@ -33712,6 +33806,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "피엠티 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-30",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "지슨 액면병합",
     "source": "fnguide",
     "auto": true
   },
