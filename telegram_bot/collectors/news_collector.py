@@ -917,6 +917,7 @@ def generate_morning_commentary(global_data, news_list, trend_text=""):
                 "type": "web_search_20260209",
                 "name": "web_search",
                 "max_uses": 3,
+                "allowed_callers": ["direct"],  # 모델이 PTC 미지원 → 직접 호출만
             }],
             system=PROMPT_SYSTEM,
             messages=[{"role": "user", "content": prompt}],
