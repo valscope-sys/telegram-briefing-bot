@@ -681,6 +681,10 @@ def generate_market_commentary(market_data, news_list, intraday_text="", trend_t
             messages=[{"role": "user", "content": prompt}],
         )
         # 웹 검색 사용 시 server_tool_use/web_search_tool_result 블록 섞임 → text 블록만 추출
+        for b in response.content:
+            if b.type == "server_tool_use" and getattr(b, "name", "") == "web_search":
+                q = (b.input or {}).get("query", "")
+                print(f"[WEB_SEARCH] \"{q}\"")
         search_count = sum(1 for b in response.content if b.type == "server_tool_use")
         u = response.usage
         print(f"[USAGE] 이브닝 시황 — 검색 {search_count}회, input={u.input_tokens}, output={u.output_tokens}")
@@ -928,6 +932,10 @@ def generate_morning_commentary(global_data, news_list, trend_text=""):
             system=PROMPT_SYSTEM,
             messages=[{"role": "user", "content": prompt}],
         )
+        for b in response.content:
+            if b.type == "server_tool_use" and getattr(b, "name", "") == "web_search":
+                q = (b.input or {}).get("query", "")
+                print(f"[WEB_SEARCH] \"{q}\"")
         search_count = sum(1 for b in response.content if b.type == "server_tool_use")
         u = response.usage
         print(f"[USAGE] 모닝 시황 — 검색 {search_count}회, input={u.input_tokens}, output={u.output_tokens}")
