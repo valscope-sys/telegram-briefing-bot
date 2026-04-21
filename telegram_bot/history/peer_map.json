@@ -1,0 +1,453 @@
+{
+  "_meta": {
+    "description": "해외 기업 → 국내 Peer 매핑 DB. Phase 0 초기 시드 (반도체/IT부품/2차전지 3개 섹터). 자동 확장됨.",
+    "version": "1.0",
+    "last_updated": "2026-04-21",
+    "confidence_legend": "0.0~1.0 — 0.9+ 확정, 0.7+ 신뢰, 0.5+ 추정, 0.5- 미확정"
+  },
+
+  "TSMC": {
+    "category": "파운드리",
+    "sector": "반도체",
+    "korean_peers": ["삼성전자", "SK하이닉스"],
+    "confidence": 0.95,
+    "last_verified": "2026-04-21",
+    "evidence_urls": [],
+    "verification_count": 3,
+    "note": "파운드리 직접 경쟁 + HBM 공급망"
+  },
+  "마이크론": {
+    "category": "DRAM/NAND",
+    "sector": "반도체",
+    "korean_peers": ["SK하이닉스", "삼성전자"],
+    "confidence": 0.95,
+    "last_verified": "2026-04-21",
+    "verification_count": 3,
+    "note": "메모리 직접 경쟁사"
+  },
+  "Micron": {
+    "category": "DRAM/NAND",
+    "sector": "반도체",
+    "korean_peers": ["SK하이닉스", "삼성전자"],
+    "confidence": 0.95,
+    "last_verified": "2026-04-21",
+    "verification_count": 3
+  },
+  "키옥시아": {
+    "category": "NAND",
+    "sector": "반도체",
+    "korean_peers": ["SK하이닉스"],
+    "confidence": 0.9,
+    "last_verified": "2026-04-21",
+    "verification_count": 2,
+    "note": "SK하이닉스가 SPC 통해 지분 33~34% 보유"
+  },
+  "Kioxia": {
+    "category": "NAND",
+    "sector": "반도체",
+    "korean_peers": ["SK하이닉스"],
+    "confidence": 0.9,
+    "last_verified": "2026-04-21",
+    "verification_count": 2
+  },
+  "Nanya": {
+    "category": "DRAM",
+    "sector": "반도체",
+    "korean_peers": ["SK하이닉스", "삼성전자"],
+    "confidence": 0.85,
+    "last_verified": "2026-04-21",
+    "verification_count": 2
+  },
+  "Phison": {
+    "category": "NAND 컨트롤러",
+    "sector": "반도체",
+    "korean_peers": ["에이디테크놀로지"],
+    "confidence": 0.75,
+    "last_verified": "2026-04-21",
+    "verification_count": 1
+  },
+  "KYEC": {
+    "category": "반도체 테스트",
+    "sector": "반도체",
+    "korean_peers": ["테스나"],
+    "confidence": 0.7,
+    "last_verified": "2026-04-21",
+    "verification_count": 1
+  },
+  "Aspeed": {
+    "category": "BMC 칩",
+    "sector": "반도체",
+    "korean_peers": [],
+    "confidence": 0.3,
+    "last_verified": "2026-04-21",
+    "verification_count": 1,
+    "note": "국내 직접 Peer 없음"
+  },
+
+  "Yageo": {
+    "category": "MLCC/수동부품",
+    "sector": "IT부품",
+    "korean_peers": ["삼성전기"],
+    "confidence": 0.95,
+    "last_verified": "2026-04-21",
+    "verification_count": 3,
+    "note": "MLCC 글로벌 주요 경쟁사"
+  },
+  "Walsin": {
+    "category": "MLCC/수동부품",
+    "sector": "IT부품",
+    "korean_peers": ["삼성전기"],
+    "confidence": 0.9,
+    "last_verified": "2026-04-21",
+    "verification_count": 2
+  },
+  "TDK": {
+    "category": "MLCC/수동부품",
+    "sector": "IT부품",
+    "korean_peers": ["삼성전기"],
+    "confidence": 0.9,
+    "last_verified": "2026-04-21",
+    "verification_count": 2
+  },
+  "Taiyo Yuden": {
+    "category": "MLCC",
+    "sector": "IT부품",
+    "korean_peers": ["삼성전기"],
+    "confidence": 0.9,
+    "last_verified": "2026-04-21",
+    "verification_count": 2
+  },
+  "Holy Stone": {
+    "category": "MLCC",
+    "sector": "IT부품",
+    "korean_peers": ["삼성전기"],
+    "confidence": 0.85,
+    "last_verified": "2026-04-21",
+    "verification_count": 1
+  },
+  "Murata": {
+    "category": "MLCC",
+    "sector": "IT부품",
+    "korean_peers": ["삼성전기"],
+    "confidence": 0.95,
+    "last_verified": "2026-04-21",
+    "verification_count": 3
+  },
+
+  "Unimicron": {
+    "category": "ABF+HDI 기판",
+    "sector": "IT부품",
+    "korean_peers": ["대덕전자", "이수페타시스", "코리아써키트"],
+    "confidence": 0.95,
+    "last_verified": "2026-04-21",
+    "verification_count": 3
+  },
+  "Kinsus": {
+    "category": "BT+ABF 기판",
+    "sector": "IT부품",
+    "korean_peers": ["대덕전자", "심텍"],
+    "confidence": 0.9,
+    "last_verified": "2026-04-21",
+    "verification_count": 2
+  },
+  "Gold Circuit": {
+    "category": "MLB 기판",
+    "sector": "IT부품",
+    "korean_peers": ["이수페타시스"],
+    "confidence": 0.9,
+    "last_verified": "2026-04-21",
+    "verification_count": 2,
+    "note": "이수페타시스 Peer (메리츠 명시)"
+  },
+  "GCE": {
+    "category": "MLB 기판",
+    "sector": "IT부품",
+    "korean_peers": ["이수페타시스"],
+    "confidence": 0.9,
+    "last_verified": "2026-04-21",
+    "verification_count": 2
+  },
+  "Topoint": {
+    "category": "PCB 드릴비트",
+    "sector": "IT부품",
+    "korean_peers": ["네오티스"],
+    "confidence": 0.95,
+    "last_verified": "2026-04-21",
+    "verification_count": 3,
+    "note": "네오티스 Peer (메리츠 명시)"
+  },
+  "Dynamic Holdings": {
+    "category": "MLB 기판",
+    "sector": "IT부품",
+    "korean_peers": ["이수페타시스", "심텍"],
+    "confidence": 0.8,
+    "last_verified": "2026-04-21",
+    "verification_count": 1
+  },
+  "CWTC": {
+    "category": "차량용 리드프레임",
+    "sector": "IT부품",
+    "korean_peers": ["해성디에스"],
+    "confidence": 0.9,
+    "last_verified": "2026-04-21",
+    "verification_count": 2,
+    "note": "해성디에스 Peer (메리츠 명시)"
+  },
+  "Taimide": {
+    "category": "PI 필름",
+    "sector": "IT부품",
+    "korean_peers": ["PI첨단소재"],
+    "confidence": 0.95,
+    "last_verified": "2026-04-21",
+    "verification_count": 3,
+    "note": "PI첨단소재 Peer (메리츠 명시)"
+  },
+  "EMC": {
+    "category": "CCL",
+    "sector": "IT부품",
+    "korean_peers": ["두산", "솔루스첨단소재"],
+    "confidence": 0.85,
+    "last_verified": "2026-04-21",
+    "verification_count": 2,
+    "note": "두산 전자BG Peer"
+  },
+  "ITEQ": {
+    "category": "CCL",
+    "sector": "IT부품",
+    "korean_peers": ["두산", "솔루스첨단소재"],
+    "confidence": 0.85,
+    "last_verified": "2026-04-21",
+    "verification_count": 2
+  },
+  "TUC": {
+    "category": "CCL",
+    "sector": "IT부품",
+    "korean_peers": ["두산", "솔루스첨단소재"],
+    "confidence": 0.85,
+    "last_verified": "2026-04-21",
+    "verification_count": 2
+  },
+  "Kingboard": {
+    "category": "CCL",
+    "sector": "IT부품",
+    "korean_peers": ["두산"],
+    "confidence": 0.8,
+    "last_verified": "2026-04-21",
+    "verification_count": 1
+  },
+  "Panasonic": {
+    "category": "CCL",
+    "sector": "IT부품",
+    "korean_peers": ["두산", "솔루스첨단소재"],
+    "confidence": 0.85,
+    "last_verified": "2026-04-21",
+    "verification_count": 2,
+    "note": "CCL 사업부 한정. 2차전지 사업부는 별도 매핑"
+  },
+  "Fulltech Fiber Glass": {
+    "category": "유리섬유",
+    "sector": "IT부품",
+    "korean_peers": ["SKC", "효성첨단소재"],
+    "confidence": 0.75,
+    "last_verified": "2026-04-21",
+    "verification_count": 1
+  },
+  "Nittobo": {
+    "category": "T-Glass",
+    "sector": "IT부품",
+    "korean_peers": ["효성첨단소재"],
+    "confidence": 0.7,
+    "last_verified": "2026-04-21",
+    "verification_count": 1,
+    "note": "T-Glass 시장 80% 이상 점유. 국내 직접 경쟁사 없음"
+  },
+  "Co-Tech": {
+    "category": "HVLP 동박",
+    "sector": "IT부품",
+    "korean_peers": ["일진머티리얼즈", "SK넥실리스"],
+    "confidence": 0.85,
+    "last_verified": "2026-04-21",
+    "verification_count": 2
+  },
+  "GCS Holdings": {
+    "category": "광트랜시버 부품",
+    "sector": "IT부품",
+    "korean_peers": ["라이트론"],
+    "confidence": 0.7,
+    "last_verified": "2026-04-21",
+    "verification_count": 1
+  },
+  "Sunny Optical": {
+    "category": "카메라 모듈",
+    "sector": "IT부품",
+    "korean_peers": ["LG이노텍", "파트론"],
+    "confidence": 0.85,
+    "last_verified": "2026-04-21",
+    "verification_count": 2
+  },
+  "LandMark Optoelectronics": {
+    "category": "광통신 에피웨이퍼",
+    "sector": "IT부품",
+    "korean_peers": ["라이트론", "옵트론텍"],
+    "confidence": 0.7,
+    "last_verified": "2026-04-21",
+    "verification_count": 1
+  },
+  "Accton": {
+    "category": "네트워크 스위치",
+    "sector": "IT부품",
+    "korean_peers": ["쏠리드"],
+    "confidence": 0.65,
+    "last_verified": "2026-04-21",
+    "verification_count": 1
+  },
+  "Wistron": {
+    "category": "서버 ODM",
+    "sector": "IT부품",
+    "korean_peers": [],
+    "confidence": 0.3,
+    "last_verified": "2026-04-21",
+    "verification_count": 1,
+    "note": "국내 직접 Peer 없음. 대신 밸류체인(LG이노텍/심텍) 간접 영향"
+  },
+  "Foxconn": {
+    "category": "EMS/서버 조립",
+    "sector": "IT부품",
+    "korean_peers": [],
+    "confidence": 0.3,
+    "last_verified": "2026-04-21",
+    "verification_count": 1
+  },
+  "HonHai": {
+    "category": "EMS/서버 조립",
+    "sector": "IT부품",
+    "korean_peers": [],
+    "confidence": 0.3,
+    "last_verified": "2026-04-21",
+    "verification_count": 1
+  },
+  "Asia Vital Components": {
+    "category": "서버 수냉 쿨링",
+    "sector": "IT부품",
+    "korean_peers": ["비나텍"],
+    "confidence": 0.6,
+    "last_verified": "2026-04-21",
+    "verification_count": 1
+  },
+  "AVC": {
+    "category": "서버 수냉 쿨링",
+    "sector": "IT부품",
+    "korean_peers": ["비나텍"],
+    "confidence": 0.6,
+    "last_verified": "2026-04-21",
+    "verification_count": 1
+  },
+  "Delta Electronics": {
+    "category": "AI 서버 전원",
+    "sector": "IT부품",
+    "korean_peers": [],
+    "confidence": 0.3,
+    "last_verified": "2026-04-21",
+    "verification_count": 1
+  },
+  "Winway": {
+    "category": "테스트 소켓",
+    "sector": "IT부품",
+    "korean_peers": ["ISC", "마이크로컨텍솔"],
+    "confidence": 0.75,
+    "last_verified": "2026-04-21",
+    "verification_count": 1
+  },
+  "ABF": {
+    "category": "ABF 기판 (제품 카테고리)",
+    "sector": "IT부품",
+    "korean_peers": ["대덕전자", "이수페타시스", "코리아써키트", "LG이노텍"],
+    "confidence": 0.9,
+    "last_verified": "2026-04-21",
+    "verification_count": 2,
+    "note": "제품 카테고리 매핑. 업체 뉴스는 개별 매핑 참조"
+  },
+
+  "CATL": {
+    "category": "2차전지 셀",
+    "sector": "2차전지",
+    "korean_peers": ["LG에너지솔루션", "삼성SDI", "SK온"],
+    "confidence": 0.95,
+    "last_verified": "2026-04-21",
+    "verification_count": 3
+  },
+  "BYD": {
+    "category": "2차전지 셀 + EV",
+    "sector": "2차전지",
+    "korean_peers": ["LG에너지솔루션", "삼성SDI"],
+    "confidence": 0.9,
+    "last_verified": "2026-04-21",
+    "verification_count": 2
+  },
+  "Panasonic Battery": {
+    "category": "2차전지 셀",
+    "sector": "2차전지",
+    "korean_peers": ["삼성SDI", "LG에너지솔루션"],
+    "confidence": 0.9,
+    "last_verified": "2026-04-21",
+    "verification_count": 2,
+    "note": "Panasonic 2차전지 사업부 한정 (CCL 사업부와 별도)"
+  },
+  "Northvolt": {
+    "category": "2차전지 셀",
+    "sector": "2차전지",
+    "korean_peers": ["SK온", "LG에너지솔루션"],
+    "confidence": 0.8,
+    "last_verified": "2026-04-21",
+    "verification_count": 1
+  },
+  "Albemarle": {
+    "category": "리튬",
+    "sector": "2차전지",
+    "korean_peers": ["포스코퓨처엠", "엘앤에프"],
+    "confidence": 0.75,
+    "last_verified": "2026-04-21",
+    "verification_count": 1
+  },
+  "SQM": {
+    "category": "리튬",
+    "sector": "2차전지",
+    "korean_peers": ["포스코퓨처엠"],
+    "confidence": 0.75,
+    "last_verified": "2026-04-21",
+    "verification_count": 1
+  },
+  "Livent": {
+    "category": "리튬",
+    "sector": "2차전지",
+    "korean_peers": ["포스코퓨처엠"],
+    "confidence": 0.7,
+    "last_verified": "2026-04-21",
+    "verification_count": 1
+  },
+  "Ganfeng": {
+    "category": "리튬",
+    "sector": "2차전지",
+    "korean_peers": ["엘앤에프", "포스코퓨처엠"],
+    "confidence": 0.7,
+    "last_verified": "2026-04-21",
+    "verification_count": 1
+  },
+  "EVE Energy": {
+    "category": "2차전지 셀",
+    "sector": "2차전지",
+    "korean_peers": ["SK온", "삼성SDI"],
+    "confidence": 0.75,
+    "last_verified": "2026-04-21",
+    "verification_count": 1
+  },
+  "Tesla": {
+    "category": "EV + 2차전지 셀 자체",
+    "sector": "전기차/2차전지",
+    "korean_peers": ["현대차", "기아", "LG에너지솔루션"],
+    "confidence": 0.8,
+    "last_verified": "2026-04-21",
+    "verification_count": 2,
+    "note": "EV는 현대차/기아, 2차전지는 LG엔솔(Tesla 공급)"
+  }
+}
