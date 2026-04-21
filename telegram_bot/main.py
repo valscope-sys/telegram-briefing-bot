@@ -1,5 +1,7 @@
 """NODE Research 텔레그램 자동 브리핑 봇 - 메인 엔트리포인트"""
+import os
 import sys
+import subprocess
 import datetime
 import pytz
 from apscheduler.schedulers.blocking import BlockingScheduler
@@ -8,11 +10,48 @@ from apscheduler.triggers.cron import CronTrigger
 from telegram_bot.briefings import run_morning_briefing, run_evening_briefing, resend_briefing
 
 KST = pytz.timezone("Asia/Seoul")
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 def is_weekday():
     """평일 여부 확인 (토/일 제외)"""
     return datetime.date.today().weekday() < 5
+
+
+def refresh_calendar_pre_briefing():
+    """브리핑 직전 캘린더 로컬 최신화 (FnGuide 최신 잠정실적 반영)"""
+    today = datetime.date.today()
+    yyyymm = today.strftime("%Y%m")
+    try:
+        print(f"[SCHEDULER] 캘린더 사전 갱신 시작 ({yyyymm})")
+        result = subprocess.run(
+            [sys.executable, "-m", "cal_data.update", "--month", yyyymm],
+            cwd=PROJECT_ROOT,
+            timeout=180,
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+        if result.returncode == 0:
+            print(f"[SCHEDULER] 캘린더 갱신 완료")
+        else:
+            print(f"[SCHEDULER] 캘린더 갱신 경고 (rc={result.returncode}): {result.stderr[:200]}")
+    except Exception as e:
+        print(f"[SCHEDULER] 캘린더 갱신 실패: {e} - 기존 데이터로 진행")
+
+
+def reset_calendar_git_state():
+    """git pull 충돌 방지용 로컬 변경 복구 (GitHub Actions가 정식 소스)"""
+    try:
+        subprocess.run(
+            ["git", "checkout", "--", "cal_data/calendar.json", "docs/calendar.json"],
+            cwd=PROJECT_ROOT,
+            check=False,
+            capture_output=True,
+            timeout=10,
+        )
+    except Exception as e:
+        print(f"[SCHEDULER] git 복구 실패: {e}")
 
 
 def morning_job():
@@ -21,7 +60,11 @@ def morning_job():
         print("[SCHEDULER] 주말 - 모닝 브리핑 스킵")
         return
     print(f"[SCHEDULER] 모닝 브리핑 실행 - {datetime.datetime.now()}")
-    run_morning_briefing()
+    refresh_calendar_pre_briefing()
+    try:
+        run_morning_briefing()
+    finally:
+        reset_calendar_git_state()
 
 
 def evening_job():
@@ -30,7 +73,11 @@ def evening_job():
         print("[SCHEDULER] 주말 - 이브닝 브리핑 스킵")
         return
     print(f"[SCHEDULER] 이브닝 브리핑 실행 - {datetime.datetime.now()}")
-    run_evening_briefing()
+    refresh_calendar_pre_briefing()
+    try:
+        run_evening_briefing()
+    finally:
+        reset_calendar_git_state()
 
 
 def main():
@@ -51,11 +98,23 @@ def main():
             if "--force" in sys.argv:
                 print("⚠️  --force 모드: 장중 스냅샷 무시하고 재생성합니다")
             print("=== 모닝 브리핑 수동 실행 ===")
-            run_morning_briefing()
+            if "--skip-refresh" not in sys.argv:
+                refresh_calendar_pre_briefing()
+            try:
+                run_morning_briefing()
+            finally:
+                if "--skip-refresh" not in sys.argv:
+                    reset_calendar_git_state()
             return
         elif cmd == "evening":
             print("=== 이브닝 브리핑 수동 실행 ===")
-            run_evening_briefing()
+            if "--skip-refresh" not in sys.argv:
+                refresh_calendar_pre_briefing()
+            try:
+                run_evening_briefing()
+            finally:
+                if "--skip-refresh" not in sys.argv:
+                    reset_calendar_git_state()
             return
         elif cmd == "resend":
             if len(sys.argv) < 3:
