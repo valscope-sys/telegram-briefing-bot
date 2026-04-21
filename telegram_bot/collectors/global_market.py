@@ -163,10 +163,15 @@ def fetch_bond_rates():
                 "전일대비": _safe_float(item.get("bond_mnrt_prdy_vrss")),
                 "부호": _sign_symbol(item.get("prdy_vrss_sign", "3")),
             }
-        # NOTE: yfinance 2YY=F는 stale 데이터 (수일간 동일값) → 신뢰 불가
-        # TODO P1: FRED API (DGS2) 연동으로 정확한 2Y 확보
+        # 2Y: yfinance 2YY=F futures (1일 지연 가능하나 움직임 추적 가능)
+        # 3M: ^IRX (NY Fed 표준 리세션 시그널 10Y-3M 용)
+        us_2y = _fetch_yf_yield("2YY=F")
+        us_3m = _fetch_yf_yield("^IRX")
+
         result = {
-            "미국 1Y": overseas.get("Y0203", {}),  # KIS 1년 T-BILL (정확, 매일 업데이트)
+            "미국 3M": us_3m,
+            "미국 1Y": overseas.get("Y0203", {}),  # KIS 1년 T-BILL
+            "미국 2Y": us_2y,                         # yfinance 2YY=F
             "미국 10Y": overseas.get("Y0202", {}),
             "연방기금금리": overseas.get("Y0204", {}),
             "국고채 3Y": domestic.get("Y0101", {}),
@@ -177,6 +182,27 @@ def fetch_bond_rates():
         return result
     except Exception as e:
         return {"error": str(e)}
+
+
+def _fetch_yf_yield(ticker):
+    """yfinance 로 금리 지수/선물 조회 (2Y, 3M 등 KIS 미제공분)"""
+    try:
+        import yfinance as yf
+        hist = yf.Ticker(ticker).history(period="5d")
+        if hist.empty or len(hist) < 2:
+            return {}
+        last = float(hist["Close"].iloc[-1])
+        prev = float(hist["Close"].iloc[-2])
+        delta = last - prev
+        sign = "▲" if delta > 0 else ("▼" if delta < 0 else "─")
+        return {
+            "이름": ticker,
+            "금리": round(last, 3),
+            "전일대비": round(delta, 3),
+            "부호": sign,
+        }
+    except Exception:
+        return {}
 
 
 def fetch_commodities():

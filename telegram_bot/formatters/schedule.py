@@ -155,7 +155,8 @@ def _format_schedule(title, schedule_data):
             if kr_official:
                 parts.extend(kr_official)
             if kr_provisional:
-                parts.extend([f"{n} (잠정)" for n in kr_provisional])
+                # 잠정실적은 종목 앞에 "(잠정)" 표기
+                parts.extend([f"(잠정) {n}" for n in kr_provisional])
             earnings_lines.append(f"🇰🇷 국내  {', '.join(parts)}")
 
         for session in ["장전", "장후", "기타"]:

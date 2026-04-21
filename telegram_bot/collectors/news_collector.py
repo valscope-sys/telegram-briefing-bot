@@ -480,19 +480,23 @@ def generate_market_commentary(market_data, news_list, intraday_text="", trend_t
         bonds = global_data.get("bonds", {})
         if bonds and "error" not in bonds:
             data_summary += "\n채권금리:\n"
-            for name in ["미국 1Y", "미국 10Y", "국고채 3Y", "국고채 10Y"]:
+            for name in ["미국 3M", "미국 2Y", "미국 10Y", "국고채 3Y", "국고채 10Y"]:
                 b = bonds.get(name, {})
-                if b and "error" not in b:
+                if b and "error" not in b and b.get("금리", 0):
                     data_summary += f"  {name}: {b.get('금리', 0):.3f}% ({b.get('전일대비', 0):+.3f}%p)\n"
-            # 장단기 스프레드
-            us2y = bonds.get("미국 1Y", {}).get("금리", 0)
+            # 장단기 스프레드 — 2Y-10Y (표준), 3M-10Y (NY Fed 리세션 지표) 둘 다 제공
+            us2y = bonds.get("미국 2Y", {}).get("금리", 0)
+            us3m = bonds.get("미국 3M", {}).get("금리", 0)
             us10y = bonds.get("미국 10Y", {}).get("금리", 0)
             if us2y and us10y:
                 spread = us10y - us2y
-                data_summary += f"  10Y-1Y 스프레드: {spread:+.3f}%p"
+                data_summary += f"  10Y-2Y 스프레드: {spread:+.3f}%p"
                 if spread < 0:
                     data_summary += " (장단기 역전, 경기침체 우려 시그널)"
                 data_summary += "\n"
+            if us3m and us10y:
+                spread3m = us10y - us3m
+                data_summary += f"  10Y-3M 스프레드: {spread3m:+.3f}%p (NY Fed 리세션 지표)\n"
 
         # 환율/DXY
         fx = global_data.get("fx", {})
@@ -769,22 +773,25 @@ def generate_morning_commentary(global_data, news_list, trend_text=""):
                 implied = koru_pct / 3
                 data_summary += f"  ⚠️ KORU {koru_pct:+.2f}% (3x 레버리지 → 실제 예상 갭 {implied:+.1f}%)\n"
 
-    # 채권금리
+    # 채권금리 — 3M / 2Y / 10Y (NY Fed 표준 + 시장 표준 스프레드)
     bonds = global_data.get("bonds", {})
     if bonds and "error" not in bonds:
         data_summary += "\n채권금리:\n"
-        for name in ["미국 1Y", "미국 10Y"]:
+        for name in ["미국 3M", "미국 2Y", "미국 10Y"]:
             b = bonds.get(name, {})
-            if b and "error" not in b:
+            if b and "error" not in b and b.get("금리", 0):
                 data_summary += f"  {name}: {b.get('금리', 0):.3f}% ({b.get('전일대비', 0):+.3f}%p)\n"
-        us2y = bonds.get("미국 1Y", {}).get("금리", 0)
+        us2y = bonds.get("미국 2Y", {}).get("금리", 0)
+        us3m = bonds.get("미국 3M", {}).get("금리", 0)
         us10y = bonds.get("미국 10Y", {}).get("금리", 0)
         if us2y and us10y:
             spread = us10y - us2y
-            data_summary += f"  10Y-1Y 스프레드: {spread:+.3f}%p"
+            data_summary += f"  10Y-2Y 스프레드: {spread:+.3f}%p"
             if spread < 0:
                 data_summary += " (장단기 역전)"
             data_summary += "\n"
+        if us3m and us10y:
+            data_summary += f"  10Y-3M 스프레드: {us10y - us3m:+.3f}%p\n"
 
     # 심리지표
     sentiment = global_data.get("sentiment", {})
