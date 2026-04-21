@@ -528,7 +528,7 @@ def generate_market_commentary(market_data, news_list, intraday_text="", trend_t
 위 데이터를 바탕으로 오늘 시장 시황을 작성해주세요.
 증권사 리서치센터 애널리스트 팀장이 텔레그램 채널 구독자(개인 투자자)에게 장 마감 시황을 전달합니다.
 
-[작성 방식 — 2단계 사고]
+[작성 방식 — 3단계 사고]
 
 **1단계: 시장 큰 그림 먼저 (데이터 중심 + 구조적 해석 허용)**
 - 제공된 데이터(지수·섹터·수급·장중 흐름·환율·원자재·금리)로 오늘 시장의 큰 그림을 그려라.
@@ -536,9 +536,22 @@ def generate_market_commentary(market_data, news_list, intraday_text="", trend_t
 - 예: 외국인 대규모 매도 + 원달러 상승 → 환차손 우려로 인한 롤오버 압력 해석
 - 예: 반도체 강세 + 방산 약세 → 리스크온 회귀 신호로 해석
 
-**2단계: 뉴스는 근거·증거 자료로 배치**
+**2단계: 필요 시 웹 검색으로 보강 (web_search 도구 — 최대 3회)**
+한국 장중 발생했으나 수집된 뉴스에 빠진 중요 이벤트가 있으면 검색하라.
+검색을 사용해야 하는 경우:
+- 특정 종목·섹터의 이상 급등락 원인이 뉴스에 없음
+- 장중 발표된 정책/공시/실적 (한국 기업 실적 가이던스, 해외 정책 발표 등)
+- 한국시간 오전에 발표된 중국·일본 경제지표 결과
+- 중동 지정학 사건 (유가 급변 원인 등)
+검색 원칙:
+- 공신력 있는 언론(Reuters, Bloomberg, CNBC, 한경, 매경, 연합) 결과만 신뢰
+- 검색 결과에서 확인된 팩트만 인용. 모호하면 사용하지 마라.
+- 불필요한 검색 금지.
+
+**3단계: 뉴스는 근거·증거 자료로 배치**
 - 뉴스 섹션은 시황의 주재료가 아니라, 1단계에서 해석한 시장 흐름을 **뒷받침하는 증거**로 사용하라.
 - 뉴스 내용을 요약·나열하지 말고, 1단계 해석과 연결시켜 인용하라.
+- 웹 검색으로 얻은 팩트도 동일하게 취급.
 
 [해석 vs 팩트 — 엄격히 구분]
 - **해석·맥락·로테이션·매크로 연결**: 너의 지식으로 자유롭게 작성 가능
@@ -656,10 +669,20 @@ def generate_market_commentary(market_data, news_list, intraday_text="", trend_t
             model=COMMENTARY_MODEL,
             max_tokens=2000,
             temperature=0.3,  # 시황 일관성 + 최소 창의성
+            tools=[{
+                "type": "web_search_20260209",
+                "name": "web_search",
+                "max_uses": 3,  # 호출당 최대 3회 검색
+            }],
             system=PROMPT_SYSTEM,
             messages=[{"role": "user", "content": prompt}],
         )
-        return response.content[0].text.strip()
+        # 웹 검색 사용 시 server_tool_use/web_search_tool_result 블록 섞임 → text 블록만 추출
+        search_count = sum(1 for b in response.content if b.type == "server_tool_use")
+        if search_count:
+            print(f"[WEB_SEARCH] 이브닝 시황 — 웹 검색 {search_count}회 사용")
+        text_parts = [b.text for b in response.content if b.type == "text"]
+        return "\n".join(text_parts).strip()
     except Exception as e:
         return f"시황 해석 생성 실패: {e}"
 
@@ -761,7 +784,7 @@ def generate_morning_commentary(global_data, news_list, trend_text=""):
 위 데이터를 바탕으로 전일 미국 증시 마감 리뷰 + 오늘 한국 증시 체크포인트를 작성해주세요.
 증권사 리서치센터 애널리스트 팀장이 텔레그램 채널 구독자(개인 투자자)에게 보내는 모닝 시황입니다.
 
-[작성 방식 — 2단계 사고]
+[작성 방식 — 3단계 사고]
 
 **1단계: 시장 큰 그림 먼저 (데이터 중심 + 구조적 해석 허용)**
 - 제공된 데이터(지수, 섹터, 환율, 금리, 원자재, 수급, 야간 프록시)로 먼저 오늘 시장의 큰 그림을 그려라.
@@ -769,9 +792,23 @@ def generate_morning_commentary(global_data, news_list, trend_text=""):
 - 예: 10Y 금리 급등 + 성장주 약세 → 연준 매파 시나리오 재부상으로 해석
 - 예: 에너지 약세 + 기술주 강세 → 리스크온 자금 이동으로 해석
 
-**2단계: 뉴스는 근거·증거 자료로 배치**
+**2단계: 필요 시 웹 검색으로 보강 (web_search 도구 — 최대 3회)**
+수집된 뉴스 목록에서 설명되지 않는 중요한 움직임이 있으면 웹 검색을 사용하라.
+검색을 사용해야 하는 경우:
+- 데이터에 특정 종목·지수의 이상 급등락이 있는데 뉴스에 원인이 없음 (예: 테슬라 +8% 이유)
+- 주요 지수의 N거래일 연속 상승/하락, ATH 경신, X년 만의 최대 등 마일스톤 확인
+- 미국 장 마감 후 한국시간 새벽에 발표된 실적 결과 (Netflix, TSLA 등)
+- 한국시간 새벽에 발생한 지정학 이벤트 (중동 휴전, 정상 통화 등)
+- 중요한 경제지표 발표의 컨센 대비 서프라이즈 방향
+검색 원칙:
+- 공신력 있는 언론(Reuters, Bloomberg, CNBC, WSJ, 한경, 매경) 결과만 신뢰
+- 검색 결과에서 확인된 팩트만 인용. 검색 결과가 모호하면 사용하지 마라.
+- 불필요한 검색 금지. 데이터·뉴스로 충분히 설명되면 검색하지 마라.
+
+**3단계: 뉴스는 근거·증거 자료로 배치**
 - 뉴스 섹션은 시황의 주재료가 아니라, 1단계에서 해석한 시장 흐름을 **뒷받침하는 증거**로 사용하라.
 - 뉴스 내용을 요약·나열하지 말고, 1단계 해석과 연결시켜 인용하라.
+- 웹 검색으로 얻은 팩트도 동일하게 취급 — 자연스럽게 문장에 녹여라.
 
 [해석 vs 팩트 — 엄격히 구분]
 - **해석·맥락·로테이션·매크로 연결**: 너의 지식으로 자유롭게 작성 가능
@@ -876,9 +913,18 @@ def generate_morning_commentary(global_data, news_list, trend_text=""):
             model=COMMENTARY_MODEL,
             max_tokens=2000,
             temperature=0.3,  # 시황 일관성 + 최소 창의성
+            tools=[{
+                "type": "web_search_20260209",
+                "name": "web_search",
+                "max_uses": 3,
+            }],
             system=PROMPT_SYSTEM,
             messages=[{"role": "user", "content": prompt}],
         )
-        return response.content[0].text.strip()
+        search_count = sum(1 for b in response.content if b.type == "server_tool_use")
+        if search_count:
+            print(f"[WEB_SEARCH] 모닝 시황 — 웹 검색 {search_count}회 사용")
+        text_parts = [b.text for b in response.content if b.type == "text"]
+        return "\n".join(text_parts).strip()
     except Exception as e:
         return f"미장 시황 생성 실패: {e}"
