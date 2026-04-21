@@ -1,0 +1,21 @@
+{
+  "_meta": {
+    "description": "중동 지정학 키워드 및 이란 전쟁 하위 이벤트 분류. 뉴스 필터링 시 '이란' 키워드 없어도 포함해야 할 관련 이벤트 정의.",
+    "usage": "news_collector의 뉴스 필터에서 사용. 브리핑 프롬프트에는 '중동 이벤트 있으면 반영' 한 줄로 대체."
+  },
+  "iran_war_scope": [
+    "이스라엘의 레바논·시리아·헤즈볼라 관련 군사/외교 행동",
+    "호르무즈 해협 통항/봉쇄 관련",
+    "미국-이스라엘, 미국-레바논 정상 회담/통화",
+    "중동 내 어떤 국가든 휴전/정전 합의"
+  ],
+  "keywords": [
+    "이란", "Iran", "이스라엘", "Israel", "레바논", "Lebanon",
+    "헤즈볼라", "Hezbollah", "하마스", "Hamas",
+    "휴전", "ceasefire", "정전", "truce", "평화협정", "peace deal",
+    "종전", "협상 타결",
+    "호르무즈", "Hormuz", "핵 협상", "nuclear deal",
+    "중동 리스크", "Middle East risk",
+    "트럼프 중동", "Trump Middle East", "네타냐후", "Netanyahu", "아운", "Aoun"
+  ]
+}

@@ -269,8 +269,33 @@ def _fetch_condition_search_result(seq_no):
         return []
 
 
+_SECTOR_MAPPING_CACHE = None
+
+
+def _load_sector_mapping():
+    """stock_sector_mapping.json 로드 (lazy, 모듈 수명 동안 캐시)"""
+    global _SECTOR_MAPPING_CACHE
+    if _SECTOR_MAPPING_CACHE is not None:
+        return _SECTOR_MAPPING_CACHE
+    import json
+    import os
+    path = os.path.join(
+        os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+        "history", "stock_sector_mapping.json"
+    )
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        _SECTOR_MAPPING_CACHE = {k: v for k, v in data.items() if not k.startswith("_")}
+        print(f"[SECTOR_MAP] 수동 매핑 {len(_SECTOR_MAPPING_CACHE)}종목 로드")
+    except Exception as e:
+        print(f"[SECTOR_MAP] 매핑 파일 로드 실패, Claude 폴백만 사용: {e}")
+        _SECTOR_MAPPING_CACHE = {}
+    return _SECTOR_MAPPING_CACHE
+
+
 def _classify_themes_with_claude(stock_names):
-    """Claude API로 종목명 → 투자 테마 분류"""
+    """Claude API로 종목명 → 투자 테마 분류 (수동 매핑 미커버 종목 폴백용)"""
     from telegram_bot.config import ANTHROPIC_API_KEY
     if not ANTHROPIC_API_KEY or not stock_names:
         return {name: "기타" for name in stock_names}
@@ -284,12 +309,13 @@ def _classify_themes_with_claude(stock_names):
 
 종목: {names_str}
 
-테마 예시: 반도체, 반도체장비, 광통신, 통신장비, 2차전지, 방산, 화장품/K-뷰티, 바이오/제약, 의료기기, AI/소프트웨어, 자동차, 자동차부품, 조선, 원전/전력, 건설/재건, 부동산, 철강/소재, 금속/비철, 에너지, 금융, 게임, 음식료, 로봇, 포장/용기, 기타
+테마 예시: 반도체/메모리, 반도체장비, 반도체소재, 반도체부품, 2차전지, 2차전지소재, 2차전지장비, 바이오/제약, 의료기기, AI/소프트웨어, 로봇, 자동차, 자동차부품, 조선, 기계, 원전/전력, 방산, 화장품/K-뷰티, 건설/재건, 부동산, 철강/소재, 금속/비철, 정유/화학, 에너지, 금융, 지주, 게임, 미디어/엔터, 음식료, 유통/소비재, 통신/5G, 통신장비, 섬유/패션, 항공/해운, 농업/사료, 기타
 
 핵심 규칙:
 - 종목의 실제 사업 내용을 정확히 알 때만 분류하세요.
 - 종목명에 "반도체"가 들어있다고 반도체로 분류하지 마세요. 실제 사업을 확인하세요.
 - 잘 모르는 종목은 반드시 "기타"로 분류하세요. 추측으로 반도체나 다른 테마에 넣지 마세요.
+- 지주사는 주된 자회사 섹터로. 예: 솔브레인홀딩스 → 반도체소재.
 - 주요 오분류 사례:
   레이 = 치과의료기기 (반도체 아님)
   에이치케이 = 부동산 (반도체 아님)
@@ -317,6 +343,38 @@ JSON만 출력하세요:
         print(f"[THEME] Claude 테마 분류 실패: {e}")
 
     return {name: "기타" for name in stock_names}
+
+
+def _classify_stocks(filtered_stocks):
+    """종목 리스트 → {종목코드: 섹터} 매핑.
+
+    1차: stock_sector_mapping.json 코드 기반 조회
+    2차(폴백): 미매칭 종목만 Claude API로 분류
+    """
+    mapping = _load_sector_mapping()
+    code_to_sector = {}
+    unmatched = []  # (name, code) tuples
+
+    for s in filtered_stocks:
+        code = s.get("종목코드", "")
+        name = s.get("종목명", "")
+        if code in mapping:
+            code_to_sector[code] = mapping[code]["sector"]
+        else:
+            unmatched.append((name, code))
+
+    hit = len(code_to_sector)
+    miss = len(unmatched)
+    print(f"[SECTOR_MAP] 매칭 {hit}/{hit+miss} ({100*hit/max(1,hit+miss):.0f}%), Claude 폴백 {miss}종목")
+
+    # Claude 폴백 (이름 기반)
+    if unmatched:
+        names = [name for name, _code in unmatched]
+        name_to_sector = _classify_themes_with_claude(names)
+        for name, code in unmatched:
+            code_to_sector[code] = name_to_sector.get(name, "기타")
+
+    return code_to_sector
 
 
 def fetch_new_highlow():
@@ -400,13 +458,12 @@ def fetch_new_highlow():
                 "부호": "▲" if rate > 0 else ("▼" if rate < 0 else "─"),
             })
 
-        # Claude API로 테마 분류 (한 번에 전체)
+        # 섹터 분류: 수동 매핑(JSON) 우선 → 미매칭은 Claude 폴백
         if filtered_stocks:
-            stock_names = [s["종목명"] for s in filtered_stocks]
-            print(f"[THEME] {len(stock_names)}종목 테마 분류 중...")
-            theme_map = _classify_themes_with_claude(stock_names)
+            print(f"[THEME] {len(filtered_stocks)}종목 섹터 분류 중...")
+            code_to_sector = _classify_stocks(filtered_stocks)
             for s in filtered_stocks:
-                s["섹터"] = theme_map.get(s["종목명"], "기타")
+                s["섹터"] = code_to_sector.get(s["종목코드"], "기타")
                 results["신고가"].append(s)
 
     except Exception as e:
@@ -573,9 +630,16 @@ def fetch_sector_investor_flow():
 
         items = data.get("inds_netprps", [])
         results = []
+        # KOSPI 업종 집계 레벨은 제외 — 하위 업종과 중복 집계 방지
+        # 종합/대형/중형/소형 = 시총 집계, 제조업/서비스업 = 산업 집계
+        AGGREGATE_NAMES = {"제조업", "서비스업"}
         for item in items:
             name = item.get("inds_nm", "").strip()
-            if not name or "종합" in name or "대형" in name or "중형" in name or "소형" in name:
+            if not name:
+                continue
+            if "종합" in name or "대형" in name or "중형" in name or "소형" in name:
+                continue
+            if name in AGGREGATE_NAMES:
                 continue
             frgn = _safe_int(item.get("frgnr_netprps", "0").replace("+", "").replace(",", ""))
             orgn = _safe_int(item.get("orgn_netprps", "0").replace("+", "").replace(",", ""))

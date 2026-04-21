@@ -19,6 +19,11 @@ COMMENTARY_MODEL = _MODEL_MAP.get(
     "claude-sonnet-4-20250514"
 )
 
+# 프롬프트 버전 선택 (환경변수)
+# COMMENTARY_PROMPT_VERSION=v2 → 슬림화된 v2 프롬프트 (정적 ~61% 감축)
+# 기본 v1 유지 — A/B 검증 후 전환
+_PROMPT_VERSION = os.environ.get("COMMENTARY_PROMPT_VERSION", "v1").lower()
+
 
 # ── RSS 피드 목록 ──
 RSS_FEEDS = [
@@ -279,14 +284,20 @@ def filter_news_with_claude(news_list, count=5, context=""):
          for i, n in enumerate(news_list[:150])]
     )
 
-    prompt = PROMPT_ANALYZE.format(article_list=article_list)
+    if _PROMPT_VERSION == "v2":
+        from telegram_bot.prompts_v2 import PROMPT_ANALYZE_V2, PROMPT_SYSTEM_V2
+        prompt = PROMPT_ANALYZE_V2.format(article_list=article_list)
+        sys_prompt = PROMPT_SYSTEM_V2
+    else:
+        prompt = PROMPT_ANALYZE.format(article_list=article_list)
+        sys_prompt = PROMPT_SYSTEM
 
     try:
         response = client.messages.create(
             model="claude-sonnet-4-20250514",
             max_tokens=4000,
             temperature=0,  # 뉴스 필터 재현성 보장
-            system=PROMPT_SYSTEM,
+            system=sys_prompt,
             messages=[{"role": "user", "content": prompt}],
         )
         text = response.content[0].text.strip()
@@ -523,7 +534,12 @@ def generate_market_commentary(market_data, news_list, intraday_text="", trend_t
     if consensus_text:
         data_summary += f"\n{consensus_text}\n"
 
-    prompt = f"""{data_summary}
+    if _PROMPT_VERSION == "v2":
+        from telegram_bot.prompts_v2 import PROMPT_EVENING_TEMPLATE_V2, PROMPT_SYSTEM_V2
+        prompt = PROMPT_EVENING_TEMPLATE_V2.format(data_summary=data_summary)
+        sys_prompt = PROMPT_SYSTEM_V2
+    else:
+        prompt = f"""{data_summary}
 
 위 데이터를 바탕으로 오늘 시장 시황을 작성해주세요.
 증권사 리서치센터 애널리스트 팀장이 텔레그램 채널 구독자(개인 투자자)에게 장 마감 시황을 전달합니다.
@@ -664,8 +680,9 @@ def generate_market_commentary(market_data, news_list, intraday_text="", trend_t
 - 총 14~18문장
 
 시황만 작성하세요."""
+        sys_prompt = PROMPT_SYSTEM
 
-    print(f"[COMMENTARY] 이브닝 시황 모델: {COMMENTARY_MODEL}")
+    print(f"[COMMENTARY] 이브닝 시황 모델: {COMMENTARY_MODEL} / prompt {_PROMPT_VERSION}")
     try:
         response = client.messages.create(
             model=COMMENTARY_MODEL,
@@ -677,7 +694,7 @@ def generate_market_commentary(market_data, news_list, intraday_text="", trend_t
                 "max_uses": 2,  # 이브닝은 장중 데이터 이미 수집돼있어 2회로 제한
                 "allowed_callers": ["direct"],
             }],
-            system=PROMPT_SYSTEM,
+            system=sys_prompt,
             messages=[{"role": "user", "content": prompt}],
         )
         # 웹 검색 사용 시 server_tool_use/web_search_tool_result 블록 섞임 → text 블록만 추출
@@ -786,7 +803,13 @@ def generate_morning_commentary(global_data, news_list, trend_text=""):
     if trend_text:
         data_summary += f"\n{trend_text}\n"
 
-    prompt = f"""{data_summary}
+    if _PROMPT_VERSION == "v2":
+        from telegram_bot.prompts_v2 import PROMPT_MORNING_TEMPLATE_V2, PROMPT_SYSTEM_V2
+        prompt = PROMPT_MORNING_TEMPLATE_V2.format(data_summary=data_summary)
+        sys_prompt = PROMPT_SYSTEM_V2
+    else:
+        sys_prompt = PROMPT_SYSTEM
+        prompt = f"""{data_summary}
 
 위 데이터를 바탕으로 전일 미국 증시 마감 리뷰 + 오늘 한국 증시 체크포인트를 작성해주세요.
 증권사 리서치센터 애널리스트 팀장이 텔레그램 채널 구독자(개인 투자자)에게 보내는 모닝 시황입니다.
@@ -917,7 +940,7 @@ def generate_morning_commentary(global_data, news_list, trend_text=""):
 
 시황만 작성하세요."""
 
-    print(f"[COMMENTARY] 모닝 시황 모델: {COMMENTARY_MODEL}")
+    print(f"[COMMENTARY] 모닝 시황 모델: {COMMENTARY_MODEL} / prompt {_PROMPT_VERSION}")
     try:
         response = client.messages.create(
             model=COMMENTARY_MODEL,
@@ -929,7 +952,7 @@ def generate_morning_commentary(global_data, news_list, trend_text=""):
                 "max_uses": 3,
                 "allowed_callers": ["direct"],  # 모델이 PTC 미지원 → 직접 호출만
             }],
-            system=PROMPT_SYSTEM,
+            system=sys_prompt,
             messages=[{"role": "user", "content": prompt}],
         )
         for b in response.content:
