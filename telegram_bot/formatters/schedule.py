@@ -40,9 +40,31 @@ LOW_PRIORITY_KEYWORDS = [
 
 def _clean_event_name(name):
     """이벤트명 정리 (EPS est. 제거, 불필요 텍스트 정리)"""
-    # [EPS est. $0.77] 제거
-    name = re.sub(r'\s*\[EPS est\.\s*\$[\d.]+\]', '', name)
+    # [EPS est. $0.77] 또는 [EPS est. $-0.5] 제거 (음수 EPS 포함)
+    name = re.sub(r'\s*\[EPS est\.\s*\$-?[\d.]+\]', '', name)
     return name.strip()
+
+
+# 미국 실적 세션 → KST 대략 시간대 힌트
+SESSION_KST_HINT = {
+    "장전": "밤",      # US pre-market ~7am ET ≈ KST 20-22시
+    "장후": "새벽",    # US after-hours ~4pm+ ET ≈ KST 05-06시 익일
+}
+
+
+def _parse_us_earning(entry):
+    """US 실적 entry에서 ticker/session 추출. 예: 'GE 실적발표 (장전) [EPS est. $1.6]' → ('GE', '장전')"""
+    raw = _clean_event_name(entry.get("기업명", "") or entry.get("보고서명", ""))
+    m = re.match(r'^(.+?)\s*실적발표\s*\(([^)]+)\)\s*$', raw)
+    if m:
+        return m.group(1).strip(), m.group(2).strip()
+    return raw.replace(' 실적발표', '').strip(), None
+
+
+def _is_us_earning(entry):
+    """미국 실적 여부 판별 (Finnhub은 보고서명에 '(장전)'/'(장후)' 포함)"""
+    report = entry.get("보고서명", "") or ""
+    return "(장전)" in report or "(장후)" in report
 
 
 def _is_high_priority(name):
@@ -101,25 +123,58 @@ def _format_schedule(title, schedule_data):
         else:
             lines.append(f"{marker}{country} {event_name}")
 
-    # 실적 발표 — 별도 블록
+    # 실적 발표 — 국내/해외 분리 블록
     if earnings:
-        kr_earnings = []
-        us_earnings = []
+        kr_official = []   # 한국 확정 실적
+        kr_provisional = []  # 한국 잠정 실적
+        us_by_session = {}   # {"장전": [...], "장후": [...]}
+
         for e in earnings:
             if not isinstance(e, dict) or not e.get("기업명"):
                 continue
-            name = _clean_event_name(e["기업명"])
-            if any(c >= '\uac00' for c in name):
-                if name not in kr_earnings:
-                    kr_earnings.append(name)
+
+            if _is_us_earning(e):
+                company, session = _parse_us_earning(e)
+                if not company:
+                    continue
+                bucket = us_by_session.setdefault(session or "기타", [])
+                if company not in bucket:
+                    bucket.append(company)
             else:
-                if name not in us_earnings:
-                    us_earnings.append(name)
-        us_clean = [_clean_event_name(n) for n in us_earnings[:5]]
-        all_names = kr_earnings + us_clean
-        if all_names:
+                # 한국 실적 (확정/잠정)
+                name = _clean_event_name(e["기업명"])
+                report = e.get("보고서명", "") or ""
+                is_prov = "잠정" in report
+                target = kr_provisional if is_prov else kr_official
+                if name not in target and name not in kr_official and name not in kr_provisional:
+                    target.append(name)
+
+        earnings_lines = []
+        if kr_official or kr_provisional:
+            parts = []
+            if kr_official:
+                parts.extend(kr_official)
+            if kr_provisional:
+                parts.extend([f"{n} (잠정)" for n in kr_provisional])
+            earnings_lines.append(f"🇰🇷 국내  {', '.join(parts)}")
+
+        for session in ["장전", "장후", "기타"]:
+            companies = us_by_session.get(session, [])
+            if not companies:
+                continue
+            hint = SESSION_KST_HINT.get(session)
+            if hint:
+                label = f" ({session}·KST {hint})"
+            elif session != "기타":
+                label = f" ({session})"
+            else:
+                label = ""
+            earnings_lines.append(f"🇺🇸 해외{label}  {', '.join(companies[:6])}")
+
+        if earnings_lines:
             lines.append("")
-            lines.append(f"📊 실적발표  {', '.join(all_names)}")
+            lines.append("📊 *실적발표*")
+            lines.extend(earnings_lines)
 
     if not lines:
         lines.append("주요 일정 없음")
