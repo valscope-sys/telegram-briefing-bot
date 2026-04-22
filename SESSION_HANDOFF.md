@@ -29,6 +29,8 @@
 - 커밋 푸시 완료: `b789a00` (Hybrid 필터) + 이전 `5c7624c`, `6b42d51`, 이후 `776bc41`, `add51b3`
 - 서버 .env에 `DART_API_KEY`, `TELEGRAM_ADMIN_CHAT_ID` 추가
 - `sudo systemctl restart telegram-bot` → Active running 확인
+- `ISSUE_BOT_POLL_INTERVAL_MIN=3`으로 단축 (3분 주기 실시간급)
+- `a18b20a` 추가 커밋: 본문 생성 폴백 + RSS 19개로 확장
 
 ---
 
@@ -66,12 +68,18 @@ sudo journalctl -u telegram-bot -f       # 실시간 tail
 ### 2. Phase 2 — 글로벌 커버리지 확대 (사용자 요청)
 사용자 피드백: **빅테크 주요 이벤트, 부각 종목 AI 감지 필요**.
 
-백로그:
-- SEC EDGAR 8-K 피드 연동 (NVDA/AAPL/MSFT/META/GOOGL/AMZN/TSLA 직접)
-- Digitimes, Nikkei Asia, Bloomberg Tech RSS 추가
-- "부각 감지" 로직: 최근 거래량 급증 종목 언급 시 HIGH 가점
-- market_context 연동 (한지영 채널 + briefing_memory) — "지금 테마인지" 자동 판단
-- TrendForce 개별 종목 리서치 본문 파싱
+**이번 세션 완료분:**
+- RSS 4개 피드 추가 (Nikkei Asia, Seeking Alpha, 전자신문, 디지털타임스)
+- 총 RSS 19개 (기존 15 + 신규 4)
+
+**남은 백로그 (다음 세션):**
+- SEC EDGAR 8-K 피드 별도 어댑터 (NVDA/AAPL/MSFT/META/GOOGL/AMZN/TSLA 빅테크 직접 — Phase 1 우선)
+  - `telegram_bot/issue_bot/collectors/sec_collector.py` 신규
+  - EDGAR RSS: https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK={cik}&type=8-K&output=atom
+- "부각 감지" 로직: 최근 거래량 급증·52주 신고가 종목 언급 시 HIGH 가점 (filter 프롬프트 확장)
+- market_context 연동 (한지영 채널 + briefing_memory) → 필터에 "지금 테마" 컨텍스트 주입
+- TrendForce 개별 종목 리서치 본문 파싱 (링크만 → 실제 내용)
+- Digitimes 피드 탐색 (RSS 미제공 — 스크랩 or 대안 탐색)
 
 ### 3. Phase 1.5 잔여
 - `approval/edit_handler.py` 분리 (현재 poller에 포함)
