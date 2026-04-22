@@ -1,8 +1,70 @@
 """일정 메시지 포맷터 (오늘 일정 / 내일 일정)"""
 import datetime
 import re
+import os
+import json
 
 CALENDAR_WEB_URL = "https://valscope-sys.github.io/telegram-briefing-bot/"
+
+# KRX 상장사 마스터 (세션 내 캐시)
+_KRX_LISTED_NAMES = None
+
+
+def _load_krx_listed_names():
+    """KRX 상장사 이름 집합 로드 (FDR 사용, 실패 시 stock_sector_mapping.json 폴백)"""
+    global _KRX_LISTED_NAMES
+    if _KRX_LISTED_NAMES is not None:
+        return _KRX_LISTED_NAMES
+    names = set()
+    # 1차: FDR 시도
+    try:
+        import FinanceDataReader as fdr
+        krx = fdr.StockListing("KRX")
+        for n in krx["Name"]:
+            if n:
+                names.add(str(n).strip())
+        if names:
+            print(f"[SCHEDULE] KRX 상장사 {len(names)}개 로드 (FDR)")
+            _KRX_LISTED_NAMES = names
+            return names
+    except Exception as e:
+        print(f"[SCHEDULE] FDR 로드 실패: {e}")
+
+    # 2차 폴백: stock_sector_mapping.json (263 종목만이라 불완전하지만 무 필터보다 낫음)
+    try:
+        path = os.path.join(
+            os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+            "history", "stock_sector_mapping.json",
+        )
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        for k, v in data.items():
+            if not k.startswith("_") and isinstance(v, dict) and v.get("name"):
+                names.add(v["name"].strip())
+        print(f"[SCHEDULE] stock_sector_mapping 폴백 {len(names)}종목")
+    except Exception as e:
+        print(f"[SCHEDULE] 폴백도 실패 — 상장사 필터 비활성: {e}")
+
+    _KRX_LISTED_NAMES = names
+    return names
+
+
+def _is_listed_corp(name: str) -> bool:
+    """실적 발표 기업명이 KRX 상장사인지 확인. 상장사 집합 비어있으면 True (필터 비활성)."""
+    if not name:
+        return False
+    listed = _load_krx_listed_names()
+    if not listed:
+        return True  # 마스터 로드 실패 시 필터 비활성
+    n = name.strip()
+    if n in listed:
+        return True
+    # 간단한 변형도 시도 (공백 제거)
+    n2 = n.replace(" ", "")
+    for x in listed:
+        if x.replace(" ", "") == n2:
+            return True
+    return False
 
 COUNTRY_EMOJI = {
     "한국": "🇰🇷", "South Korea": "🇰🇷",
@@ -179,8 +241,10 @@ def _format_schedule(title, schedule_data):
                 if company not in bucket:
                     bucket.append(company)
             else:
-                # 한국 실적 (확정/잠정)
+                # 한국 실적 (확정/잠정) — KRX 상장사만 통과
                 name = _clean_event_name(e["기업명"])
+                if not _is_listed_corp(name):
+                    continue  # 상장사 아니면 제외 (FnGuide 비상장 필터)
                 report = e.get("보고서명", "") or ""
                 is_prov = "잠정" in report
                 target = kr_provisional if is_prov else kr_official
