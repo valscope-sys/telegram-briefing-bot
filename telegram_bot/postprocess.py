@@ -5,8 +5,9 @@ import re
 def ensure_critical_data_mentioned(text, global_data):
     """후처리 안전장치 — 중요 이벤트가 시황에 누락되면 보완 라인 추가.
 
-    KORU: |등락률| ≥ 4% 일 때 모델이 언급 누락하면 한국 체크포인트 끝에 1줄 추가.
-    (±2~4% 구간은 모델 재량으로 두어 매일 반복되는 AI 느낌 방지)
+    KORU: |등락률| ≥ 5% 일 때 (3x 레버리지 → 실제 갭 1.67%+, 확실한 시그널)
+    모델이 언급 누락하면 한국 체크포인트 끝에 1줄 추가.
+    (3~5% 구간은 모델 재량으로 두어 매일 반복되는 AI 느낌 방지)
     """
     if not text or not global_data:
         return text
@@ -17,7 +18,7 @@ def ensure_critical_data_mentioned(text, global_data):
         return text
 
     koru_pct = koru.get("등락률", 0)
-    if abs(koru_pct) < 4.0:
+    if abs(koru_pct) < 5.0:
         return text
 
     # 이미 언급됐으면 그대로

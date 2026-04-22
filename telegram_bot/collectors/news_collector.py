@@ -779,9 +779,9 @@ def generate_morning_commentary(global_data, news_list, trend_text=""):
         if proxy_lines:
             data_summary += "\n야간 프록시 (한국 관련 해외 ETF):\n"
             data_summary += "\n".join(proxy_lines) + "\n"
-            # KORU 경고 자동 주입
+            # KORU 경고 자동 주입 (3x 레버리지 → ±3% = 실제 갭 1%, 의미 있는 시그널 시작점)
             koru = korea_proxies.get("KORU", {})
-            if koru and abs(koru.get("등락률", 0)) >= 2:
+            if koru and abs(koru.get("등락률", 0)) >= 3:
                 koru_pct = koru["등락률"]
                 implied = koru_pct / 3
                 data_summary += f"  ⚠️ KORU {koru_pct:+.2f}% (3x 레버리지 → 실제 예상 갭 {implied:+.1f}%)\n"
@@ -931,7 +931,11 @@ def generate_morning_commentary(global_data, news_list, trend_text=""):
 - 뉴스 섹션 내용 재탕 금지. 개별 뉴스를 종합해서 "시장 뷰"로 엮으세요.
 - 첫 문장은 매크로(유가/환율/지정학)부터. 방향성 단정 금지. 긍정+부정 병렬.
 - 섹터 단위로 수혜/리스크 양면 서술. 시총 상위만 기업명 언급.
-- 야간 프록시(KORU 등) 데이터가 있으면 반드시 언급하세요. 특히 ±2% 이상이면 필수적으로 시황에 반영. KORU는 3배 레버리지이므로 ÷3이 실제 예상 갭. 미장이 올랐는데 KORU가 급락했다면 한국 특유의 리스크(관세, 환율 등)가 있다는 신호이므로 반드시 경고.
+- 야간 프록시(KORU 등) 데이터가 있으면 언급 여부를 강도별 차등 판단. 3x 레버리지 특성상 작은 움직임은 노이즈:
+  · |KORU| < 3%: 노이즈, 언급 금지 (KOSPI 일평균 변동성 내. 매일 등장하면 AI 템플릿 느낌)
+  · 3 ≤ |KORU| < 5%: 맥락에 자연스럽게 녹일 수 있을 때만
+  · |KORU| ≥ 5%: 반드시 언급. 3배 레버리지(÷3=실제 갭) 설명 포함.
+  미장이 올랐는데 KORU가 급락했다면 한국 특유의 리스크(관세, 환율 등) 시그널이므로 ≥5% 에서는 필수 경고.
 - 이 시황은 07:00 발송. 한국 장은 09:00 개장. "장 초반 상승세", "프리마켓 약세" 같은 장중 묘사 절대 금지.
 
 4: 수급 + 리스크 체크 (2~3문장)

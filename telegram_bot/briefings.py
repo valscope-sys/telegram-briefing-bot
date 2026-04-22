@@ -100,7 +100,7 @@ def run_morning_briefing():
             print(f"[SELFCHECK] KORU={koru_pct:+.2f}% 주입={'✓' if koru else '✗'}, "
                   f"DXY={dxy_val:.2f} 주입={'✓' if dxy_val else '✗'}, "
                   f"리뷰에 KORU 언급={'✓' if koru_in_review else '✗'}"
-                  f"{' ⚠️ KORU±2% 경고 누락!' if abs(koru_pct) >= 2 and not koru_in_review else ''}")
+                  f"{' ⚠️ KORU±5% 경고 누락 (후처리가 잡아야 함)!' if abs(koru_pct) >= 5 and not koru_in_review else ''}")
         snapshot_msgs.append(commentary_msg)
     except Exception as e:
         print(f"[MORNING] 모닝 브리핑 실패: {e}")
