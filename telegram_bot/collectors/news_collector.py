@@ -39,25 +39,24 @@ _PROMPT_VERSION = os.environ.get("COMMENTARY_PROMPT_VERSION", "v1").lower()
 
 
 # ── RSS 피드 목록 ──
+# 2026-04-22 대대적 점검: 11개 피드 검증 → 유효 URL로 교체 or 제거
+#   · UA 헤더 없으면 WSJ 등 일부 피드가 0건 반환 → fetch_rss_news에서 agent 지정
+#   · Reuters 공식 RSS 서비스 종료 → Google News 프록시 대체
+#   · 공식 RSS가 사라진 피드는 제거 (이데일리/금융위/한은/산자부/디지털타임스)
 RSS_FEEDS = [
     # 국내 종합
     {"name": "한국경제", "url": "https://www.hankyung.com/feed/all-news", "group": "국내"},
     {"name": "매일경제", "url": "https://www.mk.co.kr/rss/30000001/", "group": "국내"},
-    {"name": "이데일리", "url": "https://www.edaily.co.kr/rss/article.xml", "group": "국내"},
-    # 국내 정책
-    {"name": "금융위원회", "url": "https://www.fsc.go.kr/comm/rss.do", "group": "국내"},
-    {"name": "한국은행", "url": "https://www.bok.or.kr/portal/bbs/rss.do?menuNo=200688", "group": "국내"},
-    {"name": "산업통상자원부", "url": "https://www.motie.go.kr/rss/rssNews.do", "group": "국내"},
     # 해외 종합
-    {"name": "Reuters", "url": "https://feeds.reuters.com/reuters/businessNews", "group": "해외"},
     {"name": "CNBC", "url": "https://www.cnbc.com/id/100003114/device/rss/rss.html", "group": "해외"},
-    {"name": "WSJ", "url": "https://feeds.a.dj.com/rss/RSSMarketsMain.xml", "group": "해외"},
+    {"name": "WSJ", "url": "https://news.google.com/rss/search?q=site:wsj.com+markets&hl=en-US&gl=US&ceid=US:en", "group": "해외"},
+    {"name": "Reuters", "url": "https://news.google.com/rss/search?q=site:reuters.com+business&hl=en-US&gl=US&ceid=US:en", "group": "해외"},
     # 섹터 전문
-    {"name": "TrendForce", "url": "https://www.trendforce.com/rss", "group": "해외"},
+    {"name": "TrendForce", "url": "https://www.trendforce.com/news/feed/", "group": "해외"},
     {"name": "Electrek", "url": "https://electrek.co/feed/", "group": "해외"},
-    {"name": "InsideEVs", "url": "https://insideevs.com/rss/articles/", "group": "해외"},
+    {"name": "InsideEVs", "url": "https://insideevs.com/feed/", "group": "해외"},
     {"name": "FiercePharma", "url": "https://www.fiercepharma.com/rss/xml", "group": "해외"},
-    {"name": "Defense News", "url": "https://www.defensenews.com/rss/", "group": "해외"},
+    {"name": "Defense News", "url": "https://www.defensenews.com/arc/outboundfeeds/rss/?outputType=xml", "group": "해외"},
     {"name": "World Nuclear News", "url": "https://www.world-nuclear-news.org/rss", "group": "해외"},
 ]
 
@@ -223,10 +222,13 @@ def fetch_rss_news(max_per_feed=50, max_age_hours=48):
     now = datetime.datetime.now(datetime.timezone.utc)
     cutoff = now - datetime.timedelta(hours=max_age_hours)
 
+    # WSJ 등 UA 없으면 빈 응답 주는 피드 대응
+    UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+
     all_news = []
     for feed_info in RSS_FEEDS:
         try:
-            feed = feedparser.parse(feed_info["url"])
+            feed = feedparser.parse(feed_info["url"], agent=UA)
             for entry in feed.entries[:max_per_feed]:
                 title = entry.get("title", "").strip()
                 if not title:

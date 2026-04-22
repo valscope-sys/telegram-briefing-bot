@@ -26,13 +26,13 @@ from telegram_bot.issue_bot.utils.telegram import extract_og_image
 
 
 # 이슈봇 전용 추가 피드 — 시황봇(news_collector)과 분리 운영
+# 2026-04-22 점검: 전자신문 URL 교체, 디지털타임스 제거(공식 RSS 없음)
 ISSUE_BOT_EXTRA_FEEDS = [
     # 글로벌 빅테크/아시아 테크
     {"name": "Nikkei Asia", "url": "https://asia.nikkei.com/rss/feed/nar", "group": "해외"},
     {"name": "Seeking Alpha", "url": "https://seekingalpha.com/market_currents.xml", "group": "해외"},
-    # 국내 IT/테크 전문 (반도체·IT부품 밸류체인)
-    {"name": "전자신문", "url": "https://www.etnews.com/rss/section/IT.xml", "group": "국내"},
-    {"name": "디지털타임스", "url": "http://www.dt.co.kr/rss/rss_industry.xml", "group": "국내"},
+    # 국내 IT/테크 전문
+    {"name": "전자신문", "url": "https://rss.etnews.com/Section902.xml", "group": "국내"},
 ]
 
 # 기사 본문 추출 대상 소스 — 제목+summary만으로 필터 판단이 어려운 전문 매체
@@ -98,10 +98,11 @@ def _hash_url(url: str) -> str:
 
 def _fetch_extra_feeds(max_per_feed: int = 15) -> List[dict]:
     """이슈봇 전용 추가 피드 수집 (news_collector 형식과 호환)."""
+    UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
     out = []
     for feed_info in ISSUE_BOT_EXTRA_FEEDS:
         try:
-            feed = feedparser.parse(feed_info["url"])
+            feed = feedparser.parse(feed_info["url"], agent=UA)
             for entry in feed.entries[:max_per_feed]:
                 title = (entry.get("title") or "").strip()
                 link = (entry.get("link") or "").strip()
@@ -121,17 +122,23 @@ def _fetch_extra_feeds(max_per_feed: int = 15) -> List[dict]:
     return out
 
 
-def collect_rss_events(limit: int = 50, fetch_images: bool = False) -> List[dict]:
+def collect_rss_events(limit: int = 50, fetch_images: bool = False,
+                       max_age_hours: int = 168) -> List[dict]:
     """
     이슈봇용 RSS 이벤트 수집:
-    - news_collector.fetch_rss_news() (기본 15개 — 시황봇과 공유)
-    - ISSUE_BOT_EXTRA_FEEDS (이슈봇 전용 4개)
+    - news_collector.fetch_rss_news() (시황봇과 공유 피드)
+    - ISSUE_BOT_EXTRA_FEEDS (이슈봇 전용)
+
+    Args:
+        max_age_hours: 기사 나이 제한 (기본 168 = 7일).
+            이슈봇은 섹터 전문지(TrendForce 등 주 1~3회) 기사도 커버해야 하므로
+            시황봇의 48h보다 크게 설정. dedup이 중복 제거 역할.
     """
     from telegram_bot.collectors.news_collector import fetch_rss_news
 
     raw = []
     try:
-        raw.extend(fetch_rss_news())
+        raw.extend(fetch_rss_news(max_age_hours=max_age_hours))
     except Exception as e:
         print(f"[RSS] 기본 피드 수집 실패: {e}")
 
