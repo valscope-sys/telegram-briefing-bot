@@ -44,10 +44,46 @@ def ensure_critical_data_mentioned(text, global_data):
     return text.rstrip() + risk_note
 
 
+_META_PREFIXES = [
+    "I'll search", "Let me search", "Let me first", "I'll first",
+    "I'll look up", "I need to search", "Let me check", "I'll check",
+    "Before writing", "Let me start by", "First, let me", "I'll begin",
+    "검색 결과를", "검색해보겠", "먼저 검색",
+]
+
+
+def _strip_meta_preface(text):
+    """모델의 '사고 과정' 메타 텍스트 제거 (첫 소제목 전까지만)
+
+    예: "I'll search for additional context..."
+    → 첫 이모지 소제목(🇺🇸·📈·🔍 등) 앞 영문/설명 줄 제거.
+    """
+    if not text:
+        return text
+    # 첫 소제목(이모지 + 공백 + 한글) 위치 찾기
+    m = re.search(r"^\s*(🇺🇸|🇰🇷|📈|🔍|🔄|💰|⚠️).*$", text, re.MULTILINE)
+    if not m:
+        return text
+    head = text[:m.start()].strip()
+    body = text[m.start():]
+    # head 가 영문 문장만으로 구성되면 제거
+    if head and not re.search(r"[가-힣]{4,}", head):
+        return body.lstrip()
+    # head 가 "I'll search" 류 영문 혼재면 그 라인만 제거
+    head_lines = [ln for ln in head.split("\n") if ln.strip()]
+    kept = [ln for ln in head_lines if not any(p.lower() in ln.lower() for p in _META_PREFIXES)]
+    if kept:
+        return ("\n".join(kept) + "\n\n" + body).lstrip()
+    return body.lstrip()
+
+
 def postprocess_commentary(text):
     """시황 텍스트를 후처리해서 가독성 개선"""
     if not text:
         return text
+
+    # 0. 메타 텍스트 제거 (모델이 생각 과정 노출한 경우)
+    text = _strip_meta_preface(text)
 
     # 1. 화살표(→) 제거 — 자연어로 변환 (하이픈 보존)
     text = text.replace(" → ", ", ")

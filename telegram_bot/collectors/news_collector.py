@@ -705,7 +705,7 @@ def generate_market_commentary(market_data, news_list, intraday_text="", trend_t
     try:
         response = client.messages.create(
             model=COMMENTARY_MODEL,
-            max_tokens=2000,
+            max_tokens=2800,
             temperature=0.3,  # 시황 일관성 + 최소 창의성
             tools=[{
                 "type": "web_search_20260209",
@@ -1003,7 +1003,7 @@ def generate_morning_commentary(global_data, news_list, trend_text="", domestic_
     try:
         response = client.messages.create(
             model=COMMENTARY_MODEL,
-            max_tokens=2000,
+            max_tokens=2800,
             temperature=0.3,  # 시황 일관성 + 최소 창의성
             tools=[{
                 "type": "web_search_20260209",
