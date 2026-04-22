@@ -23,6 +23,10 @@ from telegram_bot.issue_bot.utils.telegram import (
     acquire_poller_lock,
     refresh_poller_lock,
     release_poller_lock,
+    batch_keyboard_by_priority,
+    activate_kill_switch,
+    deactivate_kill_switch,
+    is_kill_switch_active,
 )
 from telegram_bot.issue_bot.approval.bot import (
     load_pending,
@@ -33,6 +37,9 @@ from telegram_bot.issue_bot.approval.bot import (
     approve_and_send,
     reject_issue,
     format_preview_card,
+    approve_batch_by_priority,
+    reject_batch_by_priority,
+    get_pending_summary,
 )
 from telegram_bot.issue_bot.pipeline.linter import lint_r1_r8
 
@@ -141,12 +148,134 @@ def _handle_callback(cb):
             answer_callback_query(cb_id, text="수정 모드 진입...")
             _start_edit_flow(issue_id)
 
+        elif action == "batch_approve":
+            # issue_id 자리에 priority_filter (URGENT/HIGH/NORMAL/ALL)
+            priority_filter = issue_id
+            answer_callback_query(cb_id, text=f"{priority_filter} 일괄 발송 중...")
+            res = approve_batch_by_priority(priority_filter)
+            send_admin_dm(
+                f"📦 일괄 승인 완료 ({priority_filter})\n"
+                f"• 대상: {res['total']}건\n"
+                f"• 발송: {res['sent']}건\n"
+                f"• 실패: {res['failed']}건"
+            )
+
+        elif action == "batch_reject":
+            priority_filter = issue_id
+            answer_callback_query(cb_id, text=f"{priority_filter} 일괄 스킵 중...")
+            res = reject_batch_by_priority(priority_filter)
+            send_admin_dm(
+                f"🗑️ 일괄 스킵 완료 ({priority_filter})\n"
+                f"• 대상: {res['total']}건\n"
+                f"• 스킵: {res['rejected']}건"
+            )
+
         else:
             answer_callback_query(cb_id, text=f"알 수 없는 액션: {action}")
     except Exception as e:
         print(f"[POLLER] 콜백 처리 오류 ({action}:{issue_id}): {e}")
         traceback.print_exc()
         answer_callback_query(cb_id, text=f"오류 발생: {e}", show_alert=True)
+
+
+# ===== 커맨드 처리 (/queue /mute /stop /resume) =====
+
+def _handle_command(msg: dict):
+    """DM 텍스트 메시지 중 '/'로 시작하는 것 처리."""
+    text = (msg.get("text") or "").strip()
+    if not text.startswith("/"):
+        return False
+
+    parts = text.split()
+    cmd = parts[0].lower()
+    args = parts[1:]
+
+    if cmd in ("/queue", "/q", "/status"):
+        _cmd_queue()
+    elif cmd in ("/mute", "/pause"):
+        _cmd_mute(args)
+    elif cmd == "/stop":
+        _cmd_stop()
+    elif cmd in ("/resume", "/start_again"):
+        _cmd_resume()
+    elif cmd in ("/help", "/h"):
+        _cmd_help()
+    else:
+        return False
+
+    return True
+
+
+def _cmd_queue():
+    """/queue — 대기 카드 요약 + 일괄 승인/스킵 버튼"""
+    summary = get_pending_summary()
+    total = summary["total"]
+    counts = summary["counts"]
+
+    if total == 0:
+        send_admin_dm("📭 대기 카드 없음")
+        return
+
+    lines = [f"📋 <b>대기 카드 요약</b> — 총 {total}건\n"]
+    for pri in ["URGENT", "HIGH", "NORMAL"]:
+        cnt = counts.get(pri, 0)
+        if cnt:
+            lines.append(f"• {pri}: {cnt}건")
+    lines.append("")
+    lines.append("<i>아래 버튼으로 우선순위별 일괄 처리 가능.</i>")
+
+    kb = batch_keyboard_by_priority(counts)
+    send_admin_dm("\n".join(lines), reply_markup=kb, parse_mode="HTML")
+
+
+def _cmd_mute(args: list):
+    """/mute [분] — N분간 알림 중지 (기본 60분)"""
+    minutes = 60
+    if args:
+        try:
+            minutes = max(1, min(int(args[0]), 1440))  # 1분 ~ 24시간
+        except ValueError:
+            send_admin_dm("⚠️ 사용법: /mute [분] (예: /mute 120)")
+            return
+    activate_kill_switch(minutes=minutes)
+    send_admin_dm(
+        f"🔕 이슈봇 <b>{minutes}분 중지</b>\n"
+        f"대기 중 공시/뉴스 수집 및 카드 발송을 멈춥니다.\n"
+        f"해제: /resume",
+        parse_mode="HTML",
+    )
+
+
+def _cmd_stop():
+    """/stop — 오늘 하루(KST 자정까지) 중지"""
+    now = datetime.datetime.now(KST)
+    midnight = (now + datetime.timedelta(days=1)).replace(hour=0, minute=0, second=0, microsecond=0)
+    minutes = max(1, int((midnight - now).total_seconds() // 60))
+    activate_kill_switch(minutes=minutes)
+    send_admin_dm(
+        f"🛑 이슈봇 <b>오늘 자정까지 중지</b> ({minutes}분)\n"
+        f"해제: /resume",
+        parse_mode="HTML",
+    )
+
+
+def _cmd_resume():
+    """/resume — 즉시 재개"""
+    deactivate_kill_switch()
+    send_admin_dm("✅ 이슈봇 <b>재개</b>. 다음 폴링부터 정상 수집.", parse_mode="HTML")
+
+
+def _cmd_help():
+    """/help — 명령어 안내"""
+    text = (
+        "<b>이슈봇 관리 명령</b>\n\n"
+        "• /queue — 대기 카드 요약 + 일괄 승인/스킵\n"
+        "• /mute [분] — N분간 중지 (기본 60분, 최대 1440)\n"
+        "• /stop — 오늘 자정까지 중지\n"
+        "• /resume — 즉시 재개\n"
+        "• /help — 이 메시지"
+    )
+    send_admin_dm(text, parse_mode="HTML")
 
 
 def _start_edit_flow(issue_id: str):
@@ -296,8 +425,16 @@ def run_poller(stop_event=None, interval_s: int = 2):
                     try:
                         if "callback_query" in upd:
                             _handle_callback(upd["callback_query"])
-                        elif "message" in upd and "reply_to_message" in upd["message"]:
-                            _handle_edit_reply(upd["message"])
+                        elif "message" in upd:
+                            msg = upd["message"]
+                            # 관리자 채팅만 처리 (보안)
+                            from telegram_bot.config import TELEGRAM_ADMIN_CHAT_ID
+                            if TELEGRAM_ADMIN_CHAT_ID and str(msg.get("chat", {}).get("id", "")) != str(TELEGRAM_ADMIN_CHAT_ID):
+                                continue
+                            if "reply_to_message" in msg:
+                                _handle_edit_reply(msg)
+                            elif (msg.get("text") or "").startswith("/"):
+                                _handle_command(msg)
                     except Exception as e:
                         print(f"[POLLER] 업데이트 처리 오류: {e}")
                         traceback.print_exc()

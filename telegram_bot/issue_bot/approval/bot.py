@@ -65,21 +65,27 @@ def _card_header(issue: dict) -> str:
 
 
 def _card_meta_tail(issue: dict) -> str:
+    """카드 하단 메타 영역. Peer는 '영향 해석 대상'으로 표기.
+
+    Peer는 단순 나열이 아니라 "이 이벤트가 한국 종목에 미칠 영향 해석용 재료".
+    본문 생성 시 Sonnet이 영향 방향·근거까지 본문에 녹임.
+    """
     timeout_min = TIMEOUT_MIN.get(issue.get("priority", "NORMAL"), 60)
     peers = issue.get("peer_map_used", [])
     peer_conf = issue.get("peer_confidence")
+
+    peer_line = ""
     if peers:
-        peer_line = f"Peer: {', '.join(peers)}"
+        peer_line = f"📊 <i>영향 해석 대상</i>: {', '.join(peers)}"
         if peer_conf is not None:
-            peer_line += f" (confidence: {peer_conf:.2f})"
-    else:
-        peer_line = "Peer: (매핑 없음)"
+            peer_line += f" <i>(conf {peer_conf:.2f})</i>"
+        peer_line += "\n"
 
     violations = issue.get("violations", [])
     v_line = ""
     if violations:
         vs = "; ".join(f"{v['rule']}" for v in violations[:3])
-        v_line = f"\n⚠️ <b>R1~R8 위반 경고</b>: {vs}\n"
+        v_line = f"⚠️ <b>R1~R8 위반 경고</b>: {vs}\n"
 
     expires_at = issue.get("expires_at", "")
     try:
@@ -90,7 +96,7 @@ def _card_meta_tail(issue: dict) -> str:
 
     return (
         f'\n━━━━━━━━━━━━━━━━━━━━━\n'
-        f'{_escape(peer_line)}'
+        f'{peer_line}'
         f'{v_line}'
         f'⏰ 만료: {expires_str} ({timeout_min}분)'
     )
@@ -400,6 +406,65 @@ def reject_issue(issue_id: str) -> dict:
     except Exception:
         pass
     return {"ok": True, "status": "rejected"}
+
+
+def approve_batch_by_priority(priority_filter: str) -> dict:
+    """priority_filter(URGENT/HIGH/NORMAL/ALL)에 해당하는 pending 전체 승인·발송.
+
+    Returns: {"ok": True, "total": N, "sent": M, "failed": K}
+    """
+    import time as _time
+    targets = list_pending()
+    if priority_filter != "ALL":
+        targets = [p for p in targets if p.get("priority") == priority_filter]
+
+    sent = 0
+    failed = 0
+    for t in targets:
+        try:
+            res = approve_and_send(t["id"])
+            if res.get("ok"):
+                sent += 1
+            else:
+                failed += 1
+                print(f"[BATCH] 발송 실패 {t['id']}: {res.get('error')}")
+        except Exception as e:
+            failed += 1
+            print(f"[BATCH] 예외 {t['id']}: {e}")
+        _time.sleep(0.6)  # 텔레그램 rate limit
+
+    return {"ok": True, "total": len(targets), "sent": sent, "failed": failed}
+
+
+def reject_batch_by_priority(priority_filter: str) -> dict:
+    """priority_filter에 해당하는 pending 전체 스킵."""
+    targets = list_pending()
+    if priority_filter != "ALL":
+        targets = [p for p in targets if p.get("priority") == priority_filter]
+
+    rejected = 0
+    for t in targets:
+        try:
+            reject_issue(t["id"])
+            rejected += 1
+        except Exception as e:
+            print(f"[BATCH] 스킵 실패 {t['id']}: {e}")
+
+    return {"ok": True, "total": len(targets), "rejected": rejected}
+
+
+def get_pending_summary() -> dict:
+    """현재 pending 요약 (priority별 개수 + 총합)."""
+    pending = list_pending()
+    by_pri = {"URGENT": [], "HIGH": [], "NORMAL": []}
+    for p in pending:
+        pri = p.get("priority", "NORMAL")
+        by_pri.setdefault(pri, []).append(p)
+    return {
+        "total": len(pending),
+        "counts": {pri: len(items) for pri, items in by_pri.items()},
+        "items_by_priority": by_pri,
+    }
 
 
 def mark_decision(issue_id: str, status: str, updated_content: str = None):

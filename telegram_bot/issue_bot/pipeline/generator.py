@@ -117,8 +117,19 @@ def _build_user_message(event: dict, classification: dict) -> str:
     source_url = event.get("source_url", "")
     source_type = event.get("source", "")
 
+    # Peer는 "영향 해석 대상" — 단순 나열이 아니라 본문에서 분석 재료로 활용
     peers = event.get("peer_map_used", [])
-    peer_line = ", ".join(peers) if peers else "(매핑 없음)"
+    if peers:
+        peer_block = (
+            f"[영향 해석 대상 (국내 Peer)]\n"
+            f"{', '.join(peers)}\n\n"
+            f"**중요 지시**: 본 이벤트가 위 Peer들에 미칠 수 있는 영향을 **본문 내에서** 자연스럽게 풀어 설명하세요.\n"
+            f"- 긍정/부정/중립 방향을 수치·사실 근거와 함께 제시 (예: 'HBM 가동률 상향 → SK하이닉스 Q2 출하 확대 가능')\n"
+            f"- 근거 없는 추측성 전망 금지 — 원문에 수치/사실이 있을 때만 영향 추론\n"
+            f"- Peer 이름은 본문 내 문장으로 녹이세요 (별도 나열 금지)\n"
+        )
+    else:
+        peer_block = "[영향 해석 대상] (없음 — Peer 영향 언급 없이 원문 사실만 재구성)\n"
 
     return f"""새 이벤트를 Template {template} 형식으로 변환하세요.
 
@@ -129,13 +140,14 @@ def _build_user_message(event: dict, classification: dict) -> str:
 - 제목: {title}
 - Template: {template}
 - 섹터: {sector}
-- 국내 관련 종목(Peer): {peer_line}
 
 [원문 발췌]
 {body}
 
+{peer_block}
+
 위 원문의 **수치·사실만** 재구성하세요.
-- 원문에 없는 전망·평가·국내종목 언급 추가 금지
+- 원문에 없는 전망·평가·국내종목 언급 추가 금지 (단, 위 [영향 해석 대상]은 예외 — 근거 기반 영향만)
 - R1~R8 규칙 절대 준수
 - Template {template} 형식으로 작성
 - {'면책 문구 포함' if template != 'E' else '면책 문구 생략 (E 속보)'}

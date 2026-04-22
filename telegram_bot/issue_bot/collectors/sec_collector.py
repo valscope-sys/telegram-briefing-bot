@@ -39,6 +39,77 @@ SEC_ATOM_URL = (
     "?action=getcompany&CIK={cik}&type=8-K&dateb=&owner=include&count={count}&output=atom"
 )
 
+# 8-K Item별 priority 힌트
+# 참고: https://www.sec.gov/forms 8-K current report items
+SEC_ITEM_RULES = {
+    # URGENT — 사업 존속·중대 긴급성
+    "1.03": ("URGENT", "파산·법정관리"),
+    "2.04": ("URGENT", "중대 재무 의무 발동(Triggering Events)"),
+    "4.02": ("URGENT", "과거 재무제표 신뢰성 상실"),
+    # HIGH — 실적·M&A·상장·중대계약
+    "1.01": ("HIGH", "중대계약 체결(Material Definitive Agreement)"),
+    "1.02": ("HIGH", "중대계약 종료"),
+    "2.01": ("HIGH", "인수·처분 완료"),
+    "2.02": ("HIGH", "분기/연간 실적(Results of Operations)"),
+    "2.03": ("HIGH", "중대 재무 채무 창출"),
+    "2.05": ("HIGH", "사업구조조정·Exit 비용"),
+    "2.06": ("HIGH", "중대 자산손상(Impairment)"),
+    "3.01": ("HIGH", "상장폐지 예고"),
+    "3.03": ("HIGH", "증권권리 변경"),
+    "4.01": ("HIGH", "감사인 교체"),
+    "5.01": ("HIGH", "경영권 변경(Changes in Control)"),
+    "8.01": ("HIGH", "기타 중대 사건(Other Events)"),
+    # NORMAL — 정보성·정기
+    "3.02": ("NORMAL", "비공개 증권 발행"),
+    "5.03": ("NORMAL", "정관 개정"),
+    "5.04": ("NORMAL", "임원보상계획 변경"),
+    "5.08": ("NORMAL", "주주제안"),
+    "7.01": ("NORMAL", "Regulation FD 공시"),
+    "9.01": ("NORMAL", "재무제표/Exhibit 첨부"),
+    # SKIP — 대부분 시장 영향 미미
+    "5.02": ("SKIP", "임원 변경(Departure of Directors/Officers)"),
+    "5.05": ("SKIP", "윤리강령 변경"),
+    "5.07": ("SKIP", "주주총회 결과(Submission of Matters to a Vote)"),
+}
+
+# priority 우선순위 (같은 공시에 여러 item 있을 때 가장 높은 것 채택)
+_PRIORITY_RANK = {"URGENT": 4, "HIGH": 3, "NORMAL": 2, "SKIP": 1}
+
+
+def _parse_items_from_summary(summary: str) -> list:
+    """atom summary에서 Item 번호 추출. 예: 'Item 2.02: Results of Operations'"""
+    import re as _re
+    return _re.findall(r"Item\s+(\d+\.\d+)", summary or "")
+
+
+def _pick_item_priority(items: list) -> tuple:
+    """Items 리스트에서 가장 높은 우선순위 + 라벨 선정.
+
+    Returns:
+        (priority, label, matched_item) — 매칭 없으면 (None, "", "")
+    """
+    if not items:
+        return (None, "", "")
+
+    best_priority = None
+    best_label = ""
+    best_item = ""
+    best_rank = 0
+
+    for item in items:
+        rule = SEC_ITEM_RULES.get(item)
+        if not rule:
+            continue
+        pri, label = rule
+        rank = _PRIORITY_RANK.get(pri, 0)
+        if rank > best_rank:
+            best_rank = rank
+            best_priority = pri
+            best_label = label
+            best_item = item
+
+    return (best_priority, best_label, best_item)
+
 
 def _extract_accession(entry_url: str) -> str:
     """filing URL에서 accession number 추출.
@@ -128,10 +199,29 @@ def collect_sec_8k_filings(per_cik_limit: int = 5, days_back: int = 2) -> list:
             if date_str < cutoff_date:
                 continue
 
-            title_clean = ent["title"].replace("8-K", "").strip(" -—:")
-            display_title = f"[{ticker}] 8-K — {title_clean}" if title_clean else f"[{ticker}] 8-K Current Report"
-
             summary = _strip_html(ent["summary"])[:1200]
+
+            # Item 파싱 + rule-based priority 힌트
+            items = _parse_items_from_summary(summary)
+            item_priority, item_label, matched_item = _pick_item_priority(items)
+
+            # 제목에 Item 라벨 반영 (관리자 카드 UX)
+            title_clean = ent["title"].replace("8-K", "").strip(" -—:")
+            if matched_item and item_label:
+                display_title = f"[{ticker}] 8-K Item {matched_item} — {item_label}"
+            elif title_clean:
+                display_title = f"[{ticker}] 8-K — {title_clean}"
+            else:
+                display_title = f"[{ticker}] 8-K Current Report"
+
+            # priority_hint: 매칭된 Item 기반 규칙 (Haiku 스킵 가능)
+            # 단, SKIP은 필터 호출 없이 즉시 거름 → priority_hint에 SKIP 주입
+            priority_hint = item_priority  # None or URGENT/HIGH/NORMAL/SKIP
+            rule_reason = (
+                f"SEC 8-K Item {matched_item} ({item_label})"
+                if matched_item
+                else "SEC 8-K — Item 매칭 실패, Haiku 필터 사용"
+            )
 
             events.append({
                 "id": f"sec_{ticker.lower()}_{accession}",
@@ -148,9 +238,11 @@ def collect_sec_8k_filings(per_cik_limit: int = 5, days_back: int = 2) -> list:
                 "report_nm_clean": title_clean,
                 "body_excerpt": summary,
                 "category_hint": "C",  # Template C (영문 공시/리서치)
-                "priority_hint": None,   # Haiku에게 맡김
-                "rule_match_reason": "SEC 8-K — Haiku 필터 필요",
+                "priority_hint": priority_hint,
+                "rule_match_reason": rule_reason,
                 "event_type": "8K",
+                "sec_items": items,           # 디버그/로그용
+                "sec_primary_item": matched_item,
                 "date": date_str,
             })
 

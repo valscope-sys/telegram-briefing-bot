@@ -48,8 +48,64 @@ def is_protected_time(now=None):
 
 
 def is_kill_switch_active():
-    """KILL_SWITCH 파일 존재 여부 (긴급 중단)"""
-    return os.path.exists(KILL_SWITCH_PATH)
+    """KILL_SWITCH 활성 여부.
+
+    파일 포맷:
+    - 빈 파일 or 파일만 존재 → 무제한 활성 (기존 호환)
+    - ISO8601 datetime 한 줄 → 그 시각 이후면 자동 삭제 + False 반환
+      (예: "/mute 60" 명령 결과물)
+    """
+    if not os.path.exists(KILL_SWITCH_PATH):
+        return False
+    try:
+        with open(KILL_SWITCH_PATH, "r", encoding="utf-8") as f:
+            expire_str = f.read().strip()
+    except Exception:
+        return True  # 읽기 실패 시 안전하게 활성 유지
+
+    if not expire_str:
+        return True  # 빈 파일 = 무제한
+
+    try:
+        expire = datetime.datetime.fromisoformat(expire_str)
+    except Exception:
+        return True  # 파싱 실패 시 안전하게 활성
+
+    now = datetime.datetime.now(KST) if expire.tzinfo else datetime.datetime.now()
+    if now < expire:
+        return True
+
+    # 만료 → 자동 삭제
+    try:
+        os.remove(KILL_SWITCH_PATH)
+    except Exception:
+        pass
+    return False
+
+
+def activate_kill_switch(minutes: int = None):
+    """KILL_SWITCH 활성화.
+
+    Args:
+        minutes: N분 후 자동 해제. None이면 무제한 (다음 수동 삭제까지).
+    """
+    os.makedirs(ISSUE_BOT_DIR, exist_ok=True)
+    if minutes is None:
+        content = ""
+    else:
+        expire = datetime.datetime.now(KST) + datetime.timedelta(minutes=minutes)
+        content = expire.isoformat(timespec="seconds")
+    with open(KILL_SWITCH_PATH, "w", encoding="utf-8") as f:
+        f.write(content)
+
+
+def deactivate_kill_switch():
+    """KILL_SWITCH 수동 해제."""
+    try:
+        if os.path.exists(KILL_SWITCH_PATH):
+            os.remove(KILL_SWITCH_PATH)
+    except Exception:
+        pass
 
 
 def is_issue_bot_blocked():
@@ -355,11 +411,33 @@ def approval_keyboard_preview(issue_id):
 approval_keyboard = approval_keyboard_preview
 
 
-def batch_approval_keyboard(pending_count):
-    """대기 카드 N개 있을 때 묶음 승인 버튼"""
-    return {
-        "inline_keyboard": [[
-            {"text": f"📦 NORMAL {pending_count}건 일괄승인", "callback_data": "batch_approve:NORMAL"},
-            {"text": "일괄 스킵", "callback_data": "batch_reject:NORMAL"},
-        ]]
-    }
+def batch_keyboard_by_priority(counts_by_pri: dict) -> dict:
+    """우선순위별 일괄 승인/스킵 버튼.
+
+    Args:
+        counts_by_pri: {"URGENT": 2, "HIGH": 5, "NORMAL": 10}
+
+    Layout:
+        [URGENT 2 승인] [URGENT 2 스킵]
+        [HIGH   5 승인] [HIGH   5 스킵]
+        [NORMAL 10 승인][NORMAL 10 스킵]
+        [🗑️ 전체 스킵]
+    """
+    rows = []
+    for pri in ["URGENT", "HIGH", "NORMAL"]:
+        cnt = counts_by_pri.get(pri, 0)
+        if cnt:
+            rows.append([
+                {"text": f"✅ {pri} {cnt}건 승인", "callback_data": f"batch_approve:{pri}"},
+                {"text": f"❌ {pri} {cnt}건 스킵", "callback_data": f"batch_reject:{pri}"},
+            ])
+    total = sum(counts_by_pri.values())
+    if total:
+        rows.append([
+            {"text": f"🗑️ 전체 {total}건 스킵", "callback_data": "batch_reject:ALL"},
+        ])
+    return {"inline_keyboard": rows}
+
+
+# 레거시 alias
+batch_approval_keyboard = batch_keyboard_by_priority
