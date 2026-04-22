@@ -8,16 +8,29 @@ from bs4 import BeautifulSoup
 from telegram_bot.config import ANTHROPIC_API_KEY
 
 # 시황 생성 모델 선택 (환경변수 또는 기본값)
-# COMMENTARY_MODEL=opus → claude-opus-4-20250514
-# COMMENTARY_MODEL=sonnet (기본) → claude-sonnet-4-20250514
+# COMMENTARY_MODEL 옵션:
+#   - shorthand: sonnet, opus, haiku, sonnet-4, sonnet-4-5, sonnet-4-6, opus-4, opus-4-5, opus-4-6, opus-4-7
+#   - full id:   claude-sonnet-4-6, claude-opus-4-7, claude-haiku-4-5-20251001 등 (claude- 접두어)
+# 기본값: Sonnet 4.6 (2026-04-22 업그레이드)
 _MODEL_MAP = {
-    "opus": "claude-opus-4-20250514",
-    "sonnet": "claude-sonnet-4-20250514",
+    "sonnet": "claude-sonnet-4-6",
+    "sonnet-4": "claude-sonnet-4-20250514",
+    "sonnet-4-5": "claude-sonnet-4-5-20250929",
+    "sonnet-4-6": "claude-sonnet-4-6",
+    "opus": "claude-opus-4-7",
+    "opus-4": "claude-opus-4-20250514",
+    "opus-4-1": "claude-opus-4-1-20250805",
+    "opus-4-5": "claude-opus-4-5-20251101",
+    "opus-4-6": "claude-opus-4-6",
+    "opus-4-7": "claude-opus-4-7",
+    "haiku": "claude-haiku-4-5-20251001",
+    "haiku-4-5": "claude-haiku-4-5-20251001",
 }
-COMMENTARY_MODEL = _MODEL_MAP.get(
-    os.environ.get("COMMENTARY_MODEL", "sonnet").lower(),
-    "claude-sonnet-4-20250514"
-)
+_raw_model = os.environ.get("COMMENTARY_MODEL", "sonnet").lower().strip()
+if _raw_model.startswith("claude-"):
+    COMMENTARY_MODEL = _raw_model  # full id 직접 전달
+else:
+    COMMENTARY_MODEL = _MODEL_MAP.get(_raw_model, "claude-sonnet-4-6")
 
 # 프롬프트 버전 선택 (환경변수)
 # COMMENTARY_PROMPT_VERSION=v2 → 슬림화된 v2 프롬프트 (정적 ~61% 감축)
