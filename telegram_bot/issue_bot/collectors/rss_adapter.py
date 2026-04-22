@@ -56,6 +56,19 @@ def _cached_fetch_article_body(url: str) -> str:
     return body
 
 
+_rss_session = None
+
+
+def _get_rss_session():
+    global _rss_session
+    if _rss_session is None:
+        _rss_session = requests.Session()
+        _rss_session.headers.update({
+            "User-Agent": "Mozilla/5.0 (compatible; NODEResearchBot/1.0)"
+        })
+    return _rss_session
+
+
 def _fetch_article_body(url: str, max_chars: int = 1500) -> str:
     """기사 URL에서 본문 텍스트 추출 (heuristic).
 
@@ -64,11 +77,7 @@ def _fetch_article_body(url: str, max_chars: int = 1500) -> str:
     if not url:
         return ""
     try:
-        res = requests.get(
-            url,
-            timeout=12,
-            headers={"User-Agent": "Mozilla/5.0 (compatible; NODEResearchBot/1.0)"},
-        )
+        res = _get_rss_session().get(url, timeout=12)
         if res.status_code != 200:
             return ""
         soup = BeautifulSoup(res.text, "lxml")

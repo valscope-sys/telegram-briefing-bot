@@ -49,6 +49,20 @@ KIND_VIEW_URL = "https://dart.fss.or.kr/dsaf001/main.do?rcpNo={rcept_no}"
 KIND_IFRAME_URL = "https://dart.fss.or.kr{path}"  # iframe src 보통 /dsaf001/dsaf001.do?rcpNo=...&dcmNo=...
 
 
+# 공용 세션 (TCP 재사용 — 메모리·연결 효율)
+_dart_session = None
+
+
+def _get_dart_session():
+    global _dart_session
+    if _dart_session is None:
+        _dart_session = requests.Session()
+        _dart_session.headers.update({
+            "User-Agent": "Mozilla/5.0 (compatible; NODEResearchBot/1.0)"
+        })
+    return _dart_session
+
+
 # ===== 증분 폴링 커서 =====
 
 def get_last_rcept_no() -> str:
@@ -220,7 +234,7 @@ def fetch_recent_disclosures(days_back: int = 1, page_count: int = 100, corp_cls
         params["corp_cls"] = corp_cls
 
     try:
-        res = requests.get(DART_LIST_URL, params=params, timeout=15)
+        res = _get_dart_session().get(DART_LIST_URL, params=params, timeout=15)
         data = res.json()
     except Exception as e:
         print(f"[DART] API 호출 실패: {e}")
@@ -241,11 +255,11 @@ def fetch_kind_body(rcept_no: str, max_chars: int = 1800) -> str:
     Returns:
         본문 발췌 (최대 max_chars자). 실패 시 빈 문자열.
     """
-    headers = {"User-Agent": "Mozilla/5.0 (compatible; NODEResearchBot/1.0)"}
+    sess = _get_dart_session()
     try:
         # 1단계: 뷰어 페이지에서 iframe URL 추출
         view_url = KIND_VIEW_URL.format(rcept_no=rcept_no)
-        res = requests.get(view_url, timeout=15, headers=headers)
+        res = sess.get(view_url, timeout=15)
         if res.status_code != 200:
             return ""
         soup = BeautifulSoup(res.text, "lxml")
@@ -266,7 +280,7 @@ def fetch_kind_body(rcept_no: str, max_chars: int = 1800) -> str:
             return ""
 
         # 2단계: iframe 본문 요청
-        res2 = requests.get(iframe_url, timeout=15, headers=headers)
+        res2 = sess.get(iframe_url, timeout=15)
         if res2.status_code != 200:
             return ""
 

@@ -112,11 +112,29 @@ def _build_user_message(event: dict, classification: dict) -> str:
 
     title = event.get("title", "").strip()
     company = event.get("company_name", "")
+    # SEC 실적(Exhibit 99.1 포함) 이면 본문 더 넉넉히 유지 — 실제 수치가 관건
     body = event.get("body_excerpt") or event.get("original_content", "")
-    body = body.strip()[:1500] if body else ""
+    body_limit = 3000 if event.get("has_exhibit_body") else 1500
+    body = body.strip()[:body_limit] if body else ""
     source_url = event.get("source_url", "")
     source_type = event.get("source", "")
     report_clean = event.get("report_nm_clean") or ""
+
+    # SEC 8-K 실적·중대공시 전용 지시
+    sec_note = ""
+    if event.get("source") == "SEC" and event.get("has_exhibit_body"):
+        sec_primary = event.get("sec_primary_item", "?")
+        sec_note = (
+            f"\n\n[SEC 8-K Item {sec_primary} — Exhibit 본문 포함]\n"
+            "⚠️ 본문은 Exhibit 99.1 (press release)에서 가져왔습니다.\n"
+            "본문에서 다음 수치를 추출해 첫 줄에 헤드라인으로 배치하세요:\n"
+            "  · 매출 / Revenue (절대액 + YoY%)\n"
+            "  · EPS / 영업이익 / 순이익\n"
+            "  · 가이던스 (있는 경우)\n"
+            "  · 컨센 대비 서프라이즈 (본문에 비교 있으면)\n"
+            "그 다음 2~3줄로 핵심 사업부별 수치·밸류체인 시사점.\n"
+            "'제출했다' '발표할 예정' 같은 메타 문구 금지 — 실제 숫자가 핵심."
+        )
 
     # 본문이 짧은 경우: Sonnet이 "공시 유형의 일반적 의미"를 투자자 관점으로 설명
     short_body_note = ""
@@ -158,7 +176,7 @@ def _build_user_message(event: dict, classification: dict) -> str:
 
 [원문 발췌]
 {body}
-{short_body_note}
+{short_body_note}{sec_note}
 
 {peer_block}
 
