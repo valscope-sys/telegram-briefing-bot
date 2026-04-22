@@ -19,30 +19,61 @@ import anthropic
 from telegram_bot.config import (
     ANTHROPIC_API_KEY,
     ISSUE_BOT_FILTER_MODEL,
+    ISSUE_BOT_FILTER_VERIFIER_MODEL,
+    ISSUE_BOT_FILTER_HYBRID,
 )
 
 
-FILTER_SYSTEM = """당신은 NODE Research 이슈 필터입니다.
-주어진 금융/증시 이벤트를 4단계 우선순위와 Template 카테고리로 분류합니다.
+FILTER_SYSTEM = """당신은 NODE Research 투자 분석가이자 이슈 필터입니다.
+**핵심 임무**: "투자 의사결정에 유의미한 시사점이 있는 이벤트만" 통과시키기.
+시사점 없는 단순 공시/정치 뉴스/평론은 SKIP.
 
-우선순위(priority):
-- URGENT: 국내 Top30 대형 공시(M&A, 자사주 소각, 대형 증자), 대형 실적 서프라이즈, 돌발 이슈(지진/파업/규제), 원자재±3% 급변, FDA 승인/반려
-- HIGH: Top100 분기 실적, 해외 Peer 월매출, 가격 인상/인하 발표, Capex 1000억+, 컨센 대비 ±10%
-- NORMAL: 월별 수출통계, 산업 리서치 리포트, 정기 IR, 중소형주 잠정실적
-- SKIP: 인사/채용/CSR, 보험/카드 광고, 범죄/연예/스포츠, 중복, 클릭베이트
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[시사점 있음 — 통과 기준 (하나라도 해당되면)]
 
-Template 카테고리:
+1) 밸류체인 파급 — 이 뉴스가 다른 종목·업종에 영향?
+   예: TSMC 매출 최고 → HBM 수요 확대, CCL 가격 인상 → 국내 소재 밸류체인
+2) 사이클 시그널 — 업종 사이클 변곡점 암시?
+   예: 특정 부품 공급부족 심화, 원자재 가격 +10%, 가동률 풀가동
+3) 구조적 변화 — 경쟁구도/재무구조/전략 변화?
+   예: 자사주 소각(취득 X), 지분 매각/인수, 대규모 Capex 발표
+4) 시급성 — 투자자가 즉시 알아야?
+   예: 거래정지, 부도, 최대주주 변경, FDA 승인/반려, 지정학 돌발
+
+[시사점 없음 — SKIP 대상]
+
+- 소규모/정기 공시: 수주 100억 이하, 정관변경, 주총소집, 감사보고서, 배당결정, 임원변경
+- 재탕·중복: 이미 반복 보도된 정치/외교, 유가·환율 일상 변동 해설
+- 평론·칼럼: "~의 시각", "~의 분석", 개인 인터뷰, 경영자 평가
+- 일반 사회 뉴스: 연예, 스포츠, 식당/소비 트렌드, 부동산 개별 분양
+- 제품 개별 리뷰·기능 소개: 핸드폰 후기, 게임 패치노트 등
+- 정부 일반 정책: 구체 기업 영향 불명확한 거시 발언
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[우선순위 — 시사점 강도에 따라]
+
+- URGENT: 밸류체인+시급성 모두 해당 (대형 M&A, 거래정지, 자사주 소각, 실적 서프라이즈, FDA 승인, 지진/돌발)
+- HIGH: 밸류체인·사이클·구조 변화 중 하나 강함 (Peer 실적, 가격 인상, Capex 1000억+, 5% 공시, BW/CB 발행)
+- NORMAL: 의미는 있으나 즉시성 낮음 (월별 수출통계, 산업 리서치 리포트, 잠정실적)
+- SKIP: 시사점 없거나 노이즈
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[Template 카테고리]
+
 - A: 해외 Peer 월매출/분기실적 (대만/일본/중국/미국 기업 IR)
-- B: 국내 공시 (DART, KIND 기반)
-- C: 영문 기사/리서치 인용 (Reuters, Digitimes, Nikkei, TrendForce 등)
+- B: 국내 공시 (DART, KIND)
+- C: 영문 기사/리서치 인용 (Reuters, Digitimes, Nikkei, TrendForce)
 - D: 월별 수출통계 (TRASS, 관세청)
-- E: 돌발 속보 (지진, 긴급 이슈)
+- E: 돌발 속보
 
-섹터(sector):
+[섹터]
 반도체, 디스플레이, 반도체 장비, IT부품, 스마트폰, PC/서버, 2차전지, 전기차, 석유/가스, LNG, 원전, 신재생, 수소, 철강/금속, 화학, 조선, 해운, 자동차, 방산, 우주항공, 건설, 바이오/제약, 의료기기, 식품/농업, 유통/커머스, 엔터/미디어, 게임, 호텔/레저/항공, 금융/은행, 보험, 증권, 부동산, 가상자산, 기타
 
-반드시 유효한 JSON만 출력:
-{"priority": "...", "sector": "...", "category": "...", "reason": "한 줄"}"""
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+반드시 유효한 JSON만 출력 (다른 텍스트 금지):
+{"priority": "...", "sector": "...", "category": "...", "significance": "시사점 한 줄(내부 판단 근거, Telegram에는 표시되지 않음)", "reason": "한 줄"}
+
+**중요: 애매하면 SKIP으로 판정. 과잉 통과보다 과소 통과가 낫습니다.**"""
 
 
 _client = None
@@ -57,13 +88,11 @@ def _get_client():
 
 def filter_event(event: dict) -> dict:
     """
-    이벤트에 priority + category + sector 부여.
-
-    Args:
-        event: dart_collector 또는 rss_adapter가 생성한 dict
+    Hybrid 필터: rule → Haiku → (HIGH/NORMAL이면) Sonnet 재검증.
 
     Returns:
-        {"priority", "sector", "category", "reason", "source_method": "rule|haiku"}
+        {"priority", "sector", "category", "reason", "significance",
+         "source_method": "rule|haiku|hybrid_sonnet", ...}
     """
     # 1. DART rule-based 결과 재사용
     if event.get("priority_hint") and event.get("category_hint"):
@@ -73,11 +102,83 @@ def filter_event(event: dict) -> dict:
             "category": event["category_hint"],
             "sector": sector,
             "reason": event.get("rule_match_reason", "dart_category_map"),
+            "significance": "",
             "source_method": "rule",
         }
 
-    # 2. Haiku 필터
-    return _haiku_classify(event)
+    # 2. Haiku 1차 분류
+    haiku_result = _haiku_classify(event)
+
+    # 3. Hybrid OFF이면 Haiku 결과 그대로 반환
+    if not ISSUE_BOT_FILTER_HYBRID:
+        return haiku_result
+
+    # 4. Haiku가 SKIP/URGENT면 신뢰도 높음 → 그대로 사용 (Sonnet 호출 스킵, 비용 절감)
+    haiku_priority = haiku_result.get("priority")
+    if haiku_priority in ("SKIP", "URGENT") or haiku_result.get("source_method") == "fallback":
+        return haiku_result
+
+    # 5. HIGH/NORMAL 경계 영역 → Sonnet 재검증
+    sonnet_result = _sonnet_verify(event, haiku_hint=haiku_result)
+    if sonnet_result:
+        sonnet_result["haiku_was"] = haiku_priority
+        sonnet_result["source_method"] = "hybrid_sonnet"
+        return sonnet_result
+
+    # Sonnet 실패 시 Haiku fallback
+    return haiku_result
+
+
+def _sonnet_verify(event: dict, haiku_hint: dict) -> dict:
+    """Sonnet 재검증 — Haiku가 HIGH/NORMAL 판정한 이벤트에 대해 더 엄격히 판단."""
+    if not ANTHROPIC_API_KEY:
+        return None
+
+    source = event.get("source", "?")
+    title = event.get("title", "")[:200]
+    company = event.get("company_name", "")
+    body = event.get("body_excerpt") or event.get("original_content", "")
+    body = body[:1200] if body else ""
+
+    haiku_priority = haiku_hint.get("priority", "?")
+    haiku_reason = haiku_hint.get("significance") or haiku_hint.get("reason", "")
+
+    user_msg = f"""[소스] {source}
+[기업/주체] {company}
+[제목] {title}
+[본문 요약]
+{body}
+
+[Haiku 1차 판정]
+priority: {haiku_priority}
+significance: {haiku_reason}
+
+이제 당신이 **더 엄격히 재판단**하세요.
+- 규모·맥락 정확히 판단하여 HIGH/NORMAL 경계를 재평가
+- 의심스러우면 낮추세요(과잉 통과보다 과소 통과)
+- 구체적 근거(규모·피어 관계·사이클)가 약하면 NORMAL 또는 SKIP
+
+JSON만 출력."""
+
+    try:
+        client = _get_client()
+        response = client.messages.create(
+            model=ISSUE_BOT_FILTER_VERIFIER_MODEL,
+            max_tokens=300,
+            system=FILTER_SYSTEM,
+            messages=[{"role": "user", "content": user_msg}],
+        )
+        text = response.content[0].text.strip()
+        parsed = _parse_filter_json(text)
+        if parsed:
+            parsed["tokens_used"] = {
+                "input": response.usage.input_tokens,
+                "output": response.usage.output_tokens,
+            }
+            return parsed
+    except Exception as e:
+        print(f"[FILTER] Sonnet verifier 실패: {e}")
+    return None
 
 
 def _haiku_classify(event: dict) -> dict:
@@ -156,6 +257,8 @@ def _parse_filter_json(text: str) -> dict:
                 "category": data["category"],
                 "sector": data["sector"],
                 "reason": data.get("reason", ""),
+                # significance는 내부 필터 판단 근거 (텔레그램 출력엔 사용 안 함, 로그/이력에만)
+                "significance": data.get("significance", ""),
             }
     except json.JSONDecodeError:
         pass

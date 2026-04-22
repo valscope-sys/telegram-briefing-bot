@@ -35,6 +35,8 @@ DART_API_KEY = os.getenv("DART_API_KEY", "")
 ISSUE_BOT_ENABLED = os.getenv("ISSUE_BOT_ENABLED", "true").lower() == "true"
 ISSUE_BOT_AUTO_APPROVE = os.getenv("ISSUE_BOT_AUTO_APPROVE", "false").lower() == "true"
 ISSUE_BOT_FILTER_MODEL = os.getenv("ISSUE_BOT_FILTER_MODEL", "claude-haiku-4-5-20251001")
+ISSUE_BOT_FILTER_VERIFIER_MODEL = os.getenv("ISSUE_BOT_FILTER_VERIFIER_MODEL", "claude-sonnet-4-5")
+ISSUE_BOT_FILTER_HYBRID = os.getenv("ISSUE_BOT_FILTER_HYBRID", "true").lower() == "true"
 ISSUE_BOT_GENERATOR_MODEL = os.getenv("ISSUE_BOT_GENERATOR_MODEL", "claude-sonnet-4-5")
 ISSUE_BOT_PEER_MODEL = os.getenv("ISSUE_BOT_PEER_MODEL", "claude-sonnet-4-5")
 ISSUE_BOT_ENABLE_CACHING = os.getenv("ISSUE_BOT_ENABLE_CACHING", "true").lower() == "true"

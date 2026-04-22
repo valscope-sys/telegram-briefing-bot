@@ -4,9 +4,14 @@ __pycache__/
 token_cache.yaml
 telegram_bot/history/latest_*.json
 
-# 이슈봇 런타임 state (재시작 시 재생성)
+# 이슈봇 런타임 state (재시작 시 재생성 / 서버별로 누적)
 telegram_bot/history/issue_bot/pending/
 telegram_bot/history/issue_bot/poller.lock
 telegram_bot/history/issue_bot/poller_offset.txt
 telegram_bot/history/issue_bot/KILL_SWITCH
+telegram_bot/history/issue_bot/cache_stats.jsonl
+telegram_bot/history/issue_bot/seen_ids.jsonl
+telegram_bot/history/issue_bot/last_rcept_no.txt
+telegram_bot/history/issue_bot/sent/
+telegram_bot/history/issue_bot/rejected/
 .claude/settings.local.json

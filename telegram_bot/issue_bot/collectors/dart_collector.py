@@ -42,10 +42,36 @@ HISTORY_DIR = os.path.join(
     "history",
 )
 DART_CATEGORY_MAP_PATH = os.path.join(HISTORY_DIR, "dart_category_map.json")
+LAST_RCEPT_NO_PATH = os.path.join(HISTORY_DIR, "issue_bot", "last_rcept_no.txt")
 
 DART_LIST_URL = "https://opendart.fss.or.kr/api/list.json"
 KIND_VIEW_URL = "https://dart.fss.or.kr/dsaf001/main.do?rcpNo={rcept_no}"
 KIND_IFRAME_URL = "https://dart.fss.or.kr{path}"  # iframe src 보통 /dsaf001/dsaf001.do?rcpNo=...&dcmNo=...
+
+
+# ===== 증분 폴링 커서 =====
+
+def get_last_rcept_no() -> str:
+    """마지막으로 처리한 rcept_no. 없으면 빈 문자열 (=첫 실행)."""
+    if not os.path.exists(LAST_RCEPT_NO_PATH):
+        return ""
+    try:
+        with open(LAST_RCEPT_NO_PATH, "r") as f:
+            return f.read().strip()
+    except Exception:
+        return ""
+
+
+def save_last_rcept_no(rcept_no: str):
+    """rcept_no 커서 갱신 (다음 폴링에서 이 값 이후만 처리)."""
+    if not rcept_no:
+        return
+    os.makedirs(os.path.dirname(LAST_RCEPT_NO_PATH), exist_ok=True)
+    try:
+        with open(LAST_RCEPT_NO_PATH, "w") as f:
+            f.write(rcept_no)
+    except Exception as e:
+        print(f"[DART] last_rcept_no 저장 실패: {e}")
 
 
 # ===== category_map 로딩 (모듈 load 시 1회) =====
@@ -258,18 +284,37 @@ def fetch_kind_body(rcept_no: str, max_chars: int = 800) -> str:
 
 # ===== 통합 수집 인터페이스 =====
 
-def collect_disclosures(days_back: int = 1, fetch_body: bool = True) -> list:
+def collect_disclosures(days_back: int = 1, fetch_body: bool = True,
+                       incremental: bool = True, first_run_limit: int = 10) -> list:
     """
     최근 공시를 수집하여 이슈봇 파이프라인 형식으로 반환.
 
     Args:
         days_back: 며칠 전까지 (기본 1일)
         fetch_body: True면 KIND HTML 본문 추출 (느림, N+1 요청)
+        incremental: True면 last_rcept_no 기반 증분 폴링 (신규만)
+        first_run_limit: 첫 실행 시 최근 N건만 처리 (부팅 몰빵 방지)
 
     Returns:
-        list of 이슈 이벤트 dict (SKIP 판정된 항목 제외)
+        list of 이슈 이벤트 dict (SKIP 판정된 항목 제외).
+        rcept_no 오름차순 정렬 (오래된 것부터).
     """
     raw_items = fetch_recent_disclosures(days_back=days_back)
+
+    # rcept_no 오름차순 정렬 (시간순 처리)
+    raw_items.sort(key=lambda x: x.get("rcept_no", ""))
+
+    if incremental:
+        last_no = get_last_rcept_no()
+        if not last_no:
+            # 첫 실행: 최근 first_run_limit건만 처리 (몰빵 방지)
+            raw_items = raw_items[-first_run_limit:]
+            print(f"[DART] 첫 실행 — 최근 {first_run_limit}건으로 제한 ({len(raw_items)}건)")
+        else:
+            # 증분: last_rcept_no 이후만
+            raw_items = [x for x in raw_items if x.get("rcept_no", "") > last_no]
+            print(f"[DART] 증분 폴링 — last_rcept_no={last_no} 이후 ({len(raw_items)}건)")
+
     events = []
     now_iso = datetime.datetime.now().isoformat(timespec="seconds")
 
