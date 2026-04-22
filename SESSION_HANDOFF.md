@@ -1,194 +1,163 @@
-# 세션 핸드오프 — 2026-04-22
+# 세션 핸드오프 — 2026-04-22 (AWS 라이브 운영 시작)
 
-**다음 세션에서 이 파일을 먼저 읽어주세요.** (이전 대화 요약 + 현재 상태)
-
----
-
-## 🎯 현재 상황 요약
-
-실시간 이슈봇 **Phase 1 MVP 구현 완료 + 로컬 테스트 진행 중**, 배포 직전 단계.
+**다음 세션에서 이 파일을 먼저 읽어주세요.**
 
 ---
 
-## ✅ 완료된 작업 (이번 세션)
+## 🎯 현재 상태 요약
 
-### Phase 0 — 인프라 (완료)
-- DART API 키 발급 + `.env`에 저장
-- 관리자 chat_id 취득 (`TELEGRAM_ADMIN_CHAT_ID=5033358048`)
-- 메리츠 Tech 채널 샘플 70+개 학습
+**실시간 이슈봇 Phase 1 — AWS Lightsail 라이브 운영 중** (2026-04-22 10:18 KST부터).
 
-### Phase 1 — MVP (완료)
-10개 모듈 구현:
-- `telegram_bot/issue_bot/collectors/dart_collector.py` — DART 폴링 + 증분 커서
-- `telegram_bot/issue_bot/collectors/rss_adapter.py` — 기존 RSS 16개 재활용
-- `telegram_bot/issue_bot/pipeline/filter.py` — **Hybrid 필터 (Haiku→Sonnet 재검증)**
-- `telegram_bot/issue_bot/pipeline/dedup.py` — 구조화 해시 중복 감지
-- `telegram_bot/issue_bot/pipeline/generator.py` — Sonnet + style_canon + 캐싱
-- `telegram_bot/issue_bot/pipeline/linter.py` — R1~R8 자동 린트
-- `telegram_bot/issue_bot/approval/bot.py` — 하이브리드 승인 카드 State 1/2
-- `telegram_bot/issue_bot/approval/poller.py` — 콜백 + 수정 답장 + 타임아웃
-- `telegram_bot/issue_bot/utils/telegram.py` — DM/채널/보호구간/락/og:image
-- `telegram_bot/issue_bot/main.py` — 폴링 루프
-
-### 테스트 결과
-- **Test A (스킵)**: ✅ 통과
-- **Test B (채널 발송)**: ✅ 통과 (channel_msg_id 193, race 수정 완료)
-- **Test C (AWS 배포)**: ⏸ 일시 중단 — 로컬 커밋은 완료 (`5744c8b`), **push 아직 안 함**
-
-### Claude.ai 데스크탑 앱 A/B 비교 완료
-- Haiku vs Sonnet 4.5 30건 테스트 → **일치율 83%**
-- Sonnet이 5건 모두 더 정확 (HIGH↔NORMAL 경계에서)
-- **결론: Hybrid 채택** (Haiku 1차 → HIGH/NORMAL이면 Sonnet 재검증)
-
-### 최종 튜닝 (이 세션에서 반영)
-- `주식등의대량보유상황보고서` (5% 공시): HIGH → **SKIP**
-- `감사보고서` / `연결감사보고서`: NORMAL → **SKIP**
-- `단일판매ㆍ공급계약체결`: HIGH → **NORMAL** (body 보고 Sonnet 판단)
-- 환경변수 `ISSUE_BOT_ADMIN_MIN_PRIORITY=HIGH` (기본값) — NORMAL은 카드 X, 로그만
-
-### 3대 안정성 개선 (최종)
-- `rcept_no 증분 폴링` — 신규만 처리, 중복 방지
-- `max_cards_per_poll=3` — 카드 몰빵 방지
-- `first_run_limit=10` — 첫 실행 조용히 시작
+- 서비스: `telegram-bot.service` (systemd, Lightsail /home/ubuntu/telegram-briefing-bot)
+- 브리핑봇 + 이슈봇 **한 프로세스에서 공존** (APScheduler 통합)
+- 15분 간격 폴링 (DART 증분 + RSS 15개)
+- 보호구간: 06:50~07:10 / 16:20~16:50 (브리핑 시간 자동 회피)
 
 ---
 
-## 📦 커밋 + 배포 상태
+## ✅ 오늘 완료된 작업
 
-### 로컬 Git
-- 로컬 커밋 완료: `5744c8b feat: 실시간 이슈봇 Phase 1 MVP 추가` (30 files, 5,514 insertions)
-- **Push 거부됨** (main 직접 push 권한 이슈) — 사용자가 다음 중 선택 필요:
-  1. 명시적 "main push 허가" → 저 재시도
-  2. 수동 push: `git push origin main`
-  3. 피처 브랜치 PR
+### 코드
+- Hybrid 필터 (Haiku 1차 → HIGH/NORMAL 경계는 Sonnet 재검증)
+- 필터 프롬프트 전면 강화: "투자 시사점 4기준" + SKIP 목록 명시
+- DART 증분 폴링 (rcept_no 커서), max_cards_per_poll=3
+- RSS 어댑터 재도입 (기존 news_collector 15개 피드)
+- dart_category_map 튜닝: 감사보고서 / 5%공시 → SKIP
+- 런타임 상태 파일 .gitignore (cache_stats/seen_ids/sent/rejected/last_rcept_no)
 
-### 이후 추가 수정 (Hybrid + 튜닝 + 증분 폴링 + RSS 재통합) — **커밋 안 됨**
-다음 커밋에 들어갈 파일:
-- `telegram_bot/config.py` (HYBRID 플래그 추가)
-- `telegram_bot/issue_bot/pipeline/filter.py` (Sonnet 재검증 로직)
-- `telegram_bot/issue_bot/collectors/dart_collector.py` (증분 커서)
-- `telegram_bot/issue_bot/collectors/rss_adapter.py` (NEW — 한 번 사라졌다가 복원됨)
-- `telegram_bot/issue_bot/main.py` (RSS 통합, max_cards, 증분)
-- `telegram_bot/history/dart_category_map.json` (감사보고서/5% 공시 SKIP)
-- `scripts/dryrun_filter.py`, `scripts/benchmark_filter_models.py`, `scripts/export_claude_testpack.py` (테스트용)
+### 배포
+- 커밋 푸시 완료: `b789a00` (Hybrid 필터) + 이전 `5c7624c`, `6b42d51`, 이후 `776bc41`, `add51b3`
+- 서버 .env에 `DART_API_KEY`, `TELEGRAM_ADMIN_CHAT_ID` 추가
+- `sudo systemctl restart telegram-bot` → Active running 확인
 
 ---
 
-## 🗂 상태 파일
+## 📡 현재 커버리지
 
-### 살아있는 상태
-- `telegram_bot/history/issue_bot/last_rcept_no.txt` = `20260422900085` (커서)
-- `telegram_bot/history/issue_bot/seen_ids.jsonl` — 중복 방지
-- `telegram_bot/history/issue_bot/sent/2026-04-21.jsonl` — Test B 발송 이력
-- `telegram_bot/history/issue_bot/rejected/2026-04-21.jsonl` — Test A 스킵 이력
-- `telegram_bot/history/issue_bot/poller.lock` — (만약 남아있으면) stale 자동 해제됨
+### DART (국내 공시)
+- rcept_no 증분 폴링. 첫 실행 시 최근 10건만.
+- rule-based 분류: `dart_category_map.json` (감사/5% SKIP)
 
-### gitignored
-- `pending/`, `poller.lock`, `poller_offset.txt`, `KILL_SWITCH`, `.claude/settings.local.json`
+### RSS 15개 (기존 news_collector 재활용)
+- **국내(6)**: 한국경제, 매일경제, 이데일리, 금융위, 한국은행, 산자부
+- **해외종합(3)**: Reuters, CNBC, WSJ
+- **섹터(6)**: TrendForce, Electrek, InsideEVs, FiercePharma, Defense News, World Nuclear News
+
+### 필터 (Hybrid)
+- 1차: Haiku — "투자 시사점 4기준" (밸류체인/사이클/구조변화/시급성)
+- 2차: Sonnet (HIGH/NORMAL 경계만) — 더 엄격히 재판정
+- SKIP/URGENT는 Haiku 결정 유지 (비용 절감)
 
 ---
 
-## 🎛 현재 운영 설정
+## 🚦 다음 세션 우선순위
 
+### 1. 라이브 운영 관찰 (당장)
+- @noderesearch_bot DM으로 승인카드 수신 빈도 체크
+- 하루 몇 건 오는지 → ADMIN_MIN_PRIORITY 조정 가늠
+- SKIP 판정이 적절한지 spot check
+
+**서버 로그 확인 명령** (브라우저 SSH):
 ```bash
-# .env
-TELEGRAM_ADMIN_CHAT_ID=5033358048
-DART_API_KEY=<발급됨>
-# ISSUE_BOT_* 는 코드 기본값 사용:
-#   ENABLED=true
-#   AUTO_APPROVE=false
-#   FILTER_MODEL=claude-haiku-4-5-20251001
-#   FILTER_VERIFIER_MODEL=claude-sonnet-4-5
-#   FILTER_HYBRID=true
-#   GENERATOR_MODEL=claude-sonnet-4-5
-#   ENABLE_CACHING=true
-#   POLL_INTERVAL_MIN=15
-#   URGENT_TIMEOUT_MIN=15
-#   HIGH_TIMEOUT_MIN=45
-#   NORMAL_TIMEOUT_MIN=120
-#   EDIT_TIMEOUT_MIN=15
-# ADMIN_MIN_PRIORITY=HIGH (기본, 사용자 선택)
+sudo journalctl -u telegram-bot -n 100 --no-pager
+sudo journalctl -u telegram-bot -f       # 실시간 tail
 ```
 
-**사용자 방금 확정**: `ADMIN_MIN_PRIORITY=HIGH` 유지 (NORMAL은 카드 안 옴)
+### 2. Phase 2 — 글로벌 커버리지 확대 (사용자 요청)
+사용자 피드백: **빅테크 주요 이벤트, 부각 종목 AI 감지 필요**.
 
----
+백로그:
+- SEC EDGAR 8-K 피드 연동 (NVDA/AAPL/MSFT/META/GOOGL/AMZN/TSLA 직접)
+- Digitimes, Nikkei Asia, Bloomberg Tech RSS 추가
+- "부각 감지" 로직: 최근 거래량 급증 종목 언급 시 HIGH 가점
+- market_context 연동 (한지영 채널 + briefing_memory) — "지금 테마인지" 자동 판단
+- TrendForce 개별 종목 리서치 본문 파싱
 
-## 🚦 다음 세션에서 할 일 (우선순위 순)
-
-### 1. 추가 변경사항 커밋 + 배포
-```bash
-cd "C:\Users\user\Desktop\텔레그램 시황 브리핑"
-git add telegram_bot/config.py telegram_bot/issue_bot/ \
-        telegram_bot/history/dart_category_map.json \
-        scripts/*.py SESSION_HANDOFF.md
-git commit -m "feat: Hybrid 필터 + 증분 폴링 + 튜닝"
-git push origin main   # 권한 이슈 시 사용자 직접 실행 필요
-```
-
-### 2. AWS Lightsail 배포 확인
-- deploy.sh 크론이 pull & systemd restart 수행
-- 다음 크론: **06:30, 15:30, 17:00 KST**
-- 서버에서 `systemctl status telegram-bot` + 로그 확인
-
-### 3. 라이브 운영 관찰
-- 관리자 DM에 카드 오는지 확인
-- 필요 시 `ADMIN_MIN_PRIORITY` 조정 (HIGH→NORMAL이면 더 많이)
-
-### 4. Phase 1.5 백로그
+### 3. Phase 1.5 잔여
 - `approval/edit_handler.py` 분리 (현재 poller에 포함)
-- `approval/commands.py` `/mute` `/stop` 실구현
-- Peer 매핑 웹검색 자동화 (`peer_mapper.py`)
-- TrendForce/Digitimes RSS 직접 연동 (해외 IR 뉴스 커버리지 확장)
-
-### 5. 알려진 미해결
-- Windows cp949 콘솔 인코딩 — 스크립트에 utf-8 reconfigure 추가했으나 bash 일부 잔존
-- DART `report_nm` "[기재정정]주요사항보고서(타법인주식및출자증권양수결정)" 같이 key 완전일치 실패 건 → Haiku fallback이 처리 (현재 큰 문제 없음)
+- `/mute` `/stop` 실구현
+- Peer 매핑 자동화 (`peer_mapper.py`)
 
 ---
 
-## 📚 주요 문서 (읽을 순서)
-
-1. **`SESSION_HANDOFF.md`** (이 파일) — 최근 세션 전체 상태
-2. **`CLAUDE.md`** — 프로젝트 전체 개요 + 브리핑봇 + 이슈봇 포인터
-3. **`REVIEW_SUMMARY.md`** — 외부 개발자용 14섹션 리뷰 (아키텍처/LOC/비용/리스크)
-4. **`ISSUE_BOT_SPEC.md`** — 이슈봇 전체 설계 1,121줄 (R1~R8, Template A~E, 33 섹터, Phase 로드맵)
-5. **`telegram_bot/history/style_canon.md`** — Claude에 주입되는 스타일 경전
-
----
-
-## 🔧 빠른 동작 확인 명령
+## 🎛 운영 설정 (서버 .env)
 
 ```bash
-cd "C:\Users\user\Desktop\텔레그램 시황 브리핑"
+# 기본 (자동, 수정 불필요)
+ISSUE_BOT_ENABLED=true
+ISSUE_BOT_AUTO_APPROVE=false
+ISSUE_BOT_FILTER_MODEL=claude-haiku-4-5-20251001
+ISSUE_BOT_FILTER_VERIFIER_MODEL=claude-sonnet-4-5
+ISSUE_BOT_FILTER_HYBRID=true
+ISSUE_BOT_GENERATOR_MODEL=claude-sonnet-4-5
+ISSUE_BOT_POLL_INTERVAL_MIN=15
+ISSUE_BOT_ADMIN_MIN_PRIORITY=HIGH  # NORMAL은 로그만, 카드 안 옴
+```
 
-# 1회 폴링 (실제 카드 발송)
+스팸 심하면 → `ADMIN_MIN_PRIORITY=URGENT` 로 상향
+누락 느끼면 → `ADMIN_MIN_PRIORITY=NORMAL` 로 하향
+
+---
+
+## ⚠️ 운영 주의사항
+
+### 텔레그램 봇 토큰
+- 2026-04-22 대화창에 한 번 노출된 적 있음 (재발급 안 하기로 결정)
+- **향후 절대 채팅창에 `.env` 값 붙여넣지 말 것**
+
+### 커밋 습관
+- 서버 deploy.sh가 `telegram_bot/history/` 변경을 자동으로 커밋+푸시함
+- 로컬 작업 시 pull 먼저!
+
+### 로컬 poller
+- 이 세션 이전 로컬에서 돌리던 poller는 죽음 (AWS 올라가면서 불필요)
+- 로컬 재시작 불요 — AWS가 주 운영 환경
+
+---
+
+## 🔧 트러블슈팅 명령
+
+```bash
+# 서비스 상태
+sudo systemctl status telegram-bot --no-pager
+
+# 재시작
+sudo systemctl restart telegram-bot
+
+# 실시간 로그
+sudo journalctl -u telegram-bot -f
+
+# 1회 수동 폴링 (테스트)
+cd /home/ubuntu/telegram-briefing-bot
+source venv/bin/activate
 python -m telegram_bot.issue_bot.main once
 
-# dry-run (카드 안 보내고 분류만)
-python scripts/dryrun_filter.py --days 1
-
-# 배포 전 DART 테스트
-python scripts/test_dart_api.py
-
-# Claude.ai 테스트팩 재생성
-python scripts/export_claude_testpack.py --max 30
-
-# 멈추기: history/issue_bot/KILL_SWITCH 파일 생성
+# 긴급 중단
+touch telegram_bot/history/issue_bot/KILL_SWITCH
+sudo systemctl stop telegram-bot
 ```
 
 ---
 
-## 💬 새 세션 시작 시 쓸 프롬프트 예시
+## 📚 주요 문서
+
+1. **`SESSION_HANDOFF.md`** (이 파일)
+2. **`CLAUDE.md`** — 프로젝트 전체 개요
+3. **`ISSUE_BOT_SPEC.md`** — 이슈봇 전체 설계 1,121줄
+4. **`telegram_bot/history/style_canon.md`** — 스타일 경전
+
+---
+
+## 💬 새 세션 프롬프트 예시
 
 ```
-이 프로젝트 이어서 작업할게. SESSION_HANDOFF.md 읽어서 현재 상태 파악해줘.
-그 다음 [구체적 작업 지시]
+SESSION_HANDOFF.md 먼저 읽고 현재 상태 파악해줘.
+이슈봇 24시간 라이브 시작했으니 이제 Phase 2(빅테크/글로벌) 작업 시작.
 ```
 
 또는:
 
 ```
-실시간 이슈봇 Phase 1 배포 작업 이어서 진행. SESSION_HANDOFF.md + CLAUDE.md 참조.
-지금 상태에서 git push부터 진행해줘.
+어제부터 이슈봇 돌고 있어. 관리자 DM 받은 카드 품질 분석해줘.
+sudo journalctl -u telegram-bot --since "yesterday" 로 로그 확인하고 주요 지표 정리.
 ```
