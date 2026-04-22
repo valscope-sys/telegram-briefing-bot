@@ -367,7 +367,15 @@ def _handle_edit_reply(msg):
 # ===== 타임아웃 정리 =====
 
 def check_timeouts():
-    """만료된 pending을 timeout 처리. main 루프에서 주기적 호출."""
+    """만료된 pending을 timeout 처리. main 루프에서 주기적 호출.
+
+    기본 OFF(ISSUE_BOT_AUTO_TIMEOUT=false) — 자는 동안 중요 이슈 자동 유실 방지.
+    관리자가 /queue + 일괄 스킵 or 개별 ❌ 스킵으로 처리해야 pending에서 제거됨.
+    """
+    from telegram_bot.config import ISSUE_BOT_AUTO_TIMEOUT
+    if not ISSUE_BOT_AUTO_TIMEOUT:
+        return  # 자동 타임아웃 비활성 (기본값)
+
     from telegram_bot.issue_bot.approval.bot import list_pending, mark_decision
     now = datetime.datetime.now(KST)
     for p in list_pending():
@@ -379,7 +387,6 @@ def check_timeouts():
         except Exception:
             continue
         if expire < now:
-            # 타임아웃 처리
             print(f"[POLLER] 타임아웃: {p['id']}")
             try:
                 edit_admin_message(

@@ -87,18 +87,24 @@ def _card_meta_tail(issue: dict) -> str:
         vs = "; ".join(f"{v['rule']}" for v in violations[:3])
         v_line = f"⚠️ <b>R1~R8 위반 경고</b>: {vs}\n"
 
-    expires_at = issue.get("expires_at", "")
-    try:
-        dt = datetime.datetime.fromisoformat(expires_at) if expires_at else None
-        expires_str = dt.strftime("%H:%M") if dt else "?"
-    except Exception:
-        expires_str = "?"
+    from telegram_bot.config import ISSUE_BOT_AUTO_TIMEOUT
+
+    if ISSUE_BOT_AUTO_TIMEOUT:
+        expires_at = issue.get("expires_at", "")
+        try:
+            dt = datetime.datetime.fromisoformat(expires_at) if expires_at else None
+            expires_str = dt.strftime("%H:%M") if dt else "?"
+        except Exception:
+            expires_str = "?"
+        timeout_line = f'⏰ 만료: {expires_str} ({timeout_min}분)'
+    else:
+        timeout_line = '⏳ <i>수동 처리 전까지 유지</i>'
 
     return (
         f'\n━━━━━━━━━━━━━━━━━━━━━\n'
         f'{peer_line}'
         f'{v_line}'
-        f'⏰ 만료: {expires_str} ({timeout_min}분)'
+        f'{timeout_line}'
     )
 
 

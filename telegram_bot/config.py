@@ -46,6 +46,10 @@ ISSUE_BOT_HIGH_TIMEOUT_MIN = int(os.getenv("ISSUE_BOT_HIGH_TIMEOUT_MIN", "45"))
 ISSUE_BOT_NORMAL_TIMEOUT_MIN = int(os.getenv("ISSUE_BOT_NORMAL_TIMEOUT_MIN", "120"))
 ISSUE_BOT_EDIT_TIMEOUT_MIN = int(os.getenv("ISSUE_BOT_EDIT_TIMEOUT_MIN", "15"))
 
+# 자동 타임아웃 스킵 활성 여부 (기본 OFF — 자는 동안 중요 이슈 유실 방지)
+# True로 켜면 priority별 timeout_min 초과 시 자동 rejected 처리
+ISSUE_BOT_AUTO_TIMEOUT = os.getenv("ISSUE_BOT_AUTO_TIMEOUT", "false").lower() == "true"
+
 # Anthropic
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
 
