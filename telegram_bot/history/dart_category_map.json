@@ -83,6 +83,21 @@
       "priority": "HIGH",
       "note": "EB 발행"
     },
+    "주요사항보고서(신규시설투자등)": {
+      "template": "B",
+      "priority": "HIGH",
+      "note": "Capex 결정 — 증설/신규공장/라인 투자. 규모 1000억+는 URGENT 후보. 미래 이벤트여도 실체적 의사결정"
+    },
+    "주요사항보고서(유형자산양수결정)": {
+      "template": "B",
+      "priority": "HIGH",
+      "note": "대형 자산 취득 결정 — 공장/부동산 인수 등"
+    },
+    "주요사항보고서(유형자산양도결정)": {
+      "template": "B",
+      "priority": "NORMAL",
+      "note": "자산 매각 — 구조조정 신호일 수 있으나 규모 작으면 NORMAL"
+    },
     "주요사항보고서(영업양도결정)": {
       "template": "B",
       "priority": "URGENT"
