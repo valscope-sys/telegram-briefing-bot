@@ -4,6 +4,16 @@
 
 ---
 
+## ⚠️ 작업 도메인 경고 — 이 작업방은 "이슈봇 전용"
+
+- ✅ **이슈봇 영역**: `telegram_bot/issue_bot/**`, `telegram_bot/history/issue_bot/**`, `telegram_bot/history/dart_category_map.json`, SEC/DART/이슈봇 RSS 어댑터, 이슈봇 환경변수
+- ❌ **건드리지 않음(시황 브리핑봇 영역)**: `telegram_bot/collectors/news_collector.py`, `telegram_bot/history/market_context.txt`, `telegram_bot/briefings.py`, `telegram_bot/collectors/*` (news_collector 제외한 것들은 원래 브리핑 데이터 수집용)
+
+**이슈봇 RSS 추가**는 `telegram_bot/issue_bot/collectors/rss_adapter.py`의 `ISSUE_BOT_EXTRA_FEEDS`에만.
+시황봇 `market_context.txt` (한지영·브리핑 메모리)는 이슈봇 필터에 주입 금지 — 이슈봇은 이벤트 **객관 평가** 전용.
+
+---
+
 ## 🎯 현재 상태 요약
 
 **실시간 이슈봇 Phase 1 — AWS Lightsail 라이브 운영 중** (2026-04-22 10:18 KST부터).
@@ -72,14 +82,22 @@ sudo journalctl -u telegram-bot -f       # 실시간 tail
 - RSS 4개 피드 추가 (Nikkei Asia, Seeking Alpha, 전자신문, 디지털타임스)
 - 총 RSS 19개 (기존 15 + 신규 4)
 
-**남은 백로그 (다음 세션):**
-- SEC EDGAR 8-K 피드 별도 어댑터 (NVDA/AAPL/MSFT/META/GOOGL/AMZN/TSLA 빅테크 직접 — Phase 1 우선)
-  - `telegram_bot/issue_bot/collectors/sec_collector.py` 신규
-  - EDGAR RSS: https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK={cik}&type=8-K&output=atom
-- "부각 감지" 로직: 최근 거래량 급증·52주 신고가 종목 언급 시 HIGH 가점 (filter 프롬프트 확장)
-- market_context 연동 (한지영 채널 + briefing_memory) → 필터에 "지금 테마" 컨텍스트 주입
-- TrendForce 개별 종목 리서치 본문 파싱 (링크만 → 실제 내용)
-- Digitimes 피드 탐색 (RSS 미제공 — 스크랩 or 대안 탐색)
+**완료분 (Phase 2 이번 세션):**
+- SEC EDGAR 8-K 수집기 (16개 CIK — M7 + 반도체 Peer)
+- 필터 프롬프트에 "해외 Peer 8-K 판정 기준" 조항 추가 (Item 2.02/1.01 → HIGH 후보)
+- 이슈봇 전용 RSS 4개 (Nikkei Asia / Seeking Alpha / 전자신문 / 디지털타임스)
+  → `rss_adapter.ISSUE_BOT_EXTRA_FEEDS`에만 저장, 시황봇 `news_collector` 불변
+
+**남은 백로그 (다음 세션 — 이슈봇 도메인):**
+- SEC 8-K Item 파싱 (Item 2.02 실적 / 1.01 M&A 등을 자동 태깅)
+- TrendForce 개별 리서치 본문 파싱
+- Digitimes 대안 탐색 (공식 RSS 없음)
+- `/mute` `/stop` 실구현
+- 승인 카드 UX: DM 카드 일괄승인/스킵 버튼
+
+**❌ 명시적 분리:**
+- `market_context.txt` (한지영·브리핑 메모리) → **시황봇 전용** (이슈봇 미사용)
+- 52주 신고가/거래량 급증 데이터 → 별도 데이터 소스 필요. 지금은 이벤트 본문에 있는 수치만 필터가 활용.
 
 ### 3. Phase 1.5 잔여
 - `approval/edit_handler.py` 분리 (현재 poller에 포함)

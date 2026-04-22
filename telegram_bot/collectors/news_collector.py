@@ -59,12 +59,6 @@ RSS_FEEDS = [
     {"name": "FiercePharma", "url": "https://www.fiercepharma.com/rss/xml", "group": "해외"},
     {"name": "Defense News", "url": "https://www.defensenews.com/rss/", "group": "해외"},
     {"name": "World Nuclear News", "url": "https://www.world-nuclear-news.org/rss", "group": "해외"},
-    # 글로벌 빅테크/아시아 테크 (Phase 2 확장)
-    {"name": "Nikkei Asia", "url": "https://asia.nikkei.com/rss/feed/nar", "group": "해외"},
-    {"name": "Seeking Alpha", "url": "https://seekingalpha.com/market_currents.xml", "group": "해외"},
-    # 국내 IT/테크 전문 (반도체·IT부품 밸류체인 보강)
-    {"name": "전자신문", "url": "https://www.etnews.com/rss/section/IT.xml", "group": "국내"},
-    {"name": "디지털타임스", "url": "http://www.dt.co.kr/rss/rss_industry.xml", "group": "국내"},
 ]
 
 
