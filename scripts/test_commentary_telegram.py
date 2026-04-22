@@ -89,8 +89,9 @@ def main():
         ctx = ""
     extra = "\n\n".join(filter(None, [trend_text, prev, ctx]))
 
-    # 4. 양쪽 모델 호출
-    print("[4/4] 모델별 호출...")
+    # 4. 모델 호출 (env SONNET_ONLY=1 이면 Opus 스킵)
+    sonnet_only = os.environ.get("SONNET_ONLY", "0") == "1"
+    print(f"[4/4] 모델 호출 (sonnet_only={sonnet_only})...")
 
     # Sonnet
     print("  -> Sonnet 4...")
@@ -99,36 +100,43 @@ def main():
     sonnet_out = nc.generate_morning_commentary(global_data, filtered, trend_text=extra)
     t_sonnet = time.time() - t0
 
-    time.sleep(3)  # rate limit
+    opus_out = None
+    t_opus = 0
+    if not sonnet_only:
+        time.sleep(3)  # rate limit
+        print("  -> Opus 4...")
+        nc.COMMENTARY_MODEL = "claude-opus-4-20250514"
+        t0 = time.time()
+        opus_out = nc.generate_morning_commentary(global_data, filtered, trend_text=extra)
+        t_opus = time.time() - t0
 
-    # Opus
-    print("  -> Opus 4...")
-    nc.COMMENTARY_MODEL = "claude-opus-4-20250514"
-    t0 = time.time()
-    opus_out = nc.generate_morning_commentary(global_data, filtered, trend_text=extra)
-    t_opus = time.time() - t0
-
-    # 파일로 항상 저장 (admin 발송 실패 대비)
+    # 파일로 항상 저장 (텔레그램 발송 실패 대비)
     out_dir = Path(__file__).parent.parent / "telegram_bot" / "history"
     ts = time.strftime("%Y%m%d_%H%M%S")
     out_path = out_dir / f"commentary_compare_{ts}.md"
     with out_path.open("w", encoding="utf-8") as f:
-        f.write(f"# Sonnet vs Opus 모닝 시황 비교\n\n")
+        title = "Sonnet 모닝 시황 테스트" if sonnet_only else "Sonnet vs Opus 모닝 시황 비교"
+        f.write(f"# {title}\n\n")
         f.write(f"- 생성 시각: {ts}\n")
         f.write(f"- 데이터: 오늘 수집된 실 데이터\n\n")
         f.write(f"## Sonnet 4 ({t_sonnet:.0f}s)\n\n```\n{sonnet_out}\n```\n\n")
-        f.write(f"## Opus 4 ({t_opus:.0f}s)\n\n```\n{opus_out}\n```\n")
+        if opus_out:
+            f.write(f"## Opus 4 ({t_opus:.0f}s)\n\n```\n{opus_out}\n```\n")
     print(f"\n파일 저장: {out_path}")
 
     # 노드리서치 채널 발송 ([테스트] 라벨로 프로덕션 메시지와 구분)
     if TELEGRAM_CHANNEL_ID:
-        header = "⚠️ [모델 비교 테스트] Sonnet vs Opus\n아래 두 메시지 확인 후 삭제하세요."
+        if sonnet_only:
+            header = "⚠️ [모델 테스트] Sonnet 4 모닝 시황\n확인 후 삭제하세요."
+        else:
+            header = "⚠️ [모델 비교 테스트] Sonnet vs Opus\n아래 메시지 확인 후 삭제하세요."
         send_channel(header, tag="헤더")
         time.sleep(2)
         send_channel(f"🟦 [테스트·Sonnet 4] ({t_sonnet:.0f}s)\n\n{sonnet_out}", tag="Sonnet")
-        time.sleep(2)
-        send_channel(f"🟣 [테스트·Opus 4] ({t_opus:.0f}s)\n\n{opus_out}", tag="Opus")
-        print("노드리서치 채널 발송 완료 — 구분 후 삭제 필요.")
+        if opus_out:
+            time.sleep(2)
+            send_channel(f"🟣 [테스트·Opus 4] ({t_opus:.0f}s)\n\n{opus_out}", tag="Opus")
+        print("노드리서치 채널 발송 완료 — 확인 후 수동 삭제.")
     else:
         print("TELEGRAM_CHANNEL_ID 미설정 — 파일로만 저장됨.")
 
