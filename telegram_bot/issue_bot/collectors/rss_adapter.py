@@ -11,6 +11,7 @@ DART와의 차이:
 - dedup_key는 URL 해시 기반
 """
 import os
+import re
 import sys
 import time
 import hashlib
@@ -18,6 +19,8 @@ import datetime
 from typing import List
 
 import feedparser
+import requests
+from bs4 import BeautifulSoup
 
 from telegram_bot.issue_bot.utils.telegram import extract_og_image
 
@@ -31,6 +34,62 @@ ISSUE_BOT_EXTRA_FEEDS = [
     {"name": "전자신문", "url": "https://www.etnews.com/rss/section/IT.xml", "group": "국내"},
     {"name": "디지털타임스", "url": "http://www.dt.co.kr/rss/rss_industry.xml", "group": "국내"},
 ]
+
+# 기사 본문 추출 대상 소스 — 제목+summary만으로 필터 판단이 어려운 전문 매체
+DETAIL_FETCH_SOURCES = {"TrendForce"}  # 추후 확장: Digitimes 등
+
+# URL → body 메모리 캐시 (프로세스 수명 동안 유효)
+# 동일 기사가 여러 폴링에서 반복 조회될 때 중복 fetch 방지
+_article_body_cache = {}
+_CACHE_MAX_SIZE = 500
+
+
+def _cached_fetch_article_body(url: str) -> str:
+    if url in _article_body_cache:
+        return _article_body_cache[url]
+    body = _fetch_article_body(url)
+    # 간단한 LRU: 크기 초과 시 가장 오래된 것부터 제거
+    if len(_article_body_cache) >= _CACHE_MAX_SIZE:
+        for k in list(_article_body_cache.keys())[:50]:
+            _article_body_cache.pop(k, None)
+    _article_body_cache[url] = body
+    return body
+
+
+def _fetch_article_body(url: str, max_chars: int = 1500) -> str:
+    """기사 URL에서 본문 텍스트 추출 (heuristic).
+
+    TrendForce 같이 RSS summary가 짧은 전문 매체용.
+    """
+    if not url:
+        return ""
+    try:
+        res = requests.get(
+            url,
+            timeout=12,
+            headers={"User-Agent": "Mozilla/5.0 (compatible; NODEResearchBot/1.0)"},
+        )
+        if res.status_code != 200:
+            return ""
+        soup = BeautifulSoup(res.text, "lxml")
+        for tag in soup(["script", "style", "nav", "header", "footer", "aside", "form"]):
+            tag.decompose()
+
+        # article 우선, 없으면 content 클래스, 없으면 body
+        target = (
+            soup.find("article")
+            or soup.find("main")
+            or soup.find("div", class_=re.compile(r"(article|content|post|body|entry)", re.I))
+        )
+        if not target:
+            target = soup.body or soup
+
+        text = target.get_text(separator=" ", strip=True)
+        text = re.sub(r"\s+", " ", text)
+        return text[:max_chars]
+    except Exception as e:
+        print(f"[RSS] 본문 fetch 실패 ({url[:60]}): {e}")
+        return ""
 
 
 def _hash_url(url: str) -> str:
@@ -91,7 +150,18 @@ def collect_rss_events(limit: int = 50, fetch_images: bool = False) -> List[dict
             continue
 
         uid = _hash_url(url)
+        source_name = article.get("source", "")
         summary = article.get("summary", "") or ""
+
+        # 전문 매체(TrendForce 등): RSS summary 짧음 → 기사 본문 추가 추출 (URL 캐시)
+        body = summary
+        if source_name in DETAIL_FETCH_SOURCES:
+            cache_hit = url in _article_body_cache
+            detailed = _cached_fetch_article_body(url)
+            if detailed and len(detailed) > len(summary):
+                body = detailed
+            if not cache_hit:
+                time.sleep(0.3)  # rate limit (캐시 히트 시엔 대기 불필요)
 
         image_url = None
         if fetch_images:
@@ -104,13 +174,13 @@ def collect_rss_events(limit: int = 50, fetch_images: bool = False) -> List[dict
             "source_id": url,
             "fetched_at": now_iso,
             "ticker": None,
-            "company_name": article.get("source", ""),
+            "company_name": source_name,
             "corp_code": "",
             "corp_cls": "",
             "title": title,
             "report_nm_raw": None,
             "report_nm_clean": None,
-            "body_excerpt": summary[:1500],
+            "body_excerpt": body[:1500],
             "category_hint": None,
             "priority_hint": None,
             "rule_match_reason": "RSS — Haiku 필터 필요",

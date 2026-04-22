@@ -200,7 +200,7 @@ def main():
 
     # ===== 이슈 봇 통합 =====
     issue_bot_stop_event = None
-    issue_bot_poller_thread = None
+    issue_bot_poller_holder = {"thread": None}  # 재시작 가능하도록 mutable holder
 
     if ISSUE_BOT_ENABLED:
         from telegram_bot.issue_bot.main import issue_bot_poll_once
@@ -216,11 +216,34 @@ def main():
         print(f"[SCHEDULER] 이슈봇 폴링 등록 ({ISSUE_BOT_POLL_INTERVAL_MIN}분 간격)")
 
         issue_bot_stop_event = threading.Event()
-        issue_bot_poller_thread = threading.Thread(
-            target=run_poller, args=(issue_bot_stop_event,), daemon=True, name="issue_bot_poller",
-        )
-        issue_bot_poller_thread.start()
+
+        def _start_poller_thread():
+            t = threading.Thread(
+                target=run_poller, args=(issue_bot_stop_event,),
+                daemon=True, name="issue_bot_poller",
+            )
+            t.start()
+            issue_bot_poller_holder["thread"] = t
+            return t
+
+        _start_poller_thread()
         print("[SCHEDULER] 이슈봇 poller 스레드 시작")
+
+        # ── Poller health check: 스레드가 silently 죽으면 자동 재시작 ──
+        def _poller_health_check():
+            t = issue_bot_poller_holder.get("thread")
+            if t is None or not t.is_alive():
+                print("[SCHEDULER] ⚠️ poller 스레드 죽음 감지 — 재시작")
+                _start_poller_thread()
+
+        scheduler.add_job(
+            _poller_health_check,
+            CronTrigger(minute="*/2", timezone=KST),  # 2분 간격 헬스체크
+            id="issue_bot_poller_health",
+            name="이슈봇 poller 헬스체크",
+            misfire_grace_time=GRACE,
+        )
+        print("[SCHEDULER] 이슈봇 poller 헬스체크 등록 (2분 간격)")
 
     try:
         scheduler.start()
@@ -228,8 +251,9 @@ def main():
         print("\n[SCHEDULER] 종료")
         if issue_bot_stop_event:
             issue_bot_stop_event.set()
-        if issue_bot_poller_thread:
-            issue_bot_poller_thread.join(timeout=10)
+        t = issue_bot_poller_holder.get("thread")
+        if t:
+            t.join(timeout=10)
         scheduler.shutdown()
 
 
