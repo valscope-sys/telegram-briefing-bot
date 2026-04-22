@@ -1,9 +1,11 @@
-"""소넷 vs 오파스 시황 생성 → admin 채팅으로 발송 (프로덕션 채널 아님).
+"""소넷 vs 오파스 시황 생성 → 노드리서치 채널 발송 (테스트 라벨).
 
-실제 오늘 수집된 데이터로 양쪽 모델 시황을 생성하고, ADMIN_CHAT_ID 로 각각 발송.
-사용자가 텔레그램 화면에서 직접 비교 가능.
+실제 오늘 수집된 데이터로 양쪽 모델 시황 생성 후,
+프로덕션 채널(@noderesearch)에 [테스트] 라벨과 함께 각각 발송.
+구독자가 보고 구별할 수 있게 상단에 [테스트] 표기.
+테스트 후 채널 관리자가 해당 메시지 삭제 가능.
 
-비용: Sonnet 1회 + Opus 1회 (모닝) ≈ $0.3 예상.
+비용: 모닝 기준 Sonnet ~$0.23 + Opus ~$2.08.
 """
 import os
 import sys
@@ -18,9 +20,10 @@ os.environ.setdefault("COMMENTARY_PROMPT_VERSION", "v2")
 
 from telegram_bot.config import (
     TELEGRAM_BOT_TOKEN,
-    TELEGRAM_ADMIN_CHAT_ID,
+    TELEGRAM_CHANNEL_ID,
     ANTHROPIC_API_KEY,
 )
+from telegram_bot.sender import send_message
 from telegram_bot.collectors.global_market import fetch_all_global
 from telegram_bot.collectors.news_collector import (
     fetch_rss_news,
@@ -36,14 +39,14 @@ from telegram_bot.collectors.market_context import get_market_context_for_prompt
 import telegram_bot.collectors.news_collector as nc
 
 
-def send_admin(text, tag=""):
-    """ADMIN_CHAT_ID 로 직접 발송 (프로덕션 채널 X)."""
-    if not TELEGRAM_BOT_TOKEN or not TELEGRAM_ADMIN_CHAT_ID:
-        print("[ADMIN] 토큰/ID 없음")
+def send_channel(text, tag=""):
+    """노드리서치 프로덕션 채널로 발송 (parse_mode 없음 — 시황 원문 그대로)."""
+    if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHANNEL_ID:
+        print("[CHANNEL] 토큰/ID 없음")
         return None
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
     payload = {
-        "chat_id": TELEGRAM_ADMIN_CHAT_ID,
+        "chat_id": TELEGRAM_CHANNEL_ID,
         "text": text,
         "disable_web_page_preview": True,
     }
@@ -51,12 +54,12 @@ def send_admin(text, tag=""):
         res = requests.post(url, json=payload, timeout=30)
         r = res.json()
         if not r.get("ok"):
-            print(f"[ADMIN] 실패: {r.get('description')}")
+            print(f"[CHANNEL] 실패: {r.get('description')}")
         else:
-            print(f"[ADMIN] 발송 OK {tag}")
+            print(f"[CHANNEL] 발송 OK {tag}")
         return r
     except Exception as e:
-        print(f"[ADMIN] 예외: {e}")
+        print(f"[CHANNEL] 예외: {e}")
         return None
 
 
@@ -117,16 +120,17 @@ def main():
         f.write(f"## Opus 4 ({t_opus:.0f}s)\n\n```\n{opus_out}\n```\n")
     print(f"\n파일 저장: {out_path}")
 
-    # 텔레그램 발송 시도 (ADMIN_CHAT_ID 설정 시만)
-    if TELEGRAM_ADMIN_CHAT_ID:
-        send_admin("🧪 시황 비교 테스트 (Sonnet vs Opus)\n아래 두 메시지를 비교하세요.", tag="헤더")
+    # 노드리서치 채널 발송 ([테스트] 라벨로 프로덕션 메시지와 구분)
+    if TELEGRAM_CHANNEL_ID:
+        header = "⚠️ [모델 비교 테스트] Sonnet vs Opus\n아래 두 메시지 확인 후 삭제하세요."
+        send_channel(header, tag="헤더")
         time.sleep(2)
-        send_admin(f"🟦 [Sonnet 4] 모닝 시황 ({t_sonnet:.0f}s)\n\n{sonnet_out}", tag="Sonnet")
+        send_channel(f"🟦 [테스트·Sonnet 4] ({t_sonnet:.0f}s)\n\n{sonnet_out}", tag="Sonnet")
         time.sleep(2)
-        send_admin(f"🟣 [Opus 4] 모닝 시황 ({t_opus:.0f}s)\n\n{opus_out}", tag="Opus")
-        print("텔레그램 admin 채팅 발송 완료.")
+        send_channel(f"🟣 [테스트·Opus 4] ({t_opus:.0f}s)\n\n{opus_out}", tag="Opus")
+        print("노드리서치 채널 발송 완료 — 구분 후 삭제 필요.")
     else:
-        print("TELEGRAM_ADMIN_CHAT_ID 미설정 — 파일로만 저장됨.")
+        print("TELEGRAM_CHANNEL_ID 미설정 — 파일로만 저장됨.")
 
 
 if __name__ == "__main__":
