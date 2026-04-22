@@ -23,7 +23,7 @@ ISSUE_BOT_DIR = os.path.join(
 )
 KILL_SWITCH_PATH = os.path.join(ISSUE_BOT_DIR, "KILL_SWITCH")
 POLLER_LOCK_PATH = os.path.join(ISSUE_BOT_DIR, "poller.lock")
-POLLER_LOCK_STALE_S = 120  # 2분 이상 갱신 없으면 stale
+POLLER_LOCK_STALE_S = 30  # 30초 이상 갱신 없으면 stale (restart 시 대기 최소화)
 
 
 # === 시간 보호 구간 ===

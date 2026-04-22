@@ -1,6 +1,7 @@
 """NODE Research 텔레그램 자동 브리핑 봇 - 메인 엔트리포인트"""
 import os
 import sys
+import signal
 import subprocess
 import datetime
 import threading
@@ -229,11 +230,30 @@ def main():
         _start_poller_thread()
         print("[SCHEDULER] 이슈봇 poller 스레드 시작")
 
+        # systemd stop/restart → SIGTERM → lock 명시 해제 후 exit
+        # (daemon 스레드가 clean-up 못 하니 main 프로세스에서 처리)
+        def _handle_termination(signum, _frame):
+            print(f"[SCHEDULER] 시그널 {signum} 수신 — poller lock 해제 + 종료")
+            try:
+                from telegram_bot.issue_bot.utils.telegram import release_poller_lock
+                release_poller_lock()
+            except Exception:
+                pass
+            if issue_bot_stop_event:
+                issue_bot_stop_event.set()
+            sys.exit(0)
+
+        signal.signal(signal.SIGTERM, _handle_termination)
+        signal.signal(signal.SIGINT, _handle_termination)
+
         # ── Poller health check: 스레드가 silently 죽으면 자동 재시작 ──
         def _poller_health_check():
             t = issue_bot_poller_holder.get("thread")
             if t is None or not t.is_alive():
-                print("[SCHEDULER] ⚠️ poller 스레드 죽음 감지 — 재시작")
+                print("[SCHEDULER] ⚠️ poller 스레드 죽음 감지 — lock 해제 후 재시작")
+                # 죽은 스레드가 점유한 lock 명시 제거 (stale 대기 없이 즉시 복구)
+                from telegram_bot.issue_bot.utils.telegram import release_poller_lock
+                release_poller_lock()
                 _start_poller_thread()
 
         scheduler.add_job(
