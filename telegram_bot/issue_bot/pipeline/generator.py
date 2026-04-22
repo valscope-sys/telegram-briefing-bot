@@ -69,6 +69,42 @@ def _log_cache_stats(usage):
         pass
 
 
+def _build_fallback_content(event: dict, classification: dict) -> str:
+    """Sonnet 실패 / 빈 응답 / 본문 극히 짧은 경우 — 최소 본문 자동 구성.
+
+    채널에 '본문 없음' 상태로 발송되는 UX 버그 방지.
+    """
+    company = (event.get("company_name") or "").strip()
+    title = (event.get("title") or "").strip()
+    url = event.get("source_url", "")
+    source = event.get("source", "")
+    template = classification.get("category", "C")
+
+    header_line = f"[{company} {title}]" if company else f"[{title}]"
+    parts = [header_line, ""]
+
+    body = (event.get("body_excerpt") or event.get("original_content") or "").strip()
+    if body:
+        parts.append(body[:600])
+    else:
+        parts.append("※ 상세 내용은 원본 링크를 참조하세요.")
+    parts.append("")
+
+    if url:
+        parts.append(f"원문: {url}")
+    if source:
+        parts.append(f"(자료: {source})")
+
+    if template != "E":
+        parts.append("")
+        parts.append(
+            "* 본 내용은 당사의 코멘트 없이 국내외 언론사 뉴스 및 전자공시자료 등을 "
+            "인용한 것으로 별도의 승인 절차 없이 제공합니다."
+        )
+
+    return "\n".join(parts)
+
+
 def _build_user_message(event: dict, classification: dict) -> str:
     """이벤트 → user 프롬프트"""
     template = classification.get("category", "C")
@@ -126,10 +162,22 @@ def generate_message(event: dict, classification: dict, retry_violations: list =
     """
     if not ANTHROPIC_API_KEY:
         return {
-            "generated_content": "",
-            "violations": [{"rule": "GENERAL", "detail": "ANTHROPIC_API_KEY 없음"}],
+            "generated_content": _build_fallback_content(event, classification),
+            "violations": [{"rule": "GENERAL", "detail": "ANTHROPIC_API_KEY 없음 — 폴백 본문"}],
             "retry_count": 0,
             "tokens_used": {},
+            "used_fallback": True,
+        }
+
+    # body가 너무 짧거나 비어있으면 Sonnet 호출 스킵 — 폴백으로 바로
+    body_for_check = (event.get("body_excerpt") or event.get("original_content") or "").strip()
+    if len(body_for_check) < 30:
+        return {
+            "generated_content": _build_fallback_content(event, classification),
+            "violations": [{"rule": "GENERAL", "detail": "원문 본문 부재 — 폴백 본문(제목+링크)"}],
+            "retry_count": 0,
+            "tokens_used": {},
+            "used_fallback": True,
         }
 
     style_canon = _load_style_canon()
@@ -162,6 +210,20 @@ def generate_message(event: dict, classification: dict, retry_violations: list =
         generated = response.content[0].text.strip()
         _log_cache_stats(response.usage)
 
+        # Sonnet이 빈 응답 반환 시 폴백
+        if not generated:
+            print("[GENERATOR] Sonnet 빈 응답 — 폴백 본문 사용")
+            return {
+                "generated_content": _build_fallback_content(event, classification),
+                "violations": [{"rule": "GENERAL", "detail": "Sonnet 빈 응답 — 폴백 본문"}],
+                "retry_count": 1 if retry_violations else 0,
+                "tokens_used": {
+                    "input": response.usage.input_tokens,
+                    "output": response.usage.output_tokens,
+                },
+                "used_fallback": True,
+            }
+
         # 린트
         template = classification.get("category", "C")
         violations = lint_r1_r8(generated, template)
@@ -178,12 +240,13 @@ def generate_message(event: dict, classification: dict, retry_violations: list =
             },
         }
     except Exception as e:
-        print(f"[GENERATOR] Sonnet 호출 실패: {e}")
+        print(f"[GENERATOR] Sonnet 호출 실패: {e} — 폴백 본문 사용")
         return {
-            "generated_content": "",
-            "violations": [{"rule": "GENERAL", "detail": f"생성 실패: {e}"}],
+            "generated_content": _build_fallback_content(event, classification),
+            "violations": [{"rule": "GENERAL", "detail": f"Sonnet 실패 — 폴백 본문: {e}"}],
             "retry_count": 0,
             "tokens_used": {},
+            "used_fallback": True,
         }
 
 
