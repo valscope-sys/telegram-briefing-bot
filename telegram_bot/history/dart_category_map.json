@@ -123,12 +123,13 @@
 
     "단일판매ㆍ공급계약체결": {
       "template": "B",
-      "priority": "HIGH",
-      "note": "수주 공시 — 규모별 URGENT/HIGH 분기"
+      "priority": "NORMAL",
+      "note": "수주 공시 — 하루 5~10건+ 필링. admin 발송 안 하고 로그만. 추후 금액 임계값 기반 URGENT/HIGH 분기"
     },
     "단일판매ㆍ공급계약해지": {
       "template": "B",
-      "priority": "HIGH"
+      "priority": "HIGH",
+      "note": "해지는 일반적으로 드물고 영향 있음"
     },
     "단일판매ㆍ공급계약변경": {
       "template": "B",
@@ -187,8 +188,8 @@
     },
     "주식등의대량보유상황보고서": {
       "template": "B",
-      "priority": "HIGH",
-      "note": "5% 공시"
+      "priority": "SKIP",
+      "note": "5% 공시 — 하루 5~15건 필링, 대부분 운용사 지분율 변동 (투자 시사점 낮음). 사용자 요청으로 SKIP"
     },
 
     "현금ㆍ현물배당결정": {

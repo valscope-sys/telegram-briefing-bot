@@ -21,6 +21,14 @@ import threading
 import datetime
 
 from telegram_bot.config import ISSUE_BOT_ENABLED, ISSUE_BOT_POLL_INTERVAL_MIN
+
+# admin 카드 발송 최소 priority (기본 HIGH — NORMAL 은 로그만)
+# env: ISSUE_BOT_ADMIN_MIN_PRIORITY = URGENT|HIGH|NORMAL
+_PRIORITY_RANK = {"URGENT": 3, "HIGH": 2, "NORMAL": 1, "SKIP": 0}
+_ADMIN_MIN = _PRIORITY_RANK.get(
+    os.environ.get("ISSUE_BOT_ADMIN_MIN_PRIORITY", "HIGH").upper(),
+    2,  # HIGH
+)
 from telegram_bot.issue_bot.collectors.dart_collector import collect_disclosures
 from telegram_bot.issue_bot.pipeline.filter import filter_event
 from telegram_bot.issue_bot.pipeline.dedup import (
@@ -77,8 +85,16 @@ def issue_bot_poll_once(fetch_body: bool = True, days_back: int = 1) -> dict:
             print(f"[ISSUE_BOT] 필터 오류 ({event['id']}): {e}")
             continue
 
-        if classification.get("priority") == "SKIP":
+        pri = classification.get("priority", "NORMAL")
+        if pri == "SKIP":
             mark_seen(dedup_key, source_url=event.get("source_url", ""), role="skipped")
+            continue
+
+        # admin 발송 최소 priority 체크 (기본 HIGH — NORMAL 은 로그만, 카드 발송 안 함)
+        if _PRIORITY_RANK.get(pri, 0) < _ADMIN_MIN:
+            mark_seen(dedup_key, source_url=event.get("source_url", ""), role="below_min_priority",
+                      extra={"priority": pri, "title": event.get("title", "")[:60]})
+            print(f"  [below min] {pri} | {event.get('company_name', '')[:15]} | {event.get('title', '')[:40]}")
             continue
 
         # 4. State 1 카드 발송 준비
