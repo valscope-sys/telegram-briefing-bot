@@ -34,6 +34,19 @@ from telegram_bot.formatters.schedule import format_today_schedule, format_tomor
 from telegram_bot.sender import send_message
 
 
+def _send_with_check(msg, label):
+    """send_message 래퍼 — 실제 Telegram API 성공 여부 확인 후 로그.
+    실패 시 예외 발생 (상위에서 traceback 남김). 로그만 가짜 성공 찍히던 버그 방지.
+    """
+    res = send_message(msg)
+    if res and res.get("ok"):
+        print(f"[{label}] ✓ 발송 성공 (msg_id={res.get('result', {}).get('message_id', '?')})")
+        return True
+    err = "응답 없음 (DNS/네트워크 실패)" if not res else res.get("description", "unknown")
+    print(f"[{label}] ⚠️ 발송 실패: {err}")
+    raise RuntimeError(f"Telegram 발송 실패 — {label}: {err}")
+
+
 def run_morning_briefing():
     """
     장전 브리핑 실행 (07:00)
@@ -77,8 +90,7 @@ def run_morning_briefing():
         msg1 = format_morning_briefing(global_data, domestic_data, morning_commentary)
         snapshot_msgs = [msg1]
 
-        send_message(msg1)
-        print("[MORNING] 모닝 데이터 발송 완료")
+        _send_with_check(msg1, "MORNING 데이터카드")
 
         # 시황 별도 메시지
         commentary_msg = ""
@@ -90,8 +102,7 @@ def run_morning_briefing():
             morning_commentary = ensure_critical_data_mentioned(morning_commentary, global_data)
             commentary_msg = f"📋 *미장 마감 리뷰*\n{date_str}\n\n{morning_commentary}"
             time.sleep(2)
-            send_message(commentary_msg)
-            print("[MORNING] 미장 리뷰 발송 완료")
+            _send_with_check(commentary_msg, "MORNING 미장 리뷰")
 
             # 자가 점검 로그
             koru = global_data.get("korea_proxies", {}).get("KORU", {})
@@ -119,8 +130,7 @@ def run_morning_briefing():
         if not filtered_news:
             filtered_news = filter_news_with_claude(raw_news, context="장전 브리핑")
         msg2 = format_premarket_news(filtered_news)
-        send_message(msg2)
-        print("[MORNING] 장전 뉴스 발송 완료")
+        _send_with_check(msg2, "MORNING 장전 뉴스")
     except Exception as e:
         print(f"[MORNING] 장전 뉴스 실패: {e}")
         traceback.print_exc()
@@ -132,8 +142,7 @@ def run_morning_briefing():
         print("[MORNING] 오늘 일정 수집 중...")
         schedule = fetch_today_schedule()
         msg3 = format_today_schedule(schedule)
-        send_message(msg3)
-        print("[MORNING] 오늘 일정 발송 완료")
+        _send_with_check(msg3, "MORNING 오늘 일정")
     except Exception as e:
         print(f"[MORNING] 오늘 일정 실패: {e}")
         traceback.print_exc()
@@ -254,8 +263,7 @@ def run_evening_briefing():
         )
         snapshot_msgs = [msg1]
 
-        send_message(msg1)
-        print("[EVENING] 이브닝 데이터 발송 완료")
+        _send_with_check(msg1, "EVENING 데이터카드")
 
         # 시황 별도 메시지
         commentary_msg = ""
@@ -264,8 +272,7 @@ def run_evening_briefing():
             commentary = postprocess_commentary(commentary)
             commentary_msg = f"📋 *오늘 시장*\n{date_str}\n\n{commentary}"
             time.sleep(2)
-            send_message(commentary_msg)
-            print("[EVENING] 시황 리뷰 발송 완료")
+            _send_with_check(commentary_msg, "EVENING 시황 리뷰")
         snapshot_msgs.append(commentary_msg)
     except Exception as e:
         print(f"[EVENING] 이브닝 브리핑 실패: {e}")
@@ -283,8 +290,7 @@ def run_evening_briefing():
             raw_news, count=5, context="장후 브리핑, 장중 시장 영향 뉴스 위주"
         )
         msg2 = format_postmarket_news(filtered_news)
-        send_message(msg2)
-        print("[EVENING] 장중 뉴스 발송 완료")
+        _send_with_check(msg2, "EVENING 장중 뉴스")
     except Exception as e:
         print(f"[EVENING] 장중 뉴스 실패: {e}")
         traceback.print_exc()
@@ -296,8 +302,7 @@ def run_evening_briefing():
         print("[EVENING] 내일 일정 수집 중...")
         schedule = fetch_tomorrow_schedule()
         msg3 = format_tomorrow_schedule(schedule)
-        send_message(msg3)
-        print("[EVENING] 내일 일정 발송 완료")
+        _send_with_check(msg3, "EVENING 내일 일정")
     except Exception as e:
         print(f"[EVENING] 내일 일정 실패: {e}")
         traceback.print_exc()
@@ -330,8 +335,11 @@ def resend_briefing(briefing_type, date_str=None):
     for i, msg in enumerate(messages):
         if not msg:
             continue
-        send_message(msg)
-        print(f"[RESEND] 메시지 {i+1}/{len(messages)} 발송 완료")
+        try:
+            _send_with_check(msg, f"RESEND {i+1}/{len(messages)}")
+        except RuntimeError as e:
+            print(f"[RESEND] 중단: {e}")
+            break
         if i < len(messages) - 1:
             time.sleep(2)
 
