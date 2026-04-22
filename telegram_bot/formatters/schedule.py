@@ -51,6 +51,44 @@ SESSION_KST_HINT = {
     "장후": "새벽",    # US after-hours ~4pm+ ET ≈ KST 05-06시 익일
 }
 
+# 해외 티커 → 한글명 매핑 (일정 실적 표기용)
+US_TICKER_KR = {
+    # 빅테크·반도체
+    "AAPL": "애플", "MSFT": "마이크로소프트", "GOOGL": "구글(A)", "GOOG": "구글(C)",
+    "AMZN": "아마존", "META": "메타", "NVDA": "엔비디아", "TSLA": "테슬라",
+    "AMD": "AMD", "INTC": "인텔", "AVGO": "브로드컴", "TSM": "TSMC",
+    "QCOM": "퀄컴", "TXN": "텍사스인스트루먼트", "ADI": "아날로그디바이시스",
+    "MU": "마이크론", "AMAT": "어플라이드머티어리얼즈", "LRCX": "램리서치",
+    "KLAC": "KLA", "ASML": "ASML", "ARM": "ARM",
+    # AI·소프트웨어·클라우드
+    "ORCL": "오라클", "CRM": "세일즈포스", "NOW": "서비스나우", "SNOW": "스노우플레이크",
+    "PLTR": "팔란티어", "NFLX": "넷플릭스", "ADBE": "어도비", "UBER": "우버",
+    # 반도체 메모리·장비
+    "SNDK": "샌디스크", "WDC": "웨스턴디지털", "STX": "시게이트",
+    # 전기차·배터리
+    "LCID": "루시드", "RIVN": "리비안", "F": "포드", "GM": "GM",
+    # 바이오·제약
+    "PFE": "화이자", "MRK": "머크", "JNJ": "존슨앤드존슨", "LLY": "일라이릴리",
+    "NVO": "노보노디스크", "MRNA": "모더나", "REGN": "리제네론",
+    # 금융
+    "JPM": "JP모건", "BAC": "뱅크오브아메리카", "GS": "골드만삭스", "MS": "모건스탠리",
+    "C": "씨티그룹", "WFC": "웰스파고", "V": "비자", "MA": "마스터카드",
+    # 산업·에너지
+    "BA": "보잉", "CAT": "캐터필러", "GE": "GE", "LMT": "록히드마틴",
+    "XOM": "엑슨모빌", "CVX": "쉐브론", "COP": "코노코필립스",
+    # 소비재·헬스케어
+    "KO": "코카콜라", "PEP": "펩시", "WMT": "월마트", "COST": "코스트코",
+    "UNH": "유나이티드헬스", "NKE": "나이키",
+    # 중국 ADR
+    "BABA": "알리바바", "JD": "징둥닷컴", "PDD": "핀둬둬", "BIDU": "바이두",
+}
+
+
+def _format_us_ticker(ticker):
+    """AAPL → 애플(AAPL) / 매핑 없으면 그대로"""
+    kr = US_TICKER_KR.get(ticker.upper())
+    return f"{kr}({ticker})" if kr else ticker
+
 
 def _parse_us_earning(entry):
     """US 실적 entry에서 ticker/session 추출. 예: 'GE 실적발표 (장전) [EPS est. $1.6]' → ('GE', '장전')"""
@@ -170,7 +208,14 @@ def _format_schedule(title, schedule_data):
                 label = f" ({session})"
             else:
                 label = ""
-            earnings_lines.append(f"🇺🇸 해외{label}  {', '.join(companies[:6])}")
+            # 한글 병기 적용 (AAPL → 애플(AAPL))
+            formatted = [_format_us_ticker(t) for t in companies[:6]]
+            earnings_lines.append(f"🇺🇸 해외{label}  {', '.join(formatted)}")
+
+        # TSLA 실적일 자동 주목 라인 추가 (국내 2차전지·AI 밸류체인 민감)
+        all_us = [t for session_list in us_by_session.values() for t in session_list]
+        if "TSLA" in [t.upper() for t in all_us]:
+            earnings_lines.append("※ 주목  TSLA 실적 — 국내 2차전지·AI 밸류체인 민감도 높음")
 
         if earnings_lines:
             lines.append("")

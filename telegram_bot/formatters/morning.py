@@ -128,16 +128,30 @@ def format_morning_briefing(global_data, domestic_data, morning_commentary=""):
         lines.append(f"Fear & Greed  {fg_val}{label_str}")
         lines.append("")
 
-    # 🌙 야간 프록시 (KORU만)
+    # 🌙 야간 프록시 (KORU·EWY·코스피200 — NY close 기준, 시점 명시)
     korea_proxies = global_data.get("korea_proxies", {})
+    proxy_lines = []
     koru = korea_proxies.get("KORU", {})
     if koru and "error" not in koru and koru.get("현재가"):
-        lines.append("🌙 *야간 프록시*")
-        lines.append(f"KORU {koru['현재가']:.2f} {_fmt_pct(koru['등락률'])}")
+        proxy_lines.append(f"KORU(3x) {koru['현재가']:.2f} {_fmt_pct(koru['등락률'])}")
+    ewy = korea_proxies.get("EWY", {})
+    if ewy and "error" not in ewy and ewy.get("현재가"):
+        proxy_lines.append(f"EWY {ewy['현재가']:.2f} {_fmt_pct(ewy['등락률'])}")
+    ks200 = korea_proxies.get("코스피200", {})
+    if ks200 and "error" not in ks200 and ks200.get("현재가"):
+        proxy_lines.append(f"코스피200 {ks200['현재가']:.2f} {_fmt_pct(ks200['등락률'])}")
+    if proxy_lines:
+        lines.append("🌙 *야간 프록시* (NY close 기준)")
+        lines.extend(proxy_lines)
         lines.append("")
 
-    # 🇰🇷 전일 국내 증시 (수급 포함)
-    lines.append("🇰🇷 *전일 국내 증시*")
+    # 🇰🇷 전일 국내 증시 (수급 포함) — 날짜 명시
+    inv_date_raw = (investors.get("날짜", "") if investors else "") or ""
+    if len(inv_date_raw) == 8:
+        inv_date_label = f" ({inv_date_raw[4:6]}-{inv_date_raw[6:8]} 종가)"
+    else:
+        inv_date_label = ""
+    lines.append(f"🇰🇷 *전일 국내 증시*{inv_date_label}")
     for name in ["KOSPI", "KOSDAQ"]:
         d = dom_indices.get(name, {})
         if "error" in d:

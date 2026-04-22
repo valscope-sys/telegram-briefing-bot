@@ -67,7 +67,9 @@ def run_morning_briefing():
         prev_evening = format_previous_for_prompt("evening")
         extra_context = "\n\n".join(filter(None, [trend_text, prev_evening, market_ctx]))
         trend_text = extra_context if extra_context else trend_text
-        morning_commentary = generate_morning_commentary(global_data, filtered_news[:8], trend_text=trend_text)
+        morning_commentary = generate_morning_commentary(
+            global_data, filtered_news[:8], trend_text=trend_text, domestic_data=domestic_data
+        )
         save_briefing("morning", morning_commentary, {
             "KOSPI": dom_indices.get("KOSPI", {}).get("현재가", 0) if (dom_indices := domestic_data.get("indices", {})) else 0,
         })

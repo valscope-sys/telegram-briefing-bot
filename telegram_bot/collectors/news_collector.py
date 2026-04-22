@@ -728,8 +728,11 @@ def generate_market_commentary(market_data, news_list, intraday_text="", trend_t
         return f"시황 해석 생성 실패: {e}"
 
 
-def generate_morning_commentary(global_data, news_list, trend_text=""):
-    """Claude API로 전일 미장 시황 해석 생성 (모닝 브리핑용)"""
+def generate_morning_commentary(global_data, news_list, trend_text="", domestic_data=None):
+    """Claude API로 전일 미장 시황 해석 생성 (모닝 브리핑용)
+
+    domestic_data: fetch_all_domestic() 결과 — 데이터 카드와 동일 소스 주입 (정합성)
+    """
     if not ANTHROPIC_API_KEY:
         return ""
 
@@ -741,6 +744,31 @@ def generate_morning_commentary(global_data, news_list, trend_text=""):
     us_stocks = global_data.get("us_stocks", {})
     commodities = global_data.get("commodities", {})
     fx = global_data.get("fx", {})
+
+    # 전일 국내 수급 — 데이터 카드와 동일 소스 (정합성 확보)
+    kr_investors_section = ""
+    if domestic_data:
+        investors = domestic_data.get("investors", {})
+        if investors and "error" not in investors:
+            inv_date = investors.get("날짜", "")
+            date_label = f"{inv_date[:4]}-{inv_date[4:6]}-{inv_date[6:8]}" if len(inv_date) == 8 else "전일"
+            frgn = investors.get("외국인금액", 0) / 100  # 백만원 → 억원
+            inst = investors.get("기관금액", 0) / 100
+            pers = investors.get("개인금액", 0) / 100
+            kr_investors_section = (
+                f"\n전일({date_label}) 국내 수급 (KOSPI, 억원):\n"
+                f"  외국인 {frgn:+,.0f}억 / 기관 {inst:+,.0f}억 / 개인 {pers:+,.0f}억\n"
+                f"  ※ 이 숫자가 데이터 카드에 표시된 값. 시황에서 '전일 수급'으로 인용 시 반드시 이 값을 사용.\n"
+            )
+        dom_indices = domestic_data.get("indices", {})
+        if dom_indices:
+            kospi = dom_indices.get("KOSPI", {})
+            kosdaq = dom_indices.get("KOSDAQ", {})
+            if kospi and "error" not in kospi:
+                kr_investors_section += (
+                    f"전일 KOSPI: {kospi.get('현재가', 0):,.2f} ({kospi.get('등락률', 0):+.2f}%) / "
+                    f"KOSDAQ: {kosdaq.get('현재가', 0):,.2f} ({kosdaq.get('등락률', 0):+.2f}%)\n"
+                )
 
     data_summary = "=== 전일 미국 증시 데이터 ===\n"
     for name, info in indices.items():
@@ -777,8 +805,9 @@ def generate_morning_commentary(global_data, news_list, trend_text=""):
                 pct = info.get("등락률", 0)
                 proxy_lines.append(f"  {name}: ${info['현재가']:.2f} ({pct:+.2f}%)")
         if proxy_lines:
-            data_summary += "\n야간 프록시 (한국 관련 해외 ETF):\n"
+            data_summary += "\n야간 프록시 (NY close 기준 — 한국 장 마감 후 미국 시점):\n"
             data_summary += "\n".join(proxy_lines) + "\n"
+            data_summary += "  ※ 시점 주의: EWY/KORU 는 미국 장 마감 가격(KST 06:00경). 한국 장 개장 전 야간선물(^KS200)과 시점 다를 수 있음.\n"
             # KORU 경고 자동 주입 (3x 레버리지 → ±3% = 실제 갭 1%, 의미 있는 시그널 시작점)
             koru = korea_proxies.get("KORU", {})
             if koru and abs(koru.get("등락률", 0)) >= 3:
@@ -815,6 +844,10 @@ def generate_morning_commentary(global_data, news_list, trend_text=""):
         pc = sentiment.get("Put/Call Ratio", {})
         if pc:
             data_summary += f"  Put/Call Ratio: {pc.get('비율', 0)} ({pc.get('해석', '')})\n"
+
+    # 전일 국내 수급 (데이터 카드와 동일 숫자 — 정합성 필수)
+    if kr_investors_section:
+        data_summary += kr_investors_section
 
     # 뉴스 (본문 포함)
     data_summary += _build_news_section(news_list, max_items=8)
