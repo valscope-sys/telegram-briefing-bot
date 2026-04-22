@@ -116,6 +116,20 @@ def _build_user_message(event: dict, classification: dict) -> str:
     body = body.strip()[:1500] if body else ""
     source_url = event.get("source_url", "")
     source_type = event.get("source", "")
+    report_clean = event.get("report_nm_clean") or ""
+
+    # 본문이 짧은 경우: Sonnet이 "공시 유형의 일반적 의미"를 투자자 관점으로 설명
+    short_body_note = ""
+    if len(body) < 120:
+        short_body_note = (
+            "\n\n[⚠️ 원문 발췌가 짧음 — 중요 지침]\n"
+            "구체 수치·계획이 본문에 없을 때는 다음 원칙으로 작성하세요:\n"
+            "1) 공시 제목·유형('" + (report_clean or title[:40]) + "')의 **일반적 의미**를 투자자 관점에서 2~3문장으로 간결히 설명\n"
+            "2) 해당 공시가 통상 어떤 신호(주주환원·재무구조·실적 가이던스 등)인지 객관적 해설\n"
+            "3) 구체 수치·일정·계획은 '상세 내용은 원문 참조' 한 줄로 마무리\n"
+            "4) 본문에 없는 수치·금액·날짜·전망·목표가 **절대 창작 금지** (이건 R1~R8 위반)\n"
+            "5) '~할 수 있다', '~할 가능성이 있다' 수준의 조심스러운 해설은 허용 (추측 전망 아님)\n"
+        )
 
     # Peer는 "영향 해석 대상" — 단순 나열이 아니라 본문에서 분석 재료로 활용
     peers = event.get("peer_map_used", [])
@@ -138,16 +152,20 @@ def _build_user_message(event: dict, classification: dict) -> str:
 - 원본 URL: {source_url}
 - 기업/주체: {company}
 - 제목: {title}
+- 공시/기사 유형: {report_clean or '(해당없음)'}
 - Template: {template}
 - 섹터: {sector}
 
 [원문 발췌]
 {body}
+{short_body_note}
 
 {peer_block}
 
-위 원문의 **수치·사실만** 재구성하세요.
-- 원문에 없는 전망·평가·국내종목 언급 추가 금지 (단, 위 [영향 해석 대상]은 예외 — 근거 기반 영향만)
+작성 원칙:
+- 원문 수치·사실을 그대로 인용·재구성 (창작 금지)
+- 원문에 없는 전망·평가·국내종목 언급 추가 금지
+  (단, [영향 해석 대상] Peer는 예외 — 근거 기반 영향만. [원문 짧음] 지침이 있으면 유형 설명도 예외)
 - R1~R8 규칙 절대 준수
 - Template {template} 형식으로 작성
 - {'면책 문구 포함' if template != 'E' else '면책 문구 생략 (E 속보)'}
@@ -181,16 +199,8 @@ def generate_message(event: dict, classification: dict, retry_violations: list =
             "used_fallback": True,
         }
 
-    # body가 너무 짧거나 비어있으면 Sonnet 호출 스킵 — 폴백으로 바로
-    body_for_check = (event.get("body_excerpt") or event.get("original_content") or "").strip()
-    if len(body_for_check) < 30:
-        return {
-            "generated_content": _build_fallback_content(event, classification),
-            "violations": [{"rule": "GENERAL", "detail": "원문 본문 부재 — 폴백 본문(제목+링크)"}],
-            "retry_count": 0,
-            "tokens_used": {},
-            "used_fallback": True,
-        }
+    # 본문 짧아도 Sonnet 호출 유지 — 제목+공시유형의 의미를 풀어 설명하도록 지시
+    # (과거엔 30자 미만이면 폴백이었으나, 사용자 피드백: "원문 참조" 대신 의미 설명 요구)
 
     style_canon = _load_style_canon()
     user_msg = _build_user_message(event, classification)

@@ -233,49 +233,66 @@ def fetch_recent_disclosures(days_back: int = 1, page_count: int = 100, corp_cls
     return data.get("list", [])
 
 
-def fetch_kind_body(rcept_no: str, max_chars: int = 800) -> str:
+def fetch_kind_body(rcept_no: str, max_chars: int = 1800) -> str:
     """
     KIND HTML에서 본문 추출. iframe 구조를 2-step으로 처리.
+    표/목록/문장 모두 텍스트화하여 Sonnet이 의미 파악 가능한 정보량 확보.
 
     Returns:
         본문 발췌 (최대 max_chars자). 실패 시 빈 문자열.
     """
+    headers = {"User-Agent": "Mozilla/5.0 (compatible; NODEResearchBot/1.0)"}
     try:
         # 1단계: 뷰어 페이지에서 iframe URL 추출
         view_url = KIND_VIEW_URL.format(rcept_no=rcept_no)
-        res = requests.get(view_url, timeout=15)
+        res = requests.get(view_url, timeout=15, headers=headers)
         if res.status_code != 200:
             return ""
         soup = BeautifulSoup(res.text, "lxml")
 
-        # iframe src 또는 스크립트 내 'viewDoc' 호출 파싱
-        # KIND 구조: JS로 iframe을 로드함. window.open('/dsaf001/dsaf001.do?...') 형태.
-        # 정규식으로 추출 시도.
+        iframe_url = None
+        # viewDoc(rcpNo, dcmNo, eleId, offset, ...) JS 호출 파싱
         m = re.search(r"viewDoc\('([^']+)',\s*'([^']+)',\s*'([^']+)',\s*'([^']+)'", res.text)
         if m:
-            # viewDoc(rcpNo, dcmNo, eleId, offset, ...)
             dcm_no = m.group(2)
             iframe_url = f"https://dart.fss.or.kr/report/viewer.do?rcpNo={rcept_no}&dcmNo={dcm_no}"
         else:
-            # fallback: iframe 태그 직접 찾기
             iframe = soup.find("iframe")
             if iframe and iframe.get("src"):
                 src = iframe["src"]
                 iframe_url = src if src.startswith("http") else f"https://dart.fss.or.kr{src}"
-            else:
-                return ""
+
+        if not iframe_url:
+            return ""
 
         # 2단계: iframe 본문 요청
-        res2 = requests.get(iframe_url, timeout=15)
+        res2 = requests.get(iframe_url, timeout=15, headers=headers)
         if res2.status_code != 200:
             return ""
 
         soup2 = BeautifulSoup(res2.text, "lxml")
-        # 텍스트 위주로 추출
-        for tag in soup2(["script", "style"]):
+        for tag in soup2(["script", "style", "noscript"]):
             tag.decompose()
-        text = soup2.get_text(separator=" ", strip=True)
-        text = re.sub(r"\s+", " ", text)
+
+        parts = []
+
+        # 테이블 셀도 개별 토큰으로 유지 (DART 공시는 표 위주)
+        for table in soup2.find_all("table"):
+            for tr in table.find_all("tr"):
+                row_cells = [td.get_text(" ", strip=True) for td in tr.find_all(["td", "th"])]
+                row_cells = [c for c in row_cells if c]
+                if row_cells:
+                    parts.append(" | ".join(row_cells))
+            table.decompose()
+
+        # 나머지 텍스트 (문장, 목록 등)
+        remaining = soup2.get_text(separator=" ", strip=True)
+        if remaining:
+            parts.append(remaining)
+
+        text = "\n".join(parts)
+        text = re.sub(r"[ \t]+", " ", text)
+        text = re.sub(r"\n{3,}", "\n\n", text)
         return text[:max_chars]
     except Exception as e:
         print(f"[DART] KIND 본문 추출 실패 ({rcept_no}): {e}")
