@@ -83,6 +83,9 @@ def run_morning_briefing():
         if morning_commentary:
             date_str = datetime.datetime.now().strftime("%m월 %d일")
             morning_commentary = postprocess_commentary(morning_commentary)
+            # |KORU| ≥ 4% 인데 모델이 누락한 경우 안전 라인 삽입
+            from telegram_bot.postprocess import ensure_critical_data_mentioned
+            morning_commentary = ensure_critical_data_mentioned(morning_commentary, global_data)
             commentary_msg = f"📋 *미장 마감 리뷰*\n{date_str}\n\n{morning_commentary}"
             time.sleep(2)
             send_message(commentary_msg)
