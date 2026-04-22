@@ -29,6 +29,7 @@ from telegram_bot.issue_bot.collectors.dart_collector import (
     collect_disclosures, get_last_rcept_no, save_last_rcept_no,
 )
 from telegram_bot.issue_bot.collectors.rss_adapter import collect_rss_events
+from telegram_bot.issue_bot.collectors.sec_collector import collect_sec_8k_filings
 from telegram_bot.issue_bot.pipeline.filter import filter_event
 from telegram_bot.issue_bot.pipeline.dedup import (
     generate_dedup_key, is_duplicate, mark_seen,
@@ -39,15 +40,17 @@ from telegram_bot.issue_bot.utils.telegram import is_issue_bot_blocked
 
 
 def issue_bot_poll_once(fetch_body: bool = True, days_back: int = 1,
-                        max_cards_per_poll: int = 3, include_rss: bool = True) -> dict:
+                        max_cards_per_poll: int = 3, include_rss: bool = True,
+                        include_sec: bool = True) -> dict:
     """
-    1회 폴링: DART(증분) + RSS → 필터 → 카드 발송 (최대 N건).
+    1회 폴링: DART(증분) + RSS + SEC 8-K → 필터 → 카드 발송 (최대 N건).
 
     Args:
         fetch_body: KIND HTML 본문 추출 여부
         days_back: DART 조회 범위 (증분 커서와 교차 필터링됨)
         max_cards_per_poll: 카드 상한 (몰빵 방지). 나머지는 다음 폴링으로 이월
         include_rss: RSS 수집 포함 여부
+        include_sec: SEC EDGAR 8-K 수집 포함 여부 (빅테크 Peer)
 
     Returns:
         {"collected", "new", "cards_sent", "deferred", "last_rcept_no", ...}
@@ -82,7 +85,16 @@ def issue_bot_poll_once(fetch_body: bool = True, days_back: int = 1,
             print(f"[ISSUE_BOT] RSS 수집 실패: {e}")
         print(f"[ISSUE_BOT] RSS 수집: {len(rss_events)}건")
 
-    events = dart_events + rss_events
+    # 3. SEC 8-K 수집 (빅테크 + 반도체 Peer — Phase 2)
+    sec_events = []
+    if include_sec:
+        try:
+            sec_events = collect_sec_8k_filings(per_cik_limit=5, days_back=2)
+        except Exception as e:
+            print(f"[ISSUE_BOT] SEC 수집 실패: {e}")
+        print(f"[ISSUE_BOT] SEC 8-K 수집: {len(sec_events)}건")
+
+    events = dart_events + rss_events + sec_events
 
     # DART는 rcept_no 오름차순, RSS는 최신순. 전체 처리는 DART 먼저 (증분 커서 정확성)
     new_count = 0
@@ -173,6 +185,7 @@ def issue_bot_poll_once(fetch_body: bool = True, days_back: int = 1,
         "collected": len(events),
         "dart": len(dart_events),
         "rss": len(rss_events),
+        "sec": len(sec_events),
         "new": new_count,
         "cards_sent": sent_count,
         "deferred": deferred_count,

@@ -107,6 +107,37 @@ US_MAJOR_STOCKS = {
     "ORCL": "오라클",
 }
 
+# === SEC EDGAR 8-K 추적 기업 (이슈봇 Phase 2) ===
+# 빅테크 + 한국 반도체 밸류체인 직결 Peer
+# CIK 10자리 zero-pad. ticker: [cik, company_name]
+SEC_TRACKED_COMPANIES = {
+    # M7 빅테크
+    "NVDA":  ["0001045810", "NVIDIA"],
+    "AAPL":  ["0000320193", "Apple"],
+    "MSFT":  ["0000789019", "Microsoft"],
+    "GOOGL": ["0001652044", "Alphabet"],
+    "AMZN":  ["0001018724", "Amazon"],
+    "TSLA":  ["0001318605", "Tesla"],
+    "META":  ["0001326801", "Meta"],
+    # 반도체 밸류체인 Peer (삼성·하이닉스 관련)
+    "TSM":   ["0001046179", "TSMC"],
+    "AVGO":  ["0001730168", "Broadcom"],
+    "AMD":   ["0000002488", "AMD"],
+    "MU":    ["0000723125", "Micron"],
+    "INTC":  ["0000050863", "Intel"],
+    "ARM":   ["0001973239", "Arm Holdings"],
+    "ASML":  ["0000937966", "ASML"],
+    # 기타 빅테크 관련
+    "NFLX":  ["0001065280", "Netflix"],
+    "ORCL":  ["0001341439", "Oracle"],
+}
+
+# SEC API User-Agent (SEC 규정 — 이메일 포함 필수)
+SEC_USER_AGENT = os.getenv(
+    "SEC_USER_AGENT",
+    "NODE Research Bot valscope@noderesearch.co.kr",
+)
+
 # 섹터별 대표 종목 (이브닝 브리핑에 함께 표시)
 SECTOR_STOCKS = {
     "반도체": [("삼성전자", "005930"), ("SK하이닉스", "000660")],
