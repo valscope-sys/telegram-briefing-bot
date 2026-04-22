@@ -11,12 +11,36 @@ _KRX_LISTED_NAMES = None
 
 
 def _load_krx_listed_names():
-    """KRX 상장사 이름 집합 로드 (FDR 사용, 실패 시 stock_sector_mapping.json 폴백)"""
+    """KRX 상장사 이름 집합 로드.
+    1순위: telegram_bot/history/krx_listing.json (scripts/dump_krx_listing.py 로 생성, 서버 호환)
+    2순위: FDR 실시간 (로컬 개발 환경)
+    3순위: stock_sector_mapping.json (263종목만, 최종 폴백)
+    """
     global _KRX_LISTED_NAMES
     if _KRX_LISTED_NAMES is not None:
         return _KRX_LISTED_NAMES
     names = set()
-    # 1차: FDR 시도
+    history_dir = os.path.join(
+        os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "history"
+    )
+
+    # 1차: JSON 덤프 (서버 호환)
+    try:
+        path = os.path.join(history_dir, "krx_listing.json")
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        for s in data.get("stocks", []):
+            n = s.get("name", "").strip()
+            if n:
+                names.add(n)
+        if names:
+            print(f"[SCHEDULE] KRX {len(names)}개 로드 (krx_listing.json)")
+            _KRX_LISTED_NAMES = names
+            return names
+    except Exception:
+        pass
+
+    # 2차: FDR 실시간
     try:
         import FinanceDataReader as fdr
         krx = fdr.StockListing("KRX")
@@ -24,18 +48,15 @@ def _load_krx_listed_names():
             if n:
                 names.add(str(n).strip())
         if names:
-            print(f"[SCHEDULE] KRX 상장사 {len(names)}개 로드 (FDR)")
+            print(f"[SCHEDULE] KRX {len(names)}개 로드 (FDR 실시간)")
             _KRX_LISTED_NAMES = names
             return names
     except Exception as e:
         print(f"[SCHEDULE] FDR 로드 실패: {e}")
 
-    # 2차 폴백: stock_sector_mapping.json (263 종목만이라 불완전하지만 무 필터보다 낫음)
+    # 3차 폴백: stock_sector_mapping.json (263종목만)
     try:
-        path = os.path.join(
-            os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-            "history", "stock_sector_mapping.json",
-        )
+        path = os.path.join(history_dir, "stock_sector_mapping.json")
         with open(path, "r", encoding="utf-8") as f:
             data = json.load(f)
         for k, v in data.items():
