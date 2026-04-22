@@ -12,6 +12,7 @@
 """
 import os
 import sys
+import gc
 import time
 import threading
 import datetime
@@ -181,7 +182,7 @@ def issue_bot_poll_once(fetch_body: bool = True, days_back: int = 1,
         msg += f", 이월 {deferred_count}건 (상한 도달)"
     print(msg)
 
-    return {
+    result = {
         "collected": len(events),
         "dart": len(dart_events),
         "rss": len(rss_events),
@@ -191,6 +192,12 @@ def issue_bot_poll_once(fetch_body: bool = True, days_back: int = 1,
         "deferred": deferred_count,
         "last_rcept_no": current_max_rcept_no,
     }
+
+    # 메모리 정리 — 512MB 서버에서 fwupd 등과 경쟁. 매 폴링 후 순환 참조 수거.
+    del events, dart_events, rss_events, sec_events
+    gc.collect()
+
+    return result
 
 
 def run_standalone():

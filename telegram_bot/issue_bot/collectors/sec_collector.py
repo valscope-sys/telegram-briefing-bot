@@ -34,6 +34,20 @@ import requests
 
 from telegram_bot.config import SEC_TRACKED_COMPANIES, SEC_USER_AGENT
 
+# 공용 세션 — TCP 재사용으로 메모리·연결 부담 완화
+_session = None
+
+
+def _get_session():
+    global _session
+    if _session is None:
+        _session = requests.Session()
+        _session.headers.update({
+            "User-Agent": SEC_USER_AGENT,
+            "Accept": "application/atom+xml, text/html, */*",
+        })
+    return _session
+
 SEC_ATOM_URL = (
     "https://www.sec.gov/cgi-bin/browse-edgar"
     "?action=getcompany&CIK={cik}&type=8-K&dateb=&owner=include&count={count}&output=atom"
@@ -74,6 +88,99 @@ SEC_ITEM_RULES = {
 
 # priority 우선순위 (같은 공시에 여러 item 있을 때 가장 높은 것 채택)
 _PRIORITY_RANK = {"URGENT": 4, "HIGH": 3, "NORMAL": 2, "SKIP": 1}
+
+# Item 2.02 (실적) 등은 Exhibit 99.1 press release 파싱으로 본문 확보
+_FETCH_EXHIBIT_ITEMS = {"2.02", "1.01", "8.01", "2.01", "5.01"}
+
+# Exhibit 파싱 캐시 (filing URL → body) — 동일 filing 반복 fetch 방지
+_exhibit_cache = {}
+_EXHIBIT_CACHE_MAX = 200
+
+
+def _fetch_sec_filing_exhibits(filing_index_url: str, max_chars: int = 3500) -> str:
+    """SEC 8-K filing index 페이지에서 Exhibit 99.1 (press release) 본문 추출.
+
+    실적·중대계약 공시는 Exhibit에 실제 수치·상세 있음.
+    Filing은 atom entry의 link로 받음 (주로 -index.htm 페이지).
+    """
+    if not filing_index_url:
+        return ""
+    if filing_index_url in _exhibit_cache:
+        return _exhibit_cache[filing_index_url]
+
+    try:
+        from bs4 import BeautifulSoup
+        sess = _get_session()
+
+        # 1) Index 페이지에서 Exhibit 파일 링크 찾기
+        res = sess.get(filing_index_url, timeout=12)
+        if res.status_code != 200:
+            return ""
+        soup = BeautifulSoup(res.text, "lxml")
+
+        exhibit_urls = []
+        for tr in soup.find_all("tr"):
+            row_text = tr.get_text(" ", strip=True).lower()
+            # Exhibit 99.1 (press release) 우선. 2.02 실적이면 99.1에 수치
+            if any(marker in row_text for marker in ["ex-99.1", "ex99.1", "exhibit 99.1", "press release"]):
+                a = tr.find("a", href=True)
+                if a:
+                    href = a["href"]
+                    if not href.startswith("http"):
+                        href = f"https://www.sec.gov{href}"
+                    # 실제 문서 (htm/html/pdf). PDF는 스킵.
+                    if href.lower().endswith((".htm", ".html")):
+                        exhibit_urls.append(href)
+
+        # fallback: 아무 99 계열 exhibit이나 시도
+        if not exhibit_urls:
+            for a in soup.find_all("a", href=True):
+                href = a["href"].lower()
+                if "ex-99" in href and href.endswith((".htm", ".html")):
+                    full = a["href"] if a["href"].startswith("http") else f"https://www.sec.gov{a['href']}"
+                    exhibit_urls.append(full)
+
+        if not exhibit_urls:
+            _exhibit_cache[filing_index_url] = ""
+            return ""
+
+        # 2) 첫 번째 Exhibit 본문 fetch
+        ex_res = sess.get(exhibit_urls[0], timeout=15)
+        if ex_res.status_code != 200:
+            _exhibit_cache[filing_index_url] = ""
+            return ""
+        ex_soup = BeautifulSoup(ex_res.text, "lxml")
+        for tag in ex_soup(["script", "style", "nav", "header", "footer"]):
+            tag.decompose()
+
+        # 3) 본문 추출 — 표 셀은 구분자로 유지 (실적표 많음)
+        parts = []
+        for table in ex_soup.find_all("table"):
+            for tr in table.find_all("tr"):
+                cells = [td.get_text(" ", strip=True) for td in tr.find_all(["td", "th"])]
+                cells = [c for c in cells if c]
+                if cells:
+                    parts.append(" | ".join(cells))
+            table.decompose()
+        remaining = ex_soup.get_text(separator=" ", strip=True)
+        if remaining:
+            parts.append(remaining)
+
+        body = "\n".join(parts)
+        body = re.sub(r"[ \t]+", " ", body)
+        body = re.sub(r"\n{3,}", "\n\n", body)
+        body = body[:max_chars]
+
+        # LRU 캐시
+        if len(_exhibit_cache) >= _EXHIBIT_CACHE_MAX:
+            for k in list(_exhibit_cache.keys())[:50]:
+                _exhibit_cache.pop(k, None)
+        _exhibit_cache[filing_index_url] = body
+        return body
+    except Exception as e:
+        print(f"[SEC] Exhibit fetch 실패 ({filing_index_url[:70]}): {e}")
+        _exhibit_cache[filing_index_url] = ""
+        return ""
 
 
 def _parse_items_from_summary(summary: str) -> list:
@@ -134,11 +241,7 @@ def _fetch_cik_8k_atom(cik: str, count: int = 5) -> list:
 
     url = SEC_ATOM_URL.format(cik=cik, count=count)
     try:
-        res = requests.get(
-            url,
-            headers={"User-Agent": SEC_USER_AGENT, "Accept": "application/atom+xml"},
-            timeout=15,
-        )
+        res = _get_session().get(url, timeout=15)
         if res.status_code != 200:
             print(f"[SEC] CIK={cik} HTTP {res.status_code}")
             return []
@@ -205,6 +308,13 @@ def collect_sec_8k_filings(per_cik_limit: int = 5, days_back: int = 2) -> list:
             items = _parse_items_from_summary(summary)
             item_priority, item_label, matched_item = _pick_item_priority(items)
 
+            # HIGH/URGENT 중요 Item이면 Exhibit 99.1 (press release) 본문 추가 주입
+            # → Sonnet이 "제출 사실"만 보고 생성하는 대신 실제 실적 수치로 작성
+            exhibit_body = ""
+            if matched_item in _FETCH_EXHIBIT_ITEMS and item_priority in ("HIGH", "URGENT"):
+                exhibit_body = _fetch_sec_filing_exhibits(ent["link"])
+                time.sleep(0.2)  # SEC rate limit
+
             # 제목에 Item 라벨 반영 (관리자 카드 UX)
             title_clean = ent["title"].replace("8-K", "").strip(" -—:")
             if matched_item and item_label:
@@ -223,6 +333,9 @@ def collect_sec_8k_filings(per_cik_limit: int = 5, days_back: int = 2) -> list:
                 else "SEC 8-K — Item 매칭 실패, Haiku 필터 사용"
             )
 
+            # body_excerpt: Exhibit 본문이 있으면 우선, 없으면 atom summary
+            body_final = exhibit_body if exhibit_body else summary
+
             events.append({
                 "id": f"sec_{ticker.lower()}_{accession}",
                 "source": "SEC",
@@ -236,13 +349,14 @@ def collect_sec_8k_filings(per_cik_limit: int = 5, days_back: int = 2) -> list:
                 "title": display_title,
                 "report_nm_raw": ent["title"],
                 "report_nm_clean": title_clean,
-                "body_excerpt": summary,
+                "body_excerpt": body_final,
                 "category_hint": "C",  # Template C (영문 공시/리서치)
                 "priority_hint": priority_hint,
                 "rule_match_reason": rule_reason,
                 "event_type": "8K",
-                "sec_items": items,           # 디버그/로그용
+                "sec_items": items,
                 "sec_primary_item": matched_item,
+                "has_exhibit_body": bool(exhibit_body),
                 "date": date_str,
             })
 

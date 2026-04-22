@@ -26629,6 +26629,17 @@
     "auto": true
   },
   {
+    "category": "게임",
+    "title": "Gamescom Latam 2026",
+    "source": "ai_scan",
+    "auto": true,
+    "month": "2026-04",
+    "undated": true,
+    "date": "2026-04-01",
+    "endDate": "2026-04-30",
+    "summary": "4월 29일-5월 3일 브라질 상파울루에서 개최되는 게임 전시회"
+  },
+  {
     "date": "2026-04-01",
     "time": "",
     "category": "자동차/배터리",
@@ -30395,6 +30406,46 @@
   },
   {
     "date": "2026-04-22",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "OCI 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-22",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "에쎈테크 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-22",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "제주은행 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-22",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "삼성바이오로직스 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-22",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "유니드 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-22",
     "time": "09:00",
     "category": "IR",
     "title": "한텍 IR (경영현황)",
@@ -30406,6 +30457,14 @@
     "time": "09:00",
     "category": "IR",
     "title": "루미르 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-22",
+    "time": "09:00",
+    "category": "한국실적",
+    "title": "엘에스일렉트릭 실적발표",
     "source": "fnguide",
     "auto": true
   },
@@ -30734,6 +30793,14 @@
   {
     "date": "2026-04-23",
     "time": "17:00",
+    "category": "IR",
+    "title": "고영 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-23",
+    "time": "17:00",
     "category": "한국실적",
     "title": "JB금융지주 실적발표",
     "source": "fnguide",
@@ -30833,6 +30900,22 @@
     "category": "미국실적",
     "title": "PG 실적발표 (장전) [EPS est. $1.6034]",
     "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-04-24",
+    "time": "",
+    "category": "한국실적",
+    "title": "기아 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-24",
+    "time": "09:00",
+    "category": "IR",
+    "title": "고영 IR (경영현황)",
+    "source": "fnguide",
     "auto": true
   },
   {
@@ -31041,6 +31124,14 @@
   },
   {
     "date": "2026-04-27",
+    "time": "09:00",
+    "category": "IR",
+    "title": "현대위아 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-27",
     "time": "10:30",
     "category": "한국실적",
     "title": "동양생명 실적발표",
@@ -31068,6 +31159,22 @@
     "time": "14:00",
     "category": "한국실적",
     "title": "한화오션 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-27",
+    "time": "14:00",
+    "category": "한국실적",
+    "title": "SKC 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-27",
+    "time": "15:00",
+    "category": "IR",
+    "title": "플래티어 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -31337,6 +31444,14 @@
   },
   {
     "date": "2026-04-28",
+    "time": "09:00",
+    "category": "IR",
+    "title": "SKC IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-28",
     "time": "10:00",
     "category": "IR",
     "title": "삼성SDI IR (경영현황)",
@@ -31364,6 +31479,14 @@
     "time": "15:30",
     "category": "한국실적",
     "title": "두산밥캣 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-28",
+    "time": "16:00",
+    "category": "IR",
+    "title": "iM금융지주 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -32257,6 +32380,15 @@
     "endDate": "2026-05-31",
     "unconfirmed": true,
     "summary": "5월 출시 예정인 정부 주도 펀드. AI·반도체 등 투자, 최대 1800만원 소득공제. 관련 금융·증권업계 영향"
+  },
+  {
+    "category": "수동",
+    "title": "삼성바이오로직스 총파업",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2026-05-01",
+    "time": "",
+    "summary": "삼성바이오로직스 상생노동조합이 5월 1일 전면 파업 예고. 바이오의약품 생산 중단 리스크"
   },
   {
     "category": "에너지",
@@ -34873,6 +35005,18 @@
     "date": "2026-12-01",
     "endDate": "2026-12-31",
     "summary": "정부가 사우디, 카자흐스탄 등에서 연말까지 원유 2억7300만 배럴 확보 완료 예정"
+  },
+  {
+    "category": "에너지",
+    "title": "제12차 전력수급기본계획 확정",
+    "source": "ai_scan",
+    "auto": true,
+    "month": "2026-12",
+    "undated": true,
+    "date": "2026-12-01",
+    "endDate": "2026-12-31",
+    "unconfirmed": true,
+    "summary": "2040년 전력 목표수요 131.8GW로 전망. 원전 2기 수준 증가한 전력계획 이르면 올해 말 확정"
   },
   {
     "date": "2026-12-01",
