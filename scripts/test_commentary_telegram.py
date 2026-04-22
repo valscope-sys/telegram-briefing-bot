@@ -105,14 +105,28 @@ def main():
     opus_out = nc.generate_morning_commentary(global_data, filtered, trend_text=extra)
     t_opus = time.time() - t0
 
-    # 발송 (admin chat)
-    send_admin("🧪 시황 비교 테스트 (Sonnet vs Opus)\n아래 두 메시지를 비교하세요.", tag="헤더")
-    time.sleep(2)
-    send_admin(f"🟦 [Sonnet 4] 모닝 시황 ({t_sonnet:.0f}s)\n\n{sonnet_out}", tag="Sonnet")
-    time.sleep(2)
-    send_admin(f"🟣 [Opus 4] 모닝 시황 ({t_opus:.0f}s)\n\n{opus_out}", tag="Opus")
+    # 파일로 항상 저장 (admin 발송 실패 대비)
+    out_dir = Path(__file__).parent.parent / "telegram_bot" / "history"
+    ts = time.strftime("%Y%m%d_%H%M%S")
+    out_path = out_dir / f"commentary_compare_{ts}.md"
+    with out_path.open("w", encoding="utf-8") as f:
+        f.write(f"# Sonnet vs Opus 모닝 시황 비교\n\n")
+        f.write(f"- 생성 시각: {ts}\n")
+        f.write(f"- 데이터: 오늘 수집된 실 데이터\n\n")
+        f.write(f"## Sonnet 4 ({t_sonnet:.0f}s)\n\n```\n{sonnet_out}\n```\n\n")
+        f.write(f"## Opus 4 ({t_opus:.0f}s)\n\n```\n{opus_out}\n```\n")
+    print(f"\n파일 저장: {out_path}")
 
-    print("\n완료. 텔레그램에서 확인하세요.")
+    # 텔레그램 발송 시도 (ADMIN_CHAT_ID 설정 시만)
+    if TELEGRAM_ADMIN_CHAT_ID:
+        send_admin("🧪 시황 비교 테스트 (Sonnet vs Opus)\n아래 두 메시지를 비교하세요.", tag="헤더")
+        time.sleep(2)
+        send_admin(f"🟦 [Sonnet 4] 모닝 시황 ({t_sonnet:.0f}s)\n\n{sonnet_out}", tag="Sonnet")
+        time.sleep(2)
+        send_admin(f"🟣 [Opus 4] 모닝 시황 ({t_opus:.0f}s)\n\n{opus_out}", tag="Opus")
+        print("텔레그램 admin 채팅 발송 완료.")
+    else:
+        print("TELEGRAM_ADMIN_CHAT_ID 미설정 — 파일로만 저장됨.")
 
 
 if __name__ == "__main__":
