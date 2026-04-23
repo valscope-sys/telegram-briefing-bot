@@ -54,36 +54,34 @@ SEC_ATOM_URL = (
 )
 
 # 8-K Item별 priority 힌트
-# 참고: https://www.sec.gov/forms 8-K current report items
+# 사용자 정책(2026-04-23): "빅테크도 실적만 나오게" → Item 2.02만 HIGH, 나머지 전부 SKIP
+# 필요 시 복원: 과거 파산(1.03)/중대계약(1.01)/경영권(5.01) 등은 note 참조
 SEC_ITEM_RULES = {
-    # URGENT — 사업 존속·중대 긴급성
-    "1.03": ("URGENT", "파산·법정관리"),
-    "2.04": ("URGENT", "중대 재무 의무 발동(Triggering Events)"),
-    "4.02": ("URGENT", "과거 재무제표 신뢰성 상실"),
-    # HIGH — 실적·M&A·상장·중대계약
-    "1.01": ("HIGH", "중대계약 체결(Material Definitive Agreement)"),
-    "1.02": ("HIGH", "중대계약 종료"),
-    "2.01": ("HIGH", "인수·처분 완료"),
     "2.02": ("HIGH", "분기/연간 실적(Results of Operations)"),
-    "2.03": ("HIGH", "중대 재무 채무 창출"),
-    "2.05": ("HIGH", "사업구조조정·Exit 비용"),
-    "2.06": ("HIGH", "중대 자산손상(Impairment)"),
-    "3.01": ("HIGH", "상장폐지 예고"),
-    "3.03": ("HIGH", "증권권리 변경"),
-    "4.01": ("HIGH", "감사인 교체"),
-    "5.01": ("HIGH", "경영권 변경(Changes in Control)"),
-    "8.01": ("HIGH", "기타 중대 사건(Other Events)"),
-    # NORMAL — 정보성·정기
-    "3.02": ("NORMAL", "비공개 증권 발행"),
-    "5.03": ("NORMAL", "정관 개정"),
-    "5.04": ("NORMAL", "임원보상계획 변경"),
-    "5.08": ("NORMAL", "주주제안"),
-    "7.01": ("NORMAL", "Regulation FD 공시"),
-    "9.01": ("NORMAL", "재무제표/Exhibit 첨부"),
-    # SKIP — 대부분 시장 영향 미미
-    "5.02": ("SKIP", "임원 변경(Departure of Directors/Officers)"),
-    "5.05": ("SKIP", "윤리강령 변경"),
-    "5.07": ("SKIP", "주주총회 결과(Submission of Matters to a Vote)"),
+    # 아래는 모두 SKIP (빅테크 메인 관심사는 실적)
+    "1.01": ("SKIP", "중대계약 체결"),
+    "1.02": ("SKIP", "중대계약 종료"),
+    "1.03": ("SKIP", "파산·법정관리"),
+    "2.01": ("SKIP", "인수·처분 완료"),
+    "2.03": ("SKIP", "중대 재무 채무"),
+    "2.04": ("SKIP", "중대 재무 의무 발동"),
+    "2.05": ("SKIP", "사업구조조정·Exit"),
+    "2.06": ("SKIP", "중대 자산손상"),
+    "3.01": ("SKIP", "상장폐지 예고"),
+    "3.02": ("SKIP", "비공개 증권 발행"),
+    "3.03": ("SKIP", "증권권리 변경"),
+    "4.01": ("SKIP", "감사인 교체"),
+    "4.02": ("SKIP", "재무 비신뢰"),
+    "5.01": ("SKIP", "경영권 변경"),
+    "5.02": ("SKIP", "임원 변경"),
+    "5.03": ("SKIP", "정관 개정"),
+    "5.04": ("SKIP", "임원보상계획"),
+    "5.05": ("SKIP", "윤리강령"),
+    "5.07": ("SKIP", "주주총회 결과"),
+    "5.08": ("SKIP", "주주제안"),
+    "7.01": ("SKIP", "Regulation FD 공시"),
+    "8.01": ("SKIP", "기타 사건"),
+    "9.01": ("SKIP", "재무제표/Exhibit"),
 }
 
 # priority 우선순위 (같은 공시에 여러 item 있을 때 가장 높은 것 채택)
@@ -97,63 +95,17 @@ _exhibit_cache = {}
 _EXHIBIT_CACHE_MAX = 200
 
 
-def _fetch_sec_filing_exhibits(filing_index_url: str, max_chars: int = 3500) -> str:
-    """SEC 8-K filing index 페이지에서 Exhibit 99.1 (press release) 본문 추출.
-
-    실적·중대계약 공시는 Exhibit에 실제 수치·상세 있음.
-    Filing은 atom entry의 link로 받음 (주로 -index.htm 페이지).
-    """
-    if not filing_index_url:
-        return ""
-    if filing_index_url in _exhibit_cache:
-        return _exhibit_cache[filing_index_url]
-
+def _extract_exhibit_text(ex_url: str, max_chars: int) -> str:
+    """단일 Exhibit URL fetch + HTML→텍스트 변환."""
     try:
         from bs4 import BeautifulSoup
         sess = _get_session()
-
-        # 1) Index 페이지에서 Exhibit 파일 링크 찾기
-        res = sess.get(filing_index_url, timeout=12)
-        if res.status_code != 200:
-            return ""
-        soup = BeautifulSoup(res.text, "lxml")
-
-        exhibit_urls = []
-        for tr in soup.find_all("tr"):
-            row_text = tr.get_text(" ", strip=True).lower()
-            # Exhibit 99.1 (press release) 우선. 2.02 실적이면 99.1에 수치
-            if any(marker in row_text for marker in ["ex-99.1", "ex99.1", "exhibit 99.1", "press release"]):
-                a = tr.find("a", href=True)
-                if a:
-                    href = a["href"]
-                    if not href.startswith("http"):
-                        href = f"https://www.sec.gov{href}"
-                    # 실제 문서 (htm/html/pdf). PDF는 스킵.
-                    if href.lower().endswith((".htm", ".html")):
-                        exhibit_urls.append(href)
-
-        # fallback: 아무 99 계열 exhibit이나 시도
-        if not exhibit_urls:
-            for a in soup.find_all("a", href=True):
-                href = a["href"].lower()
-                if "ex-99" in href and href.endswith((".htm", ".html")):
-                    full = a["href"] if a["href"].startswith("http") else f"https://www.sec.gov{a['href']}"
-                    exhibit_urls.append(full)
-
-        if not exhibit_urls:
-            _exhibit_cache[filing_index_url] = ""
-            return ""
-
-        # 2) 첫 번째 Exhibit 본문 fetch
-        ex_res = sess.get(exhibit_urls[0], timeout=15)
+        ex_res = sess.get(ex_url, timeout=15)
         if ex_res.status_code != 200:
-            _exhibit_cache[filing_index_url] = ""
             return ""
         ex_soup = BeautifulSoup(ex_res.text, "lxml")
         for tag in ex_soup(["script", "style", "nav", "header", "footer"]):
             tag.decompose()
-
-        # 3) 본문 추출 — 표 셀은 구분자로 유지 (실적표 많음)
         parts = []
         for table in ex_soup.find_all("table"):
             for tr in table.find_all("tr"):
@@ -165,18 +117,98 @@ def _fetch_sec_filing_exhibits(filing_index_url: str, max_chars: int = 3500) -> 
         remaining = ex_soup.get_text(separator=" ", strip=True)
         if remaining:
             parts.append(remaining)
-
         body = "\n".join(parts)
         body = re.sub(r"[ \t]+", " ", body)
         body = re.sub(r"\n{3,}", "\n\n", body)
-        body = body[:max_chars]
+        return body[:max_chars]
+    except Exception as e:
+        print(f"[SEC] Exhibit 개별 fetch 실패 ({ex_url[:70]}): {e}")
+        return ""
+
+
+def _fetch_sec_filing_exhibits(filing_index_url: str, max_chars: int = 6000) -> str:
+    """SEC 8-K filing index 페이지에서 Exhibit 99.1 (press release) + 99.2 (IR presentation) + 99.3 통합 추출.
+
+    - 99.1: press release (실적 수치·요점)
+    - 99.2: Investor Presentation / Supplemental / Earnings Deck (IR 자료)
+    - 99.3: Additional supplemental (분기별 디테일)
+
+    각 exhibit을 헤더로 구분해 본문에 이어 붙임. Sonnet이 press release 수치 +
+    IR 자료 가이던스·코멘트까지 종합 해석 가능.
+    """
+    if not filing_index_url:
+        return ""
+    if filing_index_url in _exhibit_cache:
+        return _exhibit_cache[filing_index_url]
+
+    try:
+        from bs4 import BeautifulSoup
+        sess = _get_session()
+
+        # 1) Index 페이지 fetch
+        res = sess.get(filing_index_url, timeout=12)
+        if res.status_code != 200:
+            return ""
+        soup = BeautifulSoup(res.text, "lxml")
+
+        # 2) Exhibit 99.1 / 99.2 / 99.3 링크 수집
+        # 99.1 = press release, 99.2 = IR presentation/supplemental, 99.3 = additional
+        exhibit_map = {}  # 99.X → url
+        for tr in soup.find_all("tr"):
+            row_text = tr.get_text(" ", strip=True).lower()
+            a = tr.find("a", href=True)
+            if not a:
+                continue
+            href = a["href"]
+            if not href.lower().endswith((".htm", ".html")):
+                continue
+            full = href if href.startswith("http") else f"https://www.sec.gov{href}"
+
+            for num in ["99.1", "99.2", "99.3"]:
+                markers = [f"ex-{num}", f"ex{num}", f"exhibit {num}"]
+                # 99.1은 press release 표시로도 매칭
+                if num == "99.1":
+                    markers.append("press release")
+                if any(m in row_text for m in markers):
+                    if num not in exhibit_map:
+                        exhibit_map[num] = full
+                    break
+
+        # fallback: 어떤 99 계열이라도
+        if not exhibit_map:
+            for a in soup.find_all("a", href=True):
+                href = a["href"].lower()
+                if "ex-99" in href and href.endswith((".htm", ".html")):
+                    full = a["href"] if a["href"].startswith("http") else f"https://www.sec.gov{a['href']}"
+                    exhibit_map.setdefault("fallback", full)
+
+        if not exhibit_map:
+            _exhibit_cache[filing_index_url] = ""
+            return ""
+
+        # 3) 각 exhibit 별 본문 추출 + 합치기
+        # 99.1에 주 수치, 99.2에 IR 가이던스/presentation
+        parts = []
+        budget_per_exhibit = max(1500, max_chars // max(len(exhibit_map), 1))
+        for label, url in sorted(exhibit_map.items()):
+            text = _extract_exhibit_text(url, budget_per_exhibit)
+            if not text:
+                continue
+            header = {
+                "99.1": "[Exhibit 99.1 — Press Release (실적 요점)]",
+                "99.2": "[Exhibit 99.2 — Investor Presentation / IR 자료]",
+                "99.3": "[Exhibit 99.3 — Supplemental]",
+            }.get(label, f"[Exhibit {label}]")
+            parts.append(f"{header}\n{text}")
+
+        combined = "\n\n".join(parts)[:max_chars]
 
         # LRU 캐시
         if len(_exhibit_cache) >= _EXHIBIT_CACHE_MAX:
             for k in list(_exhibit_cache.keys())[:50]:
                 _exhibit_cache.pop(k, None)
-        _exhibit_cache[filing_index_url] = body
-        return body
+        _exhibit_cache[filing_index_url] = combined
+        return combined
     except Exception as e:
         print(f"[SEC] Exhibit fetch 실패 ({filing_index_url[:70]}): {e}")
         _exhibit_cache[filing_index_url] = ""
