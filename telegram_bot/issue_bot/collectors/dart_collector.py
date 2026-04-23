@@ -127,10 +127,75 @@ def _normalize_report_nm(raw: str) -> tuple:
     return s, prefix
 
 
+# ===== 키워드 패턴 분류 (2026-04-23 추가) =====
+#
+# 설계 철학: category_map.json의 exact match 한계 (괄호 위치·조사 차이로 누락 발생)를
+# 극복하기 위한 report_nm 정규식 기반 fallback.
+#
+# 매칭 순서: skip_patterns → exact_map → substring fallback → **키워드 정규식** → None(Haiku)
+#
+# 2026-04-23 치명적 누락 사례:
+#   - "연결재무제표기준영업(잠정)실적(공정공시)" — 삼성SDS/하이닉스/현대차 등
+#     매핑엔 "영업실적등에대한전망(공정공시)"(미래 가이던스)만 있어서 miss
+#   - 그 외 report_nm이 매분기 조금씩 변형되어 exact match 실패 다수
+# 이 패턴 기반 분류로 report_nm 변형에 강건하게 대응.
+
+_KEYWORD_PATTERNS = [
+    # ===== URGENT — 시장 즉각 반응 =====
+    # 잠정실적 공시 (개별/연결 모두, "(잠정)실적" 키워드로 통합 커버)
+    ("URGENT", r"\(잠정\)실적", "잠정실적 공시"),
+    # 실적 전망·가이던스 ("실적등에대한전망")
+    ("URGENT", r"영업실적등에대한전망", "영업실적 전망(가이던스)"),
+    # 손익구조 변동 (매출액·영업이익·순이익 30%/15%+ 변동)
+    ("URGENT", r"손익구조.*?변경|손익구조.*?변동", "손익구조 대폭 변경"),
+    # 바이오: 품목허가 승인 (신청과 구분, (?<!신청) 부정 lookbehind)
+    ("URGENT", r"(?<!신청[(])품목허가(?!신청)", "품목허가 승인"),
+    # 자기주식 소각 (주주환원 시그널은 유지하지만 사용자 정책상 NORMAL — 이 라인은 주석)
+    # ("URGENT", r"자기주식소각결정", "자사주 소각"),
+
+    # ===== HIGH — 밸류체인·중기 영향 =====
+    ("HIGH", r"신규시설투자", "Capex·증설"),
+    ("HIGH", r"임상시험계획승인", "임상 진입"),
+    ("HIGH", r"품목허가신청", "바이오 허가 신청"),
+
+    # ===== SKIP — 노이즈 =====
+    ("SKIP", r"주권매매거래정지|매매거래정지", "거래정지"),
+    ("SKIP", r"은행거래정지", "은행거래정지"),
+    ("SKIP", r"감사보고서", "감사보고서"),
+    ("SKIP", r"특정증권등소유상황보고서|대량보유상황보고서", "지분공시"),
+    ("SKIP", r"결산실적공시예고", "결산 일정 예고(실체 無)"),
+    ("SKIP", r"증권신고서|증권발행실적보고서|투자설명서|일괄신고", "증권발행 관련"),
+]
+
+
+def _classify_by_keywords(clean_name: str) -> dict:
+    """
+    report_nm 키워드 정규식 기반 분류. exact/substring 매핑 실패 시 fallback.
+
+    매핑보다 관대하지만 확실한 키워드만 잡음 — 모호하면 None 반환해 Haiku에 위임.
+    """
+    for priority, pattern, label in _KEYWORD_PATTERNS:
+        if re.search(pattern, clean_name):
+            return {
+                "template": "B",
+                "priority": priority,
+                "reason": f"keyword_pattern: {label} (re: {pattern})",
+                "matched_key": clean_name,
+            }
+    return None
+
+
 def classify_by_rules(report_nm_raw: str) -> dict:
     """
-    report_nm을 category_map과 매칭해 template/priority 힌트 반환.
+    report_nm을 category_map + 키워드 패턴으로 매칭해 template/priority 힌트 반환.
     매칭 실패 시 None 반환 → downstream에서 Haiku 필터가 분류.
+
+    순서:
+      1. skip_patterns (substring contains)
+      2. mappings exact match
+      3. mappings substring fallback (양방향)
+      4. **키워드 정규식 패턴** (2026-04-23 추가 — exact 실패 보완)
+      5. prefix_rules (강등)
     """
     cat_map = _load_category_map()
     clean_name, prefix = _normalize_report_nm(report_nm_raw)
@@ -155,13 +220,27 @@ def classify_by_rules(report_nm_raw: str) -> dict:
                 mapping = val
                 break
 
+    # 3. 키워드 정규식 fallback (2026-04-23 추가)
+    # mapping이 없거나 NORMAL(카드 미발송 기본값)인데 키워드 매칭되면 키워드 결과 우선
+    # — 예: "단일판매ㆍ공급계약체결"(매핑 NORMAL)엔 키워드 안 잡힘 → 매핑 유지.
+    #   "연결재무제표기준영업(잠정)실적(공정공시)"(매핑 없음) → 키워드 URGENT 매칭.
     if not mapping:
-        return None  # 매칭 실패, Haiku에게 맡김
+        kw_result = _classify_by_keywords(clean_name)
+        if kw_result:
+            # prefix_rules 적용 (기재정정 → 강등)
+            if prefix:
+                prefix_rules = cat_map.get("prefix_rules", {})
+                rule = prefix_rules.get(prefix)
+                if rule and rule.get("priority_override"):
+                    kw_result["priority"] = rule["priority_override"]
+            kw_result["prefix"] = prefix
+            return kw_result
+        return None  # 키워드도 실패 → Haiku에게 맡김
 
     priority = mapping.get("priority", "NORMAL")
     template = mapping.get("template", "B")
 
-    # 3. prefix_rules 적용 ([기재정정] 등 → 우선순위 강등)
+    # 4. prefix_rules 적용 ([기재정정] 등 → 우선순위 강등)
     if prefix:
         prefix_rules = cat_map.get("prefix_rules", {})
         rule = prefix_rules.get(prefix)

@@ -107,10 +107,8 @@
       "template": "B",
       "priority": "NORMAL"
     },
-    "기업가치제고계획(자율공시)": {
-      "template": "B",
-      "priority": "NORMAL",
-      "note": "정책(2026-04-23): 밸류업은 사용자 리스트 외 → NORMAL"
+    "_기업가치제고계획_REMOVED_2026-04-23": {
+      "_note": "기존 NORMAL 매핑 제거 — 대형 기관(신한지주 46조 등)의 Value-Up 신규 계획은 ROE/주주환원율/CET1 등 구체 수치 담아 시장 반응 유의미. Haiku가 본문 보고 판단."
     },
     "최대주주변경": {
       "template": "B",
