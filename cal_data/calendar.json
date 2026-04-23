@@ -30640,9 +30640,121 @@
   },
   {
     "date": "2026-04-23",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "토비스 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-23",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "삼성E&A 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-23",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "한솔아이원스 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-23",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "OCI홀딩스 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-23",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "고영 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-23",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "삼성에스디에스 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-23",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "삼성에피스홀딩스 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-23",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "현대차 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-23",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "멀티캠퍼스 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-23",
+    "time": "09:00",
+    "category": "IR",
+    "title": "온코닉테라퓨틱스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-23",
+    "time": "09:00",
+    "category": "IR",
+    "title": "디아이동일 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-23",
     "time": "09:00",
     "category": "한국실적",
     "title": "SK하이닉스 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-23",
+    "time": "09:00",
+    "category": "한국실적(잠정)",
+    "title": "SK하이닉스 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-23",
+    "time": "09:10",
+    "category": "IR",
+    "title": "유니드 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-23",
+    "time": "09:30",
+    "category": "IR",
+    "title": "심플랫폼 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -30683,6 +30795,14 @@
   },
   {
     "date": "2026-04-23",
+    "time": "13:10",
+    "category": "한국실적(잠정)",
+    "title": "현대글로비스 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-23",
     "time": "14:00",
     "category": "IR",
     "title": "삼성에스디에스 IR (경영현황)",
@@ -30718,6 +30838,22 @@
     "time": "14:00",
     "category": "한국실적",
     "title": "LG디스플레이 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-23",
+    "time": "14:00",
+    "category": "한국실적(잠정)",
+    "title": "LG디스플레이 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-23",
+    "time": "14:00",
+    "category": "한국실적(잠정)",
+    "title": "신한지주 잠정실적발표",
     "source": "fnguide",
     "auto": true
   },
@@ -30765,6 +30901,14 @@
   },
   {
     "date": "2026-04-23",
+    "time": "16:00",
+    "category": "한국실적(잠정)",
+    "title": "KB금융 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-23",
     "time": "16:45",
     "category": "경제지표",
     "title": "🇺🇸 S&P Global Manufacturing PMI  (Apr)",
@@ -30803,6 +30947,14 @@
     "time": "17:00",
     "category": "한국실적",
     "title": "JB금융지주 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-23",
+    "time": "17:00",
+    "category": "한국실적(잠정)",
+    "title": "JB금융지주 잠정실적발표",
     "source": "fnguide",
     "auto": true
   },
@@ -31000,6 +31152,14 @@
   },
   {
     "date": "2026-04-24",
+    "time": "16:00",
+    "category": "한국실적",
+    "title": "우리금융지주 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-24",
     "time": "17:00",
     "category": "경제지표",
     "title": "🇺🇸 Michigan 1-Year Inflation Expectations  (Apr)",
@@ -31127,6 +31287,14 @@
     "time": "09:00",
     "category": "IR",
     "title": "현대위아 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-27",
+    "time": "09:00",
+    "category": "IR",
+    "title": "세나테크놀로지 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -31468,6 +31636,14 @@
   },
   {
     "date": "2026-04-28",
+    "time": "14:00",
+    "category": "한국실적",
+    "title": "HD현대일렉트릭 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-28",
     "time": "15:00",
     "category": "한국실적",
     "title": "쿠콘 실적발표",
@@ -31505,6 +31681,15 @@
     "title": "채비(구.대영채비) 신규상장",
     "source": "38cr",
     "auto": true
+  },
+  {
+    "category": "게임",
+    "title": "Gamescom Latam 2026",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2026-04-29",
+    "time": "",
+    "summary": "브라질 상파울루에서 개최되는 게임스컴 라틴아메리카. 4월 29일-5월 3일 진행"
   },
   {
     "date": "2026-04-29",
@@ -32047,6 +32232,14 @@
   {
     "date": "2026-04-30",
     "time": "10:00",
+    "category": "IR",
+    "title": "GS건설 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-30",
+    "time": "10:00",
     "category": "한국실적",
     "title": "삼성전자 실적발표",
     "source": "fnguide",
@@ -32106,6 +32299,14 @@
     "time": "13:30",
     "category": "한국실적",
     "title": "포스코퓨처엠 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-04-30",
+    "time": "13:30",
+    "category": "한국실적",
+    "title": "포스코DX 실적발표",
     "source": "fnguide",
     "auto": true
   },
@@ -32350,6 +32551,32 @@
     "auto": true
   },
   {
+    "date": "2026-05-01",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "대동고려삼 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-01",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "한울앤제주 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "category": "부동산",
+    "title": "장위 푸르지오 마크원 청약",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2026-05-01",
+    "time": "",
+    "unconfirmed": true,
+    "summary": "서울 성북구 장위뉴타운 1931채 규모 대단지 아파트 청약 예정. 분양가 3.3㎡당 5100만~5200만원 예상"
+  },
+  {
     "category": "수동",
     "title": "5세대 실손보험 출시",
     "source": "ai_scan",
@@ -32569,9 +32796,25 @@
   },
   {
     "date": "2026-05-06",
+    "time": "09:00",
+    "category": "IR",
+    "title": "LX인터내셔널 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-06",
     "time": "10:00",
     "category": "한국실적",
     "title": "카카오뱅크 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-06",
+    "time": "16:00",
+    "category": "한국실적",
+    "title": "카카오페이 실적발표",
     "source": "fnguide",
     "auto": true
   },
@@ -32729,6 +32972,14 @@
   },
   {
     "date": "2026-05-07",
+    "time": "09:00",
+    "category": "IR",
+    "title": "카카오페이 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-07",
     "time": "14:00",
     "category": "한국실적",
     "title": "CJ ENM 실적발표",
@@ -32764,6 +33015,14 @@
     "time": "15:00",
     "category": "IR",
     "title": "DL IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-08",
+    "time": "15:30",
+    "category": "IR",
+    "title": "한국타이어앤테크놀로지 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -32807,6 +33066,23 @@
     "title": "셀피글로벌 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "date": "2026-05-09",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "폴레드 유상증자(일반공모)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "category": "부동산",
+    "title": "다주택자 양도세 중과 시행",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2026-05-10",
+    "time": "",
+    "summary": "다주택자 대상 양도세 중과세 시행으로 부동산 시장 영향 예상"
   },
   {
     "date": "2026-05-11",
@@ -32873,6 +33149,14 @@
     "auto": true
   },
   {
+    "date": "2026-05-11",
+    "time": "16:00",
+    "category": "IR",
+    "title": "롯데케미칼 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-05-12",
     "time": "",
     "category": "기업이벤트",
@@ -32906,9 +33190,41 @@
   },
   {
     "date": "2026-05-12",
+    "time": "09:00",
+    "category": "IR",
+    "title": "롯데케미칼 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-12",
+    "time": "09:00",
+    "category": "한국실적",
+    "title": "NHN 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-12",
+    "time": "09:30",
+    "category": "한국실적",
+    "title": "CJ제일제당 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-12",
     "time": "10:00",
     "category": "IR",
     "title": "엑셀세라퓨틱스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-12",
+    "time": "10:30",
+    "category": "한국실적",
+    "title": "달바글로벌 실적발표",
     "source": "fnguide",
     "auto": true
   },
@@ -32983,6 +33299,14 @@
     "category": "만기일",
     "title": "5월 옵션만기일",
     "source": "news",
+    "auto": true
+  },
+  {
+    "date": "2026-05-14",
+    "time": "16:00",
+    "category": "IR",
+    "title": "KC산업 IR (경영현황)",
+    "source": "fnguide",
     "auto": true
   },
   {
@@ -33116,6 +33440,14 @@
   },
   {
     "date": "2026-05-21",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "테라사이언스 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-21",
     "time": "17:00",
     "category": "통화정책",
     "title": "🇺🇸 Atlanta Fed GDPNow  (Q2)",
@@ -33233,6 +33565,14 @@
   {
     "date": "2026-05-28",
     "time": "",
+    "category": "기업이벤트",
+    "title": "오가닉티코스메틱 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-28",
+    "time": "",
     "category": "에너지",
     "title": "OPEC+ 회의",
     "source": "news",
@@ -33246,6 +33586,14 @@
     "source": "fixed",
     "auto": false,
     "country": "🇰🇷"
+  },
+  {
+    "date": "2026-05-28",
+    "time": "14:00",
+    "category": "IR",
+    "title": "미래엔에듀파트너 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-05-28",
@@ -33424,6 +33772,17 @@
     "date": "2026-06-01",
     "time": "",
     "summary": "넷플릭스 공동창업자 헤이스팅스가 6월 주주총회에서 이사 재선임 포기. 관련주: 넷플릭스"
+  },
+  {
+    "category": "수동",
+    "title": "청년미래적금 출시",
+    "source": "ai_scan",
+    "auto": true,
+    "month": "2026-06",
+    "undated": true,
+    "date": "2026-06-01",
+    "endDate": "2026-06-30",
+    "summary": "연 최고 17% 이율의 청년미래적금 출시. 19-34세 청년 대상, 월 50만원까지 납입 가능"
   },
   {
     "date": "2026-06-01",
@@ -33673,6 +34032,14 @@
     "auto": true
   },
   {
+    "date": "2026-06-12",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "티비씨 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-06-13",
     "time": "",
     "category": "기업이벤트",
@@ -33729,6 +34096,14 @@
     "source": "investing",
     "auto": true,
     "country": "🇺🇸"
+  },
+  {
+    "date": "2026-06-17",
+    "time": "",
+    "category": "IPO/공모",
+    "title": "스트라드비젼 공모청약 (06/17~06/18)",
+    "source": "38cr",
+    "auto": true
   },
   {
     "date": "2026-06-17",
@@ -33895,6 +34270,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "스타코링크 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-27",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "형지I&C 유상증자(주주배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -34086,6 +34469,14 @@
   },
   {
     "date": "2026-07-07",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "디젠스 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-07",
     "time": "18:30",
     "category": "통화정책",
     "title": "🇺🇸 Atlanta Fed GDPNow  (Q2)",
@@ -34220,6 +34611,14 @@
     "auto": true
   },
   {
+    "date": "2026-07-24",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "센서뷰 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-07-25",
     "time": "",
     "category": "기업이벤트",
@@ -34244,6 +34643,14 @@
     "source": "investing",
     "auto": true,
     "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-29",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "대동기어 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-07-29",
@@ -34289,6 +34696,17 @@
     "source": "fixed",
     "auto": false,
     "country": "🇨🇳"
+  },
+  {
+    "category": "게임",
+    "title": "Gamescom Dev 2026",
+    "source": "ai_scan",
+    "auto": true,
+    "month": "2026-08",
+    "undated": true,
+    "date": "2026-08-01",
+    "endDate": "2026-08-31",
+    "summary": "독일에서 개최되는 게임스컴 개발자 컨퍼런스. 게임업계 관련주 관심"
   },
   {
     "date": "2026-08-01",
