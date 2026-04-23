@@ -27,10 +27,18 @@ from telegram_bot.issue_bot.utils.telegram import extract_og_image
 
 # 이슈봇 전용 추가 피드 — 시황봇(news_collector)과 분리 운영
 # 2026-04-22 점검: 전자신문 URL 교체, 디지털타임스 제거(공식 RSS 없음)
+# 2026-04-23 보강: 빅테크 AI/product launch 커버리지 (Google Cloud Next '26 TPU v8 누락 계기)
+#   · 기존 CNBC/WSJ/Reuters는 /markets·/business 서브섹션 중심 → 제품·AI 발표 놓침
+#   · Bloomberg·Reuters 공식 RSS 없음 → Google News 프록시로 technology 섹션 커버
 ISSUE_BOT_EXTRA_FEEDS = [
     # 글로벌 빅테크/아시아 테크
     {"name": "Nikkei Asia", "url": "https://asia.nikkei.com/rss/feed/nar", "group": "해외"},
     {"name": "Seeking Alpha", "url": "https://seekingalpha.com/market_currents.xml", "group": "해외"},
+    # 테크 전문 (AI·제품·빅테크 이벤트 1차 소스)
+    {"name": "TechCrunch", "url": "https://techcrunch.com/feed/", "group": "해외"},
+    {"name": "Reuters Tech", "url": "https://news.google.com/rss/search?q=site:reuters.com+technology&hl=en-US&gl=US&ceid=US:en", "group": "해외"},
+    {"name": "Bloomberg Tech", "url": "https://news.google.com/rss/search?q=site:bloomberg.com+technology&hl=en-US&gl=US&ceid=US:en", "group": "해외"},
+    {"name": "Google Blog", "url": "https://blog.google/rss/", "group": "해외"},
     # 국내 IT/테크 전문
     {"name": "전자신문", "url": "https://rss.etnews.com/Section902.xml", "group": "국내"},
 ]
