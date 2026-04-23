@@ -1,270 +1,166 @@
 {
   "_meta": {
-    "description": "DART report_nm (공시 유형) → Template + Priority 자동 매핑. 필터 단계에서 먼저 조회 후 rule-based로 빠른 분류. 매칭 실패 시 Claude Haiku로 판정.",
-    "version": "1.0",
-    "last_updated": "2026-04-21"
+    "description": "DART report_nm → Template + Priority 매핑. 2026-04-23 사용자 정책 대폭 간소화: 실적·품목허가·Capex·임상은 rule-based 즉시 HIGH/URGENT. M&A/유증·무증/CB·EB/공급계약해지는 매핑 제거해 Haiku가 규모·의미 판단. 나머지는 NORMAL(카드 X) 또는 SKIP.",
+    "version": "2.0",
+    "last_updated": "2026-04-23"
   },
 
   "mappings": {
-    "주요사항보고서(타법인주식및출자증권취득결정)": {
-      "template": "B",
-      "priority": "URGENT",
-      "note": "M&A, 지분 인수"
-    },
-    "주요사항보고서(타법인주식및출자증권처분결정)": {
-      "template": "B",
-      "priority": "URGENT",
-      "note": "지분 매각"
-    },
-    "주요사항보고서(유상증자결정)": {
-      "template": "B",
-      "priority": "URGENT",
-      "note": "유상증자"
-    },
-    "주요사항보고서(무상증자결정)": {
-      "template": "B",
-      "priority": "HIGH",
-      "note": "무상증자"
-    },
-    "주요사항보고서(감자결정)": {
-      "template": "B",
-      "priority": "URGENT",
-      "note": "감자"
-    },
-    "주요사항보고서(회사분할결정)": {
-      "template": "B",
-      "priority": "URGENT",
-      "note": "분할"
-    },
-    "주요사항보고서(회사합병결정)": {
-      "template": "B",
-      "priority": "URGENT",
-      "note": "합병"
-    },
-    "주요사항보고서(주식분할결정)": {
-      "template": "B",
-      "priority": "HIGH",
-      "note": "액면분할"
-    },
-    "주요사항보고서(주식병합결정)": {
-      "template": "B",
-      "priority": "HIGH"
-    },
-    "주요사항보고서(자기주식취득결정)": {
-      "template": "B",
-      "priority": "URGENT",
-      "note": "자사주 취득 공시 — Top30은 URGENT, 그 외 HIGH"
-    },
-    "주요사항보고서(자기주식처분결정)": {
-      "template": "B",
-      "priority": "HIGH"
-    },
-    "주요사항보고서(자기주식소각결정)": {
-      "template": "B",
-      "priority": "URGENT",
-      "note": "자사주 소각 — 주주환원 핵심 시그널"
-    },
-    "주요사항보고서(자기주식취득신탁계약체결결정)": {
-      "template": "B",
-      "priority": "HIGH"
-    },
-    "주요사항보고서(전환사채권발행결정)": {
-      "template": "B",
-      "priority": "HIGH",
-      "note": "CB 발행"
-    },
-    "주요사항보고서(신주인수권부사채권발행결정)": {
-      "template": "B",
-      "priority": "HIGH",
-      "note": "BW 발행"
-    },
-    "주요사항보고서(교환사채권발행결정)": {
-      "template": "B",
-      "priority": "HIGH",
-      "note": "EB 발행"
-    },
-    "주요사항보고서(신규시설투자등)": {
-      "template": "B",
-      "priority": "HIGH",
-      "note": "Capex 결정 — 증설/신규공장/라인 투자. 규모 1000억+는 URGENT 후보. 미래 이벤트여도 실체적 의사결정"
-    },
-    "주요사항보고서(유형자산양수결정)": {
-      "template": "B",
-      "priority": "HIGH",
-      "note": "대형 자산 취득 결정 — 공장/부동산 인수 등"
-    },
-    "주요사항보고서(유형자산양도결정)": {
-      "template": "B",
-      "priority": "NORMAL",
-      "note": "자산 매각 — 구조조정 신호일 수 있으나 규모 작으면 NORMAL"
-    },
-    "주요사항보고서(영업양도결정)": {
-      "template": "B",
-      "priority": "URGENT"
-    },
-    "주요사항보고서(영업양수결정)": {
-      "template": "B",
-      "priority": "URGENT"
-    },
-
     "영업실적등에대한전망(공정공시)": {
       "template": "B",
       "priority": "URGENT",
-      "note": "잠정실적 (시장 반응 큰 공시)"
+      "note": "잠정실적 — 시장 반응 큰 핵심 공시"
+    },
+    "연결재무제표기준영업실적등에대한전망(공정공시)": {
+      "template": "B",
+      "priority": "URGENT",
+      "note": "연결 잠정실적"
     },
     "매출액또는손익구조30%(대규모법인은15%)이상변경": {
       "template": "B",
       "priority": "URGENT",
-      "note": "실적 서프라이즈/쇼크"
-    },
-    "연결재무제표기준영업실적등에대한전망(공정공시)": {
-      "template": "B",
-      "priority": "URGENT"
+      "note": "실적 서프라이즈/쇼크 — 자동 URGENT"
     },
 
-    "분기보고서": {
+    "품목허가": {
       "template": "B",
-      "priority": "NORMAL",
-      "note": "정기보고서 — 단순 제출. 내용 중요도는 별도 판정 필요"
+      "priority": "URGENT",
+      "note": "바이오 — FDA/식약처 최종 승인"
     },
-    "반기보고서": {
-      "template": "B",
-      "priority": "NORMAL"
-    },
-    "사업보고서": {
-      "template": "B",
-      "priority": "NORMAL"
-    },
-
-    "단일판매ㆍ공급계약체결": {
-      "template": "B",
-      "priority": "NORMAL",
-      "note": "수주 공시 — 하루 5~10건+ 필링. admin 발송 안 하고 로그만. 추후 금액 임계값 기반 URGENT/HIGH 분기"
-    },
-    "단일판매ㆍ공급계약해지": {
+    "임상시험계획승인": {
       "template": "B",
       "priority": "HIGH",
-      "note": "해지는 일반적으로 드물고 영향 있음"
+      "note": "바이오 임상 진입"
     },
-    "단일판매ㆍ공급계약변경": {
+    "품목허가신청": {
+      "template": "B",
+      "priority": "HIGH",
+      "note": "바이오 허가 신청"
+    },
+
+    "주요사항보고서(신규시설투자등)": {
+      "template": "B",
+      "priority": "HIGH",
+      "note": "Capex — 증설·신규공장·라인 투자"
+    },
+
+    "해산사유발생": {
+      "template": "B",
+      "priority": "URGENT",
+      "note": "안전장치 — 사용자 명시 외 유지"
+    },
+    "부도발생": {
+      "template": "B",
+      "priority": "URGENT",
+      "note": "안전장치 — 사용자 명시 외 유지"
+    },
+    "회생절차개시신청": {
+      "template": "B",
+      "priority": "URGENT",
+      "note": "안전장치 — 사용자 명시 외 유지"
+    },
+    "상장폐지신청": {
+      "template": "B",
+      "priority": "URGENT",
+      "note": "안전장치 — 사용자 명시 외 유지"
+    },
+
+    "주요사항보고서(감자결정)": {
+      "template": "B",
+      "priority": "NORMAL",
+      "note": "정책(2026-04-23): 감자는 간소화 대상 외 → NORMAL"
+    },
+    "주요사항보고서(주식분할결정)": {
       "template": "B",
       "priority": "NORMAL"
     },
-
-    "최대주주변경": {
+    "주요사항보고서(주식병합결정)": {
+      "template": "B",
+      "priority": "NORMAL"
+    },
+    "주요사항보고서(자기주식취득결정)": {
       "template": "B",
       "priority": "NORMAL",
-      "note": "사용자 정책(2026-04-23): 대부분 소형주 소액 지분 이동. ADMIN_MIN_PRIORITY=HIGH 게이트에서 카드 발송 안 됨. 대형주 경영권 변경은 수동 처리."
+      "note": "정책(2026-04-23): 자사주 계열은 카드 제외. 필요 시 복원."
     },
-    "최대주주변경을수반하는주식담보제공계약체결": {
+    "주요사항보고서(자기주식처분결정)": {
+      "template": "B",
+      "priority": "NORMAL"
+    },
+    "주요사항보고서(자기주식소각결정)": {
       "template": "B",
       "priority": "NORMAL",
-      "note": "주식담보 제공 자체는 위험 신호이나 소형주 위주 → NORMAL"
+      "note": "정책(2026-04-23): 주주환원 시그널이지만 사용자 리스트 외 → NORMAL"
     },
-    "임원ㆍ주요주주특정증권등소유상황보고서": {
+    "주요사항보고서(자기주식취득신탁계약체결결정)": {
       "template": "B",
-      "priority": "SKIP",
-      "note": "임원 지분 변동 — 실측 빈도 최상위(하루 10건+). 대부분 소량, SKIP 처리. 대형 지분 변동은 보통 별도 최대주주 변경 공시로 나옴"
+      "priority": "NORMAL"
     },
-    "주권매매거래정지": {
+    "주요사항보고서(신주인수권부사채권발행결정)": {
       "template": "B",
-      "priority": "SKIP",
-      "note": "사용자 정책(2026-04-22): 텔레 미발송. 빈도 높고 소규모 종목 위주라 채널 가치 낮음. 필요 시 재평가"
+      "priority": "NORMAL",
+      "note": "정책(2026-04-23): BW는 사용자 리스트 외 → NORMAL"
     },
-    "감사보고서": {
+    "주요사항보고서(유형자산양수결정)": {
       "template": "B",
-      "priority": "SKIP",
-      "note": "정기 감사 제출 — 시사점 약함. 감사의견 거절/한정은 별도 공시로 잡힘"
+      "priority": "NORMAL",
+      "note": "자산 취득 — Capex 범주 외 → NORMAL"
     },
-    "연결감사보고서": {
+    "주요사항보고서(유형자산양도결정)": {
       "template": "B",
-      "priority": "SKIP"
+      "priority": "NORMAL"
     },
     "기업가치제고계획(자율공시)": {
       "template": "B",
-      "priority": "HIGH",
-      "note": "밸류업 프로그램. 자사주/배당 계획 포함 시 URGENT 가능"
+      "priority": "NORMAL",
+      "note": "정책(2026-04-23): 밸류업은 사용자 리스트 외 → NORMAL"
     },
-    "전환청구권행사": {
+    "최대주주변경": {
       "template": "B",
       "priority": "NORMAL",
-      "note": "CB 전환 — 신주 발행 주주가치 희석 요소"
+      "note": "정책(2026-04-23): 소형주 소액 지분 이동 많음 → NORMAL"
     },
-    "전환청구권ㆍ신주인수권ㆍ교환청구권행사": {
+    "최대주주변경을수반하는주식담보제공계약체결": {
       "template": "B",
       "priority": "NORMAL"
     },
     "최대주주등소유주식변동신고서": {
       "template": "B",
-      "priority": "HIGH",
-      "note": "최대주주 지분 변동 — 경영권 이슈 가능성"
-    },
-    "기업설명회(IR)개최": {
-      "template": "B",
       "priority": "NORMAL"
     },
-    "주식등의대량보유상황보고서": {
-      "template": "B",
-      "priority": "SKIP",
-      "note": "5% 공시 — 하루 5~15건 필링, 대부분 운용사 지분율 변동 (투자 시사점 낮음). 사용자 요청으로 SKIP"
-    },
-
-    "현금ㆍ현물배당결정": {
+    "단일판매ㆍ공급계약체결": {
       "template": "B",
       "priority": "NORMAL",
-      "note": "배당 결정"
+      "note": "체결은 빈도 높아 NORMAL. 해지만 AI 판단(매핑 없음)"
     },
-    "주식배당결정": {
+    "단일판매ㆍ공급계약변경": {
       "template": "B",
       "priority": "NORMAL"
     },
-
-    "해산사유발생": {
+    "전환청구권행사": {
       "template": "B",
-      "priority": "URGENT"
+      "priority": "NORMAL"
     },
-    "부도발생": {
+    "전환청구권ㆍ신주인수권ㆍ교환청구권행사": {
       "template": "B",
-      "priority": "URGENT"
+      "priority": "NORMAL"
     },
-    "은행거래정지": {
-      "template": "B",
-      "priority": "SKIP",
-      "note": "사용자 정책(2026-04-22): 거래정지 전면 미발송"
-    },
-    "회생절차개시신청": {
-      "template": "B",
-      "priority": "URGENT"
-    },
-    "상장폐지신청": {
-      "template": "B",
-      "priority": "URGENT"
-    },
-
     "소송등의제기ㆍ신청(일정규모이상의손해배상청구소송)": {
       "template": "B",
-      "priority": "HIGH"
+      "priority": "NORMAL"
     },
     "특허권취득": {
       "template": "B",
       "priority": "NORMAL"
     },
-    "임상시험계획승인": {
+    "현금ㆍ현물배당결정": {
       "template": "B",
-      "priority": "HIGH",
-      "note": "바이오 섹터"
+      "priority": "NORMAL"
     },
-    "품목허가신청": {
+    "주식배당결정": {
       "template": "B",
-      "priority": "HIGH",
-      "note": "바이오 섹터"
+      "priority": "NORMAL"
     },
-    "품목허가": {
-      "template": "B",
-      "priority": "URGENT",
-      "note": "바이오 섹터"
-    },
-
     "정관변경": {
       "template": "B",
       "priority": "NORMAL"
@@ -281,15 +177,71 @@
       "template": "B",
       "priority": "NORMAL"
     },
-
+    "기업설명회(IR)개최": {
+      "template": "B",
+      "priority": "NORMAL"
+    },
     "기업설명회(IR)개최(안내공시)": {
       "template": "B",
-      "priority": "NORMAL",
-      "note": "IR 예고"
+      "priority": "NORMAL"
     },
     "기업설명회(IR)개최결과": {
       "template": "B",
       "priority": "NORMAL"
+    },
+    "분기보고서": {
+      "template": "B",
+      "priority": "NORMAL",
+      "note": "정기보고서 — 내용 중요도는 별도 판정"
+    },
+    "반기보고서": {
+      "template": "B",
+      "priority": "NORMAL"
+    },
+    "사업보고서": {
+      "template": "B",
+      "priority": "NORMAL"
+    },
+    "주권매매거래정지": {
+      "template": "B",
+      "priority": "SKIP"
+    },
+    "은행거래정지": {
+      "template": "B",
+      "priority": "SKIP"
+    },
+    "감사보고서": {
+      "template": "B",
+      "priority": "SKIP"
+    },
+    "연결감사보고서": {
+      "template": "B",
+      "priority": "SKIP"
+    },
+    "임원ㆍ주요주주특정증권등소유상황보고서": {
+      "template": "B",
+      "priority": "SKIP"
+    },
+    "주식등의대량보유상황보고서": {
+      "template": "B",
+      "priority": "SKIP"
+    },
+
+    "_ai_judgment_note": {
+      "_": "아래 report_nm들은 **의도적으로 매핑 제거** — Haiku 필터가 제목·본문 보고 규모·시장 의미 판단:",
+      "의도적_미매핑_목록": [
+        "주요사항보고서(타법인주식및출자증권취득결정) — M&A 인수",
+        "주요사항보고서(타법인주식및출자증권처분결정) — 지분 매각",
+        "주요사항보고서(회사합병결정) — 합병",
+        "주요사항보고서(회사분할결정) — 분할",
+        "주요사항보고서(영업양도결정) — 영업 양도",
+        "주요사항보고서(영업양수결정) — 영업 양수",
+        "주요사항보고서(유상증자결정) — 유상증자",
+        "주요사항보고서(무상증자결정) — 무상증자",
+        "주요사항보고서(전환사채권발행결정) — CB",
+        "주요사항보고서(교환사채권발행결정) — EB",
+        "단일판매ㆍ공급계약해지 — 수주 해지"
+      ]
     }
   },
 
@@ -327,25 +279,11 @@
     "_comment": "report_nm 접두사 기반 규칙. 아래 매핑보다 우선 적용 X, fallback 용",
     "[기재정정]": {
       "priority_override": "NORMAL",
-      "note": "정정 공시 — 원래 우선순위에서 한 단계 강등. URGENT도 HIGH로 하향"
+      "note": "정정 공시 — 원래 우선순위에서 한 단계 강등"
     },
     "(자율공시)": {
       "priority_override": null,
       "note": "자율공시 접미사. 원래 우선순위 유지"
     }
-  },
-
-  "urgent_keywords": [
-    "서프라이즈",
-    "소각결정",
-    "최대주주변경",
-    "합병",
-    "분할",
-    "타법인주식및출자증권취득",
-    "부도",
-    "회생",
-    "상장폐지",
-    "영업양도",
-    "영업양수"
-  ]
+  }
 }
