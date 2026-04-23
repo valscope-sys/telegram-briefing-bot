@@ -118,16 +118,38 @@ def issue_bot_poll_once(fetch_body: bool = True, days_back: int = 1,
                 current_max_rcept_no = rcept_no
             continue
 
-        # 2-2. 클러스터 dedup — 같은 기업+이벤트유형으로 6h 내 primary 있으면 secondary로 강등
-        # (예: SK하이닉스 실적 1건 발송 후 같은 실적 다른 각도 뉴스가 반복 발송되는 문제)
+        # 2-2. 클러스터 dedup + 권위 소스 우선 (DART/SEC > RSS)
+        # 정책: 같은 이벤트라면 공시(DART/SEC)를 우선. RSS는 공시 이미 있으면 secondary.
+        # 공시가 RSS 이후에 들어와도 primary로 발송 (공시가 더 권위 있음).
         recent = find_recent_duplicates(dedup_key, hours=6)
-        already_primary = any(r.get("role") == "primary" for r in recent)
-        if already_primary:
+        src = event.get("source", "")
+        authoritative_sources = {"DART", "SEC"}
+        current_is_authoritative = src in authoritative_sources
+
+        authoritative_primary_exists = any(
+            r.get("role") == "primary" and r.get("source") in authoritative_sources
+            for r in recent
+        )
+        non_auth_primary_exists = any(
+            r.get("role") == "primary" and r.get("source") not in authoritative_sources
+            for r in recent
+        )
+
+        should_skip_as_secondary = False
+        if authoritative_primary_exists:
+            # 공시 primary 이미 발송됨 → 현재 건(뭐든) secondary
+            should_skip_as_secondary = True
+        elif not current_is_authoritative and non_auth_primary_exists:
+            # 현재 RSS, 이전 RSS primary 있음 → secondary (일반 cluster dedup)
+            should_skip_as_secondary = True
+        # 현재 DART/SEC이고 이전 RSS primary만 있음 → 그대로 진행 (공시가 우선)
+
+        if should_skip_as_secondary:
             mark_seen(dedup_key, source_url=event.get("source_url", ""), role="secondary",
-                      extra={"title": event.get("title", "")[:80]})
+                      extra={"title": event.get("title", "")[:80], "source": src})
             if rcept_no and rcept_no > current_max_rcept_no:
                 current_max_rcept_no = rcept_no
-            print(f"  [cluster dup] {event.get('source')} | {event.get('company_name','')[:15]} | {event.get('title','')[:50]}")
+            print(f"  [cluster dup] {src} | {event.get('company_name','')[:15]} | {event.get('title','')[:50]}")
             continue
 
         new_count += 1
@@ -142,7 +164,8 @@ def issue_bot_poll_once(fetch_body: bool = True, days_back: int = 1,
         pri = classification.get("priority", "NORMAL")
 
         if pri == "SKIP":
-            mark_seen(dedup_key, source_url=event.get("source_url", ""), role="skipped")
+            mark_seen(dedup_key, source_url=event.get("source_url", ""), role="skipped",
+                      extra={"source": src})
             if rcept_no and rcept_no > current_max_rcept_no:
                 current_max_rcept_no = rcept_no
             continue
@@ -150,7 +173,7 @@ def issue_bot_poll_once(fetch_body: bool = True, days_back: int = 1,
         # admin 발송 최소 priority 체크 (기본 HIGH)
         if _PRIORITY_RANK.get(pri, 0) < _ADMIN_MIN:
             mark_seen(dedup_key, source_url=event.get("source_url", ""), role="below_min_priority",
-                      extra={"priority": pri, "title": event.get("title", "")[:60]})
+                      extra={"priority": pri, "title": event.get("title", "")[:60], "source": src})
             if rcept_no and rcept_no > current_max_rcept_no:
                 current_max_rcept_no = rcept_no
             print(f"  [below min] {pri} | {event.get('company_name', '')[:15]} | {event.get('title', '')[:40]}")
@@ -174,7 +197,7 @@ def issue_bot_poll_once(fetch_body: bool = True, days_back: int = 1,
             if result.get("ok"):
                 sent_count += 1
                 mark_seen(dedup_key, source_url=event.get("source_url", ""), role="primary",
-                          extra={"issue_id": event["id"]})
+                          extra={"issue_id": event["id"], "source": src})
                 if rcept_no and rcept_no > current_max_rcept_no:
                     current_max_rcept_no = rcept_no
                 print(f"  [card sent {sent_count}/{max_cards_per_poll}] {pri} | {event['source']} | {event['company_name'][:15]} | {event['title'][:40]}")

@@ -46,23 +46,20 @@
 
     "해산사유발생": {
       "template": "B",
-      "priority": "URGENT",
-      "note": "안전장치 — 사용자 명시 외 유지"
+      "priority": "SKIP",
+      "note": "사용자 정책(2026-04-23): 안전장치 해제"
     },
     "부도발생": {
       "template": "B",
-      "priority": "URGENT",
-      "note": "안전장치 — 사용자 명시 외 유지"
+      "priority": "SKIP"
     },
     "회생절차개시신청": {
       "template": "B",
-      "priority": "URGENT",
-      "note": "안전장치 — 사용자 명시 외 유지"
+      "priority": "SKIP"
     },
     "상장폐지신청": {
       "template": "B",
-      "priority": "URGENT",
-      "note": "안전장치 — 사용자 명시 외 유지"
+      "priority": "SKIP"
     },
 
     "주요사항보고서(감자결정)": {
