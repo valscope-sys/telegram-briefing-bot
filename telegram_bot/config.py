@@ -123,7 +123,7 @@ SEC_TRACKED_COMPANIES = {
     "AMZN":  ["0001018724", "Amazon"],
     "TSLA":  ["0001318605", "Tesla"],
     "META":  ["0001326801", "Meta"],
-    # 반도체 밸류체인 Peer (삼성·하이닉스 관련)
+    # 반도체 설계·제조 Peer (삼성·하이닉스 관련)
     "TSM":   ["0001046179", "TSMC"],
     "AVGO":  ["0001730168", "Broadcom"],
     "AMD":   ["0000002488", "AMD"],
@@ -131,6 +131,16 @@ SEC_TRACKED_COMPANIES = {
     "INTC":  ["0000050863", "Intel"],
     "ARM":   ["0001973239", "Arm Holdings"],
     "ASML":  ["0000937966", "ASML"],
+    "QCOM":  ["0000804328", "Qualcomm"],
+    # 반도체 장비 3대장 — WFE (삼성/하이닉스 Capex 1:1 선행지표) [2026-04-23 추가]
+    "LRCX":  ["0000707549", "Lam Research"],
+    "AMAT":  ["0000006951", "Applied Materials"],
+    "KLAC":  ["0000319201", "KLA"],
+    # AI 인프라·데이터센터 [2026-04-23 추가 — Vertiv Q1 놓침 계기]
+    "VRT":   ["0001674101", "Vertiv Holdings"],      # 데이터센터 전력·냉각
+    "ANET":  ["0001596532", "Arista Networks"],      # AI 네트워킹 스위치
+    "SMCI":  ["0001375365", "Super Micro"],          # AI 서버
+    "DELL":  ["0001571996", "Dell Technologies"],    # AI 서버·스토리지
     # 기타 빅테크 관련
     "NFLX":  ["0001065280", "Netflix"],
     "ORCL":  ["0001341439", "Oracle"],
