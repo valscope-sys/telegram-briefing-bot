@@ -33,7 +33,7 @@ from telegram_bot.issue_bot.collectors.rss_adapter import collect_rss_events
 from telegram_bot.issue_bot.collectors.sec_collector import collect_sec_8k_filings
 from telegram_bot.issue_bot.pipeline.filter import filter_event
 from telegram_bot.issue_bot.pipeline.dedup import (
-    generate_dedup_key, is_duplicate, mark_seen,
+    generate_dedup_key, is_duplicate, mark_seen, find_recent_duplicates,
 )
 from telegram_bot.issue_bot.approval.bot import send_raw_approval_card
 from telegram_bot.issue_bot.approval.poller import run_poller
@@ -111,12 +111,25 @@ def issue_bot_poll_once(fetch_body: bool = True, days_back: int = 1,
 
         rcept_no = event.get("source_id", "") if event.get("source") == "DART" else ""
 
-        # 2-1. dedup
+        # 2-1. dedup (정확 일치)
         dedup_key = generate_dedup_key(event)
         if is_duplicate(dedup_key):
             if rcept_no and rcept_no > current_max_rcept_no:
                 current_max_rcept_no = rcept_no
             continue
+
+        # 2-2. 클러스터 dedup — 같은 기업+이벤트유형으로 6h 내 primary 있으면 secondary로 강등
+        # (예: SK하이닉스 실적 1건 발송 후 같은 실적 다른 각도 뉴스가 반복 발송되는 문제)
+        recent = find_recent_duplicates(dedup_key, hours=6)
+        already_primary = any(r.get("role") == "primary" for r in recent)
+        if already_primary:
+            mark_seen(dedup_key, source_url=event.get("source_url", ""), role="secondary",
+                      extra={"title": event.get("title", "")[:80]})
+            if rcept_no and rcept_no > current_max_rcept_no:
+                current_max_rcept_no = rcept_no
+            print(f"  [cluster dup] {event.get('source')} | {event.get('company_name','')[:15]} | {event.get('title','')[:50]}")
+            continue
+
         new_count += 1
 
         # 3. 필터
