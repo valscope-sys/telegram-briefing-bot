@@ -153,11 +153,13 @@
 
     "최대주주변경": {
       "template": "B",
-      "priority": "URGENT"
+      "priority": "NORMAL",
+      "note": "사용자 정책(2026-04-23): 대부분 소형주 소액 지분 이동. ADMIN_MIN_PRIORITY=HIGH 게이트에서 카드 발송 안 됨. 대형주 경영권 변경은 수동 처리."
     },
     "최대주주변경을수반하는주식담보제공계약체결": {
       "template": "B",
-      "priority": "HIGH"
+      "priority": "NORMAL",
+      "note": "주식담보 제공 자체는 위험 신호이나 소형주 위주 → NORMAL"
     },
     "임원ㆍ주요주주특정증권등소유상황보고서": {
       "template": "B",

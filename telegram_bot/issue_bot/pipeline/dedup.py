@@ -21,7 +21,9 @@ SEEN_IDS_PATH = os.path.join(ISSUE_BOT_DIR, "seen_ids.jsonl")
 
 
 EVENT_TYPE_KEYWORDS = {
-    "실적": ["실적", "영업이익", "매출액", "잠정실적", "분기보고서", "반기보고서", "사업보고서"],
+    "실적": ["실적", "영업이익", "영업익", "매출액", "매출", "순이익", "잠정실적",
+           "분기보고서", "반기보고서", "사업보고서", "어닝", "earnings",
+           "역대 최대", "역대최대", "사상최대", "서프라이즈"],
     "자사주": ["자기주식", "자사주", "자사주소각", "자기주식취득", "자기주식처분"],
     "증자감자": ["유상증자", "무상증자", "감자", "주식분할", "주식병합"],
     "M&A": ["합병", "분할", "영업양도", "영업양수", "타법인주식", "지분인수"],
@@ -33,6 +35,75 @@ EVENT_TYPE_KEYWORDS = {
     "통계": ["수출금액", "수출통계", "수출입"],
     "파생": ["결합증권", "파생결합"],
 }
+
+
+# 뉴스 제목에서 기업명 추출용 매핑 (한국어 별칭 포함).
+# RSS의 `company_name`은 매체명(한국경제 등)이라 그것만으로는 같은 기업 뉴스
+# 중복 제거 불가. 제목에서 기업 식별 후 dedup 키 사용.
+# 동일 기업의 별칭을 정식명 1개로 정규화.
+_COMPANY_ALIASES = {
+    # 반도체·IT
+    "SK하이닉스": ["SK하이닉스", "SK 하이닉스", "하이닉스", "SK하닉", "하닉"],
+    "삼성전자": ["삼성전자", "삼전"],
+    "TSMC": ["TSMC", "Tsmc", "tsmc", "타이완반도체"],
+    "엔비디아": ["엔비디아", "NVIDIA", "Nvidia", "NVDA"],
+    "애플": ["애플", "Apple", "AAPL"],
+    "마이크론": ["마이크론", "Micron", "MU"],
+    "인텔": ["인텔", "Intel", "INTC"],
+    "브로드컴": ["브로드컴", "Broadcom", "AVGO"],
+    "AMD": ["AMD"],
+    "ARM": ["ARM", "Arm"],
+    "ASML": ["ASML"],
+    "테슬라": ["테슬라", "Tesla", "TSLA"],
+    "마이크로소프트": ["마이크로소프트", "Microsoft", "MSFT"],
+    "구글": ["구글", "Google", "알파벳", "Alphabet", "GOOGL"],
+    "메타": ["메타", "Meta", "META"],
+    "아마존": ["아마존", "Amazon", "AMZN"],
+    "넷플릭스": ["넷플릭스", "Netflix", "NFLX"],
+    # 2차전지·EV
+    "LG에너지솔루션": ["LG에너지솔루션", "LG엔솔", "엘지엔솔"],
+    "삼성SDI": ["삼성SDI", "SDI"],
+    "SK온": ["SK온"],
+    "에코프로": ["에코프로", "에코프로비엠", "에코프로BM"],
+    "포스코퓨처엠": ["포스코퓨처엠", "퓨처엠"],
+    "현대차": ["현대차", "현대자동차"],
+    "기아": ["기아", "기아차"],
+    # 디스플레이·부품
+    "LG디스플레이": ["LG디스플레이", "LGD"],
+    "LG이노텍": ["LG이노텍"],
+    "삼성전기": ["삼성전기", "삼전기"],
+    "삼성디스플레이": ["삼성디스플레이", "삼디"],
+    "심텍": ["심텍"],
+    "대덕전자": ["대덕전자"],
+    "이수페타시스": ["이수페타시스"],
+    # 바이오·제약
+    "삼성바이오로직스": ["삼성바이오로직스", "삼성바이오", "삼바"],
+    "셀트리온": ["셀트리온"],
+    "유한양행": ["유한양행"],
+    "알테오젠": ["알테오젠"],
+    # 기타 대형
+    "현대중공업": ["현대중공업", "HD현대중공업"],
+    "한화오션": ["한화오션"],
+    "삼성중공업": ["삼성중공업"],
+    "한화에어로스페이스": ["한화에어로스페이스", "한화에어로"],
+    "LIG넥스원": ["LIG넥스원"],
+    "두산에너빌리티": ["두산에너빌리티", "두산에너빌"],
+    "POSCO": ["POSCO", "포스코", "포스코홀딩스"],
+    "크래프톤": ["크래프톤"],
+    "NAVER": ["NAVER", "네이버", "Naver"],
+    "카카오": ["카카오"],
+}
+
+
+def _extract_company_from_title(title: str) -> str:
+    """뉴스 제목에서 주요 상장사 추출. 못 찾으면 빈 문자열."""
+    if not title:
+        return ""
+    for canonical, aliases in _COMPANY_ALIASES.items():
+        for alias in aliases:
+            if alias in title:
+                return canonical
+    return ""
 
 
 def _normalize_title(title: str) -> str:
@@ -73,9 +144,14 @@ def generate_dedup_key(event: dict) -> str:
     """
     ticker = event.get("ticker") or event.get("company_id") or "NONE"
     if ticker == "NONE":
-        # ticker 없으면 회사명 앞 8자로 대체
-        company = event.get("company_name", "").strip()[:8] or "UNKNOWN"
-        ticker = f"C_{company}"
+        # RSS 뉴스는 company_name이 매체명(한국경제 등). 제목에서 실제 기업 추출.
+        extracted = _extract_company_from_title(event.get("title", "")) if event.get("source") == "RSS" else ""
+        if extracted:
+            ticker = f"C_{extracted}"
+        else:
+            # fallback: 회사명 앞 8자
+            company = event.get("company_name", "").strip()[:8] or "UNKNOWN"
+            ticker = f"C_{company}"
 
     event_type = event.get("event_type") or _infer_event_type(
         event.get("title", ""),
