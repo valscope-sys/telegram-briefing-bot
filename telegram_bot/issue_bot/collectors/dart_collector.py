@@ -345,10 +345,19 @@ def fetch_kind_body(rcept_no: str, max_chars: int = 1800) -> str:
 
         iframe_url = None
         # viewDoc(rcpNo, dcmNo, eleId, offset, ...) JS 호출 파싱
-        m = re.search(r"viewDoc\('([^']+)',\s*'([^']+)',\s*'([^']+)',\s*'([^']+)'", res.text)
+        # 2026-04-24 수정: DART가 single quote 'X' → double quote "X" 로 변경.
+        # 기존 regex는 single quote만 허용 → 전체 DART 공시 본문 0자 반환되는 치명 버그.
+        # 첫 매칭이 변수형태(viewDoc(original.rcpNo, ...))일 수 있어 숫자 리터럴만 매칭.
+        m = re.search(
+            r"""viewDoc\(\s*['"](\d+)['"]\s*,\s*['"](\d+)['"]""",
+            res.text,
+        )
         if m:
             dcm_no = m.group(2)
-            iframe_url = f"https://dart.fss.or.kr/report/viewer.do?rcpNo={rcept_no}&dcmNo={dcm_no}"
+            iframe_url = (
+                f"https://dart.fss.or.kr/report/viewer.do?rcpNo={rcept_no}&dcmNo={dcm_no}"
+                f"&eleId=0&offset=0&length=0&dtd=HTML"
+            )
         else:
             iframe = soup.find("iframe")
             if iframe and iframe.get("src"):

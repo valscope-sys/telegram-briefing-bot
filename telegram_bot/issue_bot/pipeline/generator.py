@@ -112,9 +112,10 @@ def _build_user_message(event: dict, classification: dict) -> str:
 
     title = event.get("title", "").strip()
     company = event.get("company_name", "")
-    # SEC 실적(Exhibit 99.1 포함) 이면 본문 더 넉넉히 유지 — 실제 수치가 관건
+    # SEC 실적(Exhibit 99.1 포함)은 Shareholder Update PDF → 재무 테이블이 뒷부분.
+    # 3000자로 자르면 매출/영업이익 Key Metrics 표 절단 → 6000자로 확대.
     body = event.get("body_excerpt") or event.get("original_content", "")
-    body_limit = 3000 if event.get("has_exhibit_body") else 1500
+    body_limit = 6000 if event.get("has_exhibit_body") else 1500
     body = body.strip()[:body_limit] if body else ""
     source_url = event.get("source_url", "")
     source_type = event.get("source", "")
@@ -126,27 +127,38 @@ def _build_user_message(event: dict, classification: dict) -> str:
         sec_primary = event.get("sec_primary_item", "?")
         sec_note = (
             f"\n\n[SEC 8-K Item {sec_primary} — Exhibit 본문 포함]\n"
-            "⚠️ 본문은 Exhibit 99.1 (press release)에서 가져왔습니다.\n"
-            "본문에서 다음 수치를 추출해 첫 줄에 헤드라인으로 배치하세요:\n"
-            "  · 매출 / Revenue (절대액 + YoY%)\n"
-            "  · EPS / 영업이익 / 순이익\n"
-            "  · 가이던스 (있는 경우)\n"
-            "  · 컨센 대비 서프라이즈 (본문에 비교 있으면)\n"
-            "그 다음 2~3줄로 핵심 사업부별 수치·밸류체인 시사점.\n"
-            "'제출했다' '발표할 예정' 같은 메타 문구 금지 — 실제 숫자가 핵심."
+            "본문은 Exhibit 99.1 (press release) + 99.2 (IR presentation) 통합본.\n"
+            "**⚠️ 절대 원칙**: 본문에 실제 매출·영업이익·EPS 숫자가 **반드시 있음**. "
+            "못 찾겠으면 본문 끝까지 스캔하세요 (재무 테이블은 보통 본문 중간~후반부).\n\n"
+            "**본문에서 다음 수치를 반드시 추출해 bullet으로 나열**:\n"
+            "  - 매출 / Revenue / Total revenues (절대액 + YoY%)\n"
+            "  - 영업이익 / Operating income / Income from operations\n"
+            "  - 순이익 / Net income (GAAP + non-GAAP 구분)\n"
+            "  - EPS / Diluted EPS\n"
+            "  - 사업부별 매출 분해 (Automotive / Services / Energy 등)\n"
+            "  - 가이던스·Outlook (본문에 있으면)\n\n"
+            "**금지 문구** (이 표현 쓰면 카드 리젝):\n"
+            "  × '제출했다' '공시했다' '발표했다'\n"
+            "  × '공개 예정' '별도 첨부를 통해 공개'\n"
+            "  × '상세 수치는 원문 참조' '세부 내용은 링크에서'\n"
+            "  × 'Form 8-K를 제출하며 ~관련 정보를 공시'\n"
+            "→ 본문에 숫자가 있는 것을 그대로 씁니다. 원문 링크로 떠넘기지 말 것.\n\n"
+            "**만약 본문을 아무리 봐도 구체 수치가 0개면**: 응답 맨 끝에 정확히 `[NO_DATA]` 태그 추가. "
+            "이 태그가 붙으면 파이프라인이 카드 발송을 자동 보류합니다."
         )
 
-    # 본문이 짧은 경우: Sonnet이 "공시 유형의 일반적 의미"를 투자자 관점으로 설명
+    # 본문이 짧은 경우: 제목·유형의 의미 중심으로 구성
     short_body_note = ""
     if len(body) < 120:
         short_body_note = (
-            "\n\n[⚠️ 원문 발췌가 짧음 — 중요 지침]\n"
-            "구체 수치·계획이 본문에 없을 때는 다음 원칙으로 작성하세요:\n"
-            "1) 공시 제목·유형('" + (report_clean or title[:40]) + "')의 **일반적 의미**를 투자자 관점에서 2~3문장으로 간결히 설명\n"
-            "2) 해당 공시가 통상 어떤 신호(주주환원·재무구조·실적 가이던스 등)인지 객관적 해설\n"
-            "3) 구체 수치·일정·계획은 '상세 내용은 원문 참조' 한 줄로 마무리\n"
-            "4) 본문에 없는 수치·금액·날짜·전망·목표가 **절대 창작 금지** (이건 R1~R8 위반)\n"
-            "5) '~할 수 있다', '~할 가능성이 있다' 수준의 조심스러운 해설은 허용 (추측 전망 아님)\n"
+            "\n\n[⚠️ 원문 발췌가 짧음]\n"
+            f"공시/기사 유형: '{report_clean or title[:60]}'\n"
+            "구체 수치가 본문에 없을 때 작성 원칙:\n"
+            "1) 제목·유형의 의미를 투자자 관점에서 2~3 bullet으로 구조화 (예: '자기주식 소각 = 주주환원 + EPS 제고')\n"
+            "2) 해당 공시/이벤트가 통상 어떤 밸류체인 영향을 주는지 일반 상식 기반 해설 (창작 금지, 원문 사실 기반)\n"
+            "3) 본문에 없는 구체 수치·금액·날짜·목표가 **절대 창작 금지**\n"
+            "4) '제출', '공시', '발표 예정' 같은 메타 문구 단독 사용 금지 — 내용 없이 끝내지 말 것\n"
+            "5) 정말로 쓸 말이 없으면 응답 맨 끝에 정확히 `[NO_DATA]` 태그 추가. 카드 발송 보류됨."
         )
 
     # Peer는 "영향 해석 대상" — 단순 나열이 아니라 본문에서 분석 재료로 활용
