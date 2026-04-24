@@ -239,6 +239,24 @@ def generate_message(event: dict, classification: dict, retry_violations: list =
           "tokens_used": {...},
         }
     """
+    # 2026-04-24: DART 잠정실적 공시는 rule-based 파서 우선 — Sonnet 실패 시
+    # body 덤프되던 "| | | |" 표 형식 카드 방지. 구조 고정이라 정확도·속도·비용
+    # 모두 Sonnet보다 우수.
+    try:
+        from telegram_bot.issue_bot.pipeline.earnings_parser import try_generate_earnings_card
+        earnings_card = try_generate_earnings_card(event)
+        if earnings_card:
+            return {
+                "generated_content": earnings_card,
+                "violations": [],  # rule-based 파서는 R1~R8 준수 보장
+                "retry_count": 0,
+                "tokens_used": {},
+                "used_parser": "earnings",
+            }
+    except Exception as e:
+        # 파서 예외 발생해도 Sonnet 경로로 떨어지도록
+        print(f"[GENERATOR] earnings_parser 예외 (Sonnet으로 fallback): {e}")
+
     if not ANTHROPIC_API_KEY:
         return {
             "generated_content": _build_fallback_content(event, classification),
