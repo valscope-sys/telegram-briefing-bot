@@ -402,28 +402,45 @@ def collect_disclosures(days_back: int = 1, fetch_body: bool = True,
     Args:
         days_back: 며칠 전까지 (기본 1일)
         fetch_body: True면 KIND HTML 본문 추출 (느림, N+1 요청)
-        incremental: True면 last_rcept_no 기반 증분 폴링 (신규만)
+        incremental: True면 seen_ids 기반 증분 (미처리만 반환)
         first_run_limit: 첫 실행 시 최근 N건만 처리 (부팅 몰빵 방지)
 
     Returns:
         list of 이슈 이벤트 dict (SKIP 판정된 항목 제외).
         rcept_no 오름차순 정렬 (오래된 것부터).
+
+    2026-04-24 수정: rcept_no 문자열 커서 방식 폐기.
+    DART rcept_no는 'YYYYMMDD + 6자리' 구조이며 앞 3자리는 시스템 prefix
+    (800xxx=KIND, 900xxx=특수 등). 같은 날짜 내에서도 시간 순서와 번호 순서가
+    일치하지 않아 문자열 비교로 cursor 추적 시 800xxx 공시가 통째로 누락되는
+    버그 발생 (예: 기아 잠정실적 20260424800317이 한국 실적 공시의 대부분인
+    800xxx 계열인데, 이전 폴링에서 900xxx 하나 들어오면 전부 차단).
+
+    대안: 매 폴링마다 어제~오늘 전체 조회 + seen_ids 기반 dedup으로 위임.
+    main.py의 is_duplicate() 체크가 이미 dedup_key 기반으로 정확히 작동.
+    last_rcept_no 파일은 호환성 유지 위해 존재만 하고 실제 필터링 로직에선 미사용.
     """
     raw_items = fetch_recent_disclosures(days_back=days_back)
 
-    # rcept_no 오름차순 정렬 (시간순 처리)
-    raw_items.sort(key=lambda x: x.get("rcept_no", ""))
+    # rcept_dt(YYYYMMDD) 우선, 동일 날짜 내 rcept_no로 정렬
+    # 완벽한 시간순은 아니지만 날짜 단위 정렬은 유효
+    raw_items.sort(key=lambda x: (x.get("rcept_dt", ""), x.get("rcept_no", "")))
 
     if incremental:
-        last_no = get_last_rcept_no()
-        if not last_no:
-            # 첫 실행: 최근 first_run_limit건만 처리 (몰빵 방지)
+        # seen_ids 파일 크기로 첫 실행 여부 판단 (몰빵 방지)
+        from telegram_bot.issue_bot.pipeline.dedup import SEEN_IDS_PATH, _ensure_seen_file
+        _ensure_seen_file()
+        try:
+            seen_size = os.path.getsize(SEEN_IDS_PATH)
+        except OSError:
+            seen_size = 0
+
+        if seen_size < 200:  # 거의 비었으면 첫 실행으로 간주
             raw_items = raw_items[-first_run_limit:]
-            print(f"[DART] 첫 실행 — 최근 {first_run_limit}건으로 제한 ({len(raw_items)}건)")
+            print(f"[DART] 첫 실행(seen_ids 비어있음) — 최근 {first_run_limit}건으로 제한")
         else:
-            # 증분: last_rcept_no 이후만
-            raw_items = [x for x in raw_items if x.get("rcept_no", "") > last_no]
-            print(f"[DART] 증분 폴링 — last_rcept_no={last_no} 이후 ({len(raw_items)}건)")
+            # 전체 반환 — 증분 dedup은 main.py의 is_duplicate()로 위임
+            print(f"[DART] 스캔 — {len(raw_items)}건 (중복은 seen_ids로 필터)")
 
     events = []
     now_iso = datetime.datetime.now().isoformat(timespec="seconds")
