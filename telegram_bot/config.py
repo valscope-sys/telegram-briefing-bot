@@ -141,6 +141,11 @@ SEC_TRACKED_COMPANIES = {
     "ANET":  ["0001596532", "Arista Networks"],      # AI 네트워킹 스위치
     "SMCI":  ["0001375365", "Super Micro"],          # AI 서버
     "DELL":  ["0001571996", "Dell Technologies"],    # AI 서버·스토리지
+    # 실적 시즌 대형 Peer [2026-04-24 추가 — TXN/NOW/IBM/CMCSA Q1 놓침 계기]
+    "TXN":   ["0000097476", "Texas Instruments"],    # 아날로그·산업용 반도체 1위
+    "NOW":   ["0001373715", "ServiceNow"],           # 엔터프라이즈 SaaS 대표, 지정학 영향 직접 신호
+    "IBM":   ["0000051143", "IBM"],                  # 엔터프라이즈 IT·AI·클라우드
+    "CMCSA": ["0001166691", "Comcast"],              # 미디어·통신 대형주
     # 기타 빅테크 관련
     "NFLX":  ["0001065280", "Netflix"],
     "ORCL":  ["0001341439", "Oracle"],
