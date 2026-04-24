@@ -32,7 +32,7 @@ import time
 import datetime
 import requests
 
-from telegram_bot.config import SEC_TRACKED_COMPANIES, SEC_USER_AGENT
+from telegram_bot.config import SEC_TRACKED_COMPANIES, SEC_USER_AGENT, SEC_FILING_FRESHNESS_HOURS
 
 # 공용 세션 — TCP 재사용으로 메모리·연결 부담 완화
 _session = None
@@ -297,7 +297,28 @@ def _fetch_cik_8k_atom(cik: str, count: int = 5) -> list:
     return out
 
 
-def collect_sec_8k_filings(per_cik_limit: int = 5, days_back: int = 2) -> list:
+def _parse_iso_datetime(s: str) -> datetime.datetime:
+    """'2026-04-22T13:45:00-04:00' → aware datetime. 실패 시 None."""
+    if not s:
+        return None
+    try:
+        # Python 3.11+ fromisoformat은 타임존 포함 ISO 지원
+        return datetime.datetime.fromisoformat(s)
+    except Exception:
+        pass
+    # 구버전 대비: tz offset 수동 처리
+    m = re.match(r"(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2}:\d{2})", s or "")
+    if not m:
+        return None
+    try:
+        dt = datetime.datetime.fromisoformat(f"{m.group(1)}T{m.group(2)}")
+        return dt.replace(tzinfo=datetime.timezone.utc)
+    except Exception:
+        return None
+
+
+def collect_sec_8k_filings(per_cik_limit: int = 5, days_back: int = 2,
+                           freshness_hours: int = None) -> list:
     """
     추적 기업 전체의 최근 8-K 수집.
 
@@ -306,7 +327,10 @@ def collect_sec_8k_filings(per_cik_limit: int = 5, days_back: int = 2) -> list:
 
     Args:
         per_cik_limit: CIK당 최근 N건 (기본 5, dedup 여유분)
-        days_back: 최근 N일 이내 공시만 유지 (첫 실행 몰빵 방지, 기본 2일)
+        days_back: 최근 N일 이내 공시만 유지 (날짜 단위, 기본 2일)
+        freshness_hours: 시간 단위 신선도 필터 — 이 값 초과 공시는 skip.
+            None이면 config.SEC_FILING_FRESHNESS_HOURS(기본 24h) 사용.
+            서버 재시작/새 기업 추가 시 backlog(이미 시장 소화된 과거 공시) 카드 방지.
 
     Returns:
         list of 이슈 이벤트 dict. 발행시간 내림차순(최신이 앞).
@@ -314,6 +338,12 @@ def collect_sec_8k_filings(per_cik_limit: int = 5, days_back: int = 2) -> list:
     events = []
     now_iso = datetime.datetime.now().isoformat(timespec="seconds")
     cutoff_date = (datetime.date.today() - datetime.timedelta(days=days_back)).strftime("%Y-%m-%d")
+
+    # 시간 단위 freshness cutoff (tz-aware, UTC 기준)
+    hours = freshness_hours if freshness_hours is not None else SEC_FILING_FRESHNESS_HOURS
+    now_utc = datetime.datetime.now(datetime.timezone.utc)
+    freshness_cutoff = now_utc - datetime.timedelta(hours=hours)
+    stale_count = 0
 
     for ticker, (cik, company_name) in SEC_TRACKED_COMPANIES.items():
         try:
@@ -333,6 +363,16 @@ def collect_sec_8k_filings(per_cik_limit: int = 5, days_back: int = 2) -> list:
             # days_back 이전 공시는 스킵
             if date_str < cutoff_date:
                 continue
+
+            # 시간 단위 신선도 필터 (backlog 방지)
+            pub_dt = _parse_iso_datetime(pub_raw)
+            if pub_dt is not None:
+                # 타임존 없으면 UTC로 가정
+                if pub_dt.tzinfo is None:
+                    pub_dt = pub_dt.replace(tzinfo=datetime.timezone.utc)
+                if pub_dt < freshness_cutoff:
+                    stale_count += 1
+                    continue
 
             summary = _strip_html(ent["summary"])[:1200]
 
@@ -393,6 +433,9 @@ def collect_sec_8k_filings(per_cik_limit: int = 5, days_back: int = 2) -> list:
             })
 
         time.sleep(0.15)  # SEC rate limit (10 req/sec) 여유있게
+
+    if stale_count > 0:
+        print(f"[SEC] 신선도 필터로 {stale_count}건 skip (> {hours}h 경과)")
 
     # 발행 시간 내림차순 (최신이 먼저) — 상위 파이프라인에서 증분/dedup
     events.sort(key=lambda e: e.get("date", ""), reverse=True)

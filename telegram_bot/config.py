@@ -50,6 +50,14 @@ ISSUE_BOT_EDIT_TIMEOUT_MIN = int(os.getenv("ISSUE_BOT_EDIT_TIMEOUT_MIN", "15"))
 # True로 켜면 priority별 timeout_min 초과 시 자동 rejected 처리
 ISSUE_BOT_AUTO_TIMEOUT = os.getenv("ISSUE_BOT_AUTO_TIMEOUT", "false").lower() == "true"
 
+# SEC 8-K 공시 신선도 (시간 단위) — 이 값 초과된 공시는 자동 skip
+# 서버 배포/재시작 또는 새 기업 추가 시 backlog(이미 시장 소화된 과거 공시) 카드 방지용.
+# 기본 24h: 어제 저녁 공시까지는 허용(아침 출근 시 확인), 48h 넘는 건 시의성 상실.
+SEC_FILING_FRESHNESS_HOURS = int(os.getenv("SEC_FILING_FRESHNESS_HOURS", "24"))
+# DART는 rcept_no 증분 커서가 이미 backlog를 막고 있어 기본 적용 X.
+# 필요 시 dart_collector 측에서 참조해 날짜 기준 추가 필터링 가능 (현재 미사용).
+DART_FILING_FRESHNESS_HOURS = int(os.getenv("DART_FILING_FRESHNESS_HOURS", "48"))
+
 # Anthropic
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
 
