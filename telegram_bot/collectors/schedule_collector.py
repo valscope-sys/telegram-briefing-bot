@@ -253,6 +253,7 @@ def _build_schedule(target_date):
 
     return {
         "date": target_date.strftime("%m월 %d일"),
+        "target_date_obj": target_date,  # 동적 라벨 생성용 (format_tomorrow_schedule)
         "events": events,
         "earnings": earnings,
     }

@@ -320,5 +320,28 @@ def format_today_schedule(schedule_data):
     return _format_schedule("오늘 일정", schedule_data)
 
 
+_WEEKDAY_KR = ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"]
+
+
 def format_tomorrow_schedule(schedule_data):
-    return _format_schedule("내일 일정", schedule_data)
+    """이브닝 브리핑 끝에 붙는 다음 거래일 일정.
+
+    라벨 결정:
+    - 대상일이 today+1 이면 '내일 일정'
+    - 주말/공휴일 건너뛴 경우 '다음 거래일 일정 (월요일 04/27)' 처럼 명시
+    - target_date_obj 없으면 '내일 일정' fallback
+    """
+    today = datetime.date.today()
+    target = schedule_data.get("target_date_obj") if isinstance(schedule_data, dict) else None
+
+    if isinstance(target, datetime.date):
+        gap_days = (target - today).days
+        if gap_days == 1:
+            title = "내일 일정"
+        else:
+            weekday_kr = _WEEKDAY_KR[target.weekday()]
+            title = f"다음 거래일 일정 ({weekday_kr} {target.strftime('%m/%d')})"
+    else:
+        title = "내일 일정"
+
+    return _format_schedule(title, schedule_data)
