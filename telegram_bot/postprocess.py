@@ -3,11 +3,13 @@ import re
 
 
 def ensure_critical_data_mentioned(text, global_data):
-    """후처리 안전장치 — 중요 이벤트가 시황에 누락되면 보완 라인 추가.
+    """후처리 백스톱 — KORU ≥5% 인데 시황에 완전 누락된 경우만 보완.
 
-    KORU: |등락률| ≥ 5% 일 때 (3x 레버리지 → 실제 갭 1.67%+, 확실한 시그널)
-    모델이 언급 누락하면 한국 체크포인트 끝에 1줄 추가.
-    (3~5% 구간은 모델 재량으로 두어 매일 반복되는 AI 느낌 방지)
+    설계 원칙 (2026-04-24 변경):
+    - 1순위: 프롬프트에서 본문 1문단에 KORU 녹이도록 강제 (prompts_v2.py).
+    - 2순위(여기): 모델이 완전 누락한 극소수 케이스에만 백스톱. 라벨 `(후주입)` 제거 — 본문 결론과 별개 꼬리로 오해되지 않도록 자연스러운 경고 문장으로.
+    - |등락률| ≥ 5% (3x 레버리지 실제 예상 갭 1.67%+, 확실한 시그널).
+    - 3~5% 구간은 모델 재량 (매일 반복되는 AI 템플릿 느낌 방지).
     """
     if not text or not global_data:
         return text
@@ -28,17 +30,17 @@ def ensure_critical_data_mentioned(text, global_data):
     # 임플라이드 갭 (3x 레버리지)
     implied = koru_pct / 3.0
     direction = "급락" if koru_pct < 0 else "급등"
+    # 라벨 제거 — 본문 톤에 녹이기 (백스톱이지만 덜 어색하게)
     risk_note = (
-        f"\n\n(후주입) 야간 KORU 가 {koru_pct:+.2f}% {direction}했습니다. "
-        f"3배 레버리지 특성상 실제 예상 갭은 약 {implied:+.1f}% 수준이라 "
-        f"한국 특유의 리스크 반영 가능성을 염두에 둘 필요가 있습니다."
+        f"\n\n※ 야간 KORU {koru_pct:+.2f}% {direction} — "
+        f"3배 레버리지 특성상 실제 예상 갭 약 {implied:+.1f}% 수준이라 "
+        f"한국 특유의 리스크(관세·환율·지정학) 반영 가능성을 염두에 두어야 합니다."
     )
 
     # 🇰🇷 한국 체크포인트 섹션 끝에 붙이기 (모닝 전용 구조)
     kr_marker = "🇰🇷 오늘 한국 증시 체크포인트"
     idx = text.find(kr_marker)
     if idx >= 0:
-        # 마커 이후 마지막 문장 뒤에 추가
         return text.rstrip() + risk_note
     # 이브닝 구조거나 마커 없으면 그냥 끝에 추가
     return text.rstrip() + risk_note
@@ -49,14 +51,20 @@ _META_PREFIXES = [
     "I'll look up", "I need to search", "Let me check", "I'll check",
     "Before writing", "Let me start by", "First, let me", "I'll begin",
     "검색 결과를", "검색해보겠", "먼저 검색",
+    # 2026-04-24 추가 — 한글 메타 텍스트 (팀장 리뷰 지적)
+    "충분한 정보", "충분히 확인", "정보를 확보",
+    "시황을 작성", "시황 작성합니다", "시황을 정리",
+    "정보를 종합", "정보를 모두", "분석을 시작",
+    "지금부터 작성", "이제 작성", "작성하겠습니다",
 ]
 
 
 def _strip_meta_preface(text):
     """모델의 '사고 과정' 메타 텍스트 제거 (첫 소제목 전까지만)
 
-    예: "I'll search for additional context..."
-    → 첫 이모지 소제목(🇺🇸·📈·🔍 등) 앞 영문/설명 줄 제거.
+    예: "I'll search for additional context..." / "충분한 정보를 확보했습니다."
+    → 첫 이모지 소제목(🇺🇸·📈·🔍 등) 앞 영문/한글 메타 설명 줄 제거.
+    선행 `---`, `━━━` 구분선도 제거.
     """
     if not text:
         return text
@@ -66,12 +74,23 @@ def _strip_meta_preface(text):
         return text
     head = text[:m.start()].strip()
     body = text[m.start():]
-    # head 가 영문 문장만으로 구성되면 제거
-    if head and not re.search(r"[가-힣]{4,}", head):
+    # head 가 없으면 그대로
+    if not head:
         return body.lstrip()
-    # head 가 "I'll search" 류 영문 혼재면 그 라인만 제거
     head_lines = [ln for ln in head.split("\n") if ln.strip()]
-    kept = [ln for ln in head_lines if not any(p.lower() in ln.lower() for p in _META_PREFIXES)]
+    kept = []
+    for ln in head_lines:
+        stripped = ln.strip()
+        # 구분선(---, ━━━, ===) 제거
+        if re.match(r"^[-━═]{3,}\s*$", stripped):
+            continue
+        # 메타 prefix 포함 라인 제거
+        if any(p.lower() in stripped.lower() for p in _META_PREFIXES):
+            continue
+        # 영문 전용 라인 제거 (한글 4자 이상 없으면 메타로 간주)
+        if not re.search(r"[가-힣]{4,}", stripped):
+            continue
+        kept.append(ln)
     if kept:
         return ("\n".join(kept) + "\n\n" + body).lstrip()
     return body.lstrip()
