@@ -33221,6 +33221,14 @@
   {
     "date": "2026-05-07",
     "time": "",
+    "category": "기업이벤트",
+    "title": "아이엘 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-07",
+    "time": "",
     "category": "한국실적",
     "title": "스튜디오드래곤 실적발표",
     "source": "fnguide",
@@ -33263,6 +33271,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "윙입푸드 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-08",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "캔버스엔 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -33554,6 +33570,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "세니젠 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-14",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "쓰리빌리언 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -33975,6 +33999,22 @@
     "auto": true
   },
   {
+    "date": "2026-05-30",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "더코디 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-30",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "알엔티엑스 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-05-31",
     "time": "10:30",
     "category": "경제지표",
@@ -34270,6 +34310,14 @@
   },
   {
     "date": "2026-06-10",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "알엔티엑스 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-10",
     "time": "11:30",
     "category": "IR",
     "title": "엑스게이트 IR (경영현황)",
@@ -34395,6 +34443,14 @@
   },
   {
     "date": "2026-06-17",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "DH오토웨어 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-17",
     "time": "04:00",
     "category": "통화정책",
     "title": "FOMC 금리 결정",
@@ -34487,6 +34543,14 @@
     "source": "fixed",
     "auto": false,
     "country": ""
+  },
+  {
+    "date": "2026-06-23",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "스트라드비젼 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-06-24",
@@ -34752,6 +34816,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "디젠스 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-07",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "KNN 액면병합",
     "source": "fnguide",
     "auto": true
   },
