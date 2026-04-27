@@ -1,8 +1,36 @@
 # NODE Research 텔레그램 브리핑 봇
 
+## 작업 운영 모드 (2026-04-25 통합)
+
+브리핑봇 + 이슈봇 **단일 세션 통합 운영**. 같은 폴더·서버·텔레그램 채널을 공유하므로 한 작업방에서 모두 작업.
+
+### 도메인 prefix 패턴 — 사용자 지시 방식
+
+사용자가 도메인을 prefix로 명시하면 즉시 해당 영역 수정:
+
+- **"이슈쪽 X 해줘 / 추가 / 수정"** → `telegram_bot/issue_bot/**`, `dart_category_map.json`, `peer_map.json`, `style_canon.md`, `seen_ids.jsonl` 등
+- **"시황쪽 X 해줘 / 수정"** → `telegram_bot/briefings.py`, `news_collector.py`, `global_market.py`, `domestic_market.py`, formatters/, prompts_v2.py, `market_context.txt` 등
+- **"공유"** 또는 **명시 X** → `main.py`, `config.py`, `CLAUDE.md`, `.claude/settings.json` (양쪽 영향 검토)
+
+### 수정 모드 vs 점검 모드
+
+- **기본 = 수정 모드**: 작업 지시면 즉시 코드 수정·커밋·배포 진행
+- **점검 모드**: 사용자가 명시적으로 **"점검 / 리뷰 / 체크 / 진단해줘"** 라고 할 때에만 적용. 분석·로그 조회·리포트만, 코드 수정 금지
+- 관련 메모리: `feedback_reviewer_role_no_edits.md` (점검 명시 시에만 발효)
+
+### 절대 규칙 (도메인 무관 항상 적용)
+
+**수동 발송 사전 승인 필수**:
+- 브리핑봇 `--force` / `resend` / 모닝·이브닝 수동 트리거
+- 이슈봇 `/preview` 자동 발송 / 카드 강제 발송
+- "재부팅 복구 / 검증용 / 테스트용" 어떤 이유든 사용자 이번 세션 명시 승인 없이 절대 실행 금지
+- 관련 메모리: `feedback_no_unauthorized_sends.md`
+
+---
+
 ## 프로젝트 개요
 KIS Open API + Claude API + yfinance를 활용한 텔레그램 자동 시황 브리핑 봇.
-하루 8개 메시지 발송 (모닝 4개, 이브닝 4개).
+하루 8개 메시지 발송 (모닝 4개, 이브닝 4개) + 실시간 이슈봇 카드 발송.
 
 ## 현재 상태 (2026-04-13)
 
