@@ -17,7 +17,13 @@ import time
 import threading
 import datetime
 
-from telegram_bot.config import ISSUE_BOT_ENABLED, ISSUE_BOT_POLL_INTERVAL_MIN
+from itertools import zip_longest
+
+from telegram_bot.config import (
+    ISSUE_BOT_ENABLED,
+    ISSUE_BOT_POLL_INTERVAL_MIN,
+    ISSUE_BOT_MAX_CARDS_PER_POLL,
+)
 
 # admin 카드 발송 최소 priority (기본 HIGH — NORMAL은 로그만, 카드 발송 안 함)
 _PRIORITY_RANK = {"URGENT": 3, "HIGH": 2, "NORMAL": 1, "SKIP": 0}
@@ -41,7 +47,7 @@ from telegram_bot.issue_bot.utils.telegram import is_issue_bot_blocked
 
 
 def issue_bot_poll_once(fetch_body: bool = True, days_back: int = 1,
-                        max_cards_per_poll: int = 3, include_rss: bool = True,
+                        max_cards_per_poll: int = None, include_rss: bool = True,
                         include_sec: bool = True) -> dict:
     """
     1회 폴링: DART(증분) + RSS + SEC 8-K → 필터 → 카드 발송 (최대 N건).
@@ -49,13 +55,19 @@ def issue_bot_poll_once(fetch_body: bool = True, days_back: int = 1,
     Args:
         fetch_body: KIND HTML 본문 추출 여부
         days_back: DART 조회 범위 (증분 커서와 교차 필터링됨)
-        max_cards_per_poll: 카드 상한 (몰빵 방지). 나머지는 다음 폴링으로 이월
+        max_cards_per_poll: 카드 상한. None이면 config.ISSUE_BOT_MAX_CARDS_PER_POLL
+            (기본 10) 사용. 나머지는 다음 폴링으로 이월.
+            2026-04-25 기본 3 → 10 상향: 잠정실적 시즌 DART 슬롯 독점으로
+            RSS·SEC이 영원히 deferred 되는 버그 대응.
         include_rss: RSS 수집 포함 여부
         include_sec: SEC EDGAR 8-K 수집 포함 여부 (빅테크 Peer)
 
     Returns:
         {"collected", "new", "cards_sent", "deferred", "last_rcept_no", ...}
     """
+    if max_cards_per_poll is None:
+        max_cards_per_poll = ISSUE_BOT_MAX_CARDS_PER_POLL
+
     if not ISSUE_BOT_ENABLED:
         return {"collected": 0, "new": 0, "cards_sent": 0, "skipped_reason": "ISSUE_BOT_ENABLED=false"}
 
@@ -95,9 +107,15 @@ def issue_bot_poll_once(fetch_body: bool = True, days_back: int = 1,
             print(f"[ISSUE_BOT] SEC 수집 실패: {e}")
         print(f"[ISSUE_BOT] SEC 8-K 수집: {len(sec_events)}건")
 
-    events = dart_events + rss_events + sec_events
+    # 2026-04-25 인터리빙: DART/RSS/SEC를 라운드 로빈으로 섞음.
+    # 기존 단순 concat 방식은 DART가 항상 앞에 와서 max_cards 상한 도달 시
+    # RSS·SEC이 영원히 deferred 되는 버그. 인터리빙으로 source별 균등 발송 보장.
+    # 예: [DART1, RSS1, SEC1, DART2, RSS2, SEC2, DART3, RSS3, ...]
+    events = [
+        e for triplet in zip_longest(dart_events, rss_events, sec_events)
+        for e in triplet if e is not None
+    ]
 
-    # DART는 rcept_no 오름차순, RSS는 최신순. 전체 처리는 DART 먼저 (증분 커서 정확성)
     new_count = 0
     sent_count = 0
     deferred_count = 0

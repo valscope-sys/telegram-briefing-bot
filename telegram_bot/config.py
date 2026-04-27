@@ -46,6 +46,12 @@ ISSUE_BOT_HIGH_TIMEOUT_MIN = int(os.getenv("ISSUE_BOT_HIGH_TIMEOUT_MIN", "45"))
 ISSUE_BOT_NORMAL_TIMEOUT_MIN = int(os.getenv("ISSUE_BOT_NORMAL_TIMEOUT_MIN", "120"))
 ISSUE_BOT_EDIT_TIMEOUT_MIN = int(os.getenv("ISSUE_BOT_EDIT_TIMEOUT_MIN", "15"))
 
+# 폴링당 카드 발송 상한 (몰빵 방지 + 관리자 부담 조절)
+# 2026-04-25 상향: 3 → 10 — 잠정실적 시즌 DART가 슬롯 독점하면서 RSS·SEC이
+# 영원히 deferred 되는 버그(주말 RSS 0건 발송 사태) 대응.
+# events 처리 순서도 DART/RSS/SEC 인터리빙으로 변경되어 source별 균등 발송.
+ISSUE_BOT_MAX_CARDS_PER_POLL = int(os.getenv("ISSUE_BOT_MAX_CARDS_PER_POLL", "10"))
+
 # 자동 타임아웃 스킵 활성 여부 (기본 OFF — 자는 동안 중요 이슈 유실 방지)
 # True로 켜면 priority별 timeout_min 초과 시 자동 rejected 처리
 ISSUE_BOT_AUTO_TIMEOUT = os.getenv("ISSUE_BOT_AUTO_TIMEOUT", "false").lower() == "true"
