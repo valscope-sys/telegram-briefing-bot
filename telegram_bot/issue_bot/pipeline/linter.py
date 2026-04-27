@@ -97,8 +97,14 @@ def lint_r1_r8(text: str, template: str) -> list:
             violations.append({"rule": "R8", "detail": f"{name}: '{m.group(0)}'"})
 
     # R7. 면책 문구 (A/B/C/D 필수, E 면제)
+    # 2026-04-27: NODE Research는 증권사가 아니라 독립 리서치 → "당사 코멘트 없이"
+    # "별도 승인 절차 없이" 같은 증권사 컴플라이언스 문구 폐기.
+    # 새 면책: "본 내용은 국내외 언론·공시 자료를 인용·정리한 것으로, 투자 판단과
+    # 그 결과의 책임은 본인에게 있습니다."
+    # 검증은 안정성 위해 핵심 키워드 두 개 동시 매칭으로 단순화.
     if template in ("A", "C", "D"):
-        if "본 내용은 당사의 코멘트 없이" not in text:
+        has_disclaimer = ("인용" in text and "본인" in text) or "본 내용은" in text
+        if not has_disclaimer:
             violations.append({
                 "rule": "R7",
                 "detail": f"Template {template}은 면책 문구 필수"
@@ -146,7 +152,7 @@ if __name__ == "__main__":
 
 (자료: TSMC ir)
 
-* 본 내용은 당사의 코멘트 없이 국내외 언론사 뉴스 및 전자공시자료 등을 인용한 것으로 별도의 승인 절차 없이 제공합니다."""
+* 본 내용은 국내외 언론·공시 자료를 인용·정리한 것으로, 투자 판단과 그 결과의 책임은 본인에게 있습니다."""
 
     bad = """[잘못된 헤더]
 

@@ -265,8 +265,8 @@ def format_earnings_card(company_name: str, parsed: dict,
         lines.append("(자료: DART)")
     lines.append("")
     lines.append(
-        "* 본 내용은 당사의 코멘트 없이 국내외 언론사 뉴스 및 전자공시자료 등을 "
-        "인용한 것으로 별도의 승인 절차 없이 제공합니다."
+        "* 본 내용은 국내외 언론·공시 자료를 인용·정리한 것으로, "
+        "투자 판단과 그 결과의 책임은 본인에게 있습니다."
     )
 
     return "\n".join(lines)
