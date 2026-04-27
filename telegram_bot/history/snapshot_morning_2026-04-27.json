@@ -1,0 +1,11 @@
+{
+  "date": "2026-04-27",
+  "timestamp": "2026-04-27T07:01:50.308960",
+  "briefing_type": "morning",
+  "messages": [
+    "🌐 *모닝 브리핑*\n04월 27일 · 07:00 기준\n\n📊 *미국 증시*\nS&P 500  7,165.08  ▲ +0.80%\nNASDAQ  24,836.60  ▲ +1.63%\nDOW  49,230.71  ▼ -0.16%\nVIX  18.71  ▼ -3.11%\n\n🏷 *미국 섹터*\n▲ 반도체 +4.67% · 기술 +2.81% · 소비재 +0.81%\n▼ 산업재 -0.92% · 헬스케어 -1.41% · 통신 -1.58%\n\n💱 *환율 · 금리*\nUSD/KRW  1,476.8  ▼ -2.90\nDXY  98.51  ▼ -0.29%\n미국채 2Y 3.81%(+0bp) / 10Y 4.31%(-3bp)  스프레드 +50bp\n\n🛢 *원자재*\nWTI  $94.40/bbl  ▼ -1.51%\n금  $4,740.90/oz  ▲ +0.76%\n구리  $6.03/lb  ▼ -0.80%\n\n🌙 *야간 프록시* (NY close 기준)\nKORU(3x) 526.44 ▲ +7.34%\nEWY 154.57 ▲ +2.64%\n코스피200 971.87 ▼ -0.38%\n\n🇰🇷 *전일 국내 증시* (04-24 종가)\nKOSPI  6,475.63  ─ -0.00%  (30.2조, ▲6% vs 20d)\nKOSDAQ  1,203.84  ▲ +2.51%  (17.4조, ▲28% vs 20d)\n외국인 ▼ -19,496억 · 기관 ▲ +8,053억 · 개인 ▲ +11,832억",
+    "📋 *미장 마감 리뷰*\n04월 27일\n\n미장 시황 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CaT8rsV8xNmg5GbcTE7uk'}\n\n※ 야간 KORU +7.34% 급등 — 3배 레버리지 특성상 실제 예상 갭 약 +2.4% 수준이라 한국 특유의 리스크(관세·환율·지정학) 반영 가능성을 염두에 두어야 합니다.",
+    "📰 *장전 주요 뉴스*\n04월 27일\n\n📌  [케빈 워시 Fed 의장 후보 인준 청신호](https://www.hankyung.com/article/2026042778647)\n\n📌  [1분기 경매 물건, 13년만에 가장 많이 쏟아졌다](https://www.hankyung.com/article/2026042778577)\n\n📌  [\"돈 모자라면 빌려줄게요\"…대출 막히자 반포서 벌어진 일 [돈앤톡]](https://www.hankyung.com/article/2026042442636)\n\n📌  [尹 '내란 우두머리' 2심 시작…1심 무기징역 선고 후 67일만](https://www.hankyung.com/article/2026042778527)\n\n📌  ['고유가 지원금' 1차 지급 오늘부터…기초·차상위·한부모 대상](https://www.hankyung.com/article/2026042778467)",
+    "📅 *오늘 일정*\n04월 27일\n\n🇰🇷 코스모로보틱스(구.엑소아틀레트아시아) 공모청약 (04/27~04/28)\n🇰🇷 에스테크엠 신규상장\n\n📊 *실적발표*\n🇰🇷 국내  동양생명, ISC, 한화오션, SKC, HD건설기계\n\n[전체 일정 보기](https://valscope-sys.github.io/telegram-briefing-bot/)"
+  ]
+}
