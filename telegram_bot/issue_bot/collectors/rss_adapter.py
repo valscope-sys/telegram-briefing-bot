@@ -26,16 +26,17 @@ from telegram_bot.issue_bot.utils.telegram import extract_og_image
 
 
 # 이슈봇 전용 추가 피드 — 시황봇(news_collector)과 분리 운영
-# 2026-04-22 점검: 전자신문 URL 교체, 디지털타임스 제거(공식 RSS 없음)
-# 2026-04-23 보강: 빅테크 AI/product launch 커버리지 (Google Cloud Next '26 TPU v8 누락 계기)
-#   · 기존 CNBC/WSJ/Reuters는 /markets·/business 서브섹션 중심 → 제품·AI 발표 놓침
-#   · Bloomberg·Reuters 공식 RSS 없음 → Google News 프록시로 technology 섹션 커버
-# 2026-04-25 Phase 1 보강: 빅테크 1차 소스 7개 추가 (Meta-Amazon $XB 딜·
-#   Anthropic $40B·Apple Tim Cook 후임 등 누락 사례 대응). RSS 19피드 → 26피드.
+# 2026-04-22~25: 빅테크 1차 소스 + 테크 전문지 + Reuters/Bloomberg Tech 추가
+# 2026-04-28 전면 점검:
+#   - 진단(24h 신규 수): Microsoft Source 0건/Anthropic GN 0건 → 제거
+#   - 신규 광역 4피드 추가 (Yahoo Finance·DC Dynamics·AI 인프라 GN·어닝 GN)
+#   - Stock Movers + 광역 GN 키워드로 단발 이벤트 / AI 자본 / 어닝 시즌 자동 캐치
 ISSUE_BOT_EXTRA_FEEDS = [
-    # 글로벌 빅테크/아시아 테크
+    # 글로벌·아시아 종합
     {"name": "Nikkei Asia", "url": "https://asia.nikkei.com/rss/feed/nar", "group": "해외"},
     {"name": "Seeking Alpha", "url": "https://seekingalpha.com/market_currents.xml", "group": "해외"},
+    # 미국 종합 마켓 (광역)
+    {"name": "Yahoo Finance", "url": "https://finance.yahoo.com/news/rssindex", "group": "해외"},
     # 테크 전문 매체·큐레이션
     {"name": "TechCrunch", "url": "https://techcrunch.com/feed/", "group": "해외"},
     {"name": "The Verge", "url": "https://www.theverge.com/rss/index.xml", "group": "해외"},
@@ -43,19 +44,21 @@ ISSUE_BOT_EXTRA_FEEDS = [
     # Reuters/Bloomberg Technology (Google News 프록시)
     {"name": "Reuters Tech", "url": "https://news.google.com/rss/search?q=site:reuters.com+technology&hl=en-US&gl=US&ceid=US:en", "group": "해외"},
     {"name": "Bloomberg Tech", "url": "https://news.google.com/rss/search?q=site:bloomberg.com+technology&hl=en-US&gl=US&ceid=US:en", "group": "해외"},
-    # 빅테크·AI 회사 1차 소스 (공식 newsroom)
+    # 빅테크·AI 회사 1차 소스 (공식 newsroom — 빈도 낮지만 1차 보도 가치)
+    # Microsoft Source / Anthropic News(GN) 는 24h+72h 0건으로 폐기 (2026-04-28 진단)
     {"name": "Google Blog", "url": "https://blog.google/rss/", "group": "해외"},
-    {"name": "Microsoft Source", "url": "https://news.microsoft.com/feed/", "group": "해외"},
     {"name": "Meta Newsroom", "url": "https://about.fb.com/news/feed/", "group": "해외"},
     {"name": "Apple Newsroom", "url": "https://www.apple.com/newsroom/rss-feed.rss", "group": "해외"},
     {"name": "OpenAI Blog", "url": "https://openai.com/news/rss.xml", "group": "해외"},
-    {"name": "Anthropic News", "url": "https://news.google.com/rss/search?q=site:anthropic.com&hl=en-US&gl=US&ceid=US:en", "group": "해외"},
-    # 단발 종목 이벤트 광역 (Stock Movers — 폭락·계약취소·해지 키워드)
-    # 2026-04-28 추가: POET Marvell·Celestial AI 계약 취소(-50%) 누락 계기.
-    # 단일 종목 전문지 여러 개 추가하는 대신 Google News 키워드 검색 RSS
-    # 1개로 모든 종목의 단독 이벤트(폭락·해지·취소) 광역 캐치. Yahoo Finance·
-    # BioSpace·Economic Times·NDTV·MSN 등 메이저 매체 자동 큐레이션.
+    # 데이터센터·AI 인프라 전문 (Bloom·Oracle 같은 메가 인프라 직격)
+    {"name": "DC Dynamics", "url": "https://www.datacenterdynamics.com/en/rss/", "group": "해외"},
+    # ─── Google News 키워드 RSS — 광역 자동 큐레이션 ───
+    # 단발 종목 이벤트 (폭락·계약취소·해지) — POET·Marvell 같은 케이스 캐치
     {"name": "Stock Movers", "url": "https://news.google.com/rss/search?q=(plunge+OR+crash+OR+collapse+OR+cancel+OR+terminate+OR+halt)+(stock+OR+shares+OR+chip+OR+contract)&hl=en-US&gl=US&ceid=US:en", "group": "해외"},
+    # AI 자본 집행 (Bloom Oracle 2.8GW·NVIDIA $5조·Anthropic $40B 같은 메가 인프라)
+    {"name": "AI Capex", "url": "https://news.google.com/rss/search?q=(%22AI+infrastructure%22+OR+%22data+center%22+OR+HBM)+(billion+OR+investment+OR+capacity+OR+GW)&hl=en-US&gl=US&ceid=US:en", "group": "해외"},
+    # 어닝 시즌 자동 (beat·miss·guidance 변경)
+    {"name": "Earnings Wire", "url": "https://news.google.com/rss/search?q=(earnings+OR+guidance)+(beat+OR+miss+OR+raised+OR+cut)+(stock+OR+shares)&hl=en-US&gl=US&ceid=US:en", "group": "해외"},
     # 국내 IT/테크 전문
     {"name": "전자신문", "url": "https://rss.etnews.com/Section902.xml", "group": "국내"},
 ]
