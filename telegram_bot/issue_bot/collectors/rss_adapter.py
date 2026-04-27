@@ -30,15 +30,26 @@ from telegram_bot.issue_bot.utils.telegram import extract_og_image
 # 2026-04-23 보강: 빅테크 AI/product launch 커버리지 (Google Cloud Next '26 TPU v8 누락 계기)
 #   · 기존 CNBC/WSJ/Reuters는 /markets·/business 서브섹션 중심 → 제품·AI 발표 놓침
 #   · Bloomberg·Reuters 공식 RSS 없음 → Google News 프록시로 technology 섹션 커버
+# 2026-04-25 Phase 1 보강: 빅테크 1차 소스 7개 추가 (Meta-Amazon $XB 딜·
+#   Anthropic $40B·Apple Tim Cook 후임 등 누락 사례 대응). RSS 19피드 → 26피드.
 ISSUE_BOT_EXTRA_FEEDS = [
     # 글로벌 빅테크/아시아 테크
     {"name": "Nikkei Asia", "url": "https://asia.nikkei.com/rss/feed/nar", "group": "해외"},
     {"name": "Seeking Alpha", "url": "https://seekingalpha.com/market_currents.xml", "group": "해외"},
-    # 테크 전문 (AI·제품·빅테크 이벤트 1차 소스)
+    # 테크 전문 매체·큐레이션
     {"name": "TechCrunch", "url": "https://techcrunch.com/feed/", "group": "해외"},
+    {"name": "The Verge", "url": "https://www.theverge.com/rss/index.xml", "group": "해외"},
+    {"name": "TechMeme", "url": "https://www.techmeme.com/feed.xml", "group": "해외"},
+    # Reuters/Bloomberg Technology (Google News 프록시)
     {"name": "Reuters Tech", "url": "https://news.google.com/rss/search?q=site:reuters.com+technology&hl=en-US&gl=US&ceid=US:en", "group": "해외"},
     {"name": "Bloomberg Tech", "url": "https://news.google.com/rss/search?q=site:bloomberg.com+technology&hl=en-US&gl=US&ceid=US:en", "group": "해외"},
+    # 빅테크·AI 회사 1차 소스 (공식 newsroom)
     {"name": "Google Blog", "url": "https://blog.google/rss/", "group": "해외"},
+    {"name": "Microsoft Source", "url": "https://news.microsoft.com/feed/", "group": "해외"},
+    {"name": "Meta Newsroom", "url": "https://about.fb.com/news/feed/", "group": "해외"},
+    {"name": "Apple Newsroom", "url": "https://www.apple.com/newsroom/rss-feed.rss", "group": "해외"},
+    {"name": "OpenAI Blog", "url": "https://openai.com/news/rss.xml", "group": "해외"},
+    {"name": "Anthropic News", "url": "https://news.google.com/rss/search?q=site:anthropic.com&hl=en-US&gl=US&ceid=US:en", "group": "해외"},
     # 국내 IT/테크 전문
     {"name": "전자신문", "url": "https://rss.etnews.com/Section902.xml", "group": "국내"},
 ]
