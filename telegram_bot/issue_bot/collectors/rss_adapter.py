@@ -150,7 +150,7 @@ def _fetch_extra_feeds(max_per_feed: int = 15) -> List[dict]:
     return out
 
 
-def collect_rss_events(limit: int = 50, fetch_images: bool = False,
+def collect_rss_events(limit: int = 300, fetch_images: bool = False,
                        max_age_hours: int = 168) -> List[dict]:
     """
     이슈봇용 RSS 이벤트 수집:
@@ -158,22 +158,38 @@ def collect_rss_events(limit: int = 50, fetch_images: bool = False,
     - ISSUE_BOT_EXTRA_FEEDS (이슈봇 전용)
 
     Args:
+        limit: 처리 상한 (기본 300). 2026-04-28 50→300 상향:
+            기존 50은 시황봇 기본 피드만으로도 차서 이슈봇 추가 14피드(빅테크
+            1차 소스)가 통째로 잘리는 버그. dedup이 신규만 거르므로 limit 커도
+            Haiku 호출은 신규 수만큼만 — 비용 영향 무시.
         max_age_hours: 기사 나이 제한 (기본 168 = 7일).
             이슈봇은 섹터 전문지(TrendForce 등 주 1~3회) 기사도 커버해야 하므로
             시황봇의 48h보다 크게 설정. dedup이 중복 제거 역할.
     """
+    from itertools import zip_longest
     from telegram_bot.collectors.news_collector import fetch_rss_news
 
-    raw = []
+    base_articles = []
+    extra_articles = []
     try:
-        raw.extend(fetch_rss_news(max_age_hours=max_age_hours))
+        base_articles = fetch_rss_news(max_age_hours=max_age_hours)
     except Exception as e:
         print(f"[RSS] 기본 피드 수집 실패: {e}")
 
     try:
-        raw.extend(_fetch_extra_feeds())
+        extra_articles = _fetch_extra_feeds()
     except Exception as e:
         print(f"[RSS] 이슈봇 전용 피드 수집 실패: {e}")
+
+    # 2026-04-28: 시황봇 기본 피드 + 이슈봇 추가 피드 인터리빙.
+    # 기존엔 단순 concat이라 base가 다 차면 extra는 limit cut으로 버려짐
+    # (Microsoft·OpenAI·NVIDIA·POET 등 빅테크 메가 이슈 누락 사례 다수).
+    # zip_longest로 라운드 로빈 → 두 그룹 균등 처리.
+    raw = [
+        a for pair in zip_longest(base_articles, extra_articles)
+        for a in pair if a is not None
+    ]
+    print(f"[RSS] base={len(base_articles)} + extra={len(extra_articles)} = total {len(raw)} (limit={limit})")
 
     now_iso = datetime.datetime.now().isoformat(timespec="seconds")
     events = []
