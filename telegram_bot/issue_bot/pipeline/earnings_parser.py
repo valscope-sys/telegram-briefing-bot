@@ -172,7 +172,8 @@ def parse_earnings_disclosure(body: str) -> Optional[dict]:
 
 def format_earnings_card(company_name: str, parsed: dict,
                          source_url: str = "",
-                         is_consolidated: bool = True) -> str:
+                         is_consolidated: bool = True,
+                         ticker: str = None) -> str:
     """
     파싱된 잠정실적 dict → 메리츠 Tech 스타일 카드 텍스트.
 
@@ -181,18 +182,37 @@ def format_earnings_card(company_name: str, parsed: dict,
         parsed: parse_earnings_disclosure 결과
         source_url: DART 원문 URL (선택)
         is_consolidated: True면 "연결", False면 "개별"
+        ticker: 6자리 종목코드 (선택). 주어지면 네이버 컨센서스 fetch해서
+            해당 분기와 비교 (vs 컨센 X억 / +N% 표시).
 
     Returns:
         텔레그램 발송용 텍스트
     """
     period = parsed.get("period") or ""
-    prefix = "연결 " if is_consolidated else "개별 "
     title_suffix = f" {period} 잠정실적" if period else " 잠정실적"
 
     lines = [
         f"[{company_name}{title_suffix}]",
         "",
     ]
+
+    # 컨센서스 fetch (ticker 있고 분기 매칭되면)
+    consensus = None
+    if ticker and period:
+        try:
+            from telegram_bot.issue_bot.collectors.consensus_fetcher import (
+                get_consensus_for_period,
+            )
+            consensus = get_consensus_for_period(ticker, period)
+        except Exception as e:
+            print(f"[EARNINGS] 컨센 fetch 실패 ({ticker}): {e}")
+
+    # 계정명 → 컨센서스 키 매핑
+    cons_key_map = {
+        "매출액": "revenue",
+        "영업이익": "op_income",
+        "당기순이익": "net_income",
+    }
 
     # 계정별 bullet
     acc_map = {a["name"]: a for a in parsed["accounts"]}
@@ -217,7 +237,21 @@ def format_earnings_card(company_name: str, parsed: dict,
         else:
             change = ""
 
-        lines.append(f"- {display_name}: {now_str} {change}".rstrip())
+        # vs 컨센서스 추가 (해당 계정에 컨센값 있으면)
+        # 잠정실적 단위: 백만원 → 억원 변환 후 비교 (네이버는 억원)
+        cons_str = ""
+        cons_key = cons_key_map.get(name_key)
+        if consensus and cons_key:
+            cons_val = consensus.get(cons_key)  # 억원
+            actual_eok = (acc["now"] / 100.0) if acc["now"] is not None else None  # 백만원→억원
+            if cons_val is not None and actual_eok is not None and cons_val != 0:
+                surprise_pct = (actual_eok - cons_val) / abs(cons_val) * 100
+                surprise_sign = "+" if surprise_pct >= 0 else ""
+                cons_amount = _format_amount_kr(cons_val * 100)  # 억원→백만원으로 다시 변환
+                cons_str = f" (vs 컨센 {cons_amount} / {surprise_sign}{surprise_pct:.1f}%)"
+
+        line = f"- {display_name}: {now_str} {change}{cons_str}".rstrip()
+        lines.append(line)
         lines.append("")  # 빈 줄 구분
 
     # 마지막 빈 줄 정리 후 출처·면책
@@ -276,8 +310,14 @@ def try_generate_earnings_card(event: dict) -> Optional[str]:
     company = event.get("company_name", "").strip() or "(회사명 미상)"
     url = event.get("source_url", "")
     is_cons = is_consolidated(report_nm)
+    # 종목코드(6자리)면 컨센서스 비교용. corp_code(8자리 DART)는 네이버 호환 안 됨.
+    raw_ticker = (event.get("ticker") or "").strip()
+    ticker = raw_ticker if re.fullmatch(r"\d{6}", raw_ticker) else None
 
-    return format_earnings_card(company, parsed, source_url=url, is_consolidated=is_cons)
+    return format_earnings_card(
+        company, parsed,
+        source_url=url, is_consolidated=is_cons, ticker=ticker,
+    )
 
 
 if __name__ == "__main__":

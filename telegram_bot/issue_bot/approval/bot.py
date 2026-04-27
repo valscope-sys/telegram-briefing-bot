@@ -109,21 +109,23 @@ def _card_meta_tail(issue: dict) -> str:
 
 
 def format_raw_card(issue: dict) -> str:
-    """State 1: 원문 발췌 카드 (생성 전)"""
+    """State 1: 원문 메타 카드 (생성 전)
+
+    2026-04-27 수정: 본문 발췌 500자 제거. 메시지 길이 ↓·가독성 ↑.
+    관리자가 어떤 이벤트인지 빠르게 파악하려면 원본 링크 클릭 → 미리보기 →
+    채널 발송 흐름. 발췌 자체는 Claude 호출과 무관 (단순 텍스트 표시).
+    """
     header = _card_header(issue)
     source_url = issue.get("source_url", "")
     source_link = f'<a href="{_escape(source_url)}">원본</a>' if source_url else "원본 없음"
 
     company = issue.get("company_name", "")
     title = issue.get("title", "")
-    excerpt = issue.get("original_excerpt", "")[:500]
 
     body_block = (
         f'<b>{_escape(company)}</b>\n'
         f'{_escape(title)}\n\n'
-        f'<i>[원문 발췌]</i>\n'
-        f'{_escape(excerpt)}\n\n'
-        f'<i>💡 요약본 생성은 아직 안됨. 미리보기로 생성 or 바로 발송으로 생성+발송</i>'
+        f'<i>💡 미리보기로 본문 확인 / 바로 발송으로 생성+발송</i>'
     )
 
     meta_tail = _card_meta_tail(issue)
