@@ -50,6 +50,12 @@ ISSUE_BOT_EXTRA_FEEDS = [
     {"name": "Apple Newsroom", "url": "https://www.apple.com/newsroom/rss-feed.rss", "group": "해외"},
     {"name": "OpenAI Blog", "url": "https://openai.com/news/rss.xml", "group": "해외"},
     {"name": "Anthropic News", "url": "https://news.google.com/rss/search?q=site:anthropic.com&hl=en-US&gl=US&ceid=US:en", "group": "해외"},
+    # 단발 종목 이벤트 광역 (Stock Movers — 폭락·계약취소·해지 키워드)
+    # 2026-04-28 추가: POET Marvell·Celestial AI 계약 취소(-50%) 누락 계기.
+    # 단일 종목 전문지 여러 개 추가하는 대신 Google News 키워드 검색 RSS
+    # 1개로 모든 종목의 단독 이벤트(폭락·해지·취소) 광역 캐치. Yahoo Finance·
+    # BioSpace·Economic Times·NDTV·MSN 등 메이저 매체 자동 큐레이션.
+    {"name": "Stock Movers", "url": "https://news.google.com/rss/search?q=(plunge+OR+crash+OR+collapse+OR+cancel+OR+terminate+OR+halt)+(stock+OR+shares+OR+chip+OR+contract)&hl=en-US&gl=US&ceid=US:en", "group": "해외"},
     # 국내 IT/테크 전문
     {"name": "전자신문", "url": "https://rss.etnews.com/Section902.xml", "group": "국내"},
 ]
@@ -125,10 +131,18 @@ def _hash_url(url: str) -> str:
 
 
 def _fetch_extra_feeds(max_per_feed: int = 15) -> List[dict]:
-    """이슈봇 전용 추가 피드 수집 (news_collector 형식과 호환)."""
+    """이슈봇 전용 추가 피드 수집 (news_collector 형식과 호환).
+
+    2026-04-28: 피드별 인터리빙으로 변경. 기존엔 [Nikkei1~15, SeekingAlpha1~15,
+    ..., StockMovers1~15] 순서라 limit cut 시 뒤쪽 피드(Stock Movers 등)가 통째로
+    잘림. zip_longest로 라운드 로빈해서 [Nikkei1, SeekingAlpha1, ..., StockMovers1,
+    Nikkei2, ...] 순서로 반환 → 모든 피드의 최신 1건이 먼저 들어옴.
+    """
+    from itertools import zip_longest
     UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-    out = []
+    feed_results = []
     for feed_info in ISSUE_BOT_EXTRA_FEEDS:
+        articles = []
         try:
             feed = feedparser.parse(feed_info["url"], agent=UA)
             for entry in feed.entries[:max_per_feed]:
@@ -136,7 +150,7 @@ def _fetch_extra_feeds(max_per_feed: int = 15) -> List[dict]:
                 link = (entry.get("link") or "").strip()
                 if not title or not link:
                     continue
-                out.append({
+                articles.append({
                     "title": title,
                     "link": link,
                     "summary": (entry.get("summary") or "").strip(),
@@ -146,8 +160,15 @@ def _fetch_extra_feeds(max_per_feed: int = 15) -> List[dict]:
                 })
         except Exception as e:
             print(f"[RSS-EXTRA] {feed_info['name']} 실패: {e}")
+        feed_results.append(articles)
         time.sleep(0.1)
-    return out
+
+    # 피드별 라운드 로빈: 모든 피드의 i번째 항목이 함께 묶임
+    interleaved = [
+        a for tup in zip_longest(*feed_results)
+        for a in tup if a is not None
+    ]
+    return interleaved
 
 
 def collect_rss_events(limit: int = 300, fetch_images: bool = False,
