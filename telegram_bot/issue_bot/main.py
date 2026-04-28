@@ -37,7 +37,7 @@ from telegram_bot.issue_bot.collectors.dart_collector import (
 )
 from telegram_bot.issue_bot.collectors.rss_adapter import collect_rss_events
 from telegram_bot.issue_bot.collectors.sec_collector import collect_sec_8k_filings
-from telegram_bot.issue_bot.pipeline.filter import filter_event
+from telegram_bot.issue_bot.pipeline.filter import filter_event, get_filter_metrics
 from telegram_bot.issue_bot.pipeline.dedup import (
     generate_dedup_key, is_duplicate, mark_seen, find_recent_duplicates,
 )
@@ -235,6 +235,17 @@ def issue_bot_poll_once(fetch_body: bool = True, days_back: int = 1,
     if deferred_count > 0:
         msg += f", 이월 {deferred_count}건 (상한 도달)"
     print(msg)
+
+    # 비용 메트릭 출력 (누적치, 프로세스 시작 이후)
+    m = get_filter_metrics()
+    haiku_total_input = m["haiku_input_uncached"] + m["haiku_cache_read"] + m["haiku_cache_create"]
+    cache_hit_pct = (100 * m["haiku_cache_read"] / haiku_total_input) if haiku_total_input else 0
+    print(
+        f"[FILTER_METRICS 누적] pre_skip={m['pre_filter_skip']} "
+        f"haiku={m['haiku_calls']} sonnet={m['sonnet_calls']} "
+        f"haiku_cache_hit={cache_hit_pct:.1f}% "
+        f"(read={m['haiku_cache_read']:,} / uncached={m['haiku_input_uncached']:,})"
+    )
 
     result = {
         "collected": len(events),

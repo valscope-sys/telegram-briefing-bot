@@ -1,8 +1,10 @@
 """중요도/카테고리 필터 — Claude Haiku
 
-2단계 분류:
-1. DART는 dart_category_map에서 이미 priority_hint 받은 경우 그대로 사용 (비용 절감)
-2. 매칭 실패 or RSS/SEC 소스면 Haiku에게 분류 의뢰 (Hybrid 시 Sonnet 재검증)
+3단계 분류 (2026-04-29 비용 절감 개편):
+0. **Pre-filter** — RSS 제목 키워드 노이즈 SKIP (Haiku 호출 전 차단, 비용 0)
+1. DART rule (dart_category_map priority_hint) — Haiku 우회
+2. 매칭 실패 or RSS/SEC 소스면 Haiku 분류 (system 프롬프트 캐싱 적용)
+3. (Hybrid 모드) HIGH/NORMAL 경계만 Sonnet 재검증 (캐싱 적용)
 
 출력 JSON:
 {
@@ -11,13 +13,11 @@
   "category": "A|B|C|D|E",
   "reason": "..."
 }
-
-Phase 2:
-- 부각 감지 조항: 빅테크 Peer / 거래량 급증 / 52주 신고가 → HIGH 가점
-- 시황 브리핑용 market_context는 이슈봇과 도메인 분리 (이슈봇은 이벤트 객관 평가)
 """
 import json
+import os
 import re
+import time
 import anthropic
 
 from telegram_bot.config import (
@@ -26,6 +26,105 @@ from telegram_bot.config import (
     ISSUE_BOT_FILTER_VERIFIER_MODEL,
     ISSUE_BOT_FILTER_HYBRID,
 )
+
+
+# ===== 비용 절감 메트릭 (프로세스 수명) =====
+_METRICS = {
+    "pre_filter_skip": 0,        # 사전 필터로 Haiku 호출 자체 차단
+    "haiku_calls": 0,            # Haiku 실제 호출
+    "sonnet_calls": 0,           # Sonnet 재검증 호출
+    "haiku_cache_read": 0,       # Haiku 캐시 읽힌 토큰
+    "haiku_cache_create": 0,     # Haiku 캐시 생성된 토큰
+    "haiku_input_uncached": 0,   # Haiku 비캐시 입력 토큰
+}
+
+
+def get_filter_metrics() -> dict:
+    """현재까지 누적 메트릭 (관리자 진단용)"""
+    return dict(_METRICS)
+
+
+def reset_filter_metrics():
+    for k in _METRICS:
+        _METRICS[k] = 0
+
+
+# ===== Pre-filter: RSS 제목 노이즈 패턴 (Haiku 호출 전 SKIP) =====
+# 명백히 한국 시장과 무관한 라이프/연예/스포츠/사회 노이즈만 보수적으로 차단.
+# false positive 방지를 위해 "확실한 noise"만 포함. 정치·금융·산업 단어는 제외.
+
+_NOISE_KO = re.compile(
+    # 스포츠·레저 (시장 직격 X)
+    r"파크골프|야구장|축구장|등산로|캠핑장|스키장|마라톤|골프장 후기"
+    # 음식·맛집·라이프
+    r"|맛집|해장국|곰탕|국밥|효도템|꿀팁"
+    # 황색언론 라이프 화제·동물·날씨
+    r"|푹 빠진|민낯|불티난|화제 만발|뜨거운 반응|핫템|눈길 끄는|충격적|경악"
+    # 사회면 일반 사건사고
+    r"|노인.{0,8}(빠진|즐긴|푹)|어린이.{0,8}(사고|실종)|학생.{0,8}(폭행|실종)"
+    # 부동산 분양·입찰 단독
+    r"|단지\s*상가\s*입찰|아파트\s*분양\s*시작|모델하우스\s*오픈"
+    # 한국 정치 단독 신경전 (인물 vs 인물)
+    r"|신경전|말 바꿨|말 바꿔.{0,3}"
+    # 포토·영상·갤러리·만평 prefix
+    r"|^\[포토\]|^\[영상\]|^\[갤러리\]|^\[화보\]|^\[만평\]|^\[그래픽\]"
+    # 산책·자전거 등 일상 활동
+    r"|산책하다|자전거 타다",
+    re.IGNORECASE,
+)
+
+_NOISE_EN = re.compile(
+    # 제품 리뷰·가이드·언박싱 (시장 시그널 X)
+    r"\b(review|hands.?on|unboxing|first look|impressions|test drive|deep dive guide)\b"
+    # Top N / Best of / Buyer's guide
+    r"|\b(best of|top \d+|buyer'?s guide|gift guide|holiday guide)\b"
+    # 쇼핑 행사
+    r"|\b(black friday|cyber monday|holiday deals|prime day|memorial day sale|labor day sale)\b"
+    # 스포츠 메가 이벤트
+    r"|\b(super bowl|world cup|olympics|world series|nba finals|nfl draft)\b"
+    # 날씨·자연재해 (한국 시장 무관)
+    r"|\b(weather forecast|hurricane warning|wildfire alert|tornado warning|blizzard)\b"
+    # 미국 단독 정치 일상 (시장 직격 X)
+    r"|\b(presidential debate|campaign rally|midterm election poll|primary results)\b"
+    # 게임 패치노트·DLC
+    r"|\b(patch notes|game update|DLC release|content drop)\b"
+    # 라이프스타일·여행
+    r"|\b(travel guide|vacation deals|food review|recipe)\b",
+    re.IGNORECASE,
+)
+
+
+def _rule_pre_filter(event: dict) -> dict:
+    """Haiku 호출 전 명백한 노이즈 차단 (비용 절감 1순위).
+
+    DART/SEC는 통과 (공시는 별도 룰 + 신뢰성 높음).
+    RSS만 제목으로 SKIP 판단.
+    """
+    src = event.get("source", "")
+    if src != "RSS":
+        return None
+
+    title = event.get("title", "") or ""
+    if not title:
+        return None
+
+    matched = None
+    if _NOISE_KO.search(title):
+        matched = "ko_noise"
+    elif _NOISE_EN.search(title):
+        matched = "en_noise"
+
+    if matched:
+        _METRICS["pre_filter_skip"] += 1
+        return {
+            "priority": "SKIP",
+            "category": "C",
+            "sector": "기타",
+            "reason": f"pre_filter:{matched}",
+            "significance": "",
+            "source_method": "rule_pre",
+        }
+    return None
 
 
 FILTER_SYSTEM = """당신은 NODE Research 투자 분석가이자 이슈 필터입니다.
@@ -163,12 +262,17 @@ def _get_client():
 
 def filter_event(event: dict) -> dict:
     """
-    Hybrid 필터: rule → Haiku → (HIGH/NORMAL이면) Sonnet 재검증.
+    Hybrid 필터: pre-filter → DART rule → Haiku → (HIGH/NORMAL이면) Sonnet 재검증.
 
     Returns:
         {"priority", "sector", "category", "reason", "significance",
-         "source_method": "rule|haiku|hybrid_sonnet", ...}
+         "source_method": "rule_pre|rule|haiku|hybrid_sonnet", ...}
     """
+    # 0. Pre-filter: RSS 제목 노이즈 사전 차단 (Haiku 호출 자체 차단 → 비용 절감)
+    pre = _rule_pre_filter(event)
+    if pre is not None:
+        return pre
+
     # 1. DART rule-based 결과 재사용
     if event.get("priority_hint") and event.get("category_hint"):
         sector = event.get("sector") or _infer_sector_from_name(event.get("company_name", ""))
@@ -251,15 +355,25 @@ def _sonnet_verify(event: dict, haiku_hint: dict) -> dict:
         response = client.messages.create(
             model=ISSUE_BOT_FILTER_VERIFIER_MODEL,
             max_tokens=300,
-            system=FILTER_SYSTEM,
+            system=[
+                {
+                    "type": "text",
+                    "text": FILTER_SYSTEM,
+                    "cache_control": {"type": "ephemeral"},
+                }
+            ],
             messages=[{"role": "user", "content": user_msg}],
         )
+        _METRICS["sonnet_calls"] += 1
         text = response.content[0].text.strip()
         parsed = _parse_filter_json(text)
         if parsed:
+            usage = response.usage
             parsed["tokens_used"] = {
-                "input": response.usage.input_tokens,
-                "output": response.usage.output_tokens,
+                "input": usage.input_tokens,
+                "output": usage.output_tokens,
+                "cache_read": getattr(usage, "cache_read_input_tokens", 0) or 0,
+                "cache_create": getattr(usage, "cache_creation_input_tokens", 0) or 0,
             }
             return parsed
     except Exception as e:
@@ -285,16 +399,32 @@ def _haiku_classify(event: dict) -> dict:
         response = client.messages.create(
             model=ISSUE_BOT_FILTER_MODEL,
             max_tokens=300,
-            system=FILTER_SYSTEM,
+            system=[
+                {
+                    "type": "text",
+                    "text": FILTER_SYSTEM,
+                    "cache_control": {"type": "ephemeral"},
+                }
+            ],
             messages=[{"role": "user", "content": user_msg}],
         )
+        _METRICS["haiku_calls"] += 1
+        usage = response.usage
+        cache_read = getattr(usage, "cache_read_input_tokens", 0) or 0
+        cache_create = getattr(usage, "cache_creation_input_tokens", 0) or 0
+        _METRICS["haiku_cache_read"] += cache_read
+        _METRICS["haiku_cache_create"] += cache_create
+        _METRICS["haiku_input_uncached"] += usage.input_tokens
+
         text = response.content[0].text.strip()
         parsed = _parse_filter_json(text)
         if parsed:
             parsed["source_method"] = "haiku"
             parsed["tokens_used"] = {
-                "input": response.usage.input_tokens,
-                "output": response.usage.output_tokens,
+                "input": usage.input_tokens,
+                "output": usage.output_tokens,
+                "cache_read": cache_read,
+                "cache_create": cache_create,
             }
             return parsed
     except Exception as e:

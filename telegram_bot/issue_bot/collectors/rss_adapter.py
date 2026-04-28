@@ -31,15 +31,18 @@ from telegram_bot.issue_bot.utils.telegram import extract_og_image
 #   - 진단(24h 신규 수): Microsoft Source 0건/Anthropic GN 0건 → 제거
 #   - 신규 광역 4피드 추가 (Yahoo Finance·DC Dynamics·AI 인프라 GN·어닝 GN)
 #   - Stock Movers + 광역 GN 키워드로 단발 이벤트 / AI 자본 / 어닝 시즌 자동 캐치
+# 2026-04-29 비용 절감 정리:
+#   - TechCrunch / The Verge 제거 — 스타트업·gadget·게임 등 한국 시장 직격성 약하고
+#     Haiku 필터 SKIP 비율 매우 높아 비용 대비 효과 낮음. TechMeme이 핵심 테크 큐레이션
+#     역할 대체. 메가 빅테크 이슈는 Reuters Tech / Bloomberg Tech / 빅테크 1차 소스가
+#     이미 1차 보도.
 ISSUE_BOT_EXTRA_FEEDS = [
     # 글로벌·아시아 종합
     {"name": "Nikkei Asia", "url": "https://asia.nikkei.com/rss/feed/nar", "group": "해외"},
     {"name": "Seeking Alpha", "url": "https://seekingalpha.com/market_currents.xml", "group": "해외"},
     # 미국 종합 마켓 (광역)
     {"name": "Yahoo Finance", "url": "https://finance.yahoo.com/news/rssindex", "group": "해외"},
-    # 테크 전문 매체·큐레이션
-    {"name": "TechCrunch", "url": "https://techcrunch.com/feed/", "group": "해외"},
-    {"name": "The Verge", "url": "https://www.theverge.com/rss/index.xml", "group": "해외"},
+    # 테크 전문 매체·큐레이션 (TechCrunch·The Verge 제거 — 2026-04-29)
     {"name": "TechMeme", "url": "https://www.techmeme.com/feed.xml", "group": "해외"},
     # Reuters/Bloomberg Technology (Google News 프록시)
     {"name": "Reuters Tech", "url": "https://news.google.com/rss/search?q=site:reuters.com+technology&hl=en-US&gl=US&ceid=US:en", "group": "해외"},

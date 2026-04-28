@@ -415,6 +415,7 @@ def fetch_new_highlow():
         # ETF/리츠/머니마켓/펀드 필터
         exclude_kw = [
             "TIGER", "KODEX", "KBSTAR", "HANARO", "SOL", "ARIRANG", "ACE", "KOSEF",
+            "BNK", "WOORI", "마이다스", "마이티", "FOCUS", "히어로즈", "WON",
             "스팩", "SPAC", "리츠", "KOFR", "RISE", "KIWOOM", "머니마켓", "1Q ",
             "인프라", "액티브", "ITF ", "PLUS ", "KoAct", "TIMEFOLIO", "파워",
             "레버리지", "인버스", "ETN",
