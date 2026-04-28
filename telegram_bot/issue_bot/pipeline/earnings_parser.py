@@ -61,23 +61,44 @@ def _to_number(s: str) -> Optional[float]:
         return None
 
 
-def _format_amount_kr(million_won: float) -> str:
-    """
-    백만원 → 억원 / 조원 표기.
-    135,820.9 백만원 = 1,358.2 억원 = 0.14 조원
-    1,358,209 백만원 = 13,582.09 억원 = 1.36 조원
+def _to_eok(value: float, unit: str) -> Optional[float]:
+    """본문 단위 → 억원 환산.
 
-    표기 규칙 (메리츠 tech 스타일):
+    DART 잠정실적은 보통 백만원이지만 일부 회사(예: 삼성SDI)는 억원·천원 등
+    다른 단위로 보고. parse 단계에서 본문의 "단위 : 억원" 표기 추출 후 변환.
+    """
+    if value is None:
+        return None
+    if unit == "억원":
+        return value
+    if unit == "백만원":
+        return value / 100.0
+    if unit == "천원":
+        return value / 100_000.0
+    if unit == "원":
+        return value / 100_000_000.0
+    # 기본값: 백만원으로 가정 (DART 표준)
+    return value / 100.0
+
+
+def _format_amount_kr(value: float, unit: str = "백만원") -> str:
+    """
+    숫자 + 단위 → "X조 Y,ZZZ억원" 표기 (메리츠 tech 스타일).
+
+    Args:
+        value: 본문에 적힌 숫자 그대로
+        unit: "억원" / "백만원" / "천원" / "원"
+
+    표기 규칙:
       - 1조 이상: "1조 3,582억원"
       - 1000억 이상: "3,582억원"
       - 100억 이상: "524억원"
-      - 그 이하: "28억원" (소수 없음)
-      - 음수: 앞에 "-" 또는 "적자" 처리는 caller가.
+      - 그 이하: "28.5억원" (소수 1자리)
+      - 음수: 앞에 "-"
     """
-    if million_won is None:
+    eok = _to_eok(value, unit)
+    if eok is None:
         return "-"
-    # 백만원 → 억원
-    eok = million_won / 100.0
     sign = "-" if eok < 0 else ""
     eok_abs = abs(eok)
 
@@ -92,6 +113,20 @@ def _format_amount_kr(million_won: float) -> str:
         return f"{sign}{eok_abs:,.0f}억원"
     # 100억 미만
     return f"{sign}{eok_abs:,.1f}억원"
+
+
+def _detect_unit(body: str) -> str:
+    """
+    본문에서 "단위 : XX" 표기 추출.
+
+    DART 잠정실적은 표 헤더에 "1. 연결실적내용 | 단위 : 백만원, %" 같이 표기.
+    삼성SDI 등 일부 회사는 "억원" 사용.
+    매칭 안 되면 백만원 기본값.
+    """
+    m = re.search(r"단위\s*[:：]\s*(억원|백만원|천원|원)", body)
+    if m:
+        return m.group(1)
+    return "백만원"
 
 
 def _format_pct(pct: Optional[float]) -> str:
@@ -145,6 +180,11 @@ def parse_earnings_disclosure(body: str) -> Optional[dict]:
     if not accounts:
         return None
 
+    # 단위 자동 감지 (백만원 / 억원 / 천원 / 원)
+    # 2026-04-28: 삼성SDI 등 "억원" 단위 케이스 대응. 무조건 백만원 가정 시
+    # ÷100 변환에서 자릿수 2칸 오차 (35,764억 → 358억으로 잘못 표시).
+    unit = _detect_unit(body)
+
     # 기간 추출: "당기실적 | YYYY-MM-DD | ~ | YYYY-MM-DD"
     period = None
     pm = re.search(
@@ -167,7 +207,7 @@ def parse_earnings_disclosure(body: str) -> Optional[dict]:
         else:
             period = f"{year}.{start_m}~{end_m}"
 
-    return {"period": period, "accounts": accounts}
+    return {"period": period, "accounts": accounts, "unit": unit}
 
 
 def format_earnings_card(company_name: str, parsed: dict,
@@ -189,6 +229,7 @@ def format_earnings_card(company_name: str, parsed: dict,
         텔레그램 발송용 텍스트
     """
     period = parsed.get("period") or ""
+    unit = parsed.get("unit", "백만원")  # 본문 단위 (백만원/억원/천원/원)
     title_suffix = f" {period} 잠정실적" if period else " 잠정실적"
 
     lines = [
@@ -223,7 +264,7 @@ def format_earnings_card(company_name: str, parsed: dict,
         if not acc:
             continue
 
-        now_str = _format_amount_kr(acc["now"])
+        now_str = _format_amount_kr(acc["now"], unit=unit)
         yoy_str = _format_pct(acc["yoy_pct"])
         qoq_str = _format_pct(acc["qoq_pct"])
 
@@ -237,17 +278,18 @@ def format_earnings_card(company_name: str, parsed: dict,
         else:
             change = ""
 
-        # vs 컨센서스 추가 (해당 계정에 컨센값 있으면)
-        # 잠정실적 단위: 백만원 → 억원 변환 후 비교 (네이버는 억원)
+        # vs 컨센서스 (네이버 단위: 억원)
+        # 잠정실적 단위 자동 변환 후 비교 — 삼성SDI 같은 "억원" 단위 케이스 대응.
         cons_str = ""
         cons_key = cons_key_map.get(name_key)
         if consensus and cons_key:
-            cons_val = consensus.get(cons_key)  # 억원
-            actual_eok = (acc["now"] / 100.0) if acc["now"] is not None else None  # 백만원→억원
-            if cons_val is not None and actual_eok is not None and cons_val != 0:
-                surprise_pct = (actual_eok - cons_val) / abs(cons_val) * 100
+            cons_eok = consensus.get(cons_key)  # 억원
+            actual_eok = _to_eok(acc["now"], unit)  # 본문 단위 → 억원
+            if cons_eok is not None and actual_eok is not None and cons_eok != 0:
+                surprise_pct = (actual_eok - cons_eok) / abs(cons_eok) * 100
                 surprise_sign = "+" if surprise_pct >= 0 else ""
-                cons_amount = _format_amount_kr(cons_val * 100)  # 억원→백만원으로 다시 변환
+                # 컨센은 억원 단위 그대로 _format_amount_kr 호출
+                cons_amount = _format_amount_kr(cons_eok, unit="억원")
                 cons_str = f" (vs 컨센 {cons_amount} / {surprise_sign}{surprise_pct:.1f}%)"
 
         line = f"- {display_name}: {now_str} {change}{cons_str}".rstrip()
