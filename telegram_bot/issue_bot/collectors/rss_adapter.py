@@ -59,8 +59,15 @@ ISSUE_BOT_EXTRA_FEEDS = [
     {"name": "AI Capex", "url": "https://news.google.com/rss/search?q=(%22AI+infrastructure%22+OR+%22data+center%22+OR+HBM)+(billion+OR+investment+OR+capacity+OR+GW)&hl=en-US&gl=US&ceid=US:en", "group": "해외"},
     # 어닝 시즌 자동 (beat·miss·guidance 변경)
     {"name": "Earnings Wire", "url": "https://news.google.com/rss/search?q=(earnings+OR+guidance)+(beat+OR+miss+OR+raised+OR+cut)+(stock+OR+shares)&hl=en-US&gl=US&ceid=US:en", "group": "해외"},
+    # 분석가 단독 보도 — Apple/AI 분석가 Ming-Chi Kuo (OpenAI 폰·Apple 부품 단독)
+    {"name": "Ming-Chi Kuo", "url": "https://news.google.com/rss/search?q=%22Ming-Chi+Kuo%22&hl=en-US&gl=US&ceid=US:en", "group": "해외"},
+    # 대만 반도체 공급망 (TSMC·UMC·Nanya Tech — 한국 메모리·파운드리 직격)
+    # 중국어(번체) RSS이지만 Sonnet이 한국어로 번역. Cahier de Market 자주 인용.
+    {"name": "UDN Money TW", "url": "https://news.google.com/rss/search?q=site:money.udn.com&hl=zh-TW&gl=TW&ceid=TW:zh-Hant", "group": "해외"},
     # 국내 IT/테크 전문
     {"name": "전자신문", "url": "https://rss.etnews.com/Section902.xml", "group": "국내"},
+    {"name": "ZDNet Korea", "url": "https://feeds.feedburner.com/zdkorea", "group": "국내"},
+    {"name": "Business Post", "url": "https://news.google.com/rss/search?q=site:businesspost.co.kr&hl=ko&gl=KR&ceid=KR:ko", "group": "국내"},
 ]
 
 # 기사 본문 추출 대상 소스 — 제목+summary만으로 필터 판단이 어려운 전문 매체
