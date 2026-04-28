@@ -2,7 +2,7 @@ name: Update Calendar
 
 on:
   schedule:
-    - cron: '0 15 * * *'  # 매일 00:00 KST (15:00 UTC)
+    - cron: '0 21 * * *'  # 매일 06:00 KST (21:00 UTC) — FnGuide 05:38 KST 배치 업데이트 직후
   workflow_dispatch:  # 수동 실행
 
 permissions:

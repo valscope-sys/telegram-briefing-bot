@@ -26629,17 +26629,6 @@
     "auto": true
   },
   {
-    "category": "게임",
-    "title": "Gamescom Latam 2026",
-    "source": "ai_scan",
-    "auto": true,
-    "month": "2026-04",
-    "undated": true,
-    "date": "2026-04-01",
-    "endDate": "2026-04-30",
-    "summary": "4월 29일-5월 3일 브라질 상파울루에서 개최되는 게임 전시회"
-  },
-  {
     "date": "2026-04-01",
     "time": "",
     "category": "자동차/배터리",
@@ -26647,17 +26636,6 @@
     "source": "fixed",
     "auto": false,
     "country": "🇰🇷"
-  },
-  {
-    "category": "전시/박람회",
-    "title": "2026 밀라노 디자인 위크",
-    "source": "ai_scan",
-    "auto": true,
-    "month": "2026-04",
-    "undated": true,
-    "date": "2026-04-01",
-    "endDate": "2026-04-30",
-    "summary": "4월 20-26일 이탈리아 밀라노에서 열리는 세계 최대 디자인 박람회. 삼성전자, LG전자, 현대차 아이오닉3 세계 최초 공개. 관련주: 삼성전자, LG전자, 현대차"
   },
   {
     "category": "정치/외교",
@@ -30193,14 +30171,6 @@
   },
   {
     "date": "2026-04-21",
-    "time": "16:00",
-    "category": "한국실적(잠정)",
-    "title": "SGC에너지 잠정실적발표",
-    "source": "fnguide",
-    "auto": true
-  },
-  {
-    "date": "2026-04-21",
     "time": "17:00",
     "category": "경제지표",
     "title": "🇺🇸 Business Inventories (MoM)  (Feb)",
@@ -30422,30 +30392,6 @@
   },
   {
     "date": "2026-04-22",
-    "time": "",
-    "category": "한국실적(잠정)",
-    "title": "제주은행 잠정실적발표",
-    "source": "fnguide",
-    "auto": true
-  },
-  {
-    "date": "2026-04-22",
-    "time": "",
-    "category": "한국실적(잠정)",
-    "title": "삼성바이오로직스 잠정실적발표",
-    "source": "fnguide",
-    "auto": true
-  },
-  {
-    "date": "2026-04-22",
-    "time": "",
-    "category": "한국실적(잠정)",
-    "title": "유니드 잠정실적발표",
-    "source": "fnguide",
-    "auto": true
-  },
-  {
-    "date": "2026-04-22",
     "time": "09:00",
     "category": "IR",
     "title": "한텍 IR (경영현황)",
@@ -30613,16 +30559,6 @@
     "auto": true
   },
   {
-    "category": "전시/박람회",
-    "title": "2026 우수급식·외식산업전 종료",
-    "source": "ai_scan",
-    "auto": true,
-    "date": "2026-04-23",
-    "time": "",
-    "unconfirmed": true,
-    "summary": "서울 코엑스에서 열리는 외식산업 전시회. 자동화 웍 등 전시"
-  },
-  {
     "date": "2026-04-23",
     "time": "",
     "category": "한국실적",
@@ -30682,22 +30618,6 @@
     "date": "2026-04-23",
     "time": "",
     "category": "한국실적(잠정)",
-    "title": "삼성에스디에스 잠정실적발표",
-    "source": "fnguide",
-    "auto": true
-  },
-  {
-    "date": "2026-04-23",
-    "time": "",
-    "category": "한국실적(잠정)",
-    "title": "삼성에피스홀딩스 잠정실적발표",
-    "source": "fnguide",
-    "auto": true
-  },
-  {
-    "date": "2026-04-23",
-    "time": "",
-    "category": "한국실적(잠정)",
     "title": "현대차 잠정실적발표",
     "source": "fnguide",
     "auto": true
@@ -30731,14 +30651,6 @@
     "time": "09:00",
     "category": "한국실적",
     "title": "SK하이닉스 실적발표",
-    "source": "fnguide",
-    "auto": true
-  },
-  {
-    "date": "2026-04-23",
-    "time": "09:00",
-    "category": "한국실적(잠정)",
-    "title": "SK하이닉스 잠정실적발표",
     "source": "fnguide",
     "auto": true
   },
@@ -30795,14 +30707,6 @@
   },
   {
     "date": "2026-04-23",
-    "time": "13:10",
-    "category": "한국실적(잠정)",
-    "title": "현대글로비스 잠정실적발표",
-    "source": "fnguide",
-    "auto": true
-  },
-  {
-    "date": "2026-04-23",
     "time": "14:00",
     "category": "IR",
     "title": "삼성에스디에스 IR (경영현황)",
@@ -30838,22 +30742,6 @@
     "time": "14:00",
     "category": "한국실적",
     "title": "LG디스플레이 실적발표",
-    "source": "fnguide",
-    "auto": true
-  },
-  {
-    "date": "2026-04-23",
-    "time": "14:00",
-    "category": "한국실적(잠정)",
-    "title": "LG디스플레이 잠정실적발표",
-    "source": "fnguide",
-    "auto": true
-  },
-  {
-    "date": "2026-04-23",
-    "time": "14:00",
-    "category": "한국실적(잠정)",
-    "title": "신한지주 잠정실적발표",
     "source": "fnguide",
     "auto": true
   },
@@ -30901,14 +30789,6 @@
   },
   {
     "date": "2026-04-23",
-    "time": "16:00",
-    "category": "한국실적(잠정)",
-    "title": "KB금융 잠정실적발표",
-    "source": "fnguide",
-    "auto": true
-  },
-  {
-    "date": "2026-04-23",
     "time": "16:45",
     "category": "경제지표",
     "title": "🇺🇸 S&P Global Manufacturing PMI  (Apr)",
@@ -30947,14 +30827,6 @@
     "time": "17:00",
     "category": "한국실적",
     "title": "JB금융지주 실적발표",
-    "source": "fnguide",
-    "auto": true
-  },
-  {
-    "date": "2026-04-23",
-    "time": "17:00",
-    "category": "한국실적(잠정)",
-    "title": "JB금융지주 잠정실적발표",
     "source": "fnguide",
     "auto": true
   },
@@ -31059,14 +30931,6 @@
     "time": "",
     "category": "한국실적",
     "title": "기아 실적발표",
-    "source": "fnguide",
-    "auto": true
-  },
-  {
-    "date": "2026-04-24",
-    "time": "",
-    "category": "한국실적(잠정)",
-    "title": "기아 잠정실적발표",
     "source": "fnguide",
     "auto": true
   },
@@ -31224,25 +31088,9 @@
   },
   {
     "date": "2026-04-24",
-    "time": "10:10",
-    "category": "한국실적(잠정)",
-    "title": "현대모비스 잠정실적발표",
-    "source": "fnguide",
-    "auto": true
-  },
-  {
-    "date": "2026-04-24",
     "time": "13:00",
     "category": "한국실적",
     "title": "KG모빌리티 실적발표",
-    "source": "fnguide",
-    "auto": true
-  },
-  {
-    "date": "2026-04-24",
-    "time": "13:00",
-    "category": "한국실적(잠정)",
-    "title": "KG모빌리티 잠정실적발표",
     "source": "fnguide",
     "auto": true
   },
@@ -31288,41 +31136,9 @@
   },
   {
     "date": "2026-04-24",
-    "time": "14:00",
-    "category": "한국실적(잠정)",
-    "title": "HD현대마린솔루션 잠정실적발표",
-    "source": "fnguide",
-    "auto": true
-  },
-  {
-    "date": "2026-04-24",
-    "time": "14:00",
-    "category": "한국실적(잠정)",
-    "title": "삼성카드 잠정실적발표",
-    "source": "fnguide",
-    "auto": true
-  },
-  {
-    "date": "2026-04-24",
-    "time": "14:00",
-    "category": "한국실적(잠정)",
-    "title": "현대제철 잠정실적발표",
-    "source": "fnguide",
-    "auto": true
-  },
-  {
-    "date": "2026-04-24",
     "time": "14:10",
     "category": "한국실적",
     "title": "현대로템 실적발표",
-    "source": "fnguide",
-    "auto": true
-  },
-  {
-    "date": "2026-04-24",
-    "time": "14:10",
-    "category": "한국실적(잠정)",
-    "title": "현대로템 잠정실적발표",
     "source": "fnguide",
     "auto": true
   },
@@ -31344,25 +31160,9 @@
   },
   {
     "date": "2026-04-24",
-    "time": "15:00",
-    "category": "한국실적(잠정)",
-    "title": "하나금융지주 잠정실적발표",
-    "source": "fnguide",
-    "auto": true
-  },
-  {
-    "date": "2026-04-24",
     "time": "16:00",
     "category": "한국실적",
     "title": "우리금융지주 실적발표",
-    "source": "fnguide",
-    "auto": true
-  },
-  {
-    "date": "2026-04-24",
-    "time": "16:00",
-    "category": "한국실적(잠정)",
-    "title": "우리금융지주 잠정실적발표",
     "source": "fnguide",
     "auto": true
   },
@@ -31668,25 +31468,9 @@
   },
   {
     "date": "2026-04-27",
-    "time": "10:30",
-    "category": "한국실적(잠정)",
-    "title": "동양생명 잠정실적발표",
-    "source": "fnguide",
-    "auto": true
-  },
-  {
-    "date": "2026-04-27",
     "time": "11:00",
     "category": "한국실적",
     "title": "ISC 실적발표",
-    "source": "fnguide",
-    "auto": true
-  },
-  {
-    "date": "2026-04-27",
-    "time": "11:00",
-    "category": "한국실적(잠정)",
-    "title": "ISC 잠정실적발표",
     "source": "fnguide",
     "auto": true
   },
@@ -31716,22 +31500,6 @@
   },
   {
     "date": "2026-04-27",
-    "time": "14:00",
-    "category": "한국실적(잠정)",
-    "title": "한화오션 잠정실적발표",
-    "source": "fnguide",
-    "auto": true
-  },
-  {
-    "date": "2026-04-27",
-    "time": "14:00",
-    "category": "한국실적(잠정)",
-    "title": "SKC 잠정실적발표",
-    "source": "fnguide",
-    "auto": true
-  },
-  {
-    "date": "2026-04-27",
     "time": "15:00",
     "category": "IR",
     "title": "플래티어 IR (경영현황)",
@@ -31751,14 +31519,6 @@
     "time": "16:00",
     "category": "한국실적",
     "title": "HD건설기계 실적발표",
-    "source": "fnguide",
-    "auto": true
-  },
-  {
-    "date": "2026-04-27",
-    "time": "16:00",
-    "category": "한국실적(잠정)",
-    "title": "HD건설기계 잠정실적발표",
     "source": "fnguide",
     "auto": true
   },
@@ -32083,15 +31843,6 @@
     "auto": true
   },
   {
-    "category": "게임",
-    "title": "Gamescom Latam 2026",
-    "source": "ai_scan",
-    "auto": true,
-    "date": "2026-04-29",
-    "time": "",
-    "summary": "브라질 상파울루에서 개최되는 게임스컴 라틴아메리카. 4월 29일-5월 3일 진행"
-  },
-  {
     "date": "2026-04-29",
     "time": "",
     "category": "기업이벤트",
@@ -32292,15 +32043,6 @@
     "auto": true
   },
   {
-    "category": "부동산",
-    "title": "더샵 탕정인피니티시티 3차 단지 상가 입찰 및 계약",
-    "source": "ai_scan",
-    "auto": true,
-    "date": "2026-04-29",
-    "time": "",
-    "summary": "충남 아산 탕정지구 더샵 탕정인피니티시티 3차 단지 내 상가 입찰 및 계약 진행. 총 3,517세대 규모 대단지 상권"
-  },
-  {
     "category": "산업컨퍼런스",
     "title": "알파벳(구글)·마이크로소프트·메타·아마존 1분기 실적 발표",
     "source": "ai_scan",
@@ -32378,14 +32120,6 @@
     "time": "16:00",
     "category": "한국실적",
     "title": "LG전자 실적발표",
-    "source": "fnguide",
-    "auto": true
-  },
-  {
-    "date": "2026-04-29",
-    "time": "16:00",
-    "category": "한국실적(잠정)",
-    "title": "LG전자 잠정실적발표",
     "source": "fnguide",
     "auto": true
   },
@@ -32668,22 +32402,6 @@
     "time": "10:00",
     "category": "한국실적",
     "title": "LG에너지솔루션 실적발표",
-    "source": "fnguide",
-    "auto": true
-  },
-  {
-    "date": "2026-04-30",
-    "time": "10:00",
-    "category": "한국실적(잠정)",
-    "title": "삼성전자 잠정실적발표",
-    "source": "fnguide",
-    "auto": true
-  },
-  {
-    "date": "2026-04-30",
-    "time": "10:00",
-    "category": "한국실적(잠정)",
-    "title": "LG에너지솔루션 잠정실적발표",
     "source": "fnguide",
     "auto": true
   },
@@ -32999,16 +32717,6 @@
     "title": "큐로홀딩스 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
-  },
-  {
-    "category": "부동산",
-    "title": "장위 푸르지오 마크원 청약",
-    "source": "ai_scan",
-    "auto": true,
-    "date": "2026-05-01",
-    "time": "",
-    "unconfirmed": true,
-    "summary": "서울 성북구 장위뉴타운 1931채 규모 대단지 아파트 청약 예정. 분양가 3.3㎡당 5100만~5200만원 예상"
   },
   {
     "category": "수동",
@@ -33546,15 +33254,6 @@
     "auto": true
   },
   {
-    "category": "부동산",
-    "title": "다주택자 양도세 중과 시행",
-    "source": "ai_scan",
-    "auto": true,
-    "date": "2026-05-10",
-    "time": "",
-    "summary": "다주택자 대상 양도세 중과세 시행으로 부동산 시장 영향 예상"
-  },
-  {
     "date": "2026-05-11",
     "time": "",
     "category": "IPO/공모",
@@ -33867,15 +33566,6 @@
     "title": "인스코비 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
-  },
-  {
-    "category": "부동산",
-    "title": "전국 농지 전수조사 시작",
-    "source": "ai_scan",
-    "auto": true,
-    "date": "2026-05-18",
-    "time": "",
-    "summary": "농식품부 농지 전수조사 실시. 농지 투기 근절 목적으로 농업 관련주 및 부동산 시장에 영향"
   },
   {
     "date": "2026-05-19",
@@ -34272,17 +33962,6 @@
     "auto": true
   },
   {
-    "category": "게임",
-    "title": "Amazon Luna 외부 구독 및 게임 스토어 지원 중단",
-    "source": "ai_scan",
-    "auto": true,
-    "month": "2026-06",
-    "undated": true,
-    "date": "2026-06-01",
-    "endDate": "2026-06-30",
-    "summary": "Amazon Luna가 2026년 6월 10일부터 타사 게임 스토어, 개별 구매, 외부 구독 지원 중단. 관련주: 아마존"
-  },
-  {
     "date": "2026-06-01",
     "endDate": "2026-06-30",
     "time": "",
@@ -34522,15 +34201,6 @@
     "source": "investing",
     "auto": true,
     "country": "🇺🇸"
-  },
-  {
-    "category": "게임",
-    "title": "Amazon Luna 서드파티 지원 중단",
-    "source": "ai_scan",
-    "auto": true,
-    "date": "2026-06-10",
-    "time": "",
-    "summary": "Amazon Luna에서 서드파티 게임스토어 및 외부 구독 서비스 지원 중단. 관련주: 아마존"
   },
   {
     "date": "2026-06-10",
@@ -35307,17 +34977,6 @@
     "source": "fixed",
     "auto": false,
     "country": "🇨🇳"
-  },
-  {
-    "category": "게임",
-    "title": "Gamescom Dev 2026",
-    "source": "ai_scan",
-    "auto": true,
-    "month": "2026-08",
-    "undated": true,
-    "date": "2026-08-01",
-    "endDate": "2026-08-31",
-    "summary": "독일에서 개최되는 게임스컴 개발자 컨퍼런스. 게임업계 관련주 관심"
   },
   {
     "date": "2026-08-01",

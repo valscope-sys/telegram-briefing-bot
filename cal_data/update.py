@@ -93,8 +93,50 @@ def merge_events(existing: list[dict], new_events: list[dict]) -> list[dict]:
             any(corp in ev.get("title", "") for corp in confirmed_corps)
         )]
 
+    # AI 스캐너 노이즈 카테고리 차단 (증시 직접 영향 없는 항목)
+    AI_BLACKLIST_CATEGORIES = {"부동산", "전시/박람회", "게임", "K-콘텐츠"}
+    result = [ev for ev in result if not (
+        ev.get("source") == "ai_scan"
+        and ev.get("category", "") in AI_BLACKLIST_CATEGORIES
+    )]
+
+    # 같은 기업 잠정→정식 dedupe: 잠정 발표 후 0~2일 이내 정식 발표 일정은 노이즈
+    # (FnGuide가 예정으로 잡은 정식 일정인데 회사가 잠정으로 선공시한 경우)
+    # 정상 발표 패턴: 잠정 후 3일+ 후 정식 분기보고서 — 보존
+    result = _dedupe_provisional_official_close(result)
+
     result.sort(key=lambda e: (e.get("date", ""), e.get("time", ""), e.get("category", "")))
     return result
+
+
+def _dedupe_provisional_official_close(events: list[dict]) -> list[dict]:
+    """같은 기업의 잠정/정식이 같은 날(0일) 동시 등록되어 있으면 잠정 제거 (정식 보존).
+    하루라도 차이나면 별개 발표로 간주 — 둘 다 보존."""
+    from collections import defaultdict
+    by_corp = defaultdict(list)
+    for ev in events:
+        cat = ev.get("category", "")
+        if cat in ("한국실적", "한국실적(잠정)"):
+            title = ev.get("title", "")
+            corp = title.replace(" 잠정실적발표", "").replace(" 실적발표", "").strip()
+            if corp:
+                by_corp[corp].append(ev)
+
+    drop_ids = set()
+    for corp, evs in by_corp.items():
+        prov = [e for e in evs if e.get("category") == "한국실적(잠정)"]
+        off = [e for e in evs if e.get("category") == "한국실적"]
+        if not prov or not off:
+            continue
+        off_dates = {o.get("date", "") for o in off}
+        for p in prov:
+            # 정식과 같은 날짜에 잠정이 있으면 잠정 제거
+            if p.get("date", "") in off_dates:
+                drop_ids.add(id(p))
+
+    if drop_ids:
+        return [ev for ev in events if id(ev) not in drop_ids]
+    return events
 
 
 def collect_all(from_date: datetime.date, to_date: datetime.date, skip_ai: bool = False) -> list[dict]:
