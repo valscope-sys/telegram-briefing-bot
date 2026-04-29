@@ -703,8 +703,89 @@ def _guess_template_from_url(url: str) -> str:
     return "C"  # 기본: 영문/한글 기사·리서치
 
 
+def _fetch_dart_disclosure(url: str) -> dict:
+    """DART 공시 메인 페이지 → iframe URL 추출 → KIND 본문 fetch.
+
+    DART URL 패턴: https://dart.fss.or.kr/dsaf001/main.do?rcpNo=NNN
+    main.do는 메타만(40자), 진짜 본문은 iframe 안의 KIND HTML.
+    """
+    import requests
+    from bs4 import BeautifulSoup
+
+    try:
+        res = requests.get(
+            url,
+            timeout=15,
+            headers={"User-Agent": "Mozilla/5.0 NODEResearchBot/1.0"},
+        )
+        if res.status_code != 200:
+            return {"error": f"DART HTTP {res.status_code}"}
+
+        soup = BeautifulSoup(res.text, "lxml")
+
+        # title — DART는 페이지 title에 "회사명/공시명/날짜"
+        title = ""
+        if soup.title and soup.title.string:
+            title = soup.title.string.strip()
+
+        # iframe URL 추출 (script 안에 dcmNo 같은 변수 있음 — 실제 본문 페이지)
+        # 보통 viewDoc('rcpNo', 'dcmNo', 'eleId', 'offset', 'length', 'dtd') 호출
+        viewdoc_match = _re_mod.search(
+            r"viewDoc\(\s*['\"](\d+)['\"]\s*,\s*['\"](\d+)['\"]\s*,\s*['\"]([^'\"]*)['\"]\s*,"
+            r"\s*['\"]([^'\"]*)['\"]\s*,\s*['\"]([^'\"]*)['\"]",
+            res.text,
+        )
+
+        body = ""
+        if viewdoc_match:
+            rcp_no, dcm_no, ele_id, offset, length = viewdoc_match.groups()
+            # KIND HTML URL 조립
+            kind_url = (
+                f"https://dart.fss.or.kr/report/viewer.do?"
+                f"rcpNo={rcp_no}&dcmNo={dcm_no}&eleId={ele_id}"
+                f"&offset={offset}&length={length}&dtd=dart3.xsd"
+            )
+            try:
+                kind_res = requests.get(
+                    kind_url,
+                    timeout=15,
+                    headers={"User-Agent": "Mozilla/5.0 NODEResearchBot/1.0"},
+                )
+                if kind_res.status_code == 200:
+                    kind_soup = BeautifulSoup(kind_res.text, "lxml")
+                    for tag in kind_soup(["script", "style", "nav", "header", "footer"]):
+                        tag.decompose()
+                    body = kind_soup.get_text(separator=" ", strip=True)
+                    body = _re_mod.sub(r"\s+", " ", body)[:6000]
+            except Exception as e:
+                print(f"[DART_FETCH] KIND iframe fetch 실패: {e}")
+
+        # body가 여전히 비어있으면 main.do 페이지 자체에서라도 추출 시도
+        if not body:
+            for tag in soup(["script", "style", "nav", "header", "footer"]):
+                tag.decompose()
+            body = soup.get_text(separator=" ", strip=True)
+            body = _re_mod.sub(r"\s+", " ", body)[:3000]
+
+        return {
+            "title": title,
+            "body": body,
+            "image_url": None,
+            "final_url": url,
+        }
+    except Exception as e:
+        return {"error": f"DART fetch error: {e}"}
+
+
 def _fetch_article_metadata(url: str) -> dict:
-    """URL에서 title, body, og:image, 최종 redirect URL 추출."""
+    """URL에서 title, body, og:image, 최종 redirect URL 추출.
+
+    DART URL은 iframe 구조라 별도 처리 (_fetch_dart_disclosure).
+    """
+    # DART 공시 URL 특수 처리
+    if "dart.fss.or.kr/dsaf001" in url:
+        return _fetch_dart_disclosure(url)
+
     import requests
     from bs4 import BeautifulSoup
 

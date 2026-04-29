@@ -139,13 +139,32 @@ def format_raw_card(issue: dict) -> str:
     )
 
 
+import re as _re_disclaimer
+
+_DISCLAIMER_RE = _re_disclaimer.compile(
+    r"\n*\*\s*본\s*내용은.*?책임은\s*본인에게\s*있습니다\.?\s*$",
+    _re_disclaimer.DOTALL,
+)
+
+
+def _strip_disclaimer(text: str) -> str:
+    """카드 본문 끝의 면책 문구 제거 (admin 미리보기용 — 발송 시에만 필요)."""
+    if not text:
+        return text
+    return _DISCLAIMER_RE.sub("", text).rstrip()
+
+
 def format_preview_card(issue: dict) -> str:
-    """State 2: 생성본 프리뷰 카드 (발송될 본문 그대로)"""
+    """State 2: 생성본 프리뷰 카드 (발송될 본문 그대로, 면책만 미리보기용 제거).
+
+    면책 문구는 채널 발송 시에만 의미 있음 (사용자 본인 미리보기에 노이즈).
+    send_to_channel은 generated_content 원본 그대로 발송 → 면책 자동 표시.
+    """
     header = _card_header(issue) + " | <i>프리뷰됨</i>"
     source_url = issue.get("source_url", "")
     source_link = f'<a href="{_escape(source_url)}">원본</a>' if source_url else "원본 없음"
 
-    generated = issue.get("generated_content", "")
+    generated = _strip_disclaimer(issue.get("generated_content", ""))
     meta_tail = _card_meta_tail(issue)
 
     return (
