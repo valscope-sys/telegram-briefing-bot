@@ -52,14 +52,14 @@ def parse_date_arg(arg: str):
 
 
 def fetch_dart_list(date: datetime.date, corp_name: str = None,
-                    page_count: int = 100) -> list:
+                    corp_code: str = None, page_count: int = 100) -> list:
     """DART list.json 조회.
 
     Args:
         date: 조회 날짜
-        corp_name: 회사명 필터 (클라이언트 측 부분 매칭).
-            DART OpenAPI list.json에는 corp_name 파라미터가 없으므로
-            전체 받아온 후 코드에서 필터링.
+        corp_name: 회사명 — corp_code 매핑 시도 후 정확한 corp_code로 호출.
+            매칭 실패 시 클라이언트 측 부분 매칭 fallback.
+        corp_code: 직접 corp_code 지정 (8자리). corp_name보다 우선.
         page_count: 최대 결과 수 (기본 100)
 
     Returns:
@@ -75,6 +75,24 @@ def fetch_dart_list(date: datetime.date, corp_name: str = None,
         "end_de": date_str,
         "page_count": min(page_count, 100),
     }
+
+    # corp_code 매핑 시도 (corp_name → corp_code)
+    resolved_corp_code = corp_code
+    if not resolved_corp_code and corp_name:
+        from telegram_bot.issue_bot.collectors.dart_corp_codes import find_corp_code
+        match = find_corp_code(corp_name, limit=1)
+        if match.get("exact"):
+            resolved_corp_code = match["exact"]
+            print(f"[DART_QUERY] '{corp_name}' → corp_code {resolved_corp_code} (정확 매칭)")
+        elif match.get("candidates"):
+            # 부분 매칭 후보가 1건이면 그걸 사용 (예: "삼전" → 삼성전자만 매칭)
+            cands = match["candidates"]
+            if len(cands) == 1:
+                resolved_corp_code = cands[0]["code"]
+                print(f"[DART_QUERY] '{corp_name}' → corp_code {resolved_corp_code} ({cands[0]['name']}, 단일 후보)")
+
+    if resolved_corp_code:
+        params["corp_code"] = resolved_corp_code
 
     try:
         res = requests.get(DART_LIST_URL, params=params, timeout=15)
@@ -101,10 +119,9 @@ def fetch_dart_list(date: datetime.date, corp_name: str = None,
                 "url": f"https://dart.fss.or.kr/dsaf001/main.do?rcpNo={rcept_no}" if rcept_no else "",
             })
 
-        # 클라이언트 측 corp_name 부분 매칭 (DART API 사양상 정확 매칭만이라
-        # "삼성전자" 검색 시 "삼성전자우"·"삼성전자머티리얼즈" 등도 포함하려면
-        # 클라이언트 필터가 필요)
-        if corp_name:
+        # corp_code 매핑 실패 시 (corp_name 입력했으나 매칭 X)
+        # 클라이언트 측 부분 매칭 fallback
+        if corp_name and not resolved_corp_code:
             cname = corp_name.strip().lower()
             if cname:
                 results = [
@@ -116,6 +133,13 @@ def fetch_dart_list(date: datetime.date, corp_name: str = None,
     except Exception as e:
         print(f"[DART_QUERY] 조회 실패: {e}")
         return []
+
+
+def get_corp_code_candidates(query: str, limit: int = 5) -> list:
+    """회사명 → corp_code 후보 목록 (정확 매칭 X 케이스에서 사용자 안내용)."""
+    from telegram_bot.issue_bot.collectors.dart_corp_codes import find_corp_code
+    result = find_corp_code(query, limit=limit)
+    return result.get("candidates", [])
 
 
 # 노이즈 보고서명 (조회 결과에서 자동 숨김)

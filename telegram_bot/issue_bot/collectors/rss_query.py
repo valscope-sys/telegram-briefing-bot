@@ -18,26 +18,32 @@ import feedparser
 from telegram_bot.config import ANTHROPIC_API_KEY
 
 
-# 핵심 매체 RSS — 시황·테크·외신 균형 (13개)
+# 핵심 매체 RSS — 시황·테크·외신 균형 (18개)
 NEWS_FEEDS = [
-    # ── 한국 종합·시황 ──
+    # ── 한국 종합·시황 (7개) ──
     {"name": "한국경제", "url": "https://www.hankyung.com/feed/all-news", "lang": "ko"},
     {"name": "매일경제", "url": "https://www.mk.co.kr/rss/30000001/", "lang": "ko"},
     {"name": "연합뉴스", "url": "https://www.yna.co.kr/rss/economy.xml", "lang": "ko"},
     {"name": "이데일리", "url": "https://rss.edaily.co.kr/stock_news.xml", "lang": "ko"},
     {"name": "머니투데이", "url": "https://rss.mt.co.kr/mt_news.xml", "lang": "ko"},
+    {"name": "조선비즈", "url": "https://news.google.com/rss/search?q=site:biz.chosun.com&hl=ko&gl=KR&ceid=KR:ko", "lang": "ko"},
+    {"name": "인포맥스", "url": "https://news.google.com/rss/search?q=site:einfomax.co.kr&hl=ko&gl=KR&ceid=KR:ko", "lang": "ko"},
     # ── 한국 테크 1차 ──
     {"name": "전자신문", "url": "https://rss.etnews.com/Section902.xml", "lang": "ko"},
-    # ── 외신 광역 ──
+    # ── 외신 광역 (4개) ──
     {"name": "Reuters", "url": "https://news.google.com/rss/search?q=site:reuters.com+business&hl=en-US&gl=US&ceid=US:en", "lang": "en"},
     {"name": "Bloomberg Tech", "url": "https://news.google.com/rss/search?q=site:bloomberg.com+technology&hl=en-US&gl=US&ceid=US:en", "lang": "en"},
     {"name": "CNBC", "url": "https://www.cnbc.com/id/100003114/device/rss/rss.html", "lang": "en"},
+    {"name": "WSJ Markets", "url": "https://news.google.com/rss/search?q=site:wsj.com+markets&hl=en-US&gl=US&ceid=US:en", "lang": "en"},
     {"name": "Financial Times", "url": "https://news.google.com/rss/search?q=site:ft.com+markets&hl=en-US&gl=US&ceid=US:en", "lang": "en"},
     # ── 아시아 ──
     {"name": "Nikkei Asia", "url": "https://asia.nikkei.com/rss/feed/nar", "lang": "en"},
-    # ── 반도체·테크 전문 ──
+    # ── 반도체·테크 전문 (5개) ──
     {"name": "TrendForce", "url": "https://www.trendforce.com/news/feed/", "lang": "en"},
     {"name": "Digitimes", "url": "https://news.google.com/rss/search?q=site:digitimes.com+chips+OR+semiconductor&hl=en-US&gl=US&ceid=US:en", "lang": "en"},
+    {"name": "SemiAnalysis", "url": "https://semianalysis.com/feed/", "lang": "en"},
+    {"name": "Tom's Hardware", "url": "https://www.tomshardware.com/feeds/all", "lang": "en"},
+    {"name": "AnandTech", "url": "https://www.anandtech.com/rss/", "lang": "en"},
 ]
 
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) NODEResearchBot/1.0"
