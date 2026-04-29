@@ -204,6 +204,8 @@ def _handle_command(msg: dict):
         _cmd_card(args)
     elif cmd in ("/dart", "/d"):
         _cmd_dart(args)
+    elif cmd in ("/news", "/n"):
+        _cmd_news(args)
     else:
         return False
 
@@ -282,6 +284,10 @@ def _cmd_help():
         "• /dart 삼성전자 — 특정 기업 (오늘)\n"
         "• /dart 어제 삼성전자 — 어제 + 특정 기업\n"
         "• /dart 2026-04-29 — 특정 날짜\n\n"
+        "<b>📰 뉴스 헤드라인 조회</b>\n"
+        "• /news — 오늘 (최근 24h) 핵심 매체\n"
+        "• /news 어제 — 어제~오늘 (48h)\n"
+        "• /news 반도체 — 키워드 검색 (Google News)\n\n"
         "<b>⚙️ 관리</b>\n"
         "• /queue — 대기 카드 요약 + 일괄 처리\n"
         "• /mute [분] — N분간 중지 (기본 60, 최대 1440)\n"
@@ -391,6 +397,80 @@ def _html_escape(text: str) -> str:
         .replace("<", "&lt;")
         .replace(">", "&gt;")
     )
+
+
+# ===== /news 명령어 (RSS 헤드라인 조회) =====
+
+def _cmd_news(args: list):
+    """/news [기간|키워드] — RSS 헤드라인 조회.
+
+    인자 규칙:
+    - 없음 또는 "오늘": 핵심 매체 최근 24h
+    - "어제": 24h~48h
+    - 그 외: Google News RSS 키워드 검색 (한글 우선)
+    """
+    from telegram_bot.issue_bot.collectors.rss_query import (
+        fetch_news_headlines, search_keyword_news,
+    )
+
+    is_keyword_search = False
+    keyword = None
+
+    if not args or args[0] in ("오늘", "today"):
+        max_age = 24
+        max_per = 5
+        label = "오늘 (최근 24h)"
+    elif args[0] in ("어제", "yesterday"):
+        max_age = 48
+        max_per = 8
+        label = "어제~오늘 (48h)"
+    else:
+        is_keyword_search = True
+        keyword = " ".join(args)
+        label = f"키워드: <b>{_html_escape(keyword)}</b>"
+
+    send_admin_dm(f"📰 뉴스 조회 중... ({label})", parse_mode="HTML")
+
+    if is_keyword_search:
+        items = search_keyword_news(keyword, max_results=30)
+    else:
+        items = fetch_news_headlines(max_age_hours=max_age, max_per_feed=max_per)
+
+    if not items:
+        send_admin_dm(f"📭 뉴스 없음 ({label})", parse_mode="HTML")
+        return
+
+    header = (
+        f"<b>📰 뉴스 헤드라인 — {label}</b>\n"
+        f"({len(items)}건)\n"
+        + "─" * 25 + "\n"
+    )
+
+    lines = [header]
+    cur_len = len(header)
+    shown = 0
+
+    for i, it in enumerate(items, 1):
+        line = (
+            f"{i}. <b>{_html_escape(it['source'])}</b>\n"
+            f"   {_html_escape(it['title'][:140])}\n"
+            f"   <a href=\"{it['link']}\">원본</a>\n"
+        )
+
+        if cur_len + len(line) > 3800:
+            lines.append(f"\n... (이하 {len(items) - shown}건 생략)")
+            break
+
+        lines.append(line)
+        cur_len += len(line)
+        shown += 1
+
+    lines.append(
+        "\n💡 <b>카드 만들기</b>: 위 URL을 <code>/card &lt;URL&gt;</code> 또는 "
+        "URL만 단독 입력하면 메리츠 스타일 카드 생성"
+    )
+
+    send_admin_dm("\n".join(lines), parse_mode="HTML")
 
 
 # ===== /card 명령어 (on-demand 카드 생성) =====
