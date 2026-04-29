@@ -262,12 +262,17 @@ def _cmd_dart(args: list):
     corp_parts = []
     report_kw = None
     report_patterns = None
+    quarter_filter = None
 
     for arg in args:
         # 0. 보고서 키워드 마커? (#report:실적)
         if arg.startswith("#report:"):
             report_kw = arg[len("#report:"):].strip()
             report_patterns = REPORT_KEYWORDS.get(report_kw)
+            continue
+        # 0-1. 분기 마커? (#quarter:1Q26)
+        if arg.startswith("#quarter:"):
+            quarter_filter = arg[len("#quarter:"):].strip()
             continue
         # 1. 날짜?
         parsed_date = parse_date_arg(arg)
@@ -292,9 +297,10 @@ def _cmd_dart(args: list):
             f" · {from_dt.strftime('%H:%M')}~{to_dt.strftime('%H:%M')}"
         )
     label_report = f" · 📄 <i>{_html_escape(report_kw)}</i>" if report_kw else ""
+    label_quarter = f" · {_html_escape(quarter_filter)}" if quarter_filter else ""
 
     send_admin_dm(
-        f"📋 DART 조회 중... ({label_date}{label_time}{label_extra}{label_report})",
+        f"📋 DART 조회 중... ({label_date}{label_time}{label_extra}{label_report}{label_quarter})",
         parse_mode="HTML",
     )
 
@@ -303,6 +309,22 @@ def _cmd_dart(args: list):
         page_count=100,
         report_patterns=report_patterns,
     )
+
+    # 분기 필터 (사용자가 "1Q26" 명시한 경우)
+    if quarter_filter and items:
+        from telegram_bot.issue_bot.collectors.dart_query import estimate_quarter_from_date
+        # 정확 매칭 (1Q26)
+        if len(quarter_filter) == 4:  # "1Q26"
+            items = [
+                it for it in items
+                if estimate_quarter_from_date(it.get("rcept_dt", "")) == quarter_filter
+            ]
+        # 분기만 ("1Q") — 모든 1Q 통과 (연도 무관, 사실상 사용자 의도상 가장 최근)
+        elif len(quarter_filter) == 2:  # "1Q"
+            items = [
+                it for it in items
+                if estimate_quarter_from_date(it.get("rcept_dt", "")).startswith(quarter_filter)
+            ]
 
     # 시간 범위 필터 (rcept_dt = YYYYMMDDHHMM)
     if from_dt is not None and to_dt is not None:
@@ -369,21 +391,34 @@ def _cmd_dart(args: list):
     lines = [header]
     cur_len = len(header)
 
+    from telegram_bot.issue_bot.collectors.dart_query import estimate_quarter_from_date
+
     for i, it in enumerate(final_items, 1):
         dt_str = it.get("rcept_dt", "")
         time_label = "--:--"
+        date_label = ""
+        if len(dt_str) >= 8:
+            date_label = f"{dt_str[4:6]}/{dt_str[6:8]}"
         if len(dt_str) >= 12:
             time_label = f"{dt_str[8:10]}:{dt_str[10:12]}"
 
         corp = _html_escape(it.get("corp_name", ""))
         report = _html_escape(it.get("report_nm", "").strip())
 
+        # 분기 추정 (잠정실적·정기보고서일 때 표시)
+        quarter = ""
+        if any(p in it.get("report_nm", "") for p in ["실적", "분기보고서", "반기보고서", "사업보고서", "손익구조"]):
+            q = estimate_quarter_from_date(dt_str)
+            if q:
+                quarter = f" · <b>{q}</b>"
+
         # 새 형식:
-        # [HH:MM] 기업명 — 보고서명 (헤드라인)
-        # 📋 DART · 원본 (작게)
-        head_line = f"\n<b>{i}.</b> [{time_label}] <b>{corp}</b> — {report}"
-        meta_line = f"   <i>📋 DART · <a href=\"{it['url']}\">원본</a></i>"
-        block = head_line + "\n" + meta_line + "\n"
+        # [MM/DD HH:MM] 기업명 — 보고서명 · 1Q26
+        # https://dart.fss.or.kr/... (코드 블록 — 복사 가능)
+        date_time = f"{date_label} {time_label}".strip()
+        head_line = f"\n<b>{i}.</b> [{date_time}] <b>{corp}</b> — {report}{quarter}"
+        url_line = f"   <code>{_html_escape(it['url'])}</code>"
+        block = head_line + "\n" + url_line + "\n"
 
         if cur_len + len(block) > 3800:
             lines.append(f"\n<i>... (이하 {len(final_items) - i + 1}건 생략)</i>")
