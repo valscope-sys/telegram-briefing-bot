@@ -1,26 +1,12 @@
 {
   "_meta": {
-    "description": "DART report_nm → Template + Priority 매핑. 2026-04-23 사용자 정책 대폭 간소화: 실적·품목허가·Capex·임상은 rule-based 즉시 HIGH/URGENT. M&A/유증·무증/CB·EB/공급계약해지는 매핑 제거해 Haiku가 규모·의미 판단. 나머지는 NORMAL(카드 X) 또는 SKIP.",
-    "version": "2.0",
-    "last_updated": "2026-04-23"
+    "description": "DART report_nm → Template + Priority 매핑. 2026-04-23 사용자 정책 대폭 간소화: 실적·품목허가·Capex·임상은 rule-based 즉시 HIGH/URGENT. M&A/유증·무증/CB·EB/공급계약해지는 매핑 제거해 Haiku가 규모·의미 판단. 나머지는 NORMAL(카드 X) 또는 SKIP. 2026-04-29 skip_patterns 6종 추가(비용 절감): 종속회사의주요경영사항·외부감사실시현황·내부회계관리제도·지속가능경영보고서·지배구조보고서·소액공모.",
+    "version": "2.1",
+    "last_updated": "2026-04-29"
   },
 
   "mappings": {
-    "영업실적등에대한전망(공정공시)": {
-      "template": "B",
-      "priority": "URGENT",
-      "note": "잠정실적 — 시장 반응 큰 핵심 공시"
-    },
-    "연결재무제표기준영업실적등에대한전망(공정공시)": {
-      "template": "B",
-      "priority": "URGENT",
-      "note": "연결 잠정실적"
-    },
-    "매출액또는손익구조30%(대규모법인은15%)이상변경": {
-      "template": "B",
-      "priority": "URGENT",
-      "note": "실적 서프라이즈/쇼크 — 자동 URGENT"
-    },
+    "_2026-04-29_실적3종_자동카드_제거": "사용자 정책: 무차별 자동 카드 X, 기업·규모·파급성 기반 선별. Haiku가 본문·시총·Peer 보고 판단. 시스템 프롬프트의 [실적 공시 가점 가이드] 참조.",
 
     "품목허가": {
       "template": "B",
@@ -267,7 +253,13 @@
     "매매거래정지기간변경",
     "수시공시의무관련사항(공정공시)",
     "감사보고서",
-    "연결감사보고서"
+    "연결감사보고서",
+    "종속회사의주요경영사항",
+    "외부감사실시현황",
+    "내부회계관리제도",
+    "지속가능경영보고서",
+    "지배구조보고서",
+    "소액공모"
   ],
 
   "prefix_rules": {
