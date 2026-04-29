@@ -415,10 +415,21 @@ def _fetch_article_metadata(url: str) -> dict:
 
 
 def _create_card_from_url(url: str):
-    """URL → 본문 fetch → 이슈 객체 생성 → State 1 카드 발송."""
-    from telegram_bot.issue_bot.approval.bot import send_raw_approval_card
+    """URL → 본문 fetch → 즉시 Sonnet 본문 생성 → 미리보기 카드 발송.
 
-    send_admin_dm(f"📋 카드 생성 중...\n<code>{url[:80]}</code>", parse_mode="HTML")
+    2026-04-29 옵션 A: 자동 폴링 OFF 후 raw 카드 단계 의미 약함.
+    사용자가 직접 URL 보낸 거라 거절 거의 0 → 즉시 미리보기로 직행.
+    클릭 1번 + 대기 1번으로 발송 가능.
+    """
+    from telegram_bot.issue_bot.approval.bot import (
+        send_raw_approval_card,
+        generate_preview_for_issue,
+    )
+
+    send_admin_dm(
+        f"📋 카드 + 본문 생성 중... (10~20초)\n<code>{url[:80]}</code>",
+        parse_mode="HTML",
+    )
 
     meta = _fetch_article_metadata(url)
     if "error" in meta:
@@ -447,7 +458,6 @@ def _create_card_from_url(url: str):
     issue_id = f"ondemand_{ts}_{url_hash}"
 
     # 이슈 객체 (filter_event 우회 — 사용자 직접 트리거니 무조건 통과)
-    # 사용자 정책 정렬: priority HIGH 고정, 사용자가 [✅ 발송] 또는 [❌ 스킵] 결정
     issue = {
         "id": issue_id,
         "source": "ON_DEMAND",
@@ -482,16 +492,23 @@ def _create_card_from_url(url: str):
     }
 
     try:
+        # 1. raw 카드 발송 (admin_msg_id 저장용 — 이후 미리보기로 edit하려면 필요)
         result = send_raw_approval_card(issue)
-        if result.get("ok"):
+        if not result.get("ok"):
+            send_admin_dm(f"⚠️ 카드 발송 실패: {result.get('error')}")
+            return
+
+        # 2. 즉시 Sonnet 본문 생성 + 미리보기 카드로 자동 전환 (edit)
+        gen_result = generate_preview_for_issue(issue_id)
+        if not gen_result.get("ok"):
             send_admin_dm(
-                "✅ 카드 생성 완료. 위 카드의 버튼으로 처리하세요:\n"
-                "• [👁 미리보기] — Sonnet 본문 생성 후 확인\n"
-                "• [✅ 바로 발송] — 본문 생성 + 즉시 채널 발송\n"
-                "• [❌ 스킵] — 발송 취소"
+                f"⚠️ 본문 자동 생성 실패: {gen_result.get('error')}\n"
+                f"위 카드의 [👁 미리보기] 버튼으로 재시도하거나 [❌ 스킵]으로 취소."
             )
-        else:
-            send_admin_dm(f"⚠️ 카드 생성 실패: {result.get('error')}")
+            return
+
+        # 카드는 이미 미리보기로 전환됨 (edit_admin_message). 추가 안내 불필요.
+        # 사용자는 카드 본문 보고 [✅ 발송] / [✏️ 수정] / [❌ 스킵] 결정.
     except Exception as e:
         traceback.print_exc()
         send_admin_dm(f"⚠️ 처리 중 오류: {e}")
