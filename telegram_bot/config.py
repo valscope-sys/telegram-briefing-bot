@@ -33,6 +33,14 @@ DART_API_KEY = os.getenv("DART_API_KEY", "")
 
 # === 이슈 봇 설정 ===
 ISSUE_BOT_ENABLED = os.getenv("ISSUE_BOT_ENABLED", "true").lower() == "true"
+# 추가 허용 chat IDs (그룹/개인) — 콤마 구분.
+# 그룹 chat_id는 음수 (-1001234567890), 개인 chat_id는 양수.
+# TELEGRAM_ADMIN_CHAT_ID는 자동 포함되며 추가로 등록할 chat만 적으면 됨.
+# 멤버 추가/제거는 텔레그램 그룹 자체 기능 사용 (코드 수정 X).
+TELEGRAM_ALLOWED_CHAT_IDS = [
+    s.strip() for s in os.getenv("TELEGRAM_ALLOWED_CHAT_IDS", "").split(",")
+    if s.strip()
+]
 # 2026-04-29: C 모드 (풀 수동) 도입 — 자동 폴링 분리 플래그.
 # false면 RSS·DART·SEC 자동 수집·필터·카드 발송 OFF (Haiku 비용 거의 0).
 # poller(/card on-demand)는 그대로 작동하므로 admin DM URL → 카드 생성 가능.

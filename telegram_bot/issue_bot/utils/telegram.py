@@ -1,10 +1,12 @@
 """텔레그램 API 래퍼 — 이슈봇 전용
 
-기존 telegram_bot/sender.py와 공존. 이슈봇은 HTML 모드 + 인라인 버튼 + DM 대상.
+기존 telegram_bot/sender.py와 공존. 이슈봇은 HTML 모드 + 인라인 버튼.
+다중 chat 지원: thread-local current_chat으로 sender에게 응답 자동 발송.
 """
 import os
 import time
 import datetime
+import threading
 import requests
 import pytz
 
@@ -12,10 +14,46 @@ from telegram_bot.config import (
     TELEGRAM_BOT_TOKEN,
     TELEGRAM_CHANNEL_ID,
     TELEGRAM_ADMIN_CHAT_ID,
+    TELEGRAM_ALLOWED_CHAT_IDS,
 )
 
 KST = pytz.timezone("Asia/Seoul")
 API_BASE = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}"
+
+
+# ===== 다중 chat 지원 (그룹/개인) =====
+
+_current_chat = threading.local()
+
+
+def set_current_chat(chat_id):
+    """현재 처리 중인 메시지의 chat_id 저장 (thread-local).
+    poller가 메시지 받을 때마다 호출 → send_admin_dm이 자동으로 sender에게 응답.
+    """
+    _current_chat.chat_id = str(chat_id) if chat_id is not None else None
+
+
+def get_current_chat():
+    """현재 chat_id 반환. 없으면 ADMIN으로 fallback (자동 발송 등 컨텍스트 외 케이스)."""
+    cid = getattr(_current_chat, "chat_id", None)
+    return cid or (str(TELEGRAM_ADMIN_CHAT_ID) if TELEGRAM_ADMIN_CHAT_ID else None)
+
+
+def is_allowed_chat(chat_id) -> bool:
+    """이 chat_id가 봇 명령어 사용 허용된 곳인지 체크.
+
+    허용 대상:
+    - TELEGRAM_ADMIN_CHAT_ID (메인 관리자 1명, 호환)
+    - TELEGRAM_ALLOWED_CHAT_IDS (콤마 구분 — 그룹/추가 사용자)
+    """
+    if chat_id is None:
+        return False
+    cid = str(chat_id)
+    if TELEGRAM_ADMIN_CHAT_ID and cid == str(TELEGRAM_ADMIN_CHAT_ID):
+        return True
+    if cid in TELEGRAM_ALLOWED_CHAT_IDS:
+        return True
+    return False
 ISSUE_BOT_DIR = os.path.join(
     os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
     "history",
@@ -247,12 +285,20 @@ def send_channel_photo(photo_url, caption, parse_mode="HTML"):
 
 def send_admin_dm(text, reply_markup=None, parse_mode="HTML",
                   reply_to_message_id=None, force_reply=False):
-    """관리자 개인 DM으로 발송 (승인 카드 등)"""
-    if not TELEGRAM_BOT_TOKEN or not TELEGRAM_ADMIN_CHAT_ID:
-        print("[ISSUE_BOT] 관리자 DM 환경변수 누락")
+    """sender chat (또는 ADMIN fallback)으로 발송. 다중 chat 지원.
+
+    poller가 set_current_chat(chat_id)로 컨텍스트 설정 → 이 함수가
+    자동으로 그 chat에 응답. 자동 발송(스케줄·외부 트리거)은 ADMIN으로 fallback.
+    """
+    if not TELEGRAM_BOT_TOKEN:
+        print("[ISSUE_BOT] BOT_TOKEN 누락")
+        return None
+    target = get_current_chat()
+    if not target:
+        print("[ISSUE_BOT] chat_id 없음 (ADMIN_CHAT_ID 미설정)")
         return None
     payload = {
-        "chat_id": int(TELEGRAM_ADMIN_CHAT_ID),
+        "chat_id": int(target),
         "text": text,
         "parse_mode": parse_mode,
         "disable_web_page_preview": True,
@@ -270,19 +316,23 @@ def send_admin_dm(text, reply_markup=None, parse_mode="HTML",
 
 
 def send_admin_dm_photo(photo_url, caption, reply_markup=None, parse_mode="HTML"):
-    """관리자 DM에 사진 + 캡션 + 버튼. 캡션 1024자 초과 시 사진+텍스트 분할."""
-    if not TELEGRAM_BOT_TOKEN or not TELEGRAM_ADMIN_CHAT_ID:
+    """sender chat에 사진 + 캡션 + 버튼. 캡션 1024자 초과 시 사진+텍스트 분할."""
+    if not TELEGRAM_BOT_TOKEN:
         return None
+    target = get_current_chat()
+    if not target:
+        return None
+    target_int = int(target)
 
     if caption and len(caption) > 1024:
         # 1단계: 사진 (버튼 없음)
         _api_call("sendPhoto", {
-            "chat_id": int(TELEGRAM_ADMIN_CHAT_ID),
+            "chat_id": target_int,
             "photo": photo_url,
         })
         # 2단계: 텍스트 카드 (버튼 포함)
         payload = {
-            "chat_id": int(TELEGRAM_ADMIN_CHAT_ID),
+            "chat_id": target_int,
             "text": caption,
             "parse_mode": parse_mode,
             "disable_web_page_preview": True,
@@ -292,7 +342,7 @@ def send_admin_dm_photo(photo_url, caption, reply_markup=None, parse_mode="HTML"
         return _api_call("sendMessage", payload)
 
     payload = {
-        "chat_id": int(TELEGRAM_ADMIN_CHAT_ID),
+        "chat_id": target_int,
         "photo": photo_url,
         "caption": caption or "",
         "parse_mode": parse_mode,
@@ -336,11 +386,14 @@ def extract_og_image(url: str) -> str:
 
 
 def edit_admin_message(message_id, text=None, reply_markup=None, parse_mode="HTML"):
-    """관리자에게 보낸 메시지 수정 (버튼 업데이트 등)"""
-    if not TELEGRAM_BOT_TOKEN or not TELEGRAM_ADMIN_CHAT_ID:
+    """sender chat의 메시지 수정 (버튼 업데이트 등). 다중 chat 지원."""
+    if not TELEGRAM_BOT_TOKEN:
+        return None
+    target = get_current_chat()
+    if not target:
         return None
     payload = {
-        "chat_id": int(TELEGRAM_ADMIN_CHAT_ID),
+        "chat_id": int(target),
         "message_id": message_id,
     }
     if text is not None:

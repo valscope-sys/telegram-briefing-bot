@@ -942,13 +942,26 @@ def run_poller(stop_event=None, interval_s: int = 2):
                     offset = max(offset, upd["update_id"] + 1)
                     try:
                         if "callback_query" in upd:
-                            _handle_callback(upd["callback_query"])
+                            cb = upd["callback_query"]
+                            # 콜백 버튼 누른 chat을 컨텍스트로 (그룹/개인)
+                            from telegram_bot.issue_bot.utils.telegram import (
+                                set_current_chat, is_allowed_chat,
+                            )
+                            cb_chat = cb.get("message", {}).get("chat", {}).get("id")
+                            if not is_allowed_chat(cb_chat):
+                                continue
+                            set_current_chat(cb_chat)
+                            _handle_callback(cb)
                         elif "message" in upd:
                             msg = upd["message"]
-                            # 관리자 채팅만 처리 (보안)
-                            from telegram_bot.config import TELEGRAM_ADMIN_CHAT_ID
-                            if TELEGRAM_ADMIN_CHAT_ID and str(msg.get("chat", {}).get("id", "")) != str(TELEGRAM_ADMIN_CHAT_ID):
+                            chat_id = msg.get("chat", {}).get("id")
+                            # 다중 chat 지원: ADMIN + ALLOWED_CHAT_IDS 화이트리스트
+                            from telegram_bot.issue_bot.utils.telegram import (
+                                set_current_chat, is_allowed_chat,
+                            )
+                            if not is_allowed_chat(chat_id):
                                 continue
+                            set_current_chat(chat_id)
                             text = (msg.get("text") or "").strip()
                             if "reply_to_message" in msg:
                                 _handle_edit_reply(msg)
