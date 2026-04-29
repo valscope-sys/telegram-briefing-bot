@@ -52,7 +52,8 @@ def parse_date_arg(arg: str):
 
 
 def fetch_dart_list(date: datetime.date, corp_name: str = None,
-                    corp_code: str = None, page_count: int = 100) -> list:
+                    corp_code: str = None, page_count: int = 100,
+                    report_patterns: list = None) -> list:
     """DART list.json 조회.
 
     Args:
@@ -128,6 +129,14 @@ def fetch_dart_list(date: datetime.date, corp_name: str = None,
                     r for r in results
                     if cname in r.get("corp_name", "").lower()
                 ]
+
+        # 보고서 종류 필터 (사용자가 "실적", "자사주" 등 명시한 경우)
+        if report_patterns:
+            patterns_lower = [p.lower() for p in report_patterns]
+            results = [
+                r for r in results
+                if any(p in r.get("report_nm", "").lower() for p in patterns_lower)
+            ]
 
         return results
     except Exception as e:

@@ -254,13 +254,21 @@ def _cmd_dart(args: list):
         parse_date_arg, fetch_dart_list, filter_signal_disclosures,
     )
     from telegram_bot.issue_bot.collectors.rss_query import parse_time_arg
+    from telegram_bot.issue_bot.utils.nlu import REPORT_KEYWORDS
 
     date = _dt.date.today()
     from_dt = None
     to_dt = None
     corp_parts = []
+    report_kw = None
+    report_patterns = None
 
     for arg in args:
+        # 0. 보고서 키워드 마커? (#report:실적)
+        if arg.startswith("#report:"):
+            report_kw = arg[len("#report:"):].strip()
+            report_patterns = REPORT_KEYWORDS.get(report_kw)
+            continue
         # 1. 날짜?
         parsed_date = parse_date_arg(arg)
         if parsed_date and from_dt is None:
@@ -283,13 +291,18 @@ def _cmd_dart(args: list):
         label_time = (
             f" · {from_dt.strftime('%H:%M')}~{to_dt.strftime('%H:%M')}"
         )
+    label_report = f" · 📄 <i>{_html_escape(report_kw)}</i>" if report_kw else ""
 
     send_admin_dm(
-        f"📋 DART 조회 중... ({label_date}{label_time}{label_extra})",
+        f"📋 DART 조회 중... ({label_date}{label_time}{label_extra}{label_report})",
         parse_mode="HTML",
     )
 
-    items = fetch_dart_list(date, corp_name=corp_name, page_count=100)
+    items = fetch_dart_list(
+        date, corp_name=corp_name,
+        page_count=100,
+        report_patterns=report_patterns,
+    )
 
     # 시간 범위 필터 (rcept_dt = YYYYMMDDHHMM)
     if from_dt is not None and to_dt is not None:
@@ -313,13 +326,13 @@ def _cmd_dart(args: list):
     if not items_filtered:
         if items:
             msg = (
-                f"📭 <b>주요 공시 없음</b> — {label_date}{label_time}{label_extra}\n"
-                f"<i>전체 {len(items)}건 중 노이즈 필터 후 0건.</i>\n"
-                f"기업명·시간 범위 다시 확인하거나 다른 날짜 시도."
+                f"📭 <b>주요 공시 없음</b> — {label_date}{label_time}{label_extra}{label_report}\n"
+                f"<i>전체 {len(items)}건 중 노이즈/보고서 필터 후 0건.</i>\n"
+                f"보고서 종류 빼거나 다른 날짜 시도."
             )
         else:
             msg = (
-                f"📭 <b>공시 없음</b> — {label_date}{label_time}{label_extra}\n"
+                f"📭 <b>공시 없음</b> — {label_date}{label_time}{label_extra}{label_report}\n"
                 f"<i>DART 응답 0건 (해당 조건에 매칭 X).</i>\n"
                 f"기업명 정확히 입력했는지 확인 (예: \"대한전선\")."
             )

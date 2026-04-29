@@ -20,6 +20,7 @@ import io
 import json
 import os
 import re
+import threading
 import xml.etree.ElementTree as ET
 import zipfile
 
@@ -42,6 +43,10 @@ DART_CORPCODE_URL = "https://opendart.fss.or.kr/api/corpCode.xml"
 # 메모리 캐시
 _corp_map_cache = None  # {corp_code: {"name", "stock_code", ...}}
 _name_index = None      # {정규화된 회사명: corp_code}
+
+# 백그라운드 다운로드 상태
+_download_lock = threading.Lock()
+_download_in_progress = False
 
 
 def _normalize_name(name: str) -> str:
@@ -120,34 +125,79 @@ def _download_and_cache():
         return False
 
 
-def _load_cache():
-    """캐시 로드 + 메모리 인덱싱."""
+def _do_load_cache_file():
+    """디스크 캐시 → 메모리 인덱싱 (다운로드 X, 파일이 있다고 가정)."""
     global _corp_map_cache, _name_index
-    if _corp_map_cache is not None:
-        return
-
-    if not _is_cache_fresh():
-        if not _download_and_cache():
-            _corp_map_cache = {}
-            _name_index = {}
-            return
-
     try:
         with open(CACHE_PATH, "r", encoding="utf-8") as f:
             _corp_map_cache = json.load(f)
-        # 정규화 이름 → corp_code 인덱스 (정확 매칭용)
         _name_index = {}
         for code, info in _corp_map_cache.items():
             normalized = _normalize_name(info.get("name", ""))
-            if normalized:
-                # 동명 회사는 첫 번째만 (보통 상장사 우선)
-                if normalized not in _name_index:
-                    _name_index[normalized] = code
+            if normalized and normalized not in _name_index:
+                _name_index[normalized] = code
         print(f"[DART_CORP_CODES] 메모리 인덱싱 완료 ({len(_corp_map_cache):,}개)")
     except Exception as e:
         print(f"[DART_CORP_CODES] 캐시 로드 실패: {e}")
         _corp_map_cache = {}
         _name_index = {}
+
+
+def _async_download_and_load():
+    """백그라운드 스레드에서 다운로드 + 로드. 사용자 차단 X."""
+    global _download_in_progress
+    try:
+        if _download_and_cache():
+            _do_load_cache_file()
+    finally:
+        _download_in_progress = False
+
+
+def trigger_async_download_if_needed():
+    """캐시 없거나 만료면 백그라운드 다운로드 시작 (즉시 반환).
+
+    main.py 봇 시작 시 호출해서 사용자 첫 호출 전에 미리 준비.
+    """
+    global _download_in_progress
+    if _is_cache_fresh():
+        return False  # 이미 신선
+    with _download_lock:
+        if _download_in_progress:
+            return False  # 이미 진행 중
+        _download_in_progress = True
+    t = threading.Thread(target=_async_download_and_load, daemon=True)
+    t.start()
+    return True
+
+
+def _load_cache():
+    """캐시 로드 + 메모리 인덱싱.
+
+    동작:
+    - 캐시 신선하면 동기 로드 (즉시)
+    - 캐시 없거나 만료면 동기 다운로드 + 로드 (4분 정도, 첫 호출만)
+
+    백그라운드 다운로드는 trigger_async_download_if_needed() 별도 호출.
+    """
+    global _corp_map_cache, _name_index
+    if _corp_map_cache is not None:
+        return
+
+    if not _is_cache_fresh():
+        # 다운로드가 백그라운드에서 진행 중이면 즉시 빈 결과로 fallback
+        # (사용자 차단 X, 클라이언트 측 부분 매칭으로 작동)
+        with _download_lock:
+            if _download_in_progress:
+                _corp_map_cache = {}
+                _name_index = {}
+                return
+        # 진행 중 아니면 동기 다운로드 (이전 버전 호환)
+        if not _download_and_cache():
+            _corp_map_cache = {}
+            _name_index = {}
+            return
+
+    _do_load_cache_file()
 
 
 def find_corp_code(query: str, limit: int = 5) -> dict:

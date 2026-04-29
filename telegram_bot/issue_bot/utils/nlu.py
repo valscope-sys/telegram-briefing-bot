@@ -25,6 +25,69 @@ DART_KEYWORDS = (
 CARD_KEYWORDS = ("카드", "정리", "요약")  # URL과 함께 쓰일 때
 HELP_KEYWORDS = ("도움", "도움말", "help", "명령어", "사용법", "메뉴", "안내")
 
+# 보고서 종류 키워드 → DART report_nm 매칭 패턴
+# 사용자가 "실적·자사주·M&A" 같은 표현 쓰면 dart_query에서 결과 필터
+REPORT_KEYWORDS = {
+    "실적": ["실적", "손익구조", "30%변경", "15%변경"],
+    "잠정실적": ["(잠정)실적", "잠정실적"],
+    "자사주": ["자기주식"],
+    "공급계약": ["단일판매", "공급계약"],
+    "수주": ["단일판매", "공급계약"],
+    "유상증자": ["유상증자"],
+    "무상증자": ["무상증자"],
+    "증자": ["유상증자", "무상증자"],
+    "전환사채": ["전환사채"],
+    "신주인수권부사채": ["신주인수권부사채"],
+    "CB": ["전환사채"],
+    "BW": ["신주인수권부사채"],
+    "EB": ["교환사채"],
+    "M&A": ["회사합병", "회사분할", "타법인주식및출자증권취득", "영업양도", "영업양수"],
+    "합병": ["회사합병"],
+    "분할": ["회사분할"],
+    "인수": ["타법인주식및출자증권취득"],
+    "Capex": ["신규시설투자"],
+    "투자": ["신규시설투자"],
+    "증설": ["신규시설투자"],
+    "품목허가": ["품목허가"],
+    "FDA": ["품목허가"],
+    "임상": ["임상시험계획승인"],
+    "IR": ["기업설명회(IR)"],
+    "기업설명회": ["기업설명회"],
+    "배당": ["현금ㆍ현물배당", "주식배당", "배당"],
+    "주총": ["주주총회"],
+    "주주총회": ["주주총회"],
+    "정관": ["정관변경"],
+    "최대주주": ["최대주주"],
+    "감자": ["감자결정"],
+    "주식분할": ["주식분할"],
+    "주식병합": ["주식병합"],
+    "기업가치제고": ["기업가치제고계획"],
+    "Value-Up": ["기업가치제고계획"],
+    "밸류업": ["기업가치제고계획"],
+    "특허": ["특허권취득"],
+    "지분매각": ["타법인주식및출자증권처분"],
+    "거래정지": ["거래정지", "주권매매거래정지"],
+    "부도": ["부도발생"],
+    "회생": ["회생절차"],
+    "상장폐지": ["상장폐지"],
+}
+
+
+def extract_report_keyword(text: str) -> tuple:
+    """텍스트에서 보고서 종류 키워드 추출.
+
+    Returns:
+        (matched_keyword, report_patterns) 또는 (None, None)
+        예: "대한전선 실적 공시" → ("실적", ["실적", "손익구조", ...])
+    """
+    text_lower = text.lower()
+    # 긴 키워드 먼저 매칭 (Value-Up이 "Value"보다 먼저)
+    sorted_keys = sorted(REPORT_KEYWORDS.keys(), key=lambda k: -len(k))
+    for kw in sorted_keys:
+        if kw.lower() in text_lower:
+            return (kw, REPORT_KEYWORDS[kw])
+    return (None, None)
+
 # 날짜 표현 (한국어 → 정규화, 광범위 추가)
 DATE_PATTERNS = {
     "오늘": "오늘",
@@ -147,6 +210,15 @@ def _rule_nlu(text: str) -> str:
             remaining = remaining.replace(m.group(0), " ")
     if time_arg:
         args.append(time_arg)
+
+    # 4-5. 보고서 종류 키워드 추출 (DART일 때만 의미 있음)
+    if cmd == "/dart":
+        report_kw, _ = extract_report_keyword(remaining)
+        if report_kw:
+            # 마커 형식으로 args에 추가 — _cmd_dart가 분리해서 처리
+            args.append(f"#report:{report_kw}")
+            # 추출된 키워드는 remaining에서 제거 (회사명에 안 섞이도록)
+            remaining = re.sub(re.escape(report_kw), " ", remaining, flags=re.IGNORECASE)
 
     # 5. 의도 키워드 제거
     for kw in NEWS_KEYWORDS + DART_KEYWORDS:

@@ -208,6 +208,17 @@ def main():
         # poller(/card·/dart·/news on-demand)만 유지.
         from telegram_bot.issue_bot.approval.poller import run_poller
 
+        # DART corp_code 캐시 백그라운드 다운로드 (사용자 첫 /dart 호출 전에 준비)
+        # 캐시 없거나 30일 만료 시 다운로드 시작 (4분 정도). 사용자 차단 X.
+        try:
+            from telegram_bot.issue_bot.collectors.dart_corp_codes import (
+                trigger_async_download_if_needed,
+            )
+            if trigger_async_download_if_needed():
+                print("[SCHEDULER] DART corp_code 캐시 백그라운드 다운로드 시작 (4분 소요)")
+        except Exception as e:
+            print(f"[SCHEDULER] DART corp_code 캐시 트리거 실패: {e}")
+
         print("[SCHEDULER] 이슈봇 — on-demand 모드 (자동 폴링 X, /card · DM 핸들러만)")
 
         issue_bot_stop_event = threading.Event()
