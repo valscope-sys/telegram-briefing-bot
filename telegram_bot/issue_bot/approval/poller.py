@@ -200,6 +200,8 @@ def _handle_command(msg: dict):
         _cmd_resume()
     elif cmd in ("/help", "/h"):
         _cmd_help()
+    elif cmd in ("/card", "/c"):
+        _cmd_card(args)
     else:
         return False
 
@@ -273,9 +275,226 @@ def _cmd_help():
         "• /mute [분] — N분간 중지 (기본 60분, 최대 1440)\n"
         "• /stop — 오늘 자정까지 중지\n"
         "• /resume — 즉시 재개\n"
-        "• /help — 이 메시지"
+        "• /card &lt;URL&gt; — 사용자가 본 기사·공시 URL로 카드 생성 (on-demand)\n"
+        "• /help — 이 메시지\n\n"
+        "<i>💡 URL만 보내도 자동으로 카드 생성됩니다.</i>"
     )
     send_admin_dm(text, parse_mode="HTML")
+
+
+# ===== /card 명령어 (on-demand 카드 생성) =====
+
+import re as _re_mod
+import hashlib as _hashlib_mod
+
+_URL_PATTERN = _re_mod.compile(r"^https?://", _re_mod.IGNORECASE)
+
+
+def _cmd_card(args: list):
+    """/card <URL>  또는  /card <키워드>"""
+    if not args:
+        send_admin_dm(
+            "📋 <b>/card 사용법</b>\n\n"
+            "<b>1. URL로</b> (가장 정확):\n"
+            "<code>/card https://www.etnews.com/...</code>\n\n"
+            "<b>2. URL만 보내도 자동 인식</b>:\n"
+            "<code>https://buly.kr/...</code>\n\n"
+            "<b>3. 키워드 검색</b> (DART): <i>곧 지원 예정</i>\n"
+            "<code>/card 삼성전자 자사주 소각</code>",
+            parse_mode="HTML",
+        )
+        return
+
+    arg = " ".join(args).strip()
+
+    if _URL_PATTERN.match(arg):
+        _create_card_from_url(arg)
+    else:
+        send_admin_dm(
+            "⚠️ 키워드 검색은 곧 지원 예정.\n"
+            "지금은 URL만 가능: <code>/card https://...</code>",
+            parse_mode="HTML",
+        )
+
+
+def _detect_source_from_url(url: str) -> str:
+    """URL 도메인으로 매체명 추론 (Haiku 매체 가점에 활용됨)."""
+    u = url.lower()
+    mapping = [
+        ("dart.fss.or.kr", "DART"),
+        ("kind.krx.co.kr", "DART"),
+        ("etnews.com", "전자신문"),
+        ("zdnet.co.kr", "ZDNet Korea"),
+        ("businesspost.co.kr", "Business Post"),
+        ("trendforce", "TrendForce"),
+        ("digitimes", "Digitimes"),
+        ("counterpoint", "Counterpoint"),
+        ("omdia", "Omdia"),
+        ("idc.com", "IDC"),
+        ("gartner", "Gartner"),
+        ("semianalysis", "SemiAnalysis"),
+        ("reuters.com", "Reuters Tech"),
+        ("bloomberg.com", "Bloomberg Tech"),
+        ("nikkei.com", "Nikkei Asia"),
+        ("ft.com", "FT"),
+        ("wsj.com", "WSJ Tech"),
+        ("seekingalpha.com", "Seeking Alpha"),
+        ("sec.gov", "SEC"),
+        ("hankyung.com", "한국경제"),
+        ("mk.co.kr", "매일경제"),
+        ("yna.co.kr", "연합뉴스"),
+        ("buly.kr", "(단축URL — 매체 자동 감지 후 표시)"),
+    ]
+    for key, name in mapping:
+        if key in u:
+            return name
+    return ""
+
+
+def _guess_template_from_url(url: str) -> str:
+    """URL로 Template 추정."""
+    u = url.lower()
+    if "dart.fss.or.kr" in u or "kind.krx.co.kr" in u:
+        return "B"  # 국내 공시
+    if "sec.gov" in u:
+        return "A"  # 해외 IR (SEC 8-K)
+    return "C"  # 기본: 영문/한글 기사·리서치
+
+
+def _fetch_article_metadata(url: str) -> dict:
+    """URL에서 title, body, og:image, 최종 redirect URL 추출."""
+    import requests
+    from bs4 import BeautifulSoup
+
+    try:
+        res = requests.get(
+            url,
+            timeout=15,
+            allow_redirects=True,
+            headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) NODEResearchBot/1.0"},
+        )
+        if res.status_code != 200:
+            return {"error": f"HTTP {res.status_code}"}
+
+        final_url = str(res.url)
+        soup = BeautifulSoup(res.text, "lxml")
+
+        # title
+        title = ""
+        og_title = soup.find("meta", property="og:title")
+        if og_title and og_title.get("content"):
+            title = og_title["content"].strip()
+        elif soup.title and soup.title.string:
+            title = soup.title.string.strip()
+
+        # body 추출 (rss_adapter 패턴 재사용)
+        for tag in soup(["script", "style", "nav", "header", "footer", "aside", "form"]):
+            tag.decompose()
+        target = (
+            soup.find("article")
+            or soup.find("main")
+            or soup.find("div", class_=_re_mod.compile(r"(article|content|post|body|entry)", _re_mod.I))
+        )
+        if not target:
+            target = soup.body or soup
+        body = target.get_text(separator=" ", strip=True)
+        body = _re_mod.sub(r"\s+", " ", body)[:3000]
+
+        # og:image
+        og_img = soup.find("meta", property="og:image")
+        image_url = og_img["content"].strip() if og_img and og_img.get("content") else None
+
+        return {
+            "title": title,
+            "body": body,
+            "image_url": image_url,
+            "final_url": final_url,
+        }
+    except Exception as e:
+        return {"error": str(e)}
+
+
+def _create_card_from_url(url: str):
+    """URL → 본문 fetch → 이슈 객체 생성 → State 1 카드 발송."""
+    from telegram_bot.issue_bot.approval.bot import send_raw_approval_card
+
+    send_admin_dm(f"📋 카드 생성 중...\n<code>{url[:80]}</code>", parse_mode="HTML")
+
+    meta = _fetch_article_metadata(url)
+    if "error" in meta:
+        send_admin_dm(f"⚠️ URL fetch 실패: {meta['error']}\n다시 시도하거나 다른 URL 입력.")
+        return
+
+    final_url = meta.get("final_url") or url
+    title = meta.get("title") or final_url
+    body = meta.get("body") or ""
+    image_url = meta.get("image_url")
+
+    if len(body) < 100:
+        send_admin_dm(
+            f"⚠️ 본문이 너무 짧음 ({len(body)}자). 카드 생성 불가.\n"
+            f"제목: {title[:80]}\n"
+            f"URL이 paywall이거나 JS 렌더링 페이지일 수 있음."
+        )
+        return
+
+    source_name = _detect_source_from_url(final_url) or "사용자 요청"
+    template = _guess_template_from_url(final_url)
+
+    # 고유 ID
+    url_hash = _hashlib_mod.sha1(final_url.encode("utf-8")).hexdigest()[:8]
+    ts = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    issue_id = f"ondemand_{ts}_{url_hash}"
+
+    # 이슈 객체 (filter_event 우회 — 사용자 직접 트리거니 무조건 통과)
+    # 사용자 정책 정렬: priority HIGH 고정, 사용자가 [✅ 발송] 또는 [❌ 스킵] 결정
+    issue = {
+        "id": issue_id,
+        "source": "ON_DEMAND",
+        "source_url": final_url,
+        "source_id": final_url,
+        "fetched_at": datetime.datetime.now().isoformat(timespec="seconds"),
+        "ticker": None,
+        "company_name": source_name,
+        "corp_code": "",
+        "corp_cls": "",
+        "title": title[:200],
+        "report_nm_raw": None,
+        "report_nm_clean": None,
+        "body_excerpt": body[:1500],
+        "original_content": body,
+        "original_excerpt": body[:500],
+        "category_hint": template,
+        "priority_hint": "HIGH",
+        "rule_match_reason": "사용자 on-demand 요청",
+        "event_type": "ondemand",
+        "date": datetime.datetime.now().date().isoformat(),
+        "image_url": image_url,
+        "article_group": "사용자 요청",
+        # filter_event 결과 격
+        "priority": "HIGH",
+        "category": template,
+        "sector": "기타",
+        "reason": "사용자 on-demand",
+        "significance": "",
+        "source_method": "ondemand",
+        "peer_map_used": [],
+    }
+
+    try:
+        result = send_raw_approval_card(issue)
+        if result.get("ok"):
+            send_admin_dm(
+                "✅ 카드 생성 완료. 위 카드의 버튼으로 처리하세요:\n"
+                "• [👁 미리보기] — Sonnet 본문 생성 후 확인\n"
+                "• [✅ 바로 발송] — 본문 생성 + 즉시 채널 발송\n"
+                "• [❌ 스킵] — 발송 취소"
+            )
+        else:
+            send_admin_dm(f"⚠️ 카드 생성 실패: {result.get('error')}")
+    except Exception as e:
+        traceback.print_exc()
+        send_admin_dm(f"⚠️ 처리 중 오류: {e}")
 
 
 def _start_edit_flow(issue_id: str):
@@ -438,10 +657,14 @@ def run_poller(stop_event=None, interval_s: int = 2):
                             from telegram_bot.config import TELEGRAM_ADMIN_CHAT_ID
                             if TELEGRAM_ADMIN_CHAT_ID and str(msg.get("chat", {}).get("id", "")) != str(TELEGRAM_ADMIN_CHAT_ID):
                                 continue
+                            text = (msg.get("text") or "").strip()
                             if "reply_to_message" in msg:
                                 _handle_edit_reply(msg)
-                            elif (msg.get("text") or "").startswith("/"):
+                            elif text.startswith("/"):
                                 _handle_command(msg)
+                            elif _URL_PATTERN.match(text):
+                                # URL만 보내면 /card 로 자동 처리
+                                _create_card_from_url(text.split()[0])
                     except Exception as e:
                         print(f"[POLLER] 업데이트 처리 오류: {e}")
                         traceback.print_exc()

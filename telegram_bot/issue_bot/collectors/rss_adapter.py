@@ -37,37 +37,32 @@ from telegram_bot.issue_bot.utils.telegram import extract_og_image
 #     역할 대체. 메가 빅테크 이슈는 Reuters Tech / Bloomberg Tech / 빅테크 1차 소스가
 #     이미 1차 보도.
 ISSUE_BOT_EXTRA_FEEDS = [
-    # 글로벌·아시아 종합
+    # ─── C 하이브리드 모드 (2026-04-29) — 메가 이슈만 자동, 노이즈 광역 제거 ───
+    # 제거된 피드: Yahoo Finance·TechMeme·Earnings Wire·Stock Movers
+    #   사유: 광역 키워드 큐레이션이라 노이즈 비율 높음. 매체 가점도 안 받음.
+    #   on-demand /card 명령어로 사용자가 직접 보완.
+    # 제거된 피드 (이전 라운드): TechCrunch·The Verge (gadget·게임 노이즈)
+
+    # 글로벌·아시아 종합 (1차 메가 보도)
     {"name": "Nikkei Asia", "url": "https://asia.nikkei.com/rss/feed/nar", "group": "해외"},
     {"name": "Seeking Alpha", "url": "https://seekingalpha.com/market_currents.xml", "group": "해외"},
-    # 미국 종합 마켓 (광역)
-    {"name": "Yahoo Finance", "url": "https://finance.yahoo.com/news/rssindex", "group": "해외"},
-    # 테크 전문 매체·큐레이션 (TechCrunch·The Verge 제거 — 2026-04-29)
-    {"name": "TechMeme", "url": "https://www.techmeme.com/feed.xml", "group": "해외"},
-    # Reuters/Bloomberg Technology (Google News 프록시)
+    # Reuters/Bloomberg Technology (광역 외신 — 매체 가점 적용)
     {"name": "Reuters Tech", "url": "https://news.google.com/rss/search?q=site:reuters.com+technology&hl=en-US&gl=US&ceid=US:en", "group": "해외"},
     {"name": "Bloomberg Tech", "url": "https://news.google.com/rss/search?q=site:bloomberg.com+technology&hl=en-US&gl=US&ceid=US:en", "group": "해외"},
-    # 빅테크·AI 회사 1차 소스 (공식 newsroom — 빈도 낮지만 1차 보도 가치)
-    # Microsoft Source / Anthropic News(GN) 는 24h+72h 0건으로 폐기 (2026-04-28 진단)
+    # 빅테크·AI 회사 1차 소스 (메가 이슈 1차 보도, 빈도 낮음 OK)
     {"name": "Google Blog", "url": "https://blog.google/rss/", "group": "해외"},
     {"name": "Meta Newsroom", "url": "https://about.fb.com/news/feed/", "group": "해외"},
     {"name": "Apple Newsroom", "url": "https://www.apple.com/newsroom/rss-feed.rss", "group": "해외"},
     {"name": "OpenAI Blog", "url": "https://openai.com/news/rss.xml", "group": "해외"},
     # 데이터센터·AI 인프라 전문 (Bloom·Oracle 같은 메가 인프라 직격)
     {"name": "DC Dynamics", "url": "https://www.datacenterdynamics.com/en/rss/", "group": "해외"},
-    # ─── Google News 키워드 RSS — 광역 자동 큐레이션 ───
-    # 단발 종목 이벤트 (폭락·계약취소·해지) — POET·Marvell 같은 케이스 캐치
-    {"name": "Stock Movers", "url": "https://news.google.com/rss/search?q=(plunge+OR+crash+OR+collapse+OR+cancel+OR+terminate+OR+halt)+(stock+OR+shares+OR+chip+OR+contract)&hl=en-US&gl=US&ceid=US:en", "group": "해외"},
-    # AI 자본 집행 (Bloom Oracle 2.8GW·NVIDIA $5조·Anthropic $40B 같은 메가 인프라)
+    # AI Capex (Bloom Oracle 2.8GW·NVIDIA $5조 같은 메가 인프라 — 광역이지만 키워드 좁음)
     {"name": "AI Capex", "url": "https://news.google.com/rss/search?q=(%22AI+infrastructure%22+OR+%22data+center%22+OR+HBM)+(billion+OR+investment+OR+capacity+OR+GW)&hl=en-US&gl=US&ceid=US:en", "group": "해외"},
-    # 어닝 시즌 자동 (beat·miss·guidance 변경)
-    {"name": "Earnings Wire", "url": "https://news.google.com/rss/search?q=(earnings+OR+guidance)+(beat+OR+miss+OR+raised+OR+cut)+(stock+OR+shares)&hl=en-US&gl=US&ceid=US:en", "group": "해외"},
-    # 분석가 단독 보도 — Apple/AI 분석가 Ming-Chi Kuo (OpenAI 폰·Apple 부품 단독)
+    # 분석가 단독 보도 — Ming-Chi Kuo (메가 이슈 1차)
     {"name": "Ming-Chi Kuo", "url": "https://news.google.com/rss/search?q=%22Ming-Chi+Kuo%22&hl=en-US&gl=US&ceid=US:en", "group": "해외"},
-    # 대만 반도체 공급망 (TSMC·UMC·Nanya Tech — 한국 메모리·파운드리 직격)
-    # 중국어(번체) RSS이지만 Sonnet이 한국어로 번역. Cahier de Market 자주 인용.
+    # 대만 반도체 공급망 (TSMC·UMC — 한국 메모리·파운드리 직격)
     {"name": "UDN Money TW", "url": "https://news.google.com/rss/search?q=site:money.udn.com&hl=zh-TW&gl=TW&ceid=TW:zh-Hant", "group": "해외"},
-    # 국내 IT/테크 전문
+    # 국내 1차 매체 (매체 가점 적용)
     {"name": "전자신문", "url": "https://rss.etnews.com/Section902.xml", "group": "국내"},
     {"name": "ZDNet Korea", "url": "https://feeds.feedburner.com/zdkorea", "group": "국내"},
     {"name": "Business Post", "url": "https://news.google.com/rss/search?q=site:businesspost.co.kr&hl=ko&gl=KR&ceid=KR:ko", "group": "국내"},

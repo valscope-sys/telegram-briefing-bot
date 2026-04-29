@@ -21,7 +21,8 @@ RE_FIRST_PERSON = re.compile(r"당사는|저희는|우리는|당사에|저희가
 RE_CERTAINTY = re.compile(r"확실히|분명히|반드시|틀림없이")
 RE_SPECULATION = re.compile(r"~한다는\s*얘기|~로\s*알려진|것으로\s*보여")
 RE_R8_EXTREME = re.compile(r"급등|폭등|수직상승|급락|폭락")
-RE_R8_RECOMMEND = re.compile(r"매수\s*추천|매도\s*권고|투자\s*의견")
+RE_R8_RECOMMEND = re.compile(r"매수\s*추천|매도\s*권고|투자\s*의견|\bBuy\b|\bSell\b|\bHold\b|강력\s*매수|강력\s*추천|필수\s*보유|최선호주|수혜주\b")
+RE_R8_TARGET_PRICE = re.compile(r"목표가\s*[\d,]+|적정\s*주가\s*[\d,]+|적정주가\s*[\d,]+|TP\s*[\d,]+", re.IGNORECASE)
 RE_R8_GOODBAD = re.compile(r"호재|악재")
 RE_R8_CROWD = re.compile(r"시장은\s[^.]*?\s?본")
 
@@ -88,7 +89,8 @@ def lint_r1_r8(text: str, template: str) -> list:
     # R8. 금지 표현
     for pattern, name in [
         (RE_R8_EXTREME, "급등/폭등/급락 등 극단 표현"),
-        (RE_R8_RECOMMEND, "매수추천/매도권고/투자의견"),
+        (RE_R8_RECOMMEND, "매수추천/매도권고/Buy/Sell/Hold/최선호주/수혜주 (컴플라이언스)"),
+        (RE_R8_TARGET_PRICE, "목표가/적정주가/TP 명시 (컴플라이언스)"),
         (RE_R8_GOODBAD, "호재/악재"),
         (RE_R8_CROWD, "시장은 ~라고 본다 (근거 없는 집단추정)"),
     ]:
