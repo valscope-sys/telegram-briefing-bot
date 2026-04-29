@@ -23,6 +23,32 @@ const CAT_LABELS = {
     "부동산":"부동산","만기일":"만기일","수동":"기타",
 };
 const DAYS_KR = ["일","월","화","수","목","금","토"];
+
+// 미국 티커 → 한글명 매핑 (telegram_bot/formatters/schedule.py US_TICKER_KR과 동일)
+const US_TICKER_KR = {
+    "AAPL":"애플","MSFT":"마이크로소프트","GOOGL":"구글(A)","GOOG":"구글(C)",
+    "AMZN":"아마존","META":"메타","NVDA":"엔비디아","TSLA":"테슬라",
+    "AMD":"AMD","INTC":"인텔","AVGO":"브로드컴","TSM":"TSMC",
+    "QCOM":"퀄컴","TXN":"텍사스인스트루먼트","ADI":"아날로그디바이시스",
+    "MU":"마이크론","AMAT":"어플라이드머티어리얼즈","LRCX":"램리서치",
+    "KLAC":"KLA","ASML":"ASML","ARM":"ARM",
+    "ORCL":"오라클","CRM":"세일즈포스","NOW":"서비스나우","SNOW":"스노우플레이크",
+    "PLTR":"팔란티어","NFLX":"넷플릭스","ADBE":"어도비","UBER":"우버",
+    "SNDK":"샌디스크","WDC":"웨스턴디지털","STX":"시게이트",
+    "LCID":"루시드","RIVN":"리비안","F":"포드","GM":"GM",
+    "PFE":"화이자","MRK":"머크","JNJ":"존슨앤드존슨","LLY":"일라이릴리",
+    "NVO":"노보노디스크","MRNA":"모더나","REGN":"리제네론",
+    "JPM":"JP모건","BAC":"뱅크오브아메리카","GS":"골드만삭스","MS":"모건스탠리",
+    "C":"씨티그룹","WFC":"웰스파고","V":"비자","MA":"마스터카드",
+    "BA":"보잉","CAT":"캐터필러","GE":"GE","LMT":"록히드마틴","RTX":"RTX",
+    "DE":"디어","XOM":"엑슨모빌","CVX":"쉐브론","COP":"코노코필립스",
+    "KO":"코카콜라","PEP":"펩시","WMT":"월마트","COST":"코스트코",
+    "UNH":"유나이티드헬스","NKE":"나이키","PG":"P&G","SBUX":"스타벅스",
+    "ABBV":"애브비","TMO":"써모피셔",
+    "CMCSA":"컴캐스트","AAOI":"어플라이드옵토",
+    "BABA":"알리바바","JD":"징둥닷컴","PDD":"핀둬둬","BIDU":"바이두",
+};
+
 // SHA-256 hash of admin password (change this)
 const ADMIN_HASH = "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3"; // "123"
 
@@ -84,6 +110,20 @@ function eventsOn(dateStr) {
     });
 }
 function catColor(cat) { return CAT_COLORS[cat] || "var(--dim)"; }
+
+// 미국실적 티커 → "한글(티커)" 표기 + EPS est. 노이즈 제거
+function localizeTitle(ev) {
+    let title = (ev && ev.title) || "";
+    // [EPS est. $X] / [EPS est. $-X] 제거
+    title = title.replace(/\s*\[EPS est\.\s*\$-?[\d.]+\]/g, "");
+    if (ev && ev.category === "미국실적") {
+        const m = title.match(/^([A-Z]{1,6})\b/);
+        if (m && US_TICKER_KR[m[1]]) {
+            title = `${US_TICKER_KR[m[1]]}(${m[1]})` + title.slice(m[1].length);
+        }
+    }
+    return title;
+}
 
 // === MINI CALENDAR ===
 function renderMiniCal() {
@@ -230,7 +270,7 @@ function renderUndatedBanner() {
         html += `<span class="undated-banner-label">${m+1}월 중</span>`;
         for (const ev of monthUndated) {
             const uc = ev.unconfirmed ? ' [미확인]' : '';
-            html += `<span class="undated-chip${ev.unconfirmed?' unconfirmed-chip':''}" ${adminAttr} style="border-color:${catColor(ev.category)};color:${catColor(ev.category)}" onclick="clickUndated(${JSON.stringify(ev).replace(/"/g,'&quot;')})">${ev.title}${uc}</span>`;
+            html += `<span class="undated-chip${ev.unconfirmed?' unconfirmed-chip':''}" ${adminAttr} style="border-color:${catColor(ev.category)};color:${catColor(ev.category)}" onclick="clickUndated(${JSON.stringify(ev).replace(/"/g,'&quot;')})">${localizeTitle(ev)}${uc}</span>`;
         }
     }
     if (weekUndated.length > 0) {
@@ -238,7 +278,7 @@ function renderUndatedBanner() {
             const wn = ev.week.split("W")[1];
             const uc = ev.unconfirmed ? ' [미확인]' : '';
             html += `<span class="undated-banner-label">${m+1}월 ${wn}주차</span>`;
-            html += `<span class="undated-chip${ev.unconfirmed?' unconfirmed-chip':''}" ${adminAttr} style="border-color:${catColor(ev.category)};color:${catColor(ev.category)}" onclick="clickUndated(${JSON.stringify(ev).replace(/"/g,'&quot;')})">${ev.title}${uc}</span>`;
+            html += `<span class="undated-chip${ev.unconfirmed?' unconfirmed-chip':''}" ${adminAttr} style="border-color:${catColor(ev.category)};color:${catColor(ev.category)}" onclick="clickUndated(${JSON.stringify(ev).replace(/"/g,'&quot;')})">${localizeTitle(ev)}${uc}</span>`;
         }
     }
     banner.innerHTML = html;
@@ -285,7 +325,8 @@ function renderMonth() {
                 else if (ds === ev.endDate) barCls += " range-end";
                 else barCls += " range-mid";
             }
-            html += `<div class="${barCls}" style="background:${catColor(ev.category)}" title="${ev.title}">${ev.title}</div>`;
+            const evTitleLocal = localizeTitle(ev);
+            html += `<div class="${barCls}" style="background:${catColor(ev.category)}" title="${evTitleLocal}">${evTitleLocal}</div>`;
         }
         if (dayEvents.length > MAX_EVENTS) {
             html += `<div class="more-events">+${dayEvents.length - MAX_EVENTS}건 더</div>`;
@@ -376,7 +417,7 @@ function renderWeek() {
                 <div class="week-event-time">${ev.time || "종일"}</div>
                 <div class="week-event-dot" style="background:${catColor(ev.category)}"></div>
                 <div class="week-event-info">
-                    <div class="week-event-title">${ev.title}</div>
+                    <div class="week-event-title">${localizeTitle(ev)}</div>
                     <div class="week-event-meta">${CAT_LABELS[ev.category]||ev.category}${ev.endDate ? " ("+ev.date+" ~ "+ev.endDate+")" : ""}</div>
                 </div>
             </div>`;
@@ -405,7 +446,7 @@ function renderDay() {
         for (const ev of dayEvs) {
             html += `<div class="day-event-card" style="border-left-color:${catColor(ev.category)}" onclick="showEventDetail(${JSON.stringify(ev).replace(/"/g,'&quot;')})">
                 <div class="day-event-card-body">
-                    <div class="day-event-card-title">${ev.title}</div>
+                    <div class="day-event-card-title">${localizeTitle(ev)}</div>
                     <div class="day-event-card-meta">${ev.time || "종일"} · ${CAT_LABELS[ev.category]||ev.category}${ev.endDate ? " · "+ev.date+" ~ "+ev.endDate : ""}</div>
                     ${ev.summary ? `<div class="day-event-card-summary">${ev.summary}</div>` : ""}
                     ${ev.link ? `<a class="day-event-card-link" href="${ev.link}" target="_blank" onclick="event.stopPropagation()">상세 보기 &rarr;</a>` : ""}
@@ -442,10 +483,11 @@ function showDetailPanel(dateStr) {
     } else {
         dayEvs.sort((a,b)=>(a.time||"99").localeCompare(b.time||"99"));
         for (const ev of dayEvs) {
+            const evTitleLocal = localizeTitle(ev);
             html += `<div class="detail-event" onclick="dayClick('${dateStr}')">
                 <div class="detail-event-title">
                     <span class="detail-event-dot" style="background:${catColor(ev.category)}"></span>
-                    ${ev.title}
+                    ${evTitleLocal}
                 </div>
                 <div class="detail-event-meta">${ev.time || "종일"} · ${CAT_LABELS[ev.category]||ev.category}</div>
                 ${ev.summary ? `<div class="detail-event-summary">${ev.summary}</div>` : ""}
@@ -491,17 +533,18 @@ function performSearch(query) {
 
     const scored = [];
     for (const ev of events) {
-        const title = (ev.title || "").toLowerCase();
+        const titleRaw = (ev.title || "").toLowerCase();
+        const titleLocal = localizeTitle(ev).toLowerCase();
         const summary = (ev.summary || "").toLowerCase();
         const cat = (CAT_LABELS[ev.category] || ev.category || "").toLowerCase();
         const date = (ev.date || "").toLowerCase();
-        const haystack = `${title} ${summary} ${cat} ${date}`;
+        const haystack = `${titleRaw} ${titleLocal} ${summary} ${cat} ${date}`;
 
         if (!terms.every(t => haystack.includes(t))) continue;
 
         // 점수: 제목 매치 우선, 미래 일정 우선
         let score = 0;
-        if (terms.every(t => title.includes(t))) score += 100;
+        if (terms.every(t => titleRaw.includes(t) || titleLocal.includes(t))) score += 100;
         if (terms.every(t => cat.includes(t))) score += 30;
         if (ev.date && ev.date >= today) score += 50;
         // 가까운 미래일수록 가산
@@ -552,7 +595,7 @@ function renderSearchResults(query) {
         return `<div class="search-item" data-idx="${idx}" data-date="${ev.date || ""}">
             <span class="search-dot" style="background:${catColor(ev.category)}"></span>
             <div class="search-info">
-                <div class="search-title">${highlightTerm(ev.title || "", query)}</div>
+                <div class="search-title">${highlightTerm(localizeTitle(ev), query)}</div>
                 <div class="search-meta">${catLabel}${ev.time ? ` · ${ev.time}` : ""}</div>
                 ${summary}
             </div>
