@@ -23,6 +23,32 @@ const CAT_LABELS = {
     "부동산":"부동산","만기일":"만기일","수동":"기타",
 };
 const DAYS_KR = ["일","월","화","수","목","금","토"];
+
+// 미국 티커 → 한글명 매핑 (telegram_bot/formatters/schedule.py US_TICKER_KR과 동일)
+const US_TICKER_KR = {
+    "AAPL":"애플","MSFT":"마이크로소프트","GOOGL":"구글(A)","GOOG":"구글(C)",
+    "AMZN":"아마존","META":"메타","NVDA":"엔비디아","TSLA":"테슬라",
+    "AMD":"AMD","INTC":"인텔","AVGO":"브로드컴","TSM":"TSMC",
+    "QCOM":"퀄컴","TXN":"텍사스인스트루먼트","ADI":"아날로그디바이시스",
+    "MU":"마이크론","AMAT":"어플라이드머티어리얼즈","LRCX":"램리서치",
+    "KLAC":"KLA","ASML":"ASML","ARM":"ARM",
+    "ORCL":"오라클","CRM":"세일즈포스","NOW":"서비스나우","SNOW":"스노우플레이크",
+    "PLTR":"팔란티어","NFLX":"넷플릭스","ADBE":"어도비","UBER":"우버",
+    "SNDK":"샌디스크","WDC":"웨스턴디지털","STX":"시게이트",
+    "LCID":"루시드","RIVN":"리비안","F":"포드","GM":"GM",
+    "PFE":"화이자","MRK":"머크","JNJ":"존슨앤드존슨","LLY":"일라이릴리",
+    "NVO":"노보노디스크","MRNA":"모더나","REGN":"리제네론",
+    "JPM":"JP모건","BAC":"뱅크오브아메리카","GS":"골드만삭스","MS":"모건스탠리",
+    "C":"씨티그룹","WFC":"웰스파고","V":"비자","MA":"마스터카드",
+    "BA":"보잉","CAT":"캐터필러","GE":"GE","LMT":"록히드마틴","RTX":"RTX",
+    "DE":"디어","XOM":"엑슨모빌","CVX":"쉐브론","COP":"코노코필립스",
+    "KO":"코카콜라","PEP":"펩시","WMT":"월마트","COST":"코스트코",
+    "UNH":"유나이티드헬스","NKE":"나이키","PG":"P&G","SBUX":"스타벅스",
+    "ABBV":"애브비","TMO":"써모피셔",
+    "CMCSA":"컴캐스트","AAOI":"어플라이드옵토",
+    "BABA":"알리바바","JD":"징둥닷컴","PDD":"핀둬둬","BIDU":"바이두",
+};
+
 // SHA-256 hash of admin password (change this)
 const ADMIN_HASH = "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3"; // "123"
 
@@ -84,6 +110,20 @@ function eventsOn(dateStr) {
     });
 }
 function catColor(cat) { return CAT_COLORS[cat] || "var(--dim)"; }
+
+// 미국실적 티커 → "한글(티커)" 표기 + EPS est. 노이즈 제거
+function localizeTitle(ev) {
+    let title = (ev && ev.title) || "";
+    // [EPS est. $X] / [EPS est. $-X] 제거
+    title = title.replace(/\s*\[EPS est\.\s*\$-?[\d.]+\]/g, "");
+    if (ev && ev.category === "미국실적") {
+        const m = title.match(/^([A-Z]{1,6})\b/);
+        if (m && US_TICKER_KR[m[1]]) {
+            title = `${US_TICKER_KR[m[1]]}(${m[1]})` + title.slice(m[1].length);
+        }
+    }
+    return title;
+}
 
 // === MINI CALENDAR ===
 function renderMiniCal() {
@@ -230,7 +270,7 @@ function renderUndatedBanner() {
         html += `<span class="undated-banner-label">${m+1}월 중</span>`;
         for (const ev of monthUndated) {
             const uc = ev.unconfirmed ? ' [미확인]' : '';
-            html += `<span class="undated-chip${ev.unconfirmed?' unconfirmed-chip':''}" ${adminAttr} style="border-color:${catColor(ev.category)};color:${catColor(ev.category)}" onclick="clickUndated(${JSON.stringify(ev).replace(/"/g,'&quot;')})">${ev.title}${uc}</span>`;
+            html += `<span class="undated-chip${ev.unconfirmed?' unconfirmed-chip':''}" ${adminAttr} style="border-color:${catColor(ev.category)};color:${catColor(ev.category)}" onclick="clickUndated(${JSON.stringify(ev).replace(/"/g,'&quot;')})">${localizeTitle(ev)}${uc}</span>`;
         }
     }
     if (weekUndated.length > 0) {
@@ -238,7 +278,7 @@ function renderUndatedBanner() {
             const wn = ev.week.split("W")[1];
             const uc = ev.unconfirmed ? ' [미확인]' : '';
             html += `<span class="undated-banner-label">${m+1}월 ${wn}주차</span>`;
-            html += `<span class="undated-chip${ev.unconfirmed?' unconfirmed-chip':''}" ${adminAttr} style="border-color:${catColor(ev.category)};color:${catColor(ev.category)}" onclick="clickUndated(${JSON.stringify(ev).replace(/"/g,'&quot;')})">${ev.title}${uc}</span>`;
+            html += `<span class="undated-chip${ev.unconfirmed?' unconfirmed-chip':''}" ${adminAttr} style="border-color:${catColor(ev.category)};color:${catColor(ev.category)}" onclick="clickUndated(${JSON.stringify(ev).replace(/"/g,'&quot;')})">${localizeTitle(ev)}${uc}</span>`;
         }
     }
     banner.innerHTML = html;
@@ -285,10 +325,32 @@ function renderMonth() {
                 else if (ds === ev.endDate) barCls += " range-end";
                 else barCls += " range-mid";
             }
-            html += `<div class="${barCls}" style="background:${catColor(ev.category)}" title="${ev.title}">${ev.title}</div>`;
+            const evTitleLocal = localizeTitle(ev);
+            html += `<div class="${barCls}" style="background:${catColor(ev.category)}" title="${evTitleLocal}">${evTitleLocal}</div>`;
         }
         if (dayEvents.length > MAX_EVENTS) {
             html += `<div class="more-events">+${dayEvents.length - MAX_EVENTS}건 더</div>`;
+        }
+        // 모바일용 카테고리 점 (CSS @media에서 .event-bar 숨겨질 때 표시)
+        if (dayEvents.length > 0) {
+            // 카테고리별 unique 점 (같은 카테고리는 한 번만), 최대 6개
+            const seenCats = new Set();
+            const dotCats = [];
+            for (const ev of dayEvents) {
+                if (!seenCats.has(ev.category)) {
+                    seenCats.add(ev.category);
+                    dotCats.push(ev.category);
+                    if (dotCats.length >= 6) break;
+                }
+            }
+            html += `<div class="event-dots-mobile">`;
+            for (const cat of dotCats) {
+                html += `<span class="event-dot-m" style="background:${catColor(cat)}" title="${CAT_LABELS[cat] || cat}"></span>`;
+            }
+            if (dayEvents.length > dotCats.length) {
+                html += `<span class="event-dot-m-count">+${dayEvents.length - dotCats.length}</span>`;
+            }
+            html += `</div>`;
         }
         html += `</div>`;
     }
@@ -355,7 +417,7 @@ function renderWeek() {
                 <div class="week-event-time">${ev.time || "종일"}</div>
                 <div class="week-event-dot" style="background:${catColor(ev.category)}"></div>
                 <div class="week-event-info">
-                    <div class="week-event-title">${ev.title}</div>
+                    <div class="week-event-title">${localizeTitle(ev)}</div>
                     <div class="week-event-meta">${CAT_LABELS[ev.category]||ev.category}${ev.endDate ? " ("+ev.date+" ~ "+ev.endDate+")" : ""}</div>
                 </div>
             </div>`;
@@ -384,7 +446,7 @@ function renderDay() {
         for (const ev of dayEvs) {
             html += `<div class="day-event-card" style="border-left-color:${catColor(ev.category)}" onclick="showEventDetail(${JSON.stringify(ev).replace(/"/g,'&quot;')})">
                 <div class="day-event-card-body">
-                    <div class="day-event-card-title">${ev.title}</div>
+                    <div class="day-event-card-title">${localizeTitle(ev)}</div>
                     <div class="day-event-card-meta">${ev.time || "종일"} · ${CAT_LABELS[ev.category]||ev.category}${ev.endDate ? " · "+ev.date+" ~ "+ev.endDate : ""}</div>
                     ${ev.summary ? `<div class="day-event-card-summary">${ev.summary}</div>` : ""}
                     ${ev.link ? `<a class="day-event-card-link" href="${ev.link}" target="_blank" onclick="event.stopPropagation()">상세 보기 &rarr;</a>` : ""}
@@ -421,10 +483,11 @@ function showDetailPanel(dateStr) {
     } else {
         dayEvs.sort((a,b)=>(a.time||"99").localeCompare(b.time||"99"));
         for (const ev of dayEvs) {
+            const evTitleLocal = localizeTitle(ev);
             html += `<div class="detail-event" onclick="dayClick('${dateStr}')">
                 <div class="detail-event-title">
                     <span class="detail-event-dot" style="background:${catColor(ev.category)}"></span>
-                    ${ev.title}
+                    ${evTitleLocal}
                 </div>
                 <div class="detail-event-meta">${ev.time || "종일"} · ${CAT_LABELS[ev.category]||ev.category}</div>
                 ${ev.summary ? `<div class="detail-event-summary">${ev.summary}</div>` : ""}
@@ -441,6 +504,210 @@ function showDetailPanel(dateStr) {
 
 function closeDetail() { document.getElementById("detail-panel").classList.add("hidden"); }
 function clickUndated(ev) { if (isAdmin) openEditEvent(ev); }
+
+// === SEARCH ===
+let searchActiveIdx = -1;
+let searchHits = [];
+let searchDebounce = null;
+
+function escapeRegex(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }
+function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+function highlightTerm(text, term) {
+    if (!term) return escapeHtml(text);
+    const re = new RegExp(`(${escapeRegex(term)})`, "gi");
+    return escapeHtml(text).replace(re, "<mark>$1</mark>");
+}
+
+function performSearch(query) {
+    const q = (query || "").trim().toLowerCase();
+    if (!q) {
+        searchHits = [];
+        renderSearchResults("");
+        return;
+    }
+    // 다중 키워드 (공백 분리, 모두 포함하는 항목 매치)
+    const terms = q.split(/\s+/).filter(Boolean);
+    const today = fmt(new Date());
+
+    const scored = [];
+    for (const ev of events) {
+        const titleRaw = (ev.title || "").toLowerCase();
+        const titleLocal = localizeTitle(ev).toLowerCase();
+        const summary = (ev.summary || "").toLowerCase();
+        const cat = (CAT_LABELS[ev.category] || ev.category || "").toLowerCase();
+        const date = (ev.date || "").toLowerCase();
+        const haystack = `${titleRaw} ${titleLocal} ${summary} ${cat} ${date}`;
+
+        if (!terms.every(t => haystack.includes(t))) continue;
+
+        // 점수: 제목 매치 우선, 미래 일정 우선
+        let score = 0;
+        if (terms.every(t => titleRaw.includes(t) || titleLocal.includes(t))) score += 100;
+        if (terms.every(t => cat.includes(t))) score += 30;
+        if (ev.date && ev.date >= today) score += 50;
+        // 가까운 미래일수록 가산
+        if (ev.date >= today) {
+            const days = Math.max(0, (toDate(ev.date) - new Date()) / 86400000);
+            score += Math.max(0, 30 - days * 0.3);
+        }
+        scored.push({ ev, score });
+    }
+    scored.sort((a, b) => {
+        if (b.score !== a.score) return b.score - a.score;
+        return (a.ev.date || "").localeCompare(b.ev.date || "");
+    });
+    searchHits = scored.slice(0, 30).map(s => s.ev);
+    searchActiveIdx = -1;
+    renderSearchResults(q);
+}
+
+function renderSearchResults(query) {
+    const container = document.getElementById("search-results");
+    const clearBtn = document.getElementById("search-clear");
+    if (!query) {
+        container.classList.add("hidden");
+        clearBtn.classList.add("hidden");
+        return;
+    }
+    clearBtn.classList.remove("hidden");
+
+    if (searchHits.length === 0) {
+        container.innerHTML = `<div class="search-empty">"${escapeHtml(query)}"에 대한 일정이 없습니다</div>`;
+        container.classList.remove("hidden");
+        return;
+    }
+
+    // 미래/과거 그룹 분리
+    const today = fmt(new Date());
+    const future = searchHits.filter(e => (e.date || "") >= today);
+    const past = searchHits.filter(e => (e.date || "") < today);
+
+    let html = "";
+    const buildItem = (ev, idx) => {
+        const dt = ev.date ? toDate(ev.date) : null;
+        const dateLabel = dt
+            ? `${dt.getMonth()+1}/${dt.getDate()} ${DAYS_KR[dt.getDay()]}`
+            : (ev.month || "미정");
+        const catLabel = CAT_LABELS[ev.category] || ev.category || "";
+        const summary = ev.summary ? `<div class="search-summary">${highlightTerm(ev.summary.slice(0, 100), query)}</div>` : "";
+        return `<div class="search-item" data-idx="${idx}" data-date="${ev.date || ""}">
+            <span class="search-dot" style="background:${catColor(ev.category)}"></span>
+            <div class="search-info">
+                <div class="search-title">${highlightTerm(localizeTitle(ev), query)}</div>
+                <div class="search-meta">${catLabel}${ev.time ? ` · ${ev.time}` : ""}</div>
+                ${summary}
+            </div>
+            <div class="search-date">${dateLabel}</div>
+        </div>`;
+    };
+
+    let idx = 0;
+    if (future.length) {
+        html += `<div class="search-group"><div class="search-group-title">앞으로 (${future.length})</div>`;
+        for (const ev of future) html += buildItem(ev, idx++);
+        html += `</div>`;
+    }
+    if (past.length) {
+        html += `<div class="search-group"><div class="search-group-title">지난 (${past.length})</div>`;
+        for (const ev of past) html += buildItem(ev, idx++);
+        html += `</div>`;
+    }
+    if (searchHits.length === 30) {
+        html += `<div class="search-count">상위 30건만 표시 — 키워드를 더 입력해 좁혀보세요</div>`;
+    }
+    container.innerHTML = html;
+    container.classList.remove("hidden");
+
+    container.querySelectorAll(".search-item").forEach(el => {
+        el.onclick = () => selectSearchHit(parseInt(el.dataset.idx));
+    });
+}
+
+function selectSearchHit(idx) {
+    const ev = searchHits[idx];
+    if (!ev) return;
+    closeSearchDropdown();
+    document.getElementById("search-input").value = "";
+    document.getElementById("search-clear").classList.add("hidden");
+
+    if (ev.undated) {
+        // 미정 이벤트 - 그냥 알림
+        alert(`${ev.title}\n${ev.month || "날짜 미정"}\n${ev.summary || ""}`);
+        return;
+    }
+    if (!ev.date) return;
+    const dt = toDate(ev.date);
+    viewDate = dt;
+    selectedDate = dt;
+    renderMiniCal();
+    renderView();
+    showDetailPanel(ev.date);
+}
+
+function closeSearchDropdown() {
+    document.getElementById("search-results").classList.add("hidden");
+    searchActiveIdx = -1;
+}
+
+function moveSearchActive(delta) {
+    const items = document.querySelectorAll("#search-results .search-item");
+    if (!items.length) return;
+    items.forEach(el => el.classList.remove("active"));
+    searchActiveIdx = (searchActiveIdx + delta + items.length) % items.length;
+    items[searchActiveIdx].classList.add("active");
+    items[searchActiveIdx].scrollIntoView({ block: "nearest" });
+}
+
+function bindSearchEvents() {
+    const input = document.getElementById("search-input");
+    const clearBtn = document.getElementById("search-clear");
+    const results = document.getElementById("search-results");
+
+    input.oninput = () => {
+        clearTimeout(searchDebounce);
+        searchDebounce = setTimeout(() => performSearch(input.value), 120);
+    };
+    input.onfocus = () => {
+        if (input.value.trim()) performSearch(input.value);
+    };
+    input.onkeydown = (e) => {
+        if (e.key === "ArrowDown") { e.preventDefault(); moveSearchActive(1); }
+        else if (e.key === "ArrowUp") { e.preventDefault(); moveSearchActive(-1); }
+        else if (e.key === "Enter") {
+            e.preventDefault();
+            if (searchActiveIdx >= 0) selectSearchHit(searchActiveIdx);
+            else if (searchHits.length > 0) selectSearchHit(0);
+        }
+        else if (e.key === "Escape") {
+            input.value = "";
+            closeSearchDropdown();
+            clearBtn.classList.add("hidden");
+            input.blur();
+        }
+    };
+    clearBtn.onclick = () => {
+        input.value = "";
+        closeSearchDropdown();
+        clearBtn.classList.add("hidden");
+        input.focus();
+    };
+
+    // 외부 클릭 시 닫기
+    document.addEventListener("click", (e) => {
+        if (!e.target.closest(".search-wrap")) closeSearchDropdown();
+    });
+
+    // Ctrl+K / Cmd+K 단축키
+    document.addEventListener("keydown", (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+            e.preventDefault();
+            input.focus();
+            input.select();
+        }
+    });
+}
 
 // === NAVIGATION ===
 function navigate(delta) {
@@ -816,6 +1083,7 @@ function bindEvents() {
     document.getElementById("ev-save").onclick = saveEvent;
     document.getElementById("ev-delete").onclick = deleteEvent;
     document.getElementById("ev-cancel").onclick = closeModal;
+    bindSearchEvents();
 
     document.onkeydown = (e) => {
         if (e.key==="Escape") { closeModal(); closeDetail(); }

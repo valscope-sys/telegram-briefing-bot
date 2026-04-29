@@ -11,6 +11,11 @@
     <header id="header">
         <div class="header-row-top">
             <span class="logo">NODE Research</span>
+            <div class="search-wrap">
+                <input type="text" id="search-input" placeholder="🔍 일정 검색 (종목명, 카테고리, 키워드)" autocomplete="off">
+                <button id="search-clear" class="search-clear hidden" title="지우기">&times;</button>
+                <div id="search-results" class="search-results hidden"></div>
+            </div>
             <div class="header-actions">
                 <div class="view-tabs">
                     <button class="view-tab active" data-view="month">월</button>

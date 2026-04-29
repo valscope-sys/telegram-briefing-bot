@@ -254,13 +254,21 @@ def _cmd_dart(args: list):
         parse_date_arg, fetch_dart_list, filter_signal_disclosures,
     )
     from telegram_bot.issue_bot.collectors.rss_query import parse_time_arg
+    from telegram_bot.issue_bot.utils.nlu import REPORT_KEYWORDS
 
     date = _dt.date.today()
     from_dt = None
     to_dt = None
     corp_parts = []
+    report_kw = None
+    report_patterns = None
 
     for arg in args:
+        # 0. 보고서 키워드 마커? (#report:실적)
+        if arg.startswith("#report:"):
+            report_kw = arg[len("#report:"):].strip()
+            report_patterns = REPORT_KEYWORDS.get(report_kw)
+            continue
         # 1. 날짜?
         parsed_date = parse_date_arg(arg)
         if parsed_date and from_dt is None:
@@ -283,13 +291,18 @@ def _cmd_dart(args: list):
         label_time = (
             f" · {from_dt.strftime('%H:%M')}~{to_dt.strftime('%H:%M')}"
         )
+    label_report = f" · 📄 <i>{_html_escape(report_kw)}</i>" if report_kw else ""
 
     send_admin_dm(
-        f"📋 DART 조회 중... ({label_date}{label_time}{label_extra})",
+        f"📋 DART 조회 중... ({label_date}{label_time}{label_extra}{label_report})",
         parse_mode="HTML",
     )
 
-    items = fetch_dart_list(date, corp_name=corp_name, page_count=100)
+    items = fetch_dart_list(
+        date, corp_name=corp_name,
+        page_count=100,
+        report_patterns=report_patterns,
+    )
 
     # 시간 범위 필터 (rcept_dt = YYYYMMDDHHMM)
     if from_dt is not None and to_dt is not None:
@@ -313,13 +326,13 @@ def _cmd_dart(args: list):
     if not items_filtered:
         if items:
             msg = (
-                f"📭 <b>주요 공시 없음</b> — {label_date}{label_time}{label_extra}\n"
-                f"<i>전체 {len(items)}건 중 노이즈 필터 후 0건.</i>\n"
-                f"기업명·시간 범위 다시 확인하거나 다른 날짜 시도."
+                f"📭 <b>주요 공시 없음</b> — {label_date}{label_time}{label_extra}{label_report}\n"
+                f"<i>전체 {len(items)}건 중 노이즈/보고서 필터 후 0건.</i>\n"
+                f"보고서 종류 빼거나 다른 날짜 시도."
             )
         else:
             msg = (
-                f"📭 <b>공시 없음</b> — {label_date}{label_time}{label_extra}\n"
+                f"📭 <b>공시 없음</b> — {label_date}{label_time}{label_extra}{label_report}\n"
                 f"<i>DART 응답 0건 (해당 조건에 매칭 X).</i>\n"
                 f"기업명 정확히 입력했는지 확인 (예: \"대한전선\")."
             )
@@ -690,8 +703,89 @@ def _guess_template_from_url(url: str) -> str:
     return "C"  # 기본: 영문/한글 기사·리서치
 
 
+def _fetch_dart_disclosure(url: str) -> dict:
+    """DART 공시 메인 페이지 → iframe URL 추출 → KIND 본문 fetch.
+
+    DART URL 패턴: https://dart.fss.or.kr/dsaf001/main.do?rcpNo=NNN
+    main.do는 메타만(40자), 진짜 본문은 iframe 안의 KIND HTML.
+    """
+    import requests
+    from bs4 import BeautifulSoup
+
+    try:
+        res = requests.get(
+            url,
+            timeout=15,
+            headers={"User-Agent": "Mozilla/5.0 NODEResearchBot/1.0"},
+        )
+        if res.status_code != 200:
+            return {"error": f"DART HTTP {res.status_code}"}
+
+        soup = BeautifulSoup(res.text, "lxml")
+
+        # title — DART는 페이지 title에 "회사명/공시명/날짜"
+        title = ""
+        if soup.title and soup.title.string:
+            title = soup.title.string.strip()
+
+        # iframe URL 추출 (script 안에 dcmNo 같은 변수 있음 — 실제 본문 페이지)
+        # 보통 viewDoc('rcpNo', 'dcmNo', 'eleId', 'offset', 'length', 'dtd') 호출
+        viewdoc_match = _re_mod.search(
+            r"viewDoc\(\s*['\"](\d+)['\"]\s*,\s*['\"](\d+)['\"]\s*,\s*['\"]([^'\"]*)['\"]\s*,"
+            r"\s*['\"]([^'\"]*)['\"]\s*,\s*['\"]([^'\"]*)['\"]",
+            res.text,
+        )
+
+        body = ""
+        if viewdoc_match:
+            rcp_no, dcm_no, ele_id, offset, length = viewdoc_match.groups()
+            # KIND HTML URL 조립
+            kind_url = (
+                f"https://dart.fss.or.kr/report/viewer.do?"
+                f"rcpNo={rcp_no}&dcmNo={dcm_no}&eleId={ele_id}"
+                f"&offset={offset}&length={length}&dtd=dart3.xsd"
+            )
+            try:
+                kind_res = requests.get(
+                    kind_url,
+                    timeout=15,
+                    headers={"User-Agent": "Mozilla/5.0 NODEResearchBot/1.0"},
+                )
+                if kind_res.status_code == 200:
+                    kind_soup = BeautifulSoup(kind_res.text, "lxml")
+                    for tag in kind_soup(["script", "style", "nav", "header", "footer"]):
+                        tag.decompose()
+                    body = kind_soup.get_text(separator=" ", strip=True)
+                    body = _re_mod.sub(r"\s+", " ", body)[:6000]
+            except Exception as e:
+                print(f"[DART_FETCH] KIND iframe fetch 실패: {e}")
+
+        # body가 여전히 비어있으면 main.do 페이지 자체에서라도 추출 시도
+        if not body:
+            for tag in soup(["script", "style", "nav", "header", "footer"]):
+                tag.decompose()
+            body = soup.get_text(separator=" ", strip=True)
+            body = _re_mod.sub(r"\s+", " ", body)[:3000]
+
+        return {
+            "title": title,
+            "body": body,
+            "image_url": None,
+            "final_url": url,
+        }
+    except Exception as e:
+        return {"error": f"DART fetch error: {e}"}
+
+
 def _fetch_article_metadata(url: str) -> dict:
-    """URL에서 title, body, og:image, 최종 redirect URL 추출."""
+    """URL에서 title, body, og:image, 최종 redirect URL 추출.
+
+    DART URL은 iframe 구조라 별도 처리 (_fetch_dart_disclosure).
+    """
+    # DART 공시 URL 특수 처리
+    if "dart.fss.or.kr/dsaf001" in url:
+        return _fetch_dart_disclosure(url)
+
     import requests
     from bs4 import BeautifulSoup
 
