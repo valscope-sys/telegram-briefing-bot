@@ -11,6 +11,42 @@ from telegram_bot.config import DART_API_KEY
 DART_LIST_URL = "https://opendart.fss.or.kr/api/list.json"
 
 
+def estimate_quarter_from_date(date_str: str) -> str:
+    """잠정실적 발표 날짜 → 해당 분기 추정.
+
+    한국 상장사 잠정실적 발표 일정 (대략):
+    - 1Q: 4~5월
+    - 2Q: 7~8월
+    - 3Q: 10~11월
+    - 4Q (연간 사업보고서): 다음 해 1~3월
+
+    Args:
+        date_str: "YYYYMMDD" 또는 "YYYYMMDDHHMM"
+
+    Returns:
+        "1Q26" 형식 또는 빈 문자열
+    """
+    if not date_str or len(date_str) < 8:
+        return ""
+    try:
+        d = datetime.datetime.strptime(date_str[:8], "%Y%m%d")
+    except ValueError:
+        return ""
+
+    month = d.month
+    yy = d.year % 100
+
+    if 4 <= month <= 6:
+        return f"1Q{yy:02d}"
+    if 7 <= month <= 9:
+        return f"2Q{yy:02d}"
+    if 10 <= month <= 12:
+        return f"3Q{yy:02d}"
+    # 1~3월: 직전 연도 4Q (연간 사업보고서)
+    prev_yy = (d.year - 1) % 100
+    return f"4Q{prev_yy:02d}"
+
+
 def parse_date_arg(arg: str):
     """날짜 인자 → date 객체. 파싱 실패 시 None.
 
