@@ -399,11 +399,10 @@ def _sonnet_verify(event: dict, haiku_hint: dict) -> dict:
                 {
                     "type": "text",
                     "text": FILTER_SYSTEM,
-                    "cache_control": {"type": "ephemeral", "ttl": "1h"},
+                    "cache_control": {"type": "ephemeral"},
                 }
             ],
             messages=[{"role": "user", "content": user_msg}],
-            extra_headers={"anthropic-beta": "extended-cache-ttl-2025-04-11"},
         )
         _METRICS["sonnet_calls"] += 1
         text = response.content[0].text.strip()
@@ -444,11 +443,10 @@ def _haiku_classify(event: dict) -> dict:
                 {
                     "type": "text",
                     "text": FILTER_SYSTEM,
-                    "cache_control": {"type": "ephemeral", "ttl": "1h"},
+                    "cache_control": {"type": "ephemeral"},
                 }
             ],
             messages=[{"role": "user", "content": user_msg}],
-            extra_headers={"anthropic-beta": "extended-cache-ttl-2025-04-11"},
         )
         _METRICS["haiku_calls"] += 1
         usage = response.usage

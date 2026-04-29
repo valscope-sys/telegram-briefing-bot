@@ -315,24 +315,17 @@ def generate_message(event: dict, classification: dict, retry_violations: list =
         }
     ]
     if ISSUE_BOT_ENABLE_CACHING:
-        # TTL 1h: 폴링 주기(10분)보다 길게 잡아 폴링간 캐시 hit 보장.
-        # 기본 5분 ttl로는 다음 폴링 첫 호출이 항상 miss → cache 무력화.
-        # cache create 단가 2배지만 hit율 60% → 90%+ 상승 효과가 훨씬 큼.
-        system_blocks[0]["cache_control"] = {"type": "ephemeral", "ttl": "1h"}
+        # 2026-04-29: 1h TTL + 베타 헤더 시도했으나 max retry exceeded 발생.
+        # 기본 5분 TTL로 복원 (안정성 우선).
+        system_blocks[0]["cache_control"] = {"type": "ephemeral"}
 
     try:
         client = _get_client()
-        # 1h cache_control TTL은 베타 헤더 필요 (extended-cache-ttl-2025-04-11)
-        extra_headers = (
-            {"anthropic-beta": "extended-cache-ttl-2025-04-11"}
-            if ISSUE_BOT_ENABLE_CACHING else {}
-        )
         response = client.messages.create(
             model=ISSUE_BOT_GENERATOR_MODEL,
             max_tokens=1500,
             system=system_blocks,
             messages=[{"role": "user", "content": user_msg}],
-            extra_headers=extra_headers,
         )
         generated = response.content[0].text.strip()
         _log_cache_stats(response.usage)
