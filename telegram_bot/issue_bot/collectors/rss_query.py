@@ -4,26 +4,49 @@
 - 인자 없음 또는 "오늘": 핵심 매체 최근 24h 헤드라인
 - "어제": 24h~48h
 - 그 외: Google News RSS 키워드 검색
+
+영문 기사는 Haiku로 한국어 번역 + 1줄 요약 (translate_summarize_batch).
 """
 import datetime
+import re
 import time
 from itertools import zip_longest
 
+import anthropic
 import feedparser
 
+from telegram_bot.config import ANTHROPIC_API_KEY
 
-# 핵심 매체 RSS — 시황·테크·외신 균형
+
+# 핵심 매체 RSS — 시황·테크·외신 균형 (13개)
 NEWS_FEEDS = [
-    {"name": "한국경제", "url": "https://www.hankyung.com/feed/all-news"},
-    {"name": "매일경제", "url": "https://www.mk.co.kr/rss/30000001/"},
-    {"name": "전자신문", "url": "https://rss.etnews.com/Section902.xml"},
-    {"name": "Reuters", "url": "https://news.google.com/rss/search?q=site:reuters.com+business&hl=en-US&gl=US&ceid=US:en"},
-    {"name": "Bloomberg Tech", "url": "https://news.google.com/rss/search?q=site:bloomberg.com+technology&hl=en-US&gl=US&ceid=US:en"},
-    {"name": "Nikkei Asia", "url": "https://asia.nikkei.com/rss/feed/nar"},
-    {"name": "TrendForce", "url": "https://www.trendforce.com/news/feed/"},
+    # ── 한국 종합·시황 ──
+    {"name": "한국경제", "url": "https://www.hankyung.com/feed/all-news", "lang": "ko"},
+    {"name": "매일경제", "url": "https://www.mk.co.kr/rss/30000001/", "lang": "ko"},
+    {"name": "연합뉴스", "url": "https://www.yna.co.kr/rss/economy.xml", "lang": "ko"},
+    {"name": "이데일리", "url": "https://rss.edaily.co.kr/stock_news.xml", "lang": "ko"},
+    {"name": "머니투데이", "url": "https://rss.mt.co.kr/mt_news.xml", "lang": "ko"},
+    # ── 한국 테크 1차 ──
+    {"name": "전자신문", "url": "https://rss.etnews.com/Section902.xml", "lang": "ko"},
+    # ── 외신 광역 ──
+    {"name": "Reuters", "url": "https://news.google.com/rss/search?q=site:reuters.com+business&hl=en-US&gl=US&ceid=US:en", "lang": "en"},
+    {"name": "Bloomberg Tech", "url": "https://news.google.com/rss/search?q=site:bloomberg.com+technology&hl=en-US&gl=US&ceid=US:en", "lang": "en"},
+    {"name": "CNBC", "url": "https://www.cnbc.com/id/100003114/device/rss/rss.html", "lang": "en"},
+    {"name": "Financial Times", "url": "https://news.google.com/rss/search?q=site:ft.com+markets&hl=en-US&gl=US&ceid=US:en", "lang": "en"},
+    # ── 아시아 ──
+    {"name": "Nikkei Asia", "url": "https://asia.nikkei.com/rss/feed/nar", "lang": "en"},
+    # ── 반도체·테크 전문 ──
+    {"name": "TrendForce", "url": "https://www.trendforce.com/news/feed/", "lang": "en"},
+    {"name": "Digitimes", "url": "https://news.google.com/rss/search?q=site:digitimes.com+chips+OR+semiconductor&hl=en-US&gl=US&ceid=US:en", "lang": "en"},
 ]
 
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) NODEResearchBot/1.0"
+
+
+def _attach_lang(article: dict, feed_info: dict) -> dict:
+    """피드 lang 정보를 article에 부착."""
+    article["lang"] = feed_info.get("lang", "en")
+    return article
 
 
 def fetch_news_headlines(max_age_hours: int = 24, max_per_feed: int = 5,
@@ -73,6 +96,7 @@ def fetch_news_headlines(max_age_hours: int = 24, max_per_feed: int = 5,
                     "title": title,
                     "link": link,
                     "source": feed_info["name"],
+                    "lang": feed_info.get("lang", "en"),
                     "published": entry.get("published", ""),
                     "published_dt": pub_dt,
                 })
@@ -147,6 +171,7 @@ def search_keyword_news(keyword: str, max_results: int = 30, lang: str = "ko",
                 "title": title,
                 "link": link,
                 "source": source or "Google News",
+                "lang": lang,
                 "published": entry.get("published", ""),
                 "published_dt": pub_dt,
             })
@@ -217,6 +242,100 @@ def parse_time_arg(arg: str, base_date: datetime.date = None):
     return None
 
 
+# ===== Haiku 번역 + 요약 (영문 기사 batch 처리) =====
+
+_TRANSLATE_SYSTEM = """당신은 금융·산업 뉴스 헤드라인 번역·요약 전문가입니다.
+영문 → 간결한 한국어 헤드라인 + 1줄 요약. 핵심만, 마크다운/이모지 금지.
+
+응답 형식 (각 항목, 정확히 이 형식만):
+1. {한국어 헤드라인}
+   {1줄 요약 (50자 이내)}
+
+2. {한국어 헤드라인}
+   {1줄 요약}
+
+다른 설명·인사·번호 외 텍스트 금지."""
+
+
+def _parse_translation_response(text: str) -> list:
+    """Haiku 응답을 [{title, summary}] 리스트로 파싱."""
+    items = []
+    blocks = re.split(r'\n(?=\d+\.\s)', text.strip())
+    for block in blocks:
+        block = block.strip()
+        if not block:
+            continue
+        block = re.sub(r'^\d+\.\s*', '', block)
+        lines = [l.strip() for l in block.split('\n') if l.strip()]
+        if not lines:
+            continue
+        title = lines[0]
+        summary = ' '.join(lines[1:]) if len(lines) > 1 else ""
+        items.append({"title": title, "summary": summary})
+    return items
+
+
+def translate_summarize_batch(items: list, max_items: int = 10) -> list:
+    """영문 기사 batch 번역 + 1줄 요약. 한글은 그대로 + 요약은 비워둠.
+
+    Args:
+        items: fetch 결과 (lang 필드 'en' / 'ko')
+        max_items: 한 번에 처리할 최대 건수 (Haiku 컨텍스트 한계 + 비용)
+
+    Returns:
+        items에 'title_kr', 'summary_kr' 필드 추가하여 반환.
+        영문 기사: title_kr=번역된 한국어 / summary_kr=1줄 요약
+        한글 기사: title_kr=원본 / summary_kr="" (요약 생략, 비용 절감)
+    """
+    targets = items[:max_items]
+
+    # 모든 항목에 기본값 채움
+    for it in targets:
+        it["title_kr"] = it.get("title", "")
+        it["summary_kr"] = ""
+
+    # 영문 항목만 추출 (한글은 번역 불필요)
+    en_indices = [i for i, it in enumerate(targets) if it.get("lang") == "en"]
+    if not en_indices or not ANTHROPIC_API_KEY:
+        return targets
+
+    # batch 프롬프트 조립
+    lines = []
+    for batch_idx, orig_idx in enumerate(en_indices, 1):
+        title = targets[orig_idx].get("title", "")[:200]
+        lines.append(f"{batch_idx}. {title}")
+
+    user_msg = (
+        f"다음 영문 헤드라인 {len(en_indices)}건을 한국어로 번역 + 1줄 요약:\n\n"
+        + "\n".join(lines)
+    )
+
+    try:
+        client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+        response = client.messages.create(
+            model="claude-haiku-4-5-20251001",
+            max_tokens=1500,
+            system=_TRANSLATE_SYSTEM,
+            messages=[{"role": "user", "content": user_msg}],
+        )
+        text = response.content[0].text.strip()
+        translated = _parse_translation_response(text)
+
+        # 매칭: 응답 순서대로 영문 항목에 채움
+        for batch_idx, orig_idx in enumerate(en_indices):
+            if batch_idx < len(translated):
+                tr = translated[batch_idx]
+                if tr.get("title"):
+                    targets[orig_idx]["title_kr"] = tr["title"]
+                if tr.get("summary"):
+                    targets[orig_idx]["summary_kr"] = tr["summary"]
+    except Exception as e:
+        print(f"[TRANSLATE] Haiku 호출 실패: {e}")
+        # 실패 시 원본 그대로 (title_kr=원본 영문)
+
+    return targets
+
+
 if __name__ == "__main__":
     import sys
     if sys.stdout.encoding and sys.stdout.encoding.lower() != "utf-8":
@@ -229,10 +348,4 @@ if __name__ == "__main__":
     items = fetch_news_headlines(max_age_hours=24, max_per_feed=3)
     print(f"== 오늘 헤드라인 {len(items)}건 ==")
     for it in items[:10]:
-        print(f"  [{it['source']}] {it['title'][:80]}")
-
-    # 테스트 2: 키워드 검색
-    print("\n== '반도체' 검색 ==")
-    items = search_keyword_news("반도체", max_results=10)
-    for it in items[:10]:
-        print(f"  [{it['source']}] {it['title'][:80]}")
+        print(f"  [{it['source']} {it['lang']}] {it['title'][:80]}")
