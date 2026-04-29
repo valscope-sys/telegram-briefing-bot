@@ -202,6 +202,8 @@ def _handle_command(msg: dict):
         _cmd_help()
     elif cmd in ("/card", "/c"):
         _cmd_card(args)
+    elif cmd in ("/dart", "/d"):
+        _cmd_dart(args)
     else:
         return False
 
@@ -270,16 +272,125 @@ def _cmd_resume():
 def _cmd_help():
     """/help — 명령어 안내"""
     text = (
-        "<b>이슈봇 관리 명령</b>\n\n"
-        "• /queue — 대기 카드 요약 + 일괄 승인/스킵\n"
-        "• /mute [분] — N분간 중지 (기본 60분, 최대 1440)\n"
+        "<b>이슈봇 명령어 (on-demand 모드)</b>\n\n"
+        "<b>📰 카드 생성</b>\n"
+        "• /card &lt;URL&gt; — URL로 카드 생성 (메리츠 스타일 가공 후 발송)\n"
+        "• URL만 단독 입력해도 자동 인식\n\n"
+        "<b>📋 DART 공시 조회</b>\n"
+        "• /dart — 오늘 주요 공시 목록\n"
+        "• /dart 어제 — 어제 공시\n"
+        "• /dart 삼성전자 — 특정 기업 (오늘)\n"
+        "• /dart 어제 삼성전자 — 어제 + 특정 기업\n"
+        "• /dart 2026-04-29 — 특정 날짜\n\n"
+        "<b>⚙️ 관리</b>\n"
+        "• /queue — 대기 카드 요약 + 일괄 처리\n"
+        "• /mute [분] — N분간 중지 (기본 60, 최대 1440)\n"
         "• /stop — 오늘 자정까지 중지\n"
         "• /resume — 즉시 재개\n"
-        "• /card &lt;URL&gt; — 사용자가 본 기사·공시 URL로 카드 생성 (on-demand)\n"
-        "• /help — 이 메시지\n\n"
-        "<i>💡 URL만 보내도 자동으로 카드 생성됩니다.</i>"
+        "• /help — 이 메시지"
     )
     send_admin_dm(text, parse_mode="HTML")
+
+
+# ===== /dart 명령어 (DART 공시 조회) =====
+
+def _cmd_dart(args: list):
+    """/dart [날짜] [기업명] — DART 공시 목록 조회.
+
+    인자 파싱 규칙:
+    - 인자 없음 → 오늘 전체
+    - 첫 인자가 날짜 키워드(오늘/어제/그제 또는 YYYY-MM-DD) → 그 날짜
+    - 그 외 인자 = 기업명 (공백 포함 시 합침)
+    """
+    import datetime as _dt
+    from telegram_bot.issue_bot.collectors.dart_query import (
+        parse_date_arg, fetch_dart_list, filter_signal_disclosures,
+    )
+
+    date = _dt.date.today()
+    corp_name = None
+
+    if args:
+        first_parsed = parse_date_arg(args[0])
+        if first_parsed:
+            date = first_parsed
+            if len(args) > 1:
+                corp_name = " ".join(args[1:])
+        else:
+            corp_name = " ".join(args)
+
+    label_date = date.strftime("%Y-%m-%d (%a)")
+    label_extra = f" — <b>{_html_escape(corp_name)}</b>" if corp_name else ""
+
+    send_admin_dm(
+        f"📋 DART 조회 중... ({label_date}{label_extra})",
+        parse_mode="HTML",
+    )
+
+    items = fetch_dart_list(date, corp_name=corp_name, page_count=100)
+    items_filtered = filter_signal_disclosures(items)
+
+    if not items_filtered:
+        msg = (
+            f"📭 <b>{label_date}{label_extra}</b>\n"
+            f"공시 없음 (전체 {len(items)}건 중 노이즈 필터 후 0건)"
+            if items else
+            f"📭 <b>{label_date}{label_extra}</b>\n공시 없음 (DART 응답 0건)"
+        )
+        send_admin_dm(msg, parse_mode="HTML")
+        return
+
+    # 메시지 조립 (4096자 분할)
+    header = (
+        f"<b>📋 DART 공시 — {label_date}{label_extra}</b>\n"
+        f"({len(items_filtered)}건 / 전체 {len(items)}건 중 시그널)\n"
+        + "─" * 25 + "\n"
+    )
+
+    lines = [header]
+    cur_len = len(header)
+    shown = 0
+
+    for i, it in enumerate(items_filtered, 1):
+        # 시간 추출 (rcept_dt = "YYYYMMDDHHMM" 가능, 또는 "YYYYMMDD")
+        dt_str = it.get("rcept_dt", "")
+        time_label = ""
+        if len(dt_str) >= 12:
+            time_label = f"{dt_str[8:10]}:{dt_str[10:12]} "
+
+        line = (
+            f"{i}. {time_label}<b>{_html_escape(it['corp_name'])}</b>\n"
+            f"   {_html_escape(it['report_nm'])}\n"
+            f"   <a href=\"{it['url']}\">원본</a>\n"
+        )
+
+        # 메시지 4000자 제한 (안전 마진)
+        if cur_len + len(line) > 3800:
+            lines.append(f"\n... (이하 {len(items_filtered) - shown}건 생략)")
+            break
+
+        lines.append(line)
+        cur_len += len(line)
+        shown += 1
+
+    lines.append(
+        "\n💡 <b>카드 만들기</b>: 위 URL을 <code>/card &lt;URL&gt;</code> 또는 "
+        "URL만 단독 입력하면 메리츠 스타일 카드 생성"
+    )
+
+    send_admin_dm("\n".join(lines), parse_mode="HTML")
+
+
+def _html_escape(text: str) -> str:
+    """HTML 특수문자 escape (telegram parse_mode=HTML 안전)."""
+    if not text:
+        return ""
+    return (
+        str(text)
+        .replace("&", "&amp;")
+        .replace("<", "&lt;")
+        .replace(">", "&gt;")
+    )
 
 
 # ===== /card 명령어 (on-demand 카드 생성) =====
