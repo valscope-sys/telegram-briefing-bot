@@ -178,6 +178,7 @@ def _api_call(method, payload, max_retry=3):
     """Bot API POST 호출 (재시도 포함)"""
     url = f"{API_BASE}/{method}"
     retry_delays = [3, 8, 20]
+    last_desc = ""
     for attempt in range(max_retry):
         try:
             res = requests.post(url, json=payload, timeout=30)
@@ -185,6 +186,9 @@ def _api_call(method, payload, max_retry=3):
             if data.get("ok"):
                 return data
             desc = data.get("description", "")
+            last_desc = desc
+            # 진짜 텔레그램 에러 description을 매번 print (진단용)
+            print(f"[TELEGRAM] {method} 실패 (시도 {attempt+1}/{max_retry}): {desc[:200]}")
             # Markdown/HTML 파싱 실패 시 parse_mode 제거 후 재시도
             if "parse" in desc.lower() and payload.get("parse_mode"):
                 payload = {**payload, "parse_mode": None}
@@ -194,9 +198,11 @@ def _api_call(method, payload, max_retry=3):
                 return data
         except Exception as e:
             print(f"[TELEGRAM] API 호출 오류 (시도 {attempt+1}): {e}")
+            last_desc = str(e)
         if attempt < max_retry - 1:
             time.sleep(retry_delays[attempt])
-    return {"ok": False, "description": "max retry exceeded"}
+    # 최종 실패 시 마지막 진짜 description 포함 (max retry exceeded만 반환하지 말 것)
+    return {"ok": False, "description": f"max retry exceeded ({last_desc[:150]})" if last_desc else "max retry exceeded"}
 
 
 def send_channel_message(text, parse_mode="HTML", disable_preview=True):
