@@ -415,19 +415,24 @@ def _fetch_article_metadata(url: str) -> dict:
 
 
 def _create_card_from_url(url: str):
-    """URL → 본문 fetch → 즉시 Sonnet 본문 생성 → 미리보기 카드 발송.
+    """URL → Sonnet 본문 생성 → 미리보기 카드 1회만 발송 (raw 카드 단계 X, edit X).
 
-    2026-04-29 옵션 A: 자동 폴링 OFF 후 raw 카드 단계 의미 약함.
-    사용자가 직접 URL 보낸 거라 거절 거의 0 → 즉시 미리보기로 직행.
-    클릭 1번 + 대기 1번으로 발송 가능.
+    2026-04-29 사용자 정책: "URL 주면 요약 정리해서 한 번에 보여줘".
+    - raw 카드 발송 X (이미지 메시지 + editMessageText 충돌 회피)
+    - edit_admin_message X
+    - send_admin_dm으로 최종 미리보기 카드 1회 발송
+    - 사용자가 그 카드의 [✅ 발송] [✏️ 수정] [❌ 스킵] 결정
     """
     from telegram_bot.issue_bot.approval.bot import (
-        send_raw_approval_card,
-        generate_preview_for_issue,
+        format_preview_card,
+        save_pending,
+        MAX_CARD_LEN,
     )
+    from telegram_bot.issue_bot.utils.telegram import approval_keyboard_preview
+    from telegram_bot.issue_bot.pipeline.generator import generate_with_retry
 
     send_admin_dm(
-        f"📋 카드 + 본문 생성 중... (10~20초)\n<code>{url[:80]}</code>",
+        f"📋 본문 정리 중... (10~20초)\n<code>{url[:80]}</code>",
         parse_mode="HTML",
     )
 
@@ -452,12 +457,10 @@ def _create_card_from_url(url: str):
     source_name = _detect_source_from_url(final_url) or "사용자 요청"
     template = _guess_template_from_url(final_url)
 
-    # 고유 ID
     url_hash = _hashlib_mod.sha1(final_url.encode("utf-8")).hexdigest()[:8]
     ts = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
     issue_id = f"ondemand_{ts}_{url_hash}"
 
-    # 이슈 객체 (filter_event 우회 — 사용자 직접 트리거니 무조건 통과)
     issue = {
         "id": issue_id,
         "source": "ON_DEMAND",
@@ -481,7 +484,6 @@ def _create_card_from_url(url: str):
         "date": datetime.datetime.now().date().isoformat(),
         "image_url": image_url,
         "article_group": "사용자 요청",
-        # filter_event 결과 격
         "priority": "HIGH",
         "category": template,
         "sector": "기타",
@@ -489,29 +491,49 @@ def _create_card_from_url(url: str):
         "significance": "",
         "source_method": "ondemand",
         "peer_map_used": [],
+        "violations": [],
+        "has_generated": False,
+        "generated_content": None,
     }
 
+    # 1. Sonnet 본문 생성 (raw 카드 발송 X — 곧바로 본문 작업)
+    classification = {
+        "priority": issue["priority"],
+        "category": issue["category"],
+        "sector": issue["sector"],
+    }
     try:
-        # 1. raw 카드 발송 (admin_msg_id 저장용 — 이후 미리보기로 edit하려면 필요)
-        result = send_raw_approval_card(issue)
-        if not result.get("ok"):
-            send_admin_dm(f"⚠️ 카드 발송 실패: {result.get('error')}")
-            return
-
-        # 2. 즉시 Sonnet 본문 생성 + 미리보기 카드로 자동 전환 (edit)
-        gen_result = generate_preview_for_issue(issue_id)
-        if not gen_result.get("ok"):
-            send_admin_dm(
-                f"⚠️ 본문 자동 생성 실패: {gen_result.get('error')}\n"
-                f"위 카드의 [👁 미리보기] 버튼으로 재시도하거나 [❌ 스킵]으로 취소."
-            )
-            return
-
-        # 카드는 이미 미리보기로 전환됨 (edit_admin_message). 추가 안내 불필요.
-        # 사용자는 카드 본문 보고 [✅ 발송] / [✏️ 수정] / [❌ 스킵] 결정.
+        gen_result = generate_with_retry(issue, classification)
+        issue["generated_content"] = gen_result["generated_content"]
+        issue["violations"] = gen_result.get("violations", [])
+        issue["has_generated"] = True
+        issue["status"] = "pending_preview"
     except Exception as e:
         traceback.print_exc()
-        send_admin_dm(f"⚠️ 처리 중 오류: {e}")
+        send_admin_dm(f"⚠️ 본문 생성 중 오류: {e}")
+        return
+
+    if not issue.get("generated_content"):
+        send_admin_dm("⚠️ 본문 생성 실패 (빈 응답). 다시 시도하거나 다른 URL 입력.")
+        return
+
+    # 2. 본문 정리 카드 1회 발송 (raw 카드 X, edit X, "프리뷰됨" 표시 제거)
+    card_text = format_preview_card(issue).replace(" | <i>프리뷰됨</i>", "")
+    if len(card_text) > MAX_CARD_LEN:
+        short = (issue["generated_content"] or "")[:MAX_CARD_LEN - 300] + "\n... (본문 일부 생략)"
+        issue_tmp = {**issue, "generated_content": short}
+        card_text = format_preview_card(issue_tmp).replace(" | <i>프리뷰됨</i>", "")
+
+    keyboard = approval_keyboard_preview(issue_id)
+
+    res = send_admin_dm(card_text, reply_markup=keyboard, parse_mode="HTML")
+
+    if res and res.get("ok"):
+        issue["telegram_admin_msg_id"] = res["result"]["message_id"]
+        save_pending(issue)
+    else:
+        err = (res.get("description") if res else "no response") or "unknown"
+        send_admin_dm(f"⚠️ 카드 발송 실패: {err}")
 
 
 def _start_edit_flow(issue_id: str):
