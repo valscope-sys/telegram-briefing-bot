@@ -200,7 +200,13 @@ def _handle_command(msg: dict):
 def _cmd_help():
     """/help — 명령어 안내"""
     text = (
-        "<b>이슈봇 명령어 (on-demand 모드)</b>\n\n"
+        "<b>이슈봇 (on-demand 모드)</b>\n\n"
+        "💬 <b>자연어로 말해도 OK</b>\n"
+        "예: \"어제 9시부터 12시까지 반도체 뉴스\"\n"
+        "예: \"오늘 삼성전자 공시 봐줘\"\n"
+        "예: \"최근 3시간 뉴스\"\n\n"
+        "─" * 25 + "\n\n"
+        "<b>명령어 (직접 입력도 OK)</b>\n\n"
         "<b>📰 카드 생성</b>\n"
         "• /card &lt;URL&gt; — URL로 카드 생성 (메리츠 스타일 가공 후 발송)\n"
         "• URL만 단독 입력해도 자동 인식\n\n"
@@ -503,6 +509,38 @@ import re as _re_mod
 import hashlib as _hashlib_mod
 
 _URL_PATTERN = _re_mod.compile(r"^https?://", _re_mod.IGNORECASE)
+
+
+def _handle_natural_language(text: str):
+    """자유 텍스트 → 명령어 변환 + 실행 (rule + Haiku fallback)."""
+    from telegram_bot.issue_bot.utils.nlu import parse_natural_language
+
+    cmd, args = parse_natural_language(text)
+
+    if not cmd:
+        send_admin_dm(
+            "⚠️ 의도를 파악하지 못했어요.\n"
+            "<code>/help</code>로 명령어 목록 확인 또는 다시 표현해주세요.\n\n"
+            "<i>예: \"어제 9시부터 12시까지 반도체 뉴스\"</i>",
+            parse_mode="HTML",
+        )
+        return
+
+    # 인식된 명령어 실행 (slash 명령어와 동일 핸들러 재사용)
+    if cmd in ("/card", "/c"):
+        _cmd_card(args)
+    elif cmd in ("/dart", "/d"):
+        _cmd_dart(args)
+    elif cmd in ("/news", "/n"):
+        _cmd_news(args)
+    elif cmd in ("/help", "/h"):
+        _cmd_help()
+    else:
+        send_admin_dm(
+            f"⚠️ 알 수 없는 명령: <code>{cmd}</code>\n"
+            "<code>/help</code>로 명령어 목록 확인.",
+            parse_mode="HTML",
+        )
 
 
 def _cmd_card(args: list):
@@ -919,6 +957,9 @@ def run_poller(stop_event=None, interval_s: int = 2):
                             elif _URL_PATTERN.match(text):
                                 # URL만 보내면 /card 로 자동 처리
                                 _create_card_from_url(text.split()[0])
+                            elif text:
+                                # 자연어 인식 (Rule + Haiku fallback)
+                                _handle_natural_language(text)
                     except Exception as e:
                         print(f"[POLLER] 업데이트 처리 오류: {e}")
                         traceback.print_exc()
