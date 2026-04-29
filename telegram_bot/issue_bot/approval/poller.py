@@ -311,51 +311,76 @@ def _cmd_dart(args: list):
     items_filtered = filter_signal_disclosures(items)
 
     if not items_filtered:
-        msg = (
-            f"📭 <b>{label_date}{label_extra}</b>\n"
-            f"공시 없음 (전체 {len(items)}건 중 노이즈 필터 후 0건)"
-            if items else
-            f"📭 <b>{label_date}{label_extra}</b>\n공시 없음 (DART 응답 0건)"
-        )
+        if items:
+            msg = (
+                f"📭 <b>주요 공시 없음</b> — {label_date}{label_time}{label_extra}\n"
+                f"<i>전체 {len(items)}건 중 노이즈 필터 후 0건.</i>\n"
+                f"기업명·시간 범위 다시 확인하거나 다른 날짜 시도."
+            )
+        else:
+            msg = (
+                f"📭 <b>공시 없음</b> — {label_date}{label_time}{label_extra}\n"
+                f"<i>DART 응답 0건 (해당 조건에 매칭 X).</i>\n"
+                f"기업명 정확히 입력했는지 확인 (예: \"대한전선\")."
+            )
         send_admin_dm(msg, parse_mode="HTML")
         return
 
-    # 메시지 조립 (4096자 분할)
+    # 매체 다양성 cap — DART는 기업별 cap (한 기업이 여러 공시 동시 발표 시 편중 방지)
+    from collections import Counter
+    MAX_PER_CORP = 3   # 한 기업당 최대 3건 (corp_name 검색이면 제한 풀림)
+    MAX_TOTAL = 12     # 전체 최대 12건
+
+    if corp_name:
+        # 특정 기업 검색이면 cap 풀고 다 보여줌
+        MAX_PER_CORP = 100
+
+    shown_per_corp = Counter()
+    final_items = []
+    for it in items_filtered:
+        cn = it.get("corp_name", "")
+        if shown_per_corp[cn] >= MAX_PER_CORP:
+            continue
+        final_items.append(it)
+        shown_per_corp[cn] += 1
+        if len(final_items) >= MAX_TOTAL:
+            break
+
+    # 메시지 조립
     header = (
-        f"<b>📋 DART 공시 — {label_date}{label_extra}</b>\n"
-        f"({len(items_filtered)}건 / 전체 {len(items)}건 중 시그널)\n"
-        + "─" * 25 + "\n"
+        f"<b>📋 DART 공시 — {label_date}{label_time}{label_extra}</b>\n"
+        f"<i>{len(final_items)}건 · 기업 {len(shown_per_corp)}곳 (전체 {len(items)}건 중 시그널 {len(items_filtered)}건)</i>\n"
+        + "─" * 25
     )
 
     lines = [header]
     cur_len = len(header)
-    shown = 0
 
-    for i, it in enumerate(items_filtered, 1):
-        # 시간 추출 (rcept_dt = "YYYYMMDDHHMM" 가능, 또는 "YYYYMMDD")
+    for i, it in enumerate(final_items, 1):
         dt_str = it.get("rcept_dt", "")
-        time_label = ""
+        time_label = "--:--"
         if len(dt_str) >= 12:
-            time_label = f"{dt_str[8:10]}:{dt_str[10:12]} "
+            time_label = f"{dt_str[8:10]}:{dt_str[10:12]}"
 
-        line = (
-            f"{i}. {time_label}<b>{_html_escape(it['corp_name'])}</b>\n"
-            f"   {_html_escape(it['report_nm'])}\n"
-            f"   <a href=\"{it['url']}\">원본</a>\n"
-        )
+        corp = _html_escape(it.get("corp_name", ""))
+        report = _html_escape(it.get("report_nm", "").strip())
 
-        # 메시지 4000자 제한 (안전 마진)
-        if cur_len + len(line) > 3800:
-            lines.append(f"\n... (이하 {len(items_filtered) - shown}건 생략)")
+        # 새 형식:
+        # [HH:MM] 기업명 — 보고서명 (헤드라인)
+        # 📋 DART · 원본 (작게)
+        head_line = f"\n<b>{i}.</b> [{time_label}] <b>{corp}</b> — {report}"
+        meta_line = f"   <i>📋 DART · <a href=\"{it['url']}\">원본</a></i>"
+        block = head_line + "\n" + meta_line + "\n"
+
+        if cur_len + len(block) > 3800:
+            lines.append(f"\n<i>... (이하 {len(final_items) - i + 1}건 생략)</i>")
             break
 
-        lines.append(line)
-        cur_len += len(line)
-        shown += 1
+        lines.append(block)
+        cur_len += len(block)
 
     lines.append(
-        "\n💡 <b>카드 만들기</b>: 위 URL을 <code>/card &lt;URL&gt;</code> 또는 "
-        "URL만 단독 입력하면 메리츠 스타일 카드 생성"
+        "\n💡 <b>카드 만들기</b>: 위 URL을 그대로 보내거나 <code>/card &lt;URL&gt;</code>"
     )
 
     send_admin_dm("\n".join(lines), parse_mode="HTML")
@@ -463,41 +488,92 @@ def _cmd_news(args: list):
         )
 
     if not items:
-        send_admin_dm(f"📭 뉴스 없음 ({label})", parse_mode="HTML")
+        send_admin_dm(
+            f"📭 <b>뉴스 없음</b> — {label}\n"
+            f"<i>해당 시간/키워드 범위에 신규 헤드라인 없음.</i>\n"
+            f"다른 시간대 또는 키워드로 다시 시도해보세요.",
+            parse_mode="HTML",
+        )
         return
+
+    # 매체별 다양성 cap — 단일 매체 편중 방지
+    from collections import Counter
+    MAX_PER_SOURCE = 2  # 매체당 최대 2건
+    MAX_TOTAL = 7       # 전체 최대 7건
+
+    shown_per_source = Counter()
+    filtered = []
+    for it in items:
+        src = it.get("source", "")
+        if shown_per_source[src] >= MAX_PER_SOURCE:
+            continue
+        filtered.append(it)
+        shown_per_source[src] += 1
+        if len(filtered) >= MAX_TOTAL:
+            break
+
+    if not filtered:
+        send_admin_dm(
+            f"📭 <b>주요 뉴스 없음</b> — {label}\n"
+            f"<i>매체별 cap 적용 후 결과 0건.</i>",
+            parse_mode="HTML",
+        )
+        return
+
+    # 영문 기사 번역 + 요약 (Haiku batch, 한글은 그대로)
+    from telegram_bot.issue_bot.collectors.rss_query import translate_summarize_batch
+    has_en = any(it.get("lang") == "en" for it in filtered)
+    if has_en:
+        send_admin_dm(
+            f"🔄 영문 기사 번역 중... ({sum(1 for it in filtered if it.get('lang') == 'en')}건)",
+            parse_mode="HTML",
+        )
+    filtered = translate_summarize_batch(filtered, max_items=MAX_TOTAL)
 
     header = (
         f"<b>📰 뉴스 헤드라인 — {label}</b>\n"
-        f"({len(items)}건)\n"
-        + "─" * 25 + "\n"
+        f"<i>{len(filtered)}건 · 매체 {len(shown_per_source)}곳</i>\n"
+        + "─" * 25
     )
 
     lines = [header]
     cur_len = len(header)
-    shown = 0
 
-    for i, it in enumerate(items, 1):
-        # 시간 표시 (published_dt 있으면 HH:MM)
+    for i, it in enumerate(filtered, 1):
         pub_dt = it.get("published_dt")
-        time_str = pub_dt.strftime("%m/%d %H:%M ") if pub_dt else ""
+        time_str = pub_dt.strftime("%H:%M") if pub_dt else "--:--"
+        src = it.get("source", "")
+        title_kr = it.get("title_kr") or it.get("title", "")
+        summary_kr = it.get("summary_kr", "")
+        link = it.get("link", "")
+        is_en = it.get("lang") == "en"
 
-        line = (
-            f"{i}. {time_str}<b>{_html_escape(it['source'])}</b>\n"
-            f"   {_html_escape(it['title'][:140])}\n"
-            f"   <a href=\"{it['link']}\">원본</a>\n"
-        )
+        # 새 형식:
+        # [HH:MM] 한글 헤드라인
+        # 1줄 요약 (영문 기사면 번역 + 요약, 한글 기사면 비어있음)
+        # 📰 매체명 · 원본 (작게)
 
-        if cur_len + len(line) > 3800:
-            lines.append(f"\n... (이하 {len(items) - shown}건 생략)")
+        head_line = f"\n<b>{i}.</b> [{time_str}] <b>{_html_escape(title_kr[:140])}</b>"
+
+        body_parts = []
+        if summary_kr:
+            body_parts.append(f"   <i>{_html_escape(summary_kr[:200])}</i>")
+
+        # 출처 — italic + 작은 글씨 느낌, 원본 링크
+        src_line = f"   <i>📰 {_html_escape(src)}{' (영문 번역)' if is_en else ''} · <a href=\"{link}\">원본</a></i>"
+        body_parts.append(src_line)
+
+        block = head_line + "\n" + "\n".join(body_parts) + "\n"
+
+        if cur_len + len(block) > 3800:
+            lines.append(f"\n<i>... (이하 {len(filtered) - i + 1}건 생략 — 카드 길이 한계)</i>")
             break
 
-        lines.append(line)
-        cur_len += len(line)
-        shown += 1
+        lines.append(block)
+        cur_len += len(block)
 
     lines.append(
-        "\n💡 <b>카드 만들기</b>: 위 URL을 <code>/card &lt;URL&gt;</code> 또는 "
-        "URL만 단독 입력하면 메리츠 스타일 카드 생성"
+        "\n💡 <b>카드 만들기</b>: 위 URL을 그대로 보내거나 <code>/card &lt;URL&gt;</code>"
     )
 
     send_admin_dm("\n".join(lines), parse_mode="HTML")
