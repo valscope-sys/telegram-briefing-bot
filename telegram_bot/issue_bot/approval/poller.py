@@ -23,10 +23,6 @@ from telegram_bot.issue_bot.utils.telegram import (
     acquire_poller_lock,
     refresh_poller_lock,
     release_poller_lock,
-    batch_keyboard_by_priority,
-    activate_kill_switch,
-    deactivate_kill_switch,
-    is_kill_switch_active,
 )
 from telegram_bot.issue_bot.approval.bot import (
     load_pending,
@@ -37,9 +33,6 @@ from telegram_bot.issue_bot.approval.bot import (
     approve_and_send,
     reject_issue,
     format_preview_card,
-    approve_batch_by_priority,
-    reject_batch_by_priority,
-    get_pending_summary,
 )
 from telegram_bot.issue_bot.pipeline.linter import lint_r1_r8
 
@@ -190,15 +183,7 @@ def _handle_command(msg: dict):
     cmd = parts[0].lower()
     args = parts[1:]
 
-    if cmd in ("/queue", "/q", "/status"):
-        _cmd_queue()
-    elif cmd in ("/mute", "/pause"):
-        _cmd_mute(args)
-    elif cmd == "/stop":
-        _cmd_stop()
-    elif cmd in ("/resume", "/start_again"):
-        _cmd_resume()
-    elif cmd in ("/help", "/h"):
+    if cmd in ("/help", "/h"):
         _cmd_help()
     elif cmd in ("/card", "/c"):
         _cmd_card(args)
@@ -210,65 +195,6 @@ def _handle_command(msg: dict):
         return False
 
     return True
-
-
-def _cmd_queue():
-    """/queue — 대기 카드 요약 + 일괄 승인/스킵 버튼"""
-    summary = get_pending_summary()
-    total = summary["total"]
-    counts = summary["counts"]
-
-    if total == 0:
-        send_admin_dm("📭 대기 카드 없음")
-        return
-
-    lines = [f"📋 <b>대기 카드 요약</b> — 총 {total}건\n"]
-    for pri in ["URGENT", "HIGH", "NORMAL"]:
-        cnt = counts.get(pri, 0)
-        if cnt:
-            lines.append(f"• {pri}: {cnt}건")
-    lines.append("")
-    lines.append("<i>아래 버튼으로 우선순위별 일괄 처리 가능.</i>")
-
-    kb = batch_keyboard_by_priority(counts)
-    send_admin_dm("\n".join(lines), reply_markup=kb, parse_mode="HTML")
-
-
-def _cmd_mute(args: list):
-    """/mute [분] — N분간 알림 중지 (기본 60분)"""
-    minutes = 60
-    if args:
-        try:
-            minutes = max(1, min(int(args[0]), 1440))  # 1분 ~ 24시간
-        except ValueError:
-            send_admin_dm("⚠️ 사용법: /mute [분] (예: /mute 120)")
-            return
-    activate_kill_switch(minutes=minutes)
-    send_admin_dm(
-        f"🔕 이슈봇 <b>{minutes}분 중지</b>\n"
-        f"대기 중 공시/뉴스 수집 및 카드 발송을 멈춥니다.\n"
-        f"해제: /resume",
-        parse_mode="HTML",
-    )
-
-
-def _cmd_stop():
-    """/stop — 오늘 하루(KST 자정까지) 중지"""
-    now = datetime.datetime.now(KST)
-    midnight = (now + datetime.timedelta(days=1)).replace(hour=0, minute=0, second=0, microsecond=0)
-    minutes = max(1, int((midnight - now).total_seconds() // 60))
-    activate_kill_switch(minutes=minutes)
-    send_admin_dm(
-        f"🛑 이슈봇 <b>오늘 자정까지 중지</b> ({minutes}분)\n"
-        f"해제: /resume",
-        parse_mode="HTML",
-    )
-
-
-def _cmd_resume():
-    """/resume — 즉시 재개"""
-    deactivate_kill_switch()
-    send_admin_dm("✅ 이슈봇 <b>재개</b>. 다음 폴링부터 정상 수집.", parse_mode="HTML")
 
 
 def _cmd_help():
@@ -286,13 +212,14 @@ def _cmd_help():
         "• /dart 2026-04-29 — 특정 날짜\n\n"
         "<b>📰 뉴스 헤드라인 조회</b>\n"
         "• /news — 오늘 (최근 24h) 핵심 매체\n"
-        "• /news 어제 — 어제~오늘 (48h)\n"
-        "• /news 반도체 — 키워드 검색 (Google News)\n\n"
-        "<b>⚙️ 관리</b>\n"
-        "• /queue — 대기 카드 요약 + 일괄 처리\n"
-        "• /mute [분] — N분간 중지 (기본 60, 최대 1440)\n"
-        "• /stop — 오늘 자정까지 중지\n"
-        "• /resume — 즉시 재개\n"
+        "• /news 어제 — 어제 전체\n"
+        "• /news 3h — 최근 3시간 (또는 30m)\n"
+        "• /news 09:00-12:00 — 오늘 9~12시\n"
+        "• /news 어제 14:00-18:00 — 어제 14~18시\n"
+        "• /news 반도체 — 키워드 검색\n"
+        "• /news 반도체 3h — 키워드 + 최근 3시간\n"
+        "• /news 반도체 어제 09-12 — 키워드 + 어제 9~12시\n\n"
+        "<b>⚙️ 기타</b>\n"
         "• /help — 이 메시지"
     )
     send_admin_dm(text, parse_mode="HTML")
@@ -301,39 +228,80 @@ def _cmd_help():
 # ===== /dart 명령어 (DART 공시 조회) =====
 
 def _cmd_dart(args: list):
-    """/dart [날짜] [기업명] — DART 공시 목록 조회.
+    """/dart [날짜] [시간범위] [기업명] — DART 공시 목록 조회.
 
-    인자 파싱 규칙:
-    - 인자 없음 → 오늘 전체
-    - 첫 인자가 날짜 키워드(오늘/어제/그제 또는 YYYY-MM-DD) → 그 날짜
-    - 그 외 인자 = 기업명 (공백 포함 시 합침)
+    인자 규칙 (자유 순서):
+    - 날짜: "오늘"/"어제"/"그제"/"YYYY-MM-DD"
+    - 시간 범위: "09:00-12:00" / "9-12" / "3h" / "30m"
+    - 기업명: 그 외 인자 합침
+
+    예시:
+    - /dart → 오늘 전체
+    - /dart 어제 → 어제 전체
+    - /dart 09:00-12:00 → 오늘 9~12시
+    - /dart 3h → 최근 3시간
+    - /dart 삼성전자 → 오늘 + 삼성전자
+    - /dart 어제 09-15 삼성전자 → 어제 9~15시 + 삼성전자
     """
     import datetime as _dt
     from telegram_bot.issue_bot.collectors.dart_query import (
         parse_date_arg, fetch_dart_list, filter_signal_disclosures,
     )
+    from telegram_bot.issue_bot.collectors.rss_query import parse_time_arg
 
     date = _dt.date.today()
-    corp_name = None
+    from_dt = None
+    to_dt = None
+    corp_parts = []
 
-    if args:
-        first_parsed = parse_date_arg(args[0])
-        if first_parsed:
-            date = first_parsed
-            if len(args) > 1:
-                corp_name = " ".join(args[1:])
-        else:
-            corp_name = " ".join(args)
+    for arg in args:
+        # 1. 날짜?
+        parsed_date = parse_date_arg(arg)
+        if parsed_date and from_dt is None:
+            date = parsed_date
+            continue
+        # 2. 시간 범위 / 상대 시간?
+        parsed_time = parse_time_arg(arg, base_date=date)
+        if parsed_time:
+            from_dt, to_dt = parsed_time
+            continue
+        # 3. 그 외는 기업명
+        corp_parts.append(arg)
+
+    corp_name = " ".join(corp_parts) if corp_parts else None
 
     label_date = date.strftime("%Y-%m-%d (%a)")
     label_extra = f" — <b>{_html_escape(corp_name)}</b>" if corp_name else ""
+    label_time = ""
+    if from_dt is not None:
+        label_time = (
+            f" · {from_dt.strftime('%H:%M')}~{to_dt.strftime('%H:%M')}"
+        )
 
     send_admin_dm(
-        f"📋 DART 조회 중... ({label_date}{label_extra})",
+        f"📋 DART 조회 중... ({label_date}{label_time}{label_extra})",
         parse_mode="HTML",
     )
 
     items = fetch_dart_list(date, corp_name=corp_name, page_count=100)
+
+    # 시간 범위 필터 (rcept_dt = YYYYMMDDHHMM)
+    if from_dt is not None and to_dt is not None:
+        filtered_by_time = []
+        for it in items:
+            dt_str = it.get("rcept_dt", "")
+            if len(dt_str) >= 12:
+                try:
+                    item_dt = _dt.datetime.strptime(dt_str[:12], "%Y%m%d%H%M")
+                    if from_dt <= item_dt <= to_dt:
+                        filtered_by_time.append(it)
+                except ValueError:
+                    continue
+            # rcept_dt가 시간 정보 없으면 (YYYYMMDD만): 통과시킴
+            else:
+                filtered_by_time.append(it)
+        items = filtered_by_time
+
     items_filtered = filter_signal_disclosures(items)
 
     if not items_filtered:
@@ -402,39 +370,91 @@ def _html_escape(text: str) -> str:
 # ===== /news 명령어 (RSS 헤드라인 조회) =====
 
 def _cmd_news(args: list):
-    """/news [기간|키워드] — RSS 헤드라인 조회.
+    """/news [날짜] [시간범위|상대시간] [키워드] — RSS 헤드라인 조회.
 
-    인자 규칙:
-    - 없음 또는 "오늘": 핵심 매체 최근 24h
-    - "어제": 24h~48h
-    - 그 외: Google News RSS 키워드 검색 (한글 우선)
+    인자 규칙 (자유 순서):
+    - 날짜: "오늘"/"어제"/"그제"/"YYYY-MM-DD"
+    - 시간 범위: "09:00-12:00" / "9-12" / "0900-1200"
+    - 상대 시간: "3h" / "30m"
+    - 키워드: 그 외 모든 인자 합침
+
+    예시:
+    - /news → 오늘 24h
+    - /news 어제 → 24h~48h
+    - /news 3h → 최근 3시간
+    - /news 09:00-12:00 → 오늘 9~12시
+    - /news 어제 14:00-18:00 → 어제 14~18시
+    - /news 반도체 → 키워드
+    - /news 반도체 3h → 키워드 + 최근 3시간
+    - /news 반도체 어제 → 키워드 + 어제
     """
+    import datetime as _dt
     from telegram_bot.issue_bot.collectors.rss_query import (
-        fetch_news_headlines, search_keyword_news,
+        fetch_news_headlines, search_keyword_news, parse_time_arg,
     )
+    from telegram_bot.issue_bot.collectors.dart_query import parse_date_arg
 
-    is_keyword_search = False
-    keyword = None
+    base_date = _dt.date.today()
+    from_dt = None
+    to_dt = None
+    keyword_parts = []
+    date_label = "오늘"
+    time_label = ""
 
-    if not args or args[0] in ("오늘", "today"):
-        max_age = 24
-        max_per = 5
-        label = "오늘 (최근 24h)"
-    elif args[0] in ("어제", "yesterday"):
-        max_age = 48
-        max_per = 8
-        label = "어제~오늘 (48h)"
+    for arg in args:
+        # 1. 날짜 키워드?
+        parsed_date = parse_date_arg(arg)
+        if parsed_date and from_dt is None:
+            base_date = parsed_date
+            date_label = arg
+            continue
+        # 2. 시간 범위 / 상대 시간?
+        parsed_time = parse_time_arg(arg, base_date=base_date)
+        if parsed_time:
+            from_dt, to_dt = parsed_time
+            time_label = arg
+            continue
+        # 3. 그 외는 키워드
+        keyword_parts.append(arg)
+
+    keyword = " ".join(keyword_parts) if keyword_parts else None
+    is_keyword_search = bool(keyword)
+
+    # 시간 범위 미지정 + 날짜만 지정 시: 그 날 24h 전체
+    if from_dt is None:
+        if base_date == _dt.date.today():
+            # 오늘: 최근 24h
+            from_dt = _dt.datetime.now() - _dt.timedelta(hours=24)
+            to_dt = _dt.datetime.now()
+            range_label = "최근 24h"
+        else:
+            # 특정 날짜: 그 날 00:00 ~ 23:59
+            from_dt = _dt.datetime.combine(base_date, _dt.time(0, 0))
+            to_dt = _dt.datetime.combine(base_date, _dt.time(23, 59))
+            range_label = base_date.strftime("%Y-%m-%d 전체")
     else:
-        is_keyword_search = True
-        keyword = " ".join(args)
-        label = f"키워드: <b>{_html_escape(keyword)}</b>"
+        # 시간 범위 명시됨
+        range_label = (
+            f"{from_dt.strftime('%m/%d %H:%M')} ~ {to_dt.strftime('%H:%M')}"
+            if from_dt.date() == to_dt.date()
+            else f"{from_dt.strftime('%m/%d %H:%M')} ~ {to_dt.strftime('%m/%d %H:%M')}"
+        )
+
+    label_parts = [range_label]
+    if keyword:
+        label_parts.append(f"키워드: <b>{_html_escape(keyword)}</b>")
+    label = " · ".join(label_parts)
 
     send_admin_dm(f"📰 뉴스 조회 중... ({label})", parse_mode="HTML")
 
     if is_keyword_search:
-        items = search_keyword_news(keyword, max_results=30)
+        items = search_keyword_news(
+            keyword, max_results=50, from_dt=from_dt, to_dt=to_dt,
+        )
     else:
-        items = fetch_news_headlines(max_age_hours=max_age, max_per_feed=max_per)
+        items = fetch_news_headlines(
+            max_per_feed=10, from_dt=from_dt, to_dt=to_dt,
+        )
 
     if not items:
         send_admin_dm(f"📭 뉴스 없음 ({label})", parse_mode="HTML")
@@ -451,8 +471,12 @@ def _cmd_news(args: list):
     shown = 0
 
     for i, it in enumerate(items, 1):
+        # 시간 표시 (published_dt 있으면 HH:MM)
+        pub_dt = it.get("published_dt")
+        time_str = pub_dt.strftime("%m/%d %H:%M ") if pub_dt else ""
+
         line = (
-            f"{i}. <b>{_html_escape(it['source'])}</b>\n"
+            f"{i}. {time_str}<b>{_html_escape(it['source'])}</b>\n"
             f"   {_html_escape(it['title'][:140])}\n"
             f"   <a href=\"{it['link']}\">원본</a>\n"
         )
