@@ -118,7 +118,8 @@ HOUR_RANGE_RE = re.compile(
 # 단일 시간 ("9시")은 안 잡음 (모호)
 
 # 상대 시간: "최근 3시간", "3시간 전부터", "30분 전"
-RELATIVE_RE = re.compile(r"(?:최근\s*)?(\d+)\s*(시간|분)\s*(?:전|동안|이내|간)?")
+# "1분기"의 "1분"은 시간이 아니므로 negative lookahead로 제외
+RELATIVE_RE = re.compile(r"(?:최근\s*)?(\d+)\s*(시간|분)(?!기)\s*(?:전|동안|이내|간)?")
 
 # URL
 URL_RE = re.compile(r"https?://\S+")
@@ -314,6 +315,11 @@ def _rule_nlu(text: str) -> str:
         if extract_quarter(text):
             is_dart = True
 
+    # "분기 추이" / "분기추이" 표현 → 자동 dart 의도 (회사명 뒤따르는 경우)
+    if not is_news and not is_dart:
+        if re.search(r"분\s*기\s*추\s*이", text) or "분기추이" in text:
+            is_dart = True
+
     if not is_news and not is_dart:
         return None  # 의도 모호 → Haiku fallback
 
@@ -369,6 +375,9 @@ def _rule_nlu(text: str) -> str:
         if report_kw:
             args.append(f"#report:{report_kw}")
             remaining = re.sub(re.escape(report_kw), " ", remaining, flags=re.IGNORECASE)
+        elif re.search(r"분\s*기\s*추\s*이", remaining) or "분기추이" in remaining:
+            # "분기 추이" 표현 → #report:실적 자동 부여 (추이 카드 트리거)
+            args.append("#report:실적")
 
         # 분기 추출 ("1Q26", "1분기" 등) — 회사명에서 분리
         quarter = extract_quarter(remaining)

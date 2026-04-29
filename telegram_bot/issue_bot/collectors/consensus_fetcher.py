@@ -117,10 +117,31 @@ def fetch_naver_consensus(stock_code: str) -> Optional[dict]:
     #   tr1: "주요재무정보 | 최근 연간 실적 (colspan 4) | 최근 분기 실적 (colspan 6)"
     #   tr2: "2023.12 | 2024.12 | 2025.12 | 2026.12 | 2024.12 | 2025.03 | 2025.06 | 2025.09 | 2025.12 | 2026.03"
     #   tr3: " | | | (E) | | | | | | (E)"
-    # 같은 컬럼 인덱스의 tr2 라벨 + tr3 (E) 표시 합쳐서 (label, is_estimate) 추출
+    # 같은 컬럼 인덱스의 tr2 라벨 + tr3 (E) 표시 합쳐서 (label, is_estimate, kind) 추출.
+    # kind: "annual" (연간 colspan 안) | "quarter" (분기 colspan 안)
+    # 분기 카드는 quarter만 의미 — annual은 같은 YYYY.MM 라벨이 분기 라벨과 충돌해
+    # 분기 추이가 연간 수치로 잘못 표시됨 (예: 4Q26 = 연간 9조).
     header_rows = thead.find_all("tr")
     if len(header_rows) < 2:
         return None
+
+    # tr1: 그룹 헤더의 colspan으로 컬럼 종류 매핑
+    # 첫 컬럼은 행 라벨용 (rowspan=2 또는 단순 "주요재무정보"). 그 후 그룹.
+    group_headers = header_rows[0].find_all(["th", "td"])
+    column_kinds = []  # 인덱스 0부터 각 컬럼이 어떤 그룹인지 ("annual" / "quarter" / "label")
+    for cell in group_headers:
+        text = cell.get_text(" ", strip=True)
+        try:
+            colspan = int(cell.get("colspan", "1"))
+        except ValueError:
+            colspan = 1
+        if "분기" in text:
+            kind = "quarter"
+        elif "연간" in text:
+            kind = "annual"
+        else:
+            kind = "label"
+        column_kinds.extend([kind] * colspan)
 
     # tr2: 분기 라벨 (YYYY.MM 패턴)
     label_cells = header_rows[1].find_all(["th", "td"])
@@ -132,16 +153,28 @@ def fetch_naver_consensus(stock_code: str) -> Optional[dict]:
         mark_cells = header_rows[2].find_all(["th", "td"])
         estimate_marks = [c.get_text(" ", strip=True) for c in mark_cells]
 
-    # 정규화: YYYY.MM 패턴인 것만 살림
-    quarter_meta = []  # [(label, is_estimate), ...]
+    # tbody cells 인덱싱: thead의 첫 컬럼이 "label" (행 라벨용)이면 tbody에서는
+    # 해당 위치가 <th>로 변환되어 td 카운트에 안 들어감 → cells_idx = thead_idx - label_count
+    label_count = sum(1 for k in column_kinds if k == "label")
+
+    # 정규화: YYYY.MM 패턴 + quarter 컬럼만 살림
+    quarter_meta = []  # [(label, is_estimate, cells_idx), ...]
     for i, lbl in enumerate(labels):
         m = re.match(r"(\d{4}\.\d{2})", lbl)
         if not m:
             continue
         clean_label = m.group(1)
+        # column_kinds 매핑 (없으면 "quarter" fallback — 후방 호환)
+        kind = column_kinds[i] if i < len(column_kinds) else "quarter"
+        if kind != "quarter":
+            continue  # 연간 컬럼 스킵
         mark = estimate_marks[i] if i < len(estimate_marks) else ""
         is_est = "(E)" in mark or "(E)" in lbl
-        quarter_meta.append((clean_label, is_est))
+        # thead 인덱스 → tbody cells 인덱스 (첫 라벨 컬럼은 cells에 없음)
+        cells_idx = i - label_count
+        if cells_idx < 0:
+            continue
+        quarter_meta.append((clean_label, is_est, cells_idx))
 
     if not quarter_meta:
         return None
@@ -163,11 +196,11 @@ def fetch_naver_consensus(stock_code: str) -> Optional[dict]:
         key = label_to_key[row_label]
 
         cells = row.find_all("td")
-        # cells의 i번째가 quarter_meta의 i번째와 매칭
-        for i, (q_label, is_est) in enumerate(quarter_meta):
-            if i >= len(cells):
-                break
-            val = _parse_int(cells[i].get_text(" ", strip=True))
+        # quarter_meta의 cells_idx로 분기 컬럼 셀만 골라냄
+        for q_label, is_est, cells_idx in quarter_meta:
+            if cells_idx >= len(cells):
+                continue
+            val = _parse_int(cells[cells_idx].get_text(" ", strip=True))
             if q_label not in result_by_label:
                 result_by_label[q_label] = {"is_estimate": is_est}
             result_by_label[q_label][key] = val
