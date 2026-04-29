@@ -1,0 +1,11 @@
+{
+  "date": "2026-04-29",
+  "timestamp": "2026-04-29T07:01:55.777323",
+  "briefing_type": "morning",
+  "messages": [
+    "🌐 *모닝 브리핑*\n04월 29일 · 07:00 기준\n\n📊 *미국 증시*\nS&P 500  7,138.80  ▼ -0.49%\nNASDAQ  24,663.80  ▼ -0.90%\nDOW  49,141.93  ▼ -0.05%\nVIX  17.83  ▼ -1.05%\n\n🏷 *미국 섹터*\n▲ 에너지 +1.66% · 부동산 +0.97% · 헬스케어 +0.26%\n▼ 산업재 -0.89% · 기술 -1.69% · 반도체 -3.67%\n\n💱 *환율 · 금리*\nUSD/KRW  1,473.2  ▼ -0.40\nDXY  98.62  ▲ +0.14%\n미국채 2Y 3.81%(+0bp) / 10Y 4.36%(+1bp)  스프레드 +55bp\n\n🛢 *원자재*\nWTI  $99.62/bbl  ▲ +3.37%\n금  $4,609.60/oz  ▼ -1.41%\n구리  $5.98/lb  ▼ -0.69%\n\n🌙 *야간 프록시* (NY close 기준)\nKORU(3x) 525.81 ▼ -4.57%\nEWY 154.37 ▼ -1.51%\n코스피200 995.33 ▲ +2.41%\n\n🇰🇷 *전일 국내 증시* (04-28 종가)\nKOSPI  6,641.02  ▲ +0.39%  (37.6조, ▲29% vs 20d)\nKOSDAQ  1,215.58  ▼ -0.86%  (13.9조, ▼1% vs 20d)\n외국인 ▼ -1,843억 · 기관 ▲ +3,532억 · 개인 ▼ -1,306억",
+    "📋 *미장 마감 리뷰*\n04월 29일\n\n미장 시황 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CaWvV1yNfR3suQVqqXqL2'}",
+    "📰 *장전 주요 뉴스*\n04월 29일\n\n📌  [\"산책하다 공에 맞을라\"…노인들 푹 빠진 '파크골프' 민낯](https://www.hankyung.com/article/2026042833421)\n\n📌  [\"아들아, TV 소리 잘 들린다\"…日서 불티난 '효도템' 韓 상륙](https://www.hankyung.com/article/202604282896g)\n\n📌  [\"제가 통님 설득\" vs \"말 바꿨다\"…하정우·한동훈 신경전](https://www.hankyung.com/article/2026042837407)\n\n📌  [[포토] 공덕오거리에 들어선 폭포](https://www.hankyung.com/article/2026042831961)\n\n📌  [LTV 공유에 2700억 '과징금 부과'…첫 정보교환 담합 인정의 법적 쟁점은? [광장의 공정거래]](https://www.hankyung.com/article/202604293790i)",
+    "📅 *오늘 일정*\n04월 29일\n\n🇰🇷 채비(구.대영채비) 신규상장\n🇰🇷 채비 신규상장\n 알파벳(구글)·마이크로소프트·메타·아마존 1분기 실적 발표\n\n📊 *실적발표*\n🇰🇷 국내  현대건설, 에코프로비엠, PI첨단소재, 에코프로에이치엔, 에코프로머티, 에코프로, 대한전선, 넥센타이어, LG전자, HL만도, 하이브\n🇺🇸 해외 (장전·KST 밤)  ABBV\n🇺🇸 해외 (장후·KST 새벽)  마이크로소프트(MSFT), 메타(META), 구글(A)(GOOGL), 퀄컴(QCOM), 아마존(AMZN)\n\n[전체 일정 보기](https://valscope-sys.github.io/telegram-briefing-bot/)"
+  ]
+}
