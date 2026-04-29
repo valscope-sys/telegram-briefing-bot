@@ -33,6 +33,10 @@ DART_API_KEY = os.getenv("DART_API_KEY", "")
 
 # === 이슈 봇 설정 ===
 ISSUE_BOT_ENABLED = os.getenv("ISSUE_BOT_ENABLED", "true").lower() == "true"
+# 2026-04-29: C 모드 (풀 수동) 도입 — 자동 폴링 분리 플래그.
+# false면 RSS·DART·SEC 자동 수집·필터·카드 발송 OFF (Haiku 비용 거의 0).
+# poller(/card on-demand)는 그대로 작동하므로 admin DM URL → 카드 생성 가능.
+ISSUE_BOT_AUTO_POLLING_ENABLED = os.getenv("ISSUE_BOT_AUTO_POLLING_ENABLED", "true").lower() == "true"
 ISSUE_BOT_AUTO_APPROVE = os.getenv("ISSUE_BOT_AUTO_APPROVE", "false").lower() == "true"
 ISSUE_BOT_FILTER_MODEL = os.getenv("ISSUE_BOT_FILTER_MODEL", "claude-haiku-4-5-20251001")
 ISSUE_BOT_FILTER_VERIFIER_MODEL = os.getenv("ISSUE_BOT_FILTER_VERIFIER_MODEL", "claude-sonnet-4-5")

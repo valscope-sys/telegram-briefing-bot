@@ -10,7 +10,11 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.triggers.cron import CronTrigger
 
 from telegram_bot.briefings import run_morning_briefing, run_evening_briefing, resend_briefing
-from telegram_bot.config import ISSUE_BOT_ENABLED, ISSUE_BOT_POLL_INTERVAL_MIN
+from telegram_bot.config import (
+    ISSUE_BOT_ENABLED,
+    ISSUE_BOT_AUTO_POLLING_ENABLED,
+    ISSUE_BOT_POLL_INTERVAL_MIN,
+)
 
 KST = pytz.timezone("Asia/Seoul")
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -207,14 +211,18 @@ def main():
         from telegram_bot.issue_bot.main import issue_bot_poll_once
         from telegram_bot.issue_bot.approval.poller import run_poller
 
-        scheduler.add_job(
-            issue_bot_poll_once,
-            CronTrigger(minute=f"*/{ISSUE_BOT_POLL_INTERVAL_MIN}", timezone=KST),
-            id="issue_bot_poll",
-            name="이슈봇 폴링",
-            misfire_grace_time=GRACE,
-        )
-        print(f"[SCHEDULER] 이슈봇 폴링 등록 ({ISSUE_BOT_POLL_INTERVAL_MIN}분 간격)")
+        # C 모드 (풀 수동): 자동 폴링 OFF, poller(/card)만 유지
+        if ISSUE_BOT_AUTO_POLLING_ENABLED:
+            scheduler.add_job(
+                issue_bot_poll_once,
+                CronTrigger(minute=f"*/{ISSUE_BOT_POLL_INTERVAL_MIN}", timezone=KST),
+                id="issue_bot_poll",
+                name="이슈봇 폴링",
+                misfire_grace_time=GRACE,
+            )
+            print(f"[SCHEDULER] 이슈봇 자동 폴링 등록 ({ISSUE_BOT_POLL_INTERVAL_MIN}분 간격)")
+        else:
+            print("[SCHEDULER] ⚠️ 이슈봇 자동 폴링 OFF (C 모드) — /card on-demand만 작동")
 
         issue_bot_stop_event = threading.Event()
 
