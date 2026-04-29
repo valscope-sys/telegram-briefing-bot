@@ -290,6 +290,27 @@ function renderMonth() {
         if (dayEvents.length > MAX_EVENTS) {
             html += `<div class="more-events">+${dayEvents.length - MAX_EVENTS}건 더</div>`;
         }
+        // 모바일용 카테고리 점 (CSS @media에서 .event-bar 숨겨질 때 표시)
+        if (dayEvents.length > 0) {
+            // 카테고리별 unique 점 (같은 카테고리는 한 번만), 최대 6개
+            const seenCats = new Set();
+            const dotCats = [];
+            for (const ev of dayEvents) {
+                if (!seenCats.has(ev.category)) {
+                    seenCats.add(ev.category);
+                    dotCats.push(ev.category);
+                    if (dotCats.length >= 6) break;
+                }
+            }
+            html += `<div class="event-dots-mobile">`;
+            for (const cat of dotCats) {
+                html += `<span class="event-dot-m" style="background:${catColor(cat)}" title="${CAT_LABELS[cat] || cat}"></span>`;
+            }
+            if (dayEvents.length > dotCats.length) {
+                html += `<span class="event-dot-m-count">+${dayEvents.length - dotCats.length}</span>`;
+            }
+            html += `</div>`;
+        }
         html += `</div>`;
     }
     // Next month padding
@@ -441,6 +462,209 @@ function showDetailPanel(dateStr) {
 
 function closeDetail() { document.getElementById("detail-panel").classList.add("hidden"); }
 function clickUndated(ev) { if (isAdmin) openEditEvent(ev); }
+
+// === SEARCH ===
+let searchActiveIdx = -1;
+let searchHits = [];
+let searchDebounce = null;
+
+function escapeRegex(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }
+function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+function highlightTerm(text, term) {
+    if (!term) return escapeHtml(text);
+    const re = new RegExp(`(${escapeRegex(term)})`, "gi");
+    return escapeHtml(text).replace(re, "<mark>$1</mark>");
+}
+
+function performSearch(query) {
+    const q = (query || "").trim().toLowerCase();
+    if (!q) {
+        searchHits = [];
+        renderSearchResults("");
+        return;
+    }
+    // 다중 키워드 (공백 분리, 모두 포함하는 항목 매치)
+    const terms = q.split(/\s+/).filter(Boolean);
+    const today = fmt(new Date());
+
+    const scored = [];
+    for (const ev of events) {
+        const title = (ev.title || "").toLowerCase();
+        const summary = (ev.summary || "").toLowerCase();
+        const cat = (CAT_LABELS[ev.category] || ev.category || "").toLowerCase();
+        const date = (ev.date || "").toLowerCase();
+        const haystack = `${title} ${summary} ${cat} ${date}`;
+
+        if (!terms.every(t => haystack.includes(t))) continue;
+
+        // 점수: 제목 매치 우선, 미래 일정 우선
+        let score = 0;
+        if (terms.every(t => title.includes(t))) score += 100;
+        if (terms.every(t => cat.includes(t))) score += 30;
+        if (ev.date && ev.date >= today) score += 50;
+        // 가까운 미래일수록 가산
+        if (ev.date >= today) {
+            const days = Math.max(0, (toDate(ev.date) - new Date()) / 86400000);
+            score += Math.max(0, 30 - days * 0.3);
+        }
+        scored.push({ ev, score });
+    }
+    scored.sort((a, b) => {
+        if (b.score !== a.score) return b.score - a.score;
+        return (a.ev.date || "").localeCompare(b.ev.date || "");
+    });
+    searchHits = scored.slice(0, 30).map(s => s.ev);
+    searchActiveIdx = -1;
+    renderSearchResults(q);
+}
+
+function renderSearchResults(query) {
+    const container = document.getElementById("search-results");
+    const clearBtn = document.getElementById("search-clear");
+    if (!query) {
+        container.classList.add("hidden");
+        clearBtn.classList.add("hidden");
+        return;
+    }
+    clearBtn.classList.remove("hidden");
+
+    if (searchHits.length === 0) {
+        container.innerHTML = `<div class="search-empty">"${escapeHtml(query)}"에 대한 일정이 없습니다</div>`;
+        container.classList.remove("hidden");
+        return;
+    }
+
+    // 미래/과거 그룹 분리
+    const today = fmt(new Date());
+    const future = searchHits.filter(e => (e.date || "") >= today);
+    const past = searchHits.filter(e => (e.date || "") < today);
+
+    let html = "";
+    const buildItem = (ev, idx) => {
+        const dt = ev.date ? toDate(ev.date) : null;
+        const dateLabel = dt
+            ? `${dt.getMonth()+1}/${dt.getDate()} ${DAYS_KR[dt.getDay()]}`
+            : (ev.month || "미정");
+        const catLabel = CAT_LABELS[ev.category] || ev.category || "";
+        const summary = ev.summary ? `<div class="search-summary">${highlightTerm(ev.summary.slice(0, 100), query)}</div>` : "";
+        return `<div class="search-item" data-idx="${idx}" data-date="${ev.date || ""}">
+            <span class="search-dot" style="background:${catColor(ev.category)}"></span>
+            <div class="search-info">
+                <div class="search-title">${highlightTerm(ev.title || "", query)}</div>
+                <div class="search-meta">${catLabel}${ev.time ? ` · ${ev.time}` : ""}</div>
+                ${summary}
+            </div>
+            <div class="search-date">${dateLabel}</div>
+        </div>`;
+    };
+
+    let idx = 0;
+    if (future.length) {
+        html += `<div class="search-group"><div class="search-group-title">앞으로 (${future.length})</div>`;
+        for (const ev of future) html += buildItem(ev, idx++);
+        html += `</div>`;
+    }
+    if (past.length) {
+        html += `<div class="search-group"><div class="search-group-title">지난 (${past.length})</div>`;
+        for (const ev of past) html += buildItem(ev, idx++);
+        html += `</div>`;
+    }
+    if (searchHits.length === 30) {
+        html += `<div class="search-count">상위 30건만 표시 — 키워드를 더 입력해 좁혀보세요</div>`;
+    }
+    container.innerHTML = html;
+    container.classList.remove("hidden");
+
+    container.querySelectorAll(".search-item").forEach(el => {
+        el.onclick = () => selectSearchHit(parseInt(el.dataset.idx));
+    });
+}
+
+function selectSearchHit(idx) {
+    const ev = searchHits[idx];
+    if (!ev) return;
+    closeSearchDropdown();
+    document.getElementById("search-input").value = "";
+    document.getElementById("search-clear").classList.add("hidden");
+
+    if (ev.undated) {
+        // 미정 이벤트 - 그냥 알림
+        alert(`${ev.title}\n${ev.month || "날짜 미정"}\n${ev.summary || ""}`);
+        return;
+    }
+    if (!ev.date) return;
+    const dt = toDate(ev.date);
+    viewDate = dt;
+    selectedDate = dt;
+    renderMiniCal();
+    renderView();
+    showDetailPanel(ev.date);
+}
+
+function closeSearchDropdown() {
+    document.getElementById("search-results").classList.add("hidden");
+    searchActiveIdx = -1;
+}
+
+function moveSearchActive(delta) {
+    const items = document.querySelectorAll("#search-results .search-item");
+    if (!items.length) return;
+    items.forEach(el => el.classList.remove("active"));
+    searchActiveIdx = (searchActiveIdx + delta + items.length) % items.length;
+    items[searchActiveIdx].classList.add("active");
+    items[searchActiveIdx].scrollIntoView({ block: "nearest" });
+}
+
+function bindSearchEvents() {
+    const input = document.getElementById("search-input");
+    const clearBtn = document.getElementById("search-clear");
+    const results = document.getElementById("search-results");
+
+    input.oninput = () => {
+        clearTimeout(searchDebounce);
+        searchDebounce = setTimeout(() => performSearch(input.value), 120);
+    };
+    input.onfocus = () => {
+        if (input.value.trim()) performSearch(input.value);
+    };
+    input.onkeydown = (e) => {
+        if (e.key === "ArrowDown") { e.preventDefault(); moveSearchActive(1); }
+        else if (e.key === "ArrowUp") { e.preventDefault(); moveSearchActive(-1); }
+        else if (e.key === "Enter") {
+            e.preventDefault();
+            if (searchActiveIdx >= 0) selectSearchHit(searchActiveIdx);
+            else if (searchHits.length > 0) selectSearchHit(0);
+        }
+        else if (e.key === "Escape") {
+            input.value = "";
+            closeSearchDropdown();
+            clearBtn.classList.add("hidden");
+            input.blur();
+        }
+    };
+    clearBtn.onclick = () => {
+        input.value = "";
+        closeSearchDropdown();
+        clearBtn.classList.add("hidden");
+        input.focus();
+    };
+
+    // 외부 클릭 시 닫기
+    document.addEventListener("click", (e) => {
+        if (!e.target.closest(".search-wrap")) closeSearchDropdown();
+    });
+
+    // Ctrl+K / Cmd+K 단축키
+    document.addEventListener("keydown", (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+            e.preventDefault();
+            input.focus();
+            input.select();
+        }
+    });
+}
 
 // === NAVIGATION ===
 function navigate(delta) {
@@ -816,6 +1040,7 @@ function bindEvents() {
     document.getElementById("ev-save").onclick = saveEvent;
     document.getElementById("ev-delete").onclick = deleteEvent;
     document.getElementById("ev-cancel").onclick = closeModal;
+    bindSearchEvents();
 
     document.onkeydown = (e) => {
         if (e.key==="Escape") { closeModal(); closeDetail(); }
