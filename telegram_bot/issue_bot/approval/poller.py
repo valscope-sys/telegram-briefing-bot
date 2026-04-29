@@ -466,38 +466,67 @@ def _cmd_news(args: list):
         send_admin_dm(f"📭 뉴스 없음 ({label})", parse_mode="HTML")
         return
 
+    # 매체별 다양성 cap — 단일 매체 편중 방지
+    from collections import Counter
+    MAX_PER_SOURCE = 2  # 매체당 최대 2건
+    MAX_TOTAL = 7       # 전체 최대 7건
+
+    shown_per_source = Counter()
+    filtered = []
+    for it in items:
+        src = it.get("source", "")
+        if shown_per_source[src] >= MAX_PER_SOURCE:
+            continue
+        filtered.append(it)
+        shown_per_source[src] += 1
+        if len(filtered) >= MAX_TOTAL:
+            break
+
+    if not filtered:
+        send_admin_dm(f"📭 매체별 cap 적용 후 결과 없음 ({label})", parse_mode="HTML")
+        return
+
     header = (
         f"<b>📰 뉴스 헤드라인 — {label}</b>\n"
-        f"({len(items)}건)\n"
+        f"({len(filtered)}건 / 매체 {len(shown_per_source)}곳)\n"
         + "─" * 25 + "\n"
     )
 
     lines = [header]
     cur_len = len(header)
-    shown = 0
 
-    for i, it in enumerate(items, 1):
-        # 시간 표시 (published_dt 있으면 HH:MM)
+    # 매체별 국가 이모지
+    def _src_emoji(src: str) -> str:
+        if src in ("한국경제", "매일경제", "전자신문", "ZDNet Korea", "Business Post"):
+            return "🇰🇷"
+        if src == "Nikkei Asia":
+            return "🇯🇵"
+        if src == "TrendForce":
+            return "🇹🇼"
+        if src in ("Reuters", "Bloomberg Tech"):
+            return "🇺🇸"
+        return "🌐"
+
+    for i, it in enumerate(filtered, 1):
         pub_dt = it.get("published_dt")
-        time_str = pub_dt.strftime("%m/%d %H:%M ") if pub_dt else ""
+        time_str = pub_dt.strftime("%H:%M ") if pub_dt else ""
+        src = it.get("source", "")
+        emoji = _src_emoji(src)
 
         line = (
-            f"{i}. {time_str}<b>{_html_escape(it['source'])}</b>\n"
+            f"<b>{i}.</b> {emoji} <b>{_html_escape(src)}</b> {time_str}\n"
             f"   {_html_escape(it['title'][:140])}\n"
-            f"   <a href=\"{it['link']}\">원본</a>\n"
+            f"   <a href=\"{it['link']}\">원본 보기</a>\n"
         )
 
         if cur_len + len(line) > 3800:
-            lines.append(f"\n... (이하 {len(items) - shown}건 생략)")
             break
 
         lines.append(line)
         cur_len += len(line)
-        shown += 1
 
     lines.append(
-        "\n💡 <b>카드 만들기</b>: 위 URL을 <code>/card &lt;URL&gt;</code> 또는 "
-        "URL만 단독 입력하면 메리츠 스타일 카드 생성"
+        "\n💡 <b>카드 만들기</b>: URL을 그대로 보내거나 <code>/card &lt;URL&gt;</code>"
     )
 
     send_admin_dm("\n".join(lines), parse_mode="HTML")
