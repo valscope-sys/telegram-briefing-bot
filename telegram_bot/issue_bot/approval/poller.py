@@ -99,10 +99,16 @@ def _handle_callback(cb):
         answer_callback_query(cb_id)
         return
 
-    issue = load_pending(issue_id)
-    if not issue and action != "batch_approve":
-        answer_callback_query(cb_id, text="이미 처리되었거나 만료됨", show_alert=True)
-        return
+    # issue_id 로드가 무의미한 액션 (URL hash 또는 batch 필터·후보 선택)
+    _NO_LOAD_ACTIONS = ("card_url", "trend_pick", "batch_approve", "batch_reject")
+
+    if action in _NO_LOAD_ACTIONS:
+        issue = None
+    else:
+        issue = load_pending(issue_id)
+        if not issue:
+            answer_callback_query(cb_id, text="이미 처리되었거나 만료됨", show_alert=True)
+            return
 
     try:
         if action == "preview":
@@ -163,6 +169,60 @@ def _handle_callback(cb):
                 f"• 스킵: {res['rejected']}건"
             )
 
+        elif action == "card_url":
+            # /dart, /news 결과 항목 → URL hash로 카드 생성
+            from telegram_bot.issue_bot.utils.url_cache import lookup_url, lookup_label
+            url = lookup_url(issue_id)  # issue_id 자리에 URL hash
+            if not url:
+                answer_callback_query(
+                    cb_id,
+                    text="URL 만료됨 (24h 경과). 명령어 다시 실행하세요.",
+                    show_alert=True,
+                )
+                return
+            answer_callback_query(cb_id, text=f"카드 생성 중... ({lookup_label(issue_id)[:30]})")
+            _create_card_from_url(url)
+
+        elif action == "trend_send":
+            # 추이 카드 → 채널 발송 (면책 추가)
+            answer_callback_query(cb_id, text="채널로 발송 중...")
+            res = _send_trend_card_to_channel(issue_id)
+            if res.get("ok"):
+                if issue and issue.get("telegram_admin_msg_id"):
+                    edit_admin_message(
+                        issue["telegram_admin_msg_id"],
+                        reply_markup=_SENT_MARKER_KB,
+                    )
+            else:
+                send_admin_dm(f"⚠️ 추이 카드 발송 실패: {res.get('error')}")
+
+        elif action == "trend_close":
+            # 추이 카드 미리보기 닫기 (pending 제거)
+            answer_callback_query(cb_id, text="닫음")
+            from telegram_bot.issue_bot.approval.bot import remove_pending
+            try:
+                if issue and issue.get("telegram_admin_msg_id"):
+                    edit_admin_message(
+                        issue["telegram_admin_msg_id"],
+                        reply_markup={"inline_keyboard": [[
+                            {"text": "❌ 닫음", "callback_data": "noop"}
+                        ]]},
+                    )
+            except Exception:
+                pass
+            remove_pending(issue_id)
+
+        elif action == "trend_pick":
+            # 후보 회사 선택: stock_code:period
+            stock_code, _, period_arg = issue_id.partition(":")
+            stock_code = stock_code.strip()
+            period_arg = period_arg.strip() or None
+            if not stock_code:
+                answer_callback_query(cb_id, text="잘못된 데이터", show_alert=True)
+                return
+            answer_callback_query(cb_id, text="추이 카드 생성 중...")
+            _show_trend_card_by_stock(stock_code, target_period=period_arg)
+
         else:
             answer_callback_query(cb_id, text=f"알 수 없는 액션: {action}")
     except Exception as e:
@@ -204,12 +264,19 @@ def _cmd_help():
         "💬 <b>자연어로 말해도 OK</b>\n"
         "예: \"어제 9시부터 12시까지 반도체 뉴스\"\n"
         "예: \"오늘 삼성전자 공시 봐줘\"\n"
-        "예: \"최근 3시간 뉴스\"\n\n"
+        "예: \"두산밥캣 실적\" → 4분기 추이 카드\n"
+        "예: \"두산밥캣 1Q26\" → 단일 분기 카드\n\n"
         "─" * 25 + "\n\n"
         "<b>명령어 (직접 입력도 OK)</b>\n\n"
         "<b>📰 카드 생성</b>\n"
         "• /card &lt;URL&gt; — URL로 카드 생성 (메리츠 스타일 가공 후 발송)\n"
-        "• URL만 단독 입력해도 자동 인식\n\n"
+        "• URL만 단독 입력해도 자동 인식\n"
+        "• /dart·/news 결과의 [📋 N] 버튼 클릭 — 한 번에 카드\n\n"
+        "<b>📈 분기 추이 카드</b> (네이버 증권 + DART)\n"
+        "• /dart 두산밥캣 실적 — 최근 4분기 (매출·영업익·순이익)\n"
+        "• /dart 두산밥캣 1Q26 — 단일 분기\n"
+        "• 회사명 + 실적/잠정실적 키워드 = 자동 추이 카드\n"
+        "• 회사명 모호 시 후보 인라인 버튼으로 선택\n\n"
         "<b>📋 DART 공시 조회</b>\n"
         "• /dart — 오늘 주요 공시 목록\n"
         "• /dart 어제 — 어제 공시\n"
@@ -288,6 +355,16 @@ def _cmd_dart(args: list):
         corp_parts.append(arg)
 
     corp_name = " ".join(corp_parts) if corp_parts else None
+
+    # ─── 추이 카드 모드 트리거 ───
+    # 회사명 + (실적|잠정실적) 키워드 또는 분기 명시 → 분기 추이 카드로 분기.
+    # 1개 분기 명시 → 1장, 미명시 → 최근 4분기.
+    is_trend_mode = bool(corp_name) and (
+        report_kw in ("실적", "잠정실적") or quarter_filter
+    )
+    if is_trend_mode:
+        _show_trend_card(corp_name, target_period=quarter_filter)
+        return
 
     label_date = date.strftime("%Y-%m-%d (%a)")
     label_extra = f" — <b>{_html_escape(corp_name)}</b>" if corp_name else ""
@@ -428,10 +505,304 @@ def _cmd_dart(args: list):
         cur_len += len(block)
 
     lines.append(
-        "\n💡 <b>카드 만들기</b>: 위 URL을 그대로 보내거나 <code>/card &lt;URL&gt;</code>"
+        "\n💡 <b>카드 만들기</b>: 아래 [📋 N] 버튼 클릭 또는 URL 직접 입력"
     )
 
-    send_admin_dm("\n".join(lines), parse_mode="HTML")
+    # ─── 인라인 버튼: 각 항목을 [📋 N]으로 → 클릭 시 카드 생성 ───
+    keyboard = _build_card_button_keyboard(final_items)
+
+    send_admin_dm("\n".join(lines), parse_mode="HTML", reply_markup=keyboard)
+
+
+def _build_card_button_keyboard(items: list) -> dict:
+    """결과 항목 목록 → [📋 1] [📋 2] ... 인라인 키보드.
+
+    각 버튼 클릭 시 해당 URL로 카드 생성 (callback: card_url:<hash>).
+    URL 해시 캐시 사용 (callback_data 64byte 제약 우회).
+
+    Args:
+        items: dict 목록. 각 항목에 'url' 필드 필수.
+            optional: 'corp_name'/'report_nm' (라벨 진단용),
+            'source'/'title' (news용).
+    """
+    from telegram_bot.issue_bot.utils.url_cache import register_url
+
+    buttons = []
+    for i, it in enumerate(items, 1):
+        url = it.get("url") or it.get("link") or ""
+        if not url:
+            continue
+        # 라벨 (캐시 진단용)
+        label = (
+            f"{it.get('corp_name', '')} — {(it.get('report_nm') or '')[:30]}"
+            if it.get('corp_name')
+            else f"{it.get('source', '')} — {(it.get('title') or '')[:40]}"
+        )
+        h = register_url(url, label=label[:80])
+        buttons.append({
+            "text": f"📋 {i}",
+            "callback_data": f"card_url:{h}",
+        })
+
+    if not buttons:
+        return None
+
+    # 4 columns × N rows
+    rows = []
+    for i in range(0, len(buttons), 4):
+        rows.append(buttons[i:i + 4])
+    return {"inline_keyboard": rows}
+
+
+def _show_trend_card(company_query: str, target_period: str = None):
+    """분기 추이 카드 표시 (admin 미리보기 → 채널 발송 흐름).
+
+    Args:
+        company_query: 사용자 입력 회사명 (예: "두산", "두산밥캣")
+        target_period: 단일 분기 ("1Q26") 또는 None (최근 4분기)
+    """
+    import datetime as _dt
+    import hashlib as _hashlib_local
+    from telegram_bot.issue_bot.pipeline.quarter_card import build_trend_card
+    from telegram_bot.issue_bot.approval.bot import save_pending
+
+    label_period = target_period or "최근 4분기"
+    send_admin_dm(
+        f"📈 <b>{_html_escape(company_query)}</b> 분기 추이 조회 중... ({label_period})\n"
+        f"<i>(네이버 증권 + DART, 5~15초)</i>",
+        parse_mode="HTML",
+    )
+
+    try:
+        card = build_trend_card(company_query, target_period=target_period, max_quarters=4)
+    except Exception as e:
+        traceback.print_exc()
+        send_admin_dm(f"⚠️ 추이 카드 생성 오류: {e}")
+        return
+
+    if not card.get("ok"):
+        # 후보 회사 안내 (인라인 선택 버튼)
+        cands = card.get("candidates", [])
+        if cands:
+            keyboard_rows = []
+            for c in cands[:5]:
+                stock = c.get("stock_code", "")
+                if not stock:
+                    continue
+                period_arg = target_period or ""
+                keyboard_rows.append([{
+                    "text": f"📊 {c['name']}",
+                    "callback_data": f"trend_pick:{stock}:{period_arg}",
+                }])
+            keyboard = {"inline_keyboard": keyboard_rows} if keyboard_rows else None
+
+            cand_lines = "\n".join(
+                f"• {_html_escape(c['name'])} ({c.get('stock_code', '')})"
+                for c in cands[:5] if c.get("stock_code")
+            )
+            send_admin_dm(
+                f"⚠️ {_html_escape(card['error'])}\n\n"
+                f"<b>후보:</b>\n{cand_lines}\n\n"
+                f"<i>아래에서 정확한 회사를 선택하세요.</i>",
+                parse_mode="HTML",
+                reply_markup=keyboard,
+            )
+        else:
+            send_admin_dm(f"⚠️ {_html_escape(card['error'])}", parse_mode="HTML")
+        return
+
+    # 카드 생성 성공 → pending 저장 + 미리보기 발송 (채널 발송 버튼 첨부)
+    ts = _dt.datetime.now().strftime("%Y%m%d_%H%M%S")
+    company_hash = _hashlib_local.sha1(card["company"].encode("utf-8")).hexdigest()[:6]
+    issue_id = f"trend_{ts}_{company_hash}"
+
+    issue = {
+        "id": issue_id,
+        "source": "TREND_CARD",
+        "source_url": "",
+        "company_name": card["company"],
+        "stock_code": card.get("stock_code", ""),
+        "corp_code": card.get("corp_code", ""),
+        "title": f"{card['company']} — 분기 추이",
+        "trend_periods": card.get("periods", []),
+        "trend_text_html": card["text"],
+        "generated_content": card["text"],
+        "has_generated": True,
+        "status": "pending_trend",
+        "category": "B",
+        "priority": "NORMAL",
+        "sector": "기타",
+        "fetched_at": _dt.datetime.now().isoformat(timespec="seconds"),
+        "peer_map_used": [],
+        "violations": [],
+    }
+
+    keyboard = {
+        "inline_keyboard": [[
+            {"text": "✅ 채널 발송", "callback_data": f"trend_send:{issue_id}"},
+            {"text": "❌ 닫기", "callback_data": f"trend_close:{issue_id}"},
+        ]]
+    }
+
+    res = send_admin_dm(card["text"], parse_mode="HTML", reply_markup=keyboard)
+    if res and res.get("ok"):
+        issue["telegram_admin_msg_id"] = res["result"]["message_id"]
+        save_pending(issue)
+    else:
+        err = (res.get("description") if res else "no response") or "unknown"
+        send_admin_dm(f"⚠️ 추이 카드 발송 실패: {err}")
+
+
+def _show_trend_card_by_stock(stock_code: str, target_period: str = None):
+    """stock_code 기반 추이 카드 (후보 선택 시).
+
+    회사명 매칭이 모호한 경우 사용자가 인라인 버튼으로 후보를 골랐을 때 호출.
+    회사명 → stock_code 매핑은 이미 끝났으므로 직접 fetch.
+    """
+    import datetime as _dt
+    import hashlib as _hashlib_local
+    from telegram_bot.issue_bot.collectors.consensus_fetcher import fetch_naver_consensus
+    from telegram_bot.issue_bot.collectors.dart_corp_codes import _corp_map_cache, _load_cache
+    from telegram_bot.issue_bot.pipeline.quarter_card import (
+        naver_label_to_period, _format_quarter_block, fetch_quarter_disclosure_url,
+    )
+    from telegram_bot.issue_bot.approval.bot import save_pending
+
+    # stock_code → 회사명·corp_code 역조회
+    _load_cache()
+    company_name = stock_code
+    corp_code = ""
+    if _corp_map_cache:
+        for code, info in _corp_map_cache.items():
+            if info.get("stock_code") == stock_code:
+                company_name = info.get("name", stock_code)
+                corp_code = code
+                break
+
+    label_period = target_period or "최근 4분기"
+    send_admin_dm(
+        f"📈 <b>{_html_escape(company_name)}</b> 분기 추이 조회 중... ({label_period})",
+        parse_mode="HTML",
+    )
+
+    data = fetch_naver_consensus(stock_code)
+    if not data or not data.get("quarters"):
+        send_admin_dm(
+            f"⚠️ 네이버 분기 데이터 없음 ({stock_code}). 잠시 후 재시도.",
+            parse_mode="HTML",
+        )
+        return
+
+    quarters_dict = data["quarters"]
+    sorted_labels = sorted(quarters_dict.keys(), reverse=True)
+
+    if target_period:
+        target_label = next(
+            (l for l in sorted_labels if naver_label_to_period(l) == target_period),
+            None,
+        )
+        chosen_labels = [target_label] if target_label else []
+    else:
+        chosen_labels = sorted_labels[:4]
+
+    if not chosen_labels:
+        send_admin_dm(
+            f"⚠️ '{target_period}' 분기 데이터 없음.",
+            parse_mode="HTML",
+        )
+        return
+
+    blocks = []
+    periods = []
+    for lbl in chosen_labels:
+        period = naver_label_to_period(lbl) or lbl
+        info = quarters_dict[lbl]
+        url = ""
+        if target_period and not info.get("is_estimate") and corp_code:
+            try:
+                url = fetch_quarter_disclosure_url(corp_code, period) or ""
+            except Exception:
+                pass
+        blocks.append(_format_quarter_block(period, info, url))
+        periods.append(period)
+
+    if target_period:
+        title = f"<b>[{company_name} {target_period}]</b>"
+    else:
+        title = f"<b>[{company_name} — 최근 {len(blocks)}개 분기 추이]</b>"
+
+    text = "\n".join([title, "", "\n\n".join(blocks), "", "<i>(자료: 네이버 증권)</i>"])
+
+    ts = _dt.datetime.now().strftime("%Y%m%d_%H%M%S")
+    company_hash = _hashlib_local.sha1(company_name.encode("utf-8")).hexdigest()[:6]
+    issue_id = f"trend_{ts}_{company_hash}"
+
+    issue = {
+        "id": issue_id,
+        "source": "TREND_CARD",
+        "source_url": "",
+        "company_name": company_name,
+        "stock_code": stock_code,
+        "corp_code": corp_code,
+        "title": f"{company_name} — 분기 추이",
+        "trend_periods": periods,
+        "trend_text_html": text,
+        "generated_content": text,
+        "has_generated": True,
+        "status": "pending_trend",
+        "category": "B",
+        "priority": "NORMAL",
+        "sector": "기타",
+        "fetched_at": _dt.datetime.now().isoformat(timespec="seconds"),
+        "peer_map_used": [],
+        "violations": [],
+    }
+
+    keyboard = {
+        "inline_keyboard": [[
+            {"text": "✅ 채널 발송", "callback_data": f"trend_send:{issue_id}"},
+            {"text": "❌ 닫기", "callback_data": f"trend_close:{issue_id}"},
+        ]]
+    }
+
+    res = send_admin_dm(text, parse_mode="HTML", reply_markup=keyboard)
+    if res and res.get("ok"):
+        issue["telegram_admin_msg_id"] = res["result"]["message_id"]
+        save_pending(issue)
+
+
+def _send_trend_card_to_channel(issue_id: str) -> dict:
+    """추이 카드 → @noderesearch 채널 발송 (면책 자동 추가)."""
+    from telegram_bot.issue_bot.approval.bot import (
+        load_pending, remove_pending, mark_decision,
+    )
+    from telegram_bot.issue_bot.utils.telegram import send_channel_message
+
+    issue = load_pending(issue_id)
+    if not issue:
+        return {"ok": False, "error": "pending not found"}
+
+    text = issue.get("trend_text_html") or issue.get("generated_content") or ""
+    if not text:
+        return {"ok": False, "error": "no content"}
+
+    # 면책 추가
+    disclaimer = (
+        "\n\n* 본 내용은 국내외 언론·공시 자료를 인용·정리한 것으로, "
+        "투자 판단과 그 결과의 책임은 본인에게 있습니다."
+    )
+    final_text = text + disclaimer
+
+    res = send_channel_message(final_text, parse_mode="HTML")
+    if not res or not res.get("ok"):
+        return {"ok": False, "error": (res.get("description") if res else "no response") or "send failed"}
+
+    issue["final_content"] = final_text
+    issue["telegram_channel_msg_id"] = res["result"]["message_id"]
+    issue["sent_to_channel_at"] = datetime.datetime.now(KST).isoformat(timespec="seconds")
+
+    mark_decision(issue_id, "sent")
+    return {"ok": True, "channel_msg_id": res["result"]["message_id"]}
 
 
 def _html_escape(text: str) -> str:
@@ -621,10 +992,12 @@ def _cmd_news(args: list):
         cur_len += len(block)
 
     lines.append(
-        "\n💡 <b>카드 만들기</b>: 위 URL을 그대로 보내거나 <code>/card &lt;URL&gt;</code>"
+        "\n💡 <b>카드 만들기</b>: 아래 [📋 N] 버튼 클릭 또는 URL 직접 입력"
     )
 
-    send_admin_dm("\n".join(lines), parse_mode="HTML")
+    keyboard = _build_card_button_keyboard(filtered)
+
+    send_admin_dm("\n".join(lines), parse_mode="HTML", reply_markup=keyboard)
 
 
 # ===== /card 명령어 (on-demand 카드 생성) =====
@@ -812,30 +1185,120 @@ def _fetch_dart_disclosure(url: str) -> dict:
         return {"error": f"DART fetch error: {e}"}
 
 
+# 진짜 Chrome User-Agent — 네이버·일부 매체에서 봇 시그니처 차단 회피
+_BROWSER_UA = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+)
+_BROWSER_HEADERS = {
+    "User-Agent": _BROWSER_UA,
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+    "Accept-Language": "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Cache-Control": "no-cache",
+    "Pragma": "no-cache",
+    "Sec-Fetch-Dest": "document",
+    "Sec-Fetch-Mode": "navigate",
+    "Sec-Fetch-Site": "none",
+    "Sec-Fetch-User": "?1",
+    "Upgrade-Insecure-Requests": "1",
+}
+
+
+def _expand_naver_mobile_url(url: str) -> list:
+    """네이버 모바일/단축/AMP URL → 시도할 URL 후보 목록.
+
+    n.news.naver.com 모바일은 봇 차단 자주 발생 → 데스크톱 URL 우선 시도.
+    실패 시 모바일 fallback (Referer 추가).
+
+    Returns:
+        [(시도할 URL, Referer 헤더), ...] — 순서대로 시도
+    """
+    candidates = []
+    m = _re_mod.search(r"n\.news\.naver\.com/(?:mnews/)?article/(\d+)/(\d+)", url)
+    if m:
+        oid, aid = m.group(1), m.group(2)
+        # 1. 데스크톱 URL 우선 (봇 차단 약함)
+        candidates.append((
+            f"https://news.naver.com/main/read.naver?oid={oid}&aid={aid}",
+            "https://news.naver.com/",
+        ))
+        # 2. 원본 모바일 (Referer = 모바일 메인)
+        candidates.append((url, "https://m.naver.com/"))
+        return candidates
+    # 그 외 URL은 그대로
+    return [(url, None)]
+
+
+def _fetch_with_browser(url: str, referer: str = None,
+                        max_retry: int = 2) -> "tuple[int, str, str]":
+    """브라우저 UA + 헤더로 fetch. (status, text, final_url) 반환.
+
+    429 시 짧은 대기 후 1회 재시도.
+    """
+    import requests
+    import time as _time
+
+    headers = dict(_BROWSER_HEADERS)
+    if referer:
+        headers["Referer"] = referer
+
+    last_status = 0
+    for attempt in range(max_retry):
+        try:
+            res = requests.get(url, timeout=15, allow_redirects=True, headers=headers)
+            last_status = res.status_code
+            if res.status_code == 200:
+                # 인코딩 자동 보정 (네이버는 EUC-KR 일부, 대부분 UTF-8)
+                if not res.encoding or res.encoding.lower() == "iso-8859-1":
+                    res.encoding = res.apparent_encoding or "utf-8"
+                return (200, res.text, str(res.url))
+            if res.status_code == 429 and attempt + 1 < max_retry:
+                _time.sleep(1.5)
+                continue
+            return (res.status_code, "", str(res.url))
+        except Exception as e:
+            print(f"[FETCH] {url[:80]} 시도 {attempt+1} 실패: {e}")
+            if attempt + 1 < max_retry:
+                _time.sleep(1.0)
+                continue
+            return (0, "", url)
+    return (last_status, "", url)
+
+
 def _fetch_article_metadata(url: str) -> dict:
     """URL에서 title, body, og:image, 최종 redirect URL 추출.
 
     DART URL은 iframe 구조라 별도 처리 (_fetch_dart_disclosure).
+    네이버 모바일 뉴스(n.news.naver.com)는 봇 차단(429) 자주 발생 →
+    데스크톱 URL 우선 시도 + 진짜 Chrome 헤더로 재시도.
     """
     # DART 공시 URL 특수 처리
     if "dart.fss.or.kr/dsaf001" in url:
         return _fetch_dart_disclosure(url)
 
-    import requests
     from bs4 import BeautifulSoup
 
-    try:
-        res = requests.get(
-            url,
-            timeout=15,
-            allow_redirects=True,
-            headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) NODEResearchBot/1.0"},
-        )
-        if res.status_code != 200:
-            return {"error": f"HTTP {res.status_code}"}
+    # URL 후보 (네이버 모바일은 데스크톱 우선)
+    url_candidates = _expand_naver_mobile_url(url)
 
-        final_url = str(res.url)
-        soup = BeautifulSoup(res.text, "lxml")
+    text = ""
+    final_url = url
+    last_status = 0
+
+    for cand_url, referer in url_candidates:
+        status, t, f_url = _fetch_with_browser(cand_url, referer=referer)
+        last_status = status
+        if status == 200 and t:
+            text = t
+            final_url = f_url
+            break
+
+    if not text:
+        return {"error": f"HTTP {last_status}"}
+
+    try:
+        soup = BeautifulSoup(text, "lxml")
 
         # title
         title = ""
