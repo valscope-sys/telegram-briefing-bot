@@ -35233,6 +35233,14 @@
   {
     "date": "2026-06-05",
     "time": "",
+    "category": "기업이벤트",
+    "title": "져스텍 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-05",
+    "time": "",
     "category": "제약/바이오",
     "title": "ASCO 2026 (미국종양학회)",
     "source": "news",
@@ -35629,6 +35637,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "제이케이시냅스 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-23",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "스트라드비젼 유상증자(일반공모)",
     "source": "fnguide",
     "auto": true
   },
