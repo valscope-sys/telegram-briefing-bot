@@ -1,0 +1,11 @@
+{
+  "date": "2026-05-01",
+  "timestamp": "2026-05-01T07:00:54.697636",
+  "briefing_type": "morning",
+  "messages": [
+    "🌐 *모닝 브리핑*\n05월 01일 · 07:00 기준\n\n📊 *미국 증시*\nS&P 500  7,209.01  ▲ +1.02%\nNASDAQ  24,892.31  ▲ +0.89%\nDOW  49,652.14  ▲ +1.62%\nVIX  16.89  ▼ -10.21%\n\n🏷 *미국 섹터*\n▲ 산업재 +2.74% · 유틸리티 +2.56% · 반도체 +2.54%\n▼ 소재 +1.00% · 금융 +0.40% · 기술 +0.25%\n\n💱 *환율 · 금리*\nUSD/KRW  1,477.5  ▼ -11.00\nDXY  98.08  ▼ -0.85%\n미국채 2Y 3.81%(+0bp) / 10Y 4.40%(-2bp)  스프레드 +59bp\n\n🛢 *원자재*\nWTI  $105.41/bbl  ▼ -1.38%\n금  $4,636.00/oz  ▲ +2.00%\n구리  $6.03/lb  ▲ +2.53%\n\n🌙 *야간 프록시* (NY close 기준)\nKORU(3x) 587.76 ▲ +12.68%\nEWY 160.76 ▲ +4.42%\n코스피200 nan ─ +nan%\n\n🇰🇷 *전일 국내 증시* (05-01 종가)\nKOSPI  6,598.87  ▼ -1.38%  (35.8조, ▲22% vs 20d)\nKOSDAQ  1,192.35  ▼ -2.29%  (15.3조, ▲8% vs 20d)\n상승 194 · 하락 668 · 보합 28\n외국인 ▼ -14,559억 · 기관 ▲ +2,838억 · 개인 ▲ +11,824억",
+    "📋 *미장 마감 리뷰*\n05월 01일\n\n미장 시황 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-05-01 at 00:00 UTC.'}, 'request_id': 'req_011Caai2SHDpMhij7EMJF1yY'}\n\n※ 야간 KORU +12.68% 급등 — 3배 레버리지 특성상 실제 예상 갭 약 +4.2% 수준이라 한국 특유의 리스크(관세·환율·지정학) 반영 가능성을 염두에 두어야 합니다.",
+    "📰 *장전 주요 뉴스*\n05월 01일\n\n📌  [헤그세스 \"휴전기간은 전쟁 아냐...60일 규정 적용 안된다\"](https://www.hankyung.com/article/202605010176i)\n\n📌  [[포토] 우지커피, '2026 브랜드 고객충성도 대상' 카페프랜차이즈 부문 수상](https://www.hankyung.com/article/2026050101627)\n\n📌  [[포토] 에뜨와, '2026 브랜드 고객충성도 대상' 유아동복 부문 수상](https://www.hankyung.com/article/2026050101607)\n\n📌  [[포토] 바이오트루, '2026 브랜드 고객충성도 대상' 프리미엄렌즈세척액 부문 수상](https://www.hankyung.com/article/2026050101577)\n\n📌  [[포토] 베이비하우스, '2026 브랜드 고객충성도 대상' 육아용품아울렛 부문 수상](https://www.hankyung.com/article/2026050101547)",
+    "📅 *오늘 일정*\n05월 01일\n\n09:00(KST)  ★ 🇰🇷 한국 수출입 통계 (4월)\n 진에어·제주항공 유류할증료 인상 적용\n 삼성바이오로직스 총파업\n UAE OPEC 탈퇴 및 독자 증산 시작\n🇰🇷 현대차/기아 4월 판매량 발표\n 한-UAE 포괄적경제동반자협정(CEPA) 발효\n★ 🇯🇵 BOJ 금리 결정\n\n[전체 일정 보기](https://valscope-sys.github.io/telegram-briefing-bot/)"
+  ]
+}
