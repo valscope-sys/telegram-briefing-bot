@@ -36346,6 +36346,22 @@
   },
   {
     "date": "2026-08-12",
+    "time": "",
+    "category": "미국실적",
+    "title": "SNDK 실적발표 [EPS est. $24.981]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-08-12",
+    "time": "",
+    "category": "미국실적",
+    "title": "DE 실적발표 (장전) [EPS est. $5.2474]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-08-12",
     "time": "21:30",
     "category": "경제지표",
     "title": "미국 CPI (7월)",
@@ -36366,6 +36382,14 @@
     "time": "",
     "category": "미국실적",
     "title": "AMAT 실적발표 (장후) [EPS est. $2.9015]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-08-13",
+    "time": "",
+    "category": "미국실적",
+    "title": "AMAT 실적발표 (장후) [EPS est. $2.917]",
     "source": "finnhub",
     "auto": true
   },
@@ -36736,6 +36760,14 @@
   },
   {
     "date": "2026-10-13",
+    "time": "",
+    "category": "미국실적",
+    "title": "JPM 실적발표 [EPS est. $5.5343]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-10-13",
     "time": "21:30",
     "category": "경제지표",
     "title": "미국 CPI (9월)",
@@ -36776,6 +36808,22 @@
     "auto": true
   },
   {
+    "date": "2026-10-14",
+    "time": "",
+    "category": "미국실적",
+    "title": "BAC 실적발표 (장전) [EPS est. $1.1458]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-10-14",
+    "time": "",
+    "category": "미국실적",
+    "title": "WFC 실적발표 (장전) [EPS est. $1.8222]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
     "date": "2026-10-15",
     "time": "10:00",
     "category": "통화정책",
@@ -36797,6 +36845,14 @@
     "time": "",
     "category": "미국실적",
     "title": "RTX 실적발표 (장전) [EPS est. $1.7829]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-10-19",
+    "time": "",
+    "category": "미국실적",
+    "title": "RTX 실적발표 (장전) [EPS est. $1.7418]",
     "source": "finnhub",
     "auto": true
   },
@@ -36831,6 +36887,14 @@
     "time": "",
     "category": "미국실적",
     "title": "MRK 실적발표 [EPS est. $2.4472]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-10-29",
+    "time": "",
+    "category": "미국실적",
+    "title": "MRK 실적발표 [EPS est. $2.3598]",
     "source": "finnhub",
     "auto": true
   },
