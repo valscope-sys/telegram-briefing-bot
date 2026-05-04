@@ -84,14 +84,34 @@ def _load_wics_map():
     return _wics_to_sector
 
 
-def fetch_naver_industry(code: str, timeout: int = 8) -> Optional[str]:
-    """네이버 증권 종목 페이지에서 WICS 산업분류 추출.
+def fetch_kiwoom_industry(code: str) -> Optional[str]:
+    """키움 ka10001 (주식기본정보)에서 업종 추출.
 
-    페이지: https://finance.naver.com/item/main.naver?code=NNNNNN
-    찾는 위치: a[href*="sise_group_detail"] (업종 링크)
+    사용자 정책 (2026-05-04): 데이터 출처 키움 단일화.
+    키움 응답에 업종 필드 있으면 그대로 사용, 없으면 네이버 fallback.
 
     Returns:
-        WICS 분류 문자열 (예: "반도체와반도체장비") 또는 None.
+        업종 문자열 또는 None.
+    """
+    if not re.fullmatch(r"\d{6}", code or ""):
+        return None
+    try:
+        from telegram_bot.kiwoom_client import fetch_stock_info, extract_industry_from_stock_info
+        info = fetch_stock_info(code)
+        industry = extract_industry_from_stock_info(info)
+        return industry or None
+    except Exception as e:
+        # rate limit, 토큰 만료, 네트워크 등
+        if "rate" not in str(e).lower():
+            print(f"[SECTOR] 키움 ka10001 실패 ({code}): {str(e)[:100]}")
+        return None
+
+
+def fetch_naver_industry(code: str, timeout: int = 8) -> Optional[str]:
+    """네이버 증권 WICS 산업분류 추출 — 키움 fallback용.
+
+    Returns:
+        WICS 분류 문자열 또는 None.
     """
     if not re.fullmatch(r"\d{6}", code or ""):
         return None
@@ -112,6 +132,23 @@ def fetch_naver_industry(code: str, timeout: int = 8) -> Optional[str]:
     except Exception as e:
         print(f"[SECTOR] 네이버 fetch 실패 ({code}): {e}")
     return None
+
+
+def fetch_industry(code: str, name: str = "") -> tuple:
+    """키움 우선 → 네이버 fallback. (industry, source) 반환.
+
+    Returns:
+        (industry_str, source) — source: "kiwoom" 또는 "naver" 또는 None.
+    """
+    # 1차: 키움 ka10001
+    industry = fetch_kiwoom_industry(code)
+    if industry:
+        return (industry, "kiwoom")
+    # 2차: 네이버 WICS (fallback)
+    industry = fetch_naver_industry(code)
+    if industry:
+        return (industry, "naver")
+    return (None, None)
 
 
 def _normalize_wics(wics: str) -> str:
@@ -183,15 +220,20 @@ def classify_stock(code: str, name: str = "",
 def classify_stocks_batch(stocks: list,
                           allow_fetch: bool = True,
                           allow_claude: bool = True,
-                          max_fetch_per_call: int = 30) -> dict:
-    """여러 종목 일괄 분류.
+                          max_fetch_per_call: int = 200) -> dict:
+    """여러 종목 일괄 분류 — 자동 누적 캐시.
+
+    매번 신고가 종목이 바뀌어도 자동 분류:
+    1. 신규 종목 → 네이버 WICS 자동 fetch → 영구 캐시
+    2. Claude fallback 결과도 wics_cache에 저장 (다음 날 즉시 사용)
+    3. 한 번 분류한 종목은 영구 — 매일 새 종목만 fetch
 
     Args:
         stocks: [{"종목코드", "종목명"}, ...]
-        max_fetch_per_call: 1회 호출당 최대 네이버 fetch 횟수 (rate limit)
+        max_fetch_per_call: 1회 호출당 최대 네이버 fetch 횟수 (200 = 거의 무제한)
 
     Returns:
-        {code: sector} dict. None인 케이스는 호출 측에서 Claude fallback.
+        {code: sector} dict.
     """
     code_to_sector = {}
     fetch_count = 0
@@ -208,49 +250,70 @@ def classify_stocks_batch(stocks: list,
             code_to_sector[code] = "기타"
             continue
 
-        # 1차: 수동 매핑
+        # 1차: 수동 매핑 (사용자가 명시 정정한 케이스만)
         if code in manual:
             code_to_sector[code] = manual[code].get("sector", "기타")
             continue
 
-        # 2차: WICS 캐시
+        # 2차: 캐시 (네이버 WICS 또는 Claude 분류 결과 누적)
         if code in cache:
-            wics = cache[code].get("wics", "")
+            cached = cache[code]
+            # 캐시에 직접 sector가 있으면 그대로 사용 (Claude fallback 결과 저장된 것)
+            if cached.get("sector"):
+                code_to_sector[code] = cached["sector"]
+                continue
+            # WICS 만 있으면 매핑 변환
+            wics = cached.get("wics", "")
             if wics:
                 code_to_sector[code] = wics_map.get(_normalize_wics(wics), "기타")
                 continue
 
-        # 3차: 네이버 fetch (rate limit 안에서)
+        # 3차: 키움 ka10001 자동 fetch (사용자 정책 — 키움 단일 우선) → 네이버 fallback
         if allow_fetch and fetch_count < max_fetch_per_call:
-            wics = fetch_naver_industry(code)
+            industry, source = fetch_industry(code, name)
             fetch_count += 1
-            time.sleep(0.5)  # 네이버 부하 분산
-            if wics:
+            time.sleep(0.3)  # 키움 rate limit (초당 5건) 안전 마진
+            if industry:
+                sector_resolved = wics_map.get(_normalize_wics(industry), "기타")
                 with _lock:
                     cache[code] = {
                         "name": name,
-                        "wics": wics,
+                        "wics": industry,
+                        "sector": sector_resolved,
                         "fetched_at": datetime.datetime.now().isoformat(timespec="seconds"),
+                        "source": source,  # "kiwoom" or "naver"
                     }
-                code_to_sector[code] = wics_map.get(_normalize_wics(wics), "기타")
+                code_to_sector[code] = sector_resolved
                 continue
 
         # 4차: Claude fallback 후보
         pending_for_claude.append((name, code))
 
-    # WICS 캐시 일괄 저장 (변경됐으면)
+    # WICS 캐시 일괄 저장
     if fetch_count > 0:
         _save_json(_WICS_CACHE_PATH, cache)
-        print(f"[SECTOR] 네이버 fetch {fetch_count}건 캐시 저장")
+        print(f"[SECTOR] 네이버 fetch {fetch_count}건 → 영구 캐시 저장")
 
-    # Claude fallback
+    # Claude fallback (네이버 fetch 실패한 종목만) + 결과도 영구 캐시
     if allow_claude and pending_for_claude:
         try:
             from telegram_bot.collectors.domestic_market import _classify_themes_with_claude
             names = [n for n, _c in pending_for_claude]
             name_to_sector = _classify_themes_with_claude(names)
-            for name, code in pending_for_claude:
-                code_to_sector[code] = name_to_sector.get(name, "기타")
+            with _lock:
+                for name, code in pending_for_claude:
+                    sec = name_to_sector.get(name, "기타")
+                    code_to_sector[code] = sec
+                    # 영구 캐시 (다음 날 같은 종목이면 Claude 다시 호출 안 함)
+                    cache[code] = {
+                        "name": name,
+                        "wics": "",
+                        "sector": sec,
+                        "fetched_at": datetime.datetime.now().isoformat(timespec="seconds"),
+                        "source": "claude_fallback",
+                    }
+            _save_json(_WICS_CACHE_PATH, cache)
+            print(f"[SECTOR] Claude fallback {len(pending_for_claude)}건 → 영구 캐시 저장")
         except Exception as e:
             print(f"[SECTOR] Claude fallback 실패: {e}")
             for _name, code in pending_for_claude:

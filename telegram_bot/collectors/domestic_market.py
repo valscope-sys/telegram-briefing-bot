@@ -394,28 +394,61 @@ def fetch_new_highlow():
     try:
         from telegram_bot.kiwoom_client import kiwoom_post
 
-        # 1차 조회
-        def _query_kiwoom():
+        # 1차 조회: dt = 신고가 기간 (일수)
+        # awakeplus처럼 (52주) + (역사적) 둘 다 잡으려면 250일·9999일(=상장 이래) 두 번 호출.
+        def _query_kiwoom(dt: str = "250"):
             data = kiwoom_post("ka10016", {
                 "mrkt_tp": "000",           # 전체 (코스피+코스닥)
                 "ntl_tp": "1",              # 신고가
                 "high_low_close_tp": "2",   # 종가기준
                 "stk_cnd": "3",             # 우선주제외
-                "trde_qty_tp": "00010",     # 만주이상
+                "trde_qty_tp": "00010",     # 만주이상 (서버 측 1만주↑)
                 "crd_cnd": "0",             # 전체
                 "updown_incls": "0",        # 상하한 미포함
-                "dt": "250",               # 250일 = 52주
+                "dt": dt,                   # 250=52주, 9999=상장 이래
                 "stex_tp": "1",             # KRX
             })
             return data.get("ntl_pric", [])
 
-        stocks = _query_kiwoom()
+        # 52주 신고가 + 역사적(상장 이래) 신고가 둘 다 fetch → dedup
+        stocks_52w = _query_kiwoom(dt="250")
+        try:
+            stocks_alltime = _query_kiwoom(dt="9999")
+        except Exception as e:
+            print(f"[KIWOOM] 역사적 신고가 fetch 실패 (52주만 사용): {e}")
+            stocks_alltime = []
 
-        # 데이터 미확정 대응: 5종목 미만이면 60초 대기 후 재시도
+        # 종목코드 기준 dedup. (52주)/(역사적) 마커는 신고가 종류로 보존.
+        # 역사적 신고가는 자동으로 52주 신고가 = True (상위 집합).
+        # 두 응답 dedup: alltime 우선 (역사적 표기 우선)
+        seen_codes = set()
+        stocks = []
+        for item in stocks_alltime:
+            code = item.get("stk_cd", "")
+            if code and code not in seen_codes:
+                item["_high_kind"] = "역사적"
+                stocks.append(item)
+                seen_codes.add(code)
+        for item in stocks_52w:
+            code = item.get("stk_cd", "")
+            if code and code not in seen_codes:
+                item["_high_kind"] = "52주"
+                stocks.append(item)
+                seen_codes.add(code)
+
+        print(f"[KIWOOM] 신고가 raw — 52주 {len(stocks_52w)}건, 역사적 {len(stocks_alltime)}건, dedup {len(stocks)}건")
+
+        # 데이터 미확정 대응: 5종목 미만이면 60초 대기 후 재시도 (52주만)
         if len(stocks) < 5:
-            print(f"[KIWOOM] 52주 신고가 {len(stocks)}종목 — 데이터 미확정 가능, 60초 후 재시도")
+            print(f"[KIWOOM] {len(stocks)}종목 — 데이터 미확정 가능, 60초 후 재시도")
             time.sleep(60)
-            stocks = _query_kiwoom()
+            stocks_52w = _query_kiwoom(dt="250")
+            for item in stocks_52w:
+                code = item.get("stk_cd", "")
+                if code and code not in seen_codes:
+                    item["_high_kind"] = "52주"
+                    stocks.append(item)
+                    seen_codes.add(code)
             print(f"[KIWOOM] 재시도 결과: {len(stocks)}종목")
 
         # ETF/리츠/머니마켓/펀드 필터
@@ -446,15 +479,17 @@ def fetch_new_highlow():
             vol = _safe_int(vol_str.replace(",", ""))
             if price == 0 or vol == 0:
                 continue
-            # 거래대금 1억원 미만 제외 (거래정지 종목은 전일 잔존 데이터라 낮음)
+            # 거래대금 5천만원 미만 제외 (거래정지 종목은 전일 잔존 데이터라 낮음)
+            # awakeplus 수준의 신고가 커버를 위해 1억 → 5천만 완화
             trade_value = price * vol
-            if trade_value < 100_000_000:
+            if trade_value < 50_000_000:
                 continue
-            # 거래량 10만주 미만 제외 (저유동성)
-            if vol < 100_000:
+            # 거래량 1만주 미만 제외 (서버 측 trde_qty_tp="00010"과 동일)
+            # 기존 10만주 제한이 코스닥 중소형주 신고가 절반 이상 누락의 원인
+            if vol < 10_000:
                 continue
             # 등락률 정확히 0% + 소량 거래는 거래정지 의심 → 제외
-            if rate == 0 and vol < 500_000:
+            if rate == 0 and vol < 100_000:
                 continue
 
             filtered_stocks.append({
@@ -463,6 +498,7 @@ def fetch_new_highlow():
                 "현재가": price,
                 "등락률": rate,
                 "부호": "▲" if rate > 0 else ("▼" if rate < 0 else "─"),
+                "신고가종류": item.get("_high_kind", "52주"),
             })
 
         # 섹터 분류: 수동 매핑(JSON) 우선 → 미매칭은 Claude 폴백
@@ -477,45 +513,9 @@ def fetch_new_highlow():
         print(f"[KIWOOM] 52주 신고가 조회 실패: {e}")
         import traceback
         traceback.print_exc()
-        # 폴백: KIS 근접 API (기존 로직)
-        try:
-            for market in ["J", "Q"]:
-                data = kis_get(
-                    "/uapi/domestic-stock/v1/ranking/near-new-highlow",
-                    "FHPST01870000",
-                    {
-                        "fid_cond_mrkt_div_code": market,
-                        "fid_cond_scr_div_code": "20187",
-                        "fid_input_iscd": "0000",
-                        "fid_div_cls_code": "1",
-                        "fid_trgt_cls_code": "0",
-                        "fid_trgt_exls_cls_code": "0",
-                        "fid_aply_rang_prc_1": "",
-                        "fid_aply_rang_prc_2": "",
-                        "fid_aply_rang_vol": "0",
-                        "fid_input_cnt_1": "0",
-                        "fid_input_cnt_2": "0",
-                        "fid_prc_cls_code": "0",
-                    },
-                )
-                seen = set()
-                for item in data.get("output", []):
-                    p = _safe_int(item.get("stck_prpr", 0))
-                    hg = _safe_int(item.get("new_hgpr", 0))
-                    r = _safe_float(item.get("prdy_ctrt", 0))
-                    n = item.get("hts_kor_isnm", "").strip()
-                    c = item.get("stck_shrn_iscd", "")
-                    if not n or p == 0 or hg == 0 or p < hg or c in seen:
-                        continue
-                    seen.add(c)
-                    results["신고가"].append({
-                        "종목명": n, "종목코드": c, "현재가": p,
-                        "등락률": r, "부호": _sign_symbol(item.get("prdy_vrss_sign", "3")),
-                        "섹터": "기타",
-                    })
-                time.sleep(0.35)
-        except Exception:
-            pass
+        # 사용자 정책 (2026-05-04): 신고가 단일 소스 = 키움.
+        # KIS API fallback 제거 — 이중 출처 차단.
+        results["오류"] = f"키움 조회 실패: {str(e)[:200]}"
 
     # 등락률 높은 순 정렬
     results["신고가"].sort(key=lambda x: x["등락률"], reverse=True)
