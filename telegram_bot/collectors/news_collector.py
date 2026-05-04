@@ -44,15 +44,25 @@ _PROMPT_VERSION = os.environ.get("COMMENTARY_PROMPT_VERSION", "v1").lower()
 #   · Reuters 공식 RSS 서비스 종료 → Google News 프록시 대체
 #   · 공식 RSS가 사라진 피드는 제거 (이데일리/금융위/한은/산자부/디지털타임스)
 RSS_FEEDS = [
-    # 국내 종합
+    # ── 국내 종합·산업 ──
     {"name": "한국경제", "url": "https://www.hankyung.com/feed/all-news", "group": "국내"},
     {"name": "매일경제", "url": "https://www.mk.co.kr/rss/30000001/", "group": "국내"},
-    # 해외 종합
+    {"name": "연합뉴스 경제", "url": "https://www.yna.co.kr/rss/economy.xml", "group": "국내"},
+    {"name": "이데일리 증시", "url": "https://rss.edaily.co.kr/stock_news.xml", "group": "국내"},
+    {"name": "전자신문", "url": "https://rss.etnews.com/Section902.xml", "group": "국내"},
+    # ── 해외 종합 ──
     {"name": "CNBC", "url": "https://www.cnbc.com/id/100003114/device/rss/rss.html", "group": "해외"},
     {"name": "WSJ", "url": "https://news.google.com/rss/search?q=site:wsj.com+markets&hl=en-US&gl=US&ceid=US:en", "group": "해외"},
     {"name": "Reuters", "url": "https://news.google.com/rss/search?q=site:reuters.com+business&hl=en-US&gl=US&ceid=US:en", "group": "해외"},
-    # 섹터 전문
+    {"name": "Bloomberg Tech", "url": "https://news.google.com/rss/search?q=site:bloomberg.com+technology&hl=en-US&gl=US&ceid=US:en", "group": "해외"},
+    {"name": "Nikkei Asia", "url": "https://asia.nikkei.com/rss/feed/nar", "group": "해외"},
+    {"name": "Financial Times", "url": "https://news.google.com/rss/search?q=site:ft.com+markets&hl=en-US&gl=US&ceid=US:en", "group": "해외"},
+    # ── 산업·리서치 (반도체·전기전자) ──
+    # 시황 정확도 ↑ — 미래/SK 등 증권사가 인용하는 1차 소스 추가
     {"name": "TrendForce", "url": "https://www.trendforce.com/news/feed/", "group": "해외"},
+    {"name": "Digitimes", "url": "https://news.google.com/rss/search?q=site:digitimes.com+chips+OR+semiconductor&hl=en-US&gl=US&ceid=US:en", "group": "해외"},
+    {"name": "SemiAnalysis", "url": "https://semianalysis.com/feed/", "group": "해외"},
+    # ── 섹터 전문 ──
     {"name": "Electrek", "url": "https://electrek.co/feed/", "group": "해외"},
     {"name": "InsideEVs", "url": "https://insideevs.com/feed/", "group": "해외"},
     {"name": "FiercePharma", "url": "https://www.fiercepharma.com/rss/xml", "group": "해외"},
@@ -117,6 +127,16 @@ PROMPT_ANALYZE = """아래 뉴스 목록을 분석하여 KOSPI/KOSDAQ에 영향�
 - 미국-이스라엘, 미국-레바논 정상 회담/통화
 - 중동 내 어떤 국가든 휴전/정전 합의
 이 중 하나라도 해당되면 반드시 포함 (한국 증시에 유가/지정학 경로로 영향).
+
+[하드 룰 — 단일 주제 편중 방지]
+- 같은 사건(같은 인물·정책·발표)을 다룬 뉴스는 **최대 2건만** 선정
+  · 예: 트럼프 호르무즈 발언 5건 들어와도 가장 신선·구체적인 2건만
+  · 같은 OPEC 결정 / 같은 Fed 발표 / 같은 FOMC도 동일 적용
+- 산업 시그널(반도체·전기전자·디스플레이·기판·MLCC·HBM·CCL·PCB)이 있으면 **반드시 1건 이상** 포함
+  · TrendForce·Digitimes·SemiAnalysis·Counterpoint·전자신문 출처 우선
+  · "MLCC 가격 인상", "HBM 수요", "TSMC 가동률", "Capex 가이던스", "기판 매출"
+- 거시 단일 카테고리(중동·Fed·환율) 합계 6건 이상 선정 금지
+- 산업 + 매크로 + 한국기업 직접 언급 = 균형 잡힌 5~10건 목표
 
 [direction]
 - 긍정 / 부정 / 중립

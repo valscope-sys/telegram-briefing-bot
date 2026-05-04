@@ -24,26 +24,15 @@ def _safe_int(val, default=0):
 
 
 def _prev_business_day(base_date=None):
-    """전 영업일 계산 (주말 건너뜀)"""
-    if base_date is None:
-        base_date = datetime.date.today()
-    d = base_date - datetime.timedelta(days=1)
-    while d.weekday() >= 5:  # 5=토, 6=일
-        d -= datetime.timedelta(days=1)
-    return d
+    """직전 KRX 거래일 (주말 + 한국 공휴일 + KRX 임시휴장 모두 건너뜀)."""
+    from telegram_bot.market_calendar import prev_business_day
+    return prev_business_day(base_date)
 
 
 def _recent_business_days(count=5, base_date=None):
-    """최근 N 영업일 리스트"""
-    if base_date is None:
-        base_date = datetime.date.today()
-    days = []
-    d = base_date
-    while len(days) < count:
-        d -= datetime.timedelta(days=1)
-        if d.weekday() < 5:
-            days.append(d)
-    return days
+    """최근 N KRX 거래일 리스트 (공휴일·임시휴장 정확 반영)."""
+    from telegram_bot.market_calendar import recent_business_days
+    return recent_business_days(count, base_date)
 
 
 def _fetch_trade_volume_avg(code, days=20):
@@ -382,8 +371,17 @@ def fetch_new_highlow():
     종가기준 + 우선주제외 + 거래량 1만주 이상
     Claude API로 테마 분류
     데이터 미확정 시 60초 대기 후 재시도 (장 마감 직후 데이터 정산 지연 대응)
+    휴장일에는 빈 결과 반환 (전 영업일 데이터 잘못 표시되던 버그 fix).
     """
     results = {"신고가": []}
+
+    # 휴장일 가드 — 5/1 근로자의 날 같은 케이스에 전 영업일 데이터를 그대로
+    # 가져와 "오늘자 신고가"로 표시되던 문제 차단.
+    from telegram_bot.market_calendar import is_market_day
+    if not is_market_day():
+        print("[KIWOOM] 휴장일 — 신고가 조회 스킵")
+        results["휴장일"] = True
+        return results
 
     try:
         from telegram_bot.kiwoom_client import kiwoom_post

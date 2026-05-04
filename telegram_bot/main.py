@@ -17,8 +17,13 @@ PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 def is_weekday():
-    """평일 여부 확인 (토/일 제외)"""
-    return datetime.date.today().weekday() < 5
+    """KRX 거래일 여부 (토/일 + 한국 공휴일 + KRX 임시휴장 모두 제외).
+
+    구 버전은 단순 weekday<5만 체크 → 5/1 근로자의 날, 5/5 어린이날, 6/3 선거일에
+    시황 강제 발송 버그. market_calendar.is_market_day로 교체 (호환 유지).
+    """
+    from telegram_bot.market_calendar import is_market_day
+    return is_market_day()
 
 
 def refresh_calendar_pre_briefing():
@@ -58,9 +63,9 @@ def reset_calendar_git_state():
 
 
 def morning_job():
-    """모닝 브리핑 스케줄 작업"""
+    """모닝 브리핑 스케줄 작업 (KRX 거래일에만 실행)"""
     if not is_weekday():
-        print("[SCHEDULER] 주말 - 모닝 브리핑 스킵")
+        print(f"[SCHEDULER] 휴장일 ({datetime.date.today()}) - 모닝 브리핑 스킵")
         return
     print(f"[SCHEDULER] 모닝 브리핑 실행 - {datetime.datetime.now()}")
     refresh_calendar_pre_briefing()
@@ -71,9 +76,9 @@ def morning_job():
 
 
 def evening_job():
-    """이브닝 브리핑 스케줄 작업"""
+    """이브닝 브리핑 스케줄 작업 (KRX 거래일에만 실행)"""
     if not is_weekday():
-        print("[SCHEDULER] 주말 - 이브닝 브리핑 스킵")
+        print(f"[SCHEDULER] 휴장일 ({datetime.date.today()}) - 이브닝 브리핑 스킵")
         return
     print(f"[SCHEDULER] 이브닝 브리핑 실행 - {datetime.datetime.now()}")
     refresh_calendar_pre_briefing()
