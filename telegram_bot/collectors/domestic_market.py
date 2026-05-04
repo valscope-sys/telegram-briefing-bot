@@ -298,13 +298,21 @@ def _classify_themes_with_claude(stock_names):
 
 종목: {names_str}
 
-테마 예시: 반도체/메모리, 반도체장비, 반도체소재, 반도체부품, 2차전지, 2차전지소재, 2차전지장비, 바이오/제약, 의료기기, AI/소프트웨어, 로봇, 자동차, 자동차부품, 조선, 기계, 원전/전력, 방산, 화장품/K-뷰티, 건설/재건, 부동산, 철강/소재, 금속/비철, 정유/화학, 에너지, 금융, 지주, 게임, 미디어/엔터, 음식료, 유통/소비재, 통신/5G, 통신장비, 섬유/패션, 항공/해운, 농업/사료, 기타
+테마 예시: 반도체/메모리, 반도체장비, 반도체소재, 반도체부품, 디스플레이, 전기전자, 2차전지, 2차전지소재, 2차전지장비, 바이오/제약, 의료기기, AI/소프트웨어, 로봇, 자동차, 자동차부품, 조선, 기계, 원전/전력, 방산, 화장품/K-뷰티, 건설/재건, 부동산, 철강/소재, 금속/비철, 정유/화학, 에너지, 금융, 지주, 게임, 미디어/엔터, 음식료, 유통/소비재, 통신/5G, 통신장비, 섬유/패션, 항공/해운, 농업/사료, 기타
 
 핵심 규칙:
 - 종목의 실제 사업 내용을 정확히 알 때만 분류하세요.
 - 종목명에 "반도체"가 들어있다고 반도체로 분류하지 마세요. 실제 사업을 확인하세요.
 - 잘 모르는 종목은 반드시 "기타"로 분류하세요. 추측으로 반도체나 다른 테마에 넣지 마세요.
 - 지주사는 주된 자회사 섹터로. 예: 솔브레인홀딩스 → 반도체소재.
+- 카테고리 세분 가이드:
+  · 반도체/메모리 = 삼성전자·SK하이닉스 같은 메모리 IDM
+  · 반도체부품 = OSAT(후공정·하나마이크론), 패키지 자재, 테스트 핸들러
+  · 반도체장비 = 노광·식각·증착·검사 장비
+  · 반도체소재 = 포토레지스트·CMP·솔더볼·식각액
+  · 디스플레이 = LED·OLED·LCD·디스플레이장비
+  · 전기전자 = MLCC·기판(PCB)·전선·케이블·전원공급장치·슈퍼캡 (삼성전기·LG이노텍·가온전선 등)
+  · 기계 = 건설중장비·산업기계·진성티이씨 등
 - 주요 오분류 사례:
   레이 = 치과의료기기 (반도체 아님)
   에이치케이 = 부동산 (반도체 아님)
@@ -312,6 +320,13 @@ def _classify_themes_with_claude(stock_names):
   케이엠더블유 = 5G통신장비 (반도체 아님, 통신장비)
   비츠로셀 = 배터리/방산 (반도체 아님)
   기가레인 = RF통신부품 (AI가 아님, 통신장비)
+  가온전선/대원전선/대한전선 = 전기전자 (전력 케이블, 통신/5G 아님)
+  하나마이크론 = 반도체부품 (OSAT 후공정, 메모리 아님)
+  서울반도체 = 디스플레이 (LED 광반도체)
+  비나텍 = 전기전자 (슈퍼캡, 2차전지 아님)
+  진성티이씨 = 기계 (건설중장비 부품, 반도체 아님)
+  PI첨단소재 = 2차전지소재 (PI필름, 반도체 아님)
+  솔루엠 = 전기전자 (전자부품, 반도체 아님)
 
 JSON만 출력하세요:
 {{"종목명": "테마", "종목명2": "테마2", ...}}"""
@@ -335,34 +350,27 @@ JSON만 출력하세요:
 
 
 def _classify_stocks(filtered_stocks):
-    """종목 리스트 → {종목코드: 섹터} 매핑.
+    """종목 리스트 → {종목코드: 섹터} 매핑 (하이브리드).
 
-    1차: stock_sector_mapping.json 코드 기반 조회
-    2차(폴백): 미매칭 종목만 Claude API로 분류
+    1차: stock_sector_mapping.json (수동 큐레이션, 가장 정확)
+    2차: wics_cache.json (네이버 fetch 결과 영구 캐시)
+    3차: 네이버 종목 페이지 fetch (WICS → 우리 카테고리)
+    4차: Claude API fallback (네이버 fetch 실패 시 종목명 추측)
+
+    sector_classifier.classify_stocks_batch가 1~3차 처리.
+    Claude fallback은 동일 모듈에서 수행.
     """
-    mapping = _load_sector_mapping()
-    code_to_sector = {}
-    unmatched = []  # (name, code) tuples
-
-    for s in filtered_stocks:
-        code = s.get("종목코드", "")
-        name = s.get("종목명", "")
-        if code in mapping:
-            code_to_sector[code] = mapping[code]["sector"]
-        else:
-            unmatched.append((name, code))
-
-    hit = len(code_to_sector)
-    miss = len(unmatched)
-    print(f"[SECTOR_MAP] 매칭 {hit}/{hit+miss} ({100*hit/max(1,hit+miss):.0f}%), Claude 폴백 {miss}종목")
-
-    # Claude 폴백 (이름 기반)
-    if unmatched:
-        names = [name for name, _code in unmatched]
-        name_to_sector = _classify_themes_with_claude(names)
-        for name, code in unmatched:
-            code_to_sector[code] = name_to_sector.get(name, "기타")
-
+    from telegram_bot.collectors.sector_classifier import classify_stocks_batch
+    code_to_sector = classify_stocks_batch(
+        filtered_stocks,
+        allow_fetch=True,
+        allow_claude=True,
+        max_fetch_per_call=30,
+    )
+    total = len(filtered_stocks)
+    other_count = sum(1 for v in code_to_sector.values() if v == "기타")
+    classified = total - other_count
+    print(f"[SECTOR_MAP] 분류 {classified}/{total} ({100*classified/max(1,total):.0f}%), 기타 {other_count}")
     return code_to_sector
 
 
