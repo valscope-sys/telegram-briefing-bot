@@ -40,14 +40,24 @@ def get_kiwoom_token():
     return _token_cache["token"]
 
 
-def kiwoom_post(api_id, body, url_path="/api/dostk/stkinfo"):
-    """키움 REST API POST 호출"""
+def kiwoom_post(api_id, body, url_path="/api/dostk/stkinfo",
+                cont_yn=None, next_key=None):
+    """키움 REST API POST 호출.
+
+    페이지네이션 헤더 (선택):
+    - cont_yn = "Y" + next_key = "000125000010000001"
+      → 두 헤더 같이 보내면 키움이 다음 페이지 반환
+    """
     token = get_kiwoom_token()
     headers = {
         "Content-Type": "application/json;charset=UTF-8",
         "api-id": api_id,
         "authorization": f"Bearer {token}",
     }
+    if cont_yn:
+        headers["cont-yn"] = cont_yn
+    if next_key:
+        headers["next-key"] = next_key
     res = requests.post(
         f"{KIWOOM_BASE_URL}{url_path}",
         headers=headers,
@@ -56,6 +66,69 @@ def kiwoom_post(api_id, body, url_path="/api/dostk/stkinfo"):
     )
     res.raise_for_status()
     return res.json()
+
+
+def kiwoom_post_with_meta(api_id, body, url_path="/api/dostk/stkinfo",
+                          cont_yn=None, next_key=None):
+    """페이지네이션 메타까지 같이 반환.
+
+    Returns:
+        (json_body, response_headers) — 호출 측에서 cont-yn, next-key 활용 가능.
+    """
+    token = get_kiwoom_token()
+    headers = {
+        "Content-Type": "application/json;charset=UTF-8",
+        "api-id": api_id,
+        "authorization": f"Bearer {token}",
+    }
+    if cont_yn:
+        headers["cont-yn"] = cont_yn
+    if next_key:
+        headers["next-key"] = next_key
+    res = requests.post(
+        f"{KIWOOM_BASE_URL}{url_path}",
+        headers=headers,
+        json=body,
+        timeout=10,
+    )
+    res.raise_for_status()
+    return res.json(), dict(res.headers)
+
+
+def kiwoom_paginated(api_id, body, url_path="/api/dostk/stkinfo",
+                     result_field="ntl_pric", max_pages=20):
+    """페이지네이션 자동 누적. 모든 페이지를 하나의 list로 반환.
+
+    Args:
+        api_id: ka10016 등
+        body: 요청 body (페이지네이션 무관 파라미터)
+        result_field: 응답 list가 들어있는 키 (ka10016 = "ntl_pric")
+        max_pages: 안전 limit (무한 루프 방지)
+
+    Returns:
+        list — 모든 페이지의 결과 누적.
+    """
+    all_items = []
+    cont_yn = None
+    next_key = None
+
+    for page in range(max_pages):
+        data, headers = kiwoom_post_with_meta(
+            api_id, body, url_path,
+            cont_yn=cont_yn, next_key=next_key,
+        )
+        items = data.get(result_field, []) or []
+        all_items.extend(items)
+
+        cont_yn = headers.get("cont-yn") or headers.get("Cont-Yn") or ""
+        next_key = headers.get("next-key") or headers.get("Next-Key") or ""
+
+        if cont_yn != "Y" or not next_key:
+            break
+        # rate limit (키움 초당 5건 안전)
+        time.sleep(0.25)
+
+    return all_items
 
 
 def fetch_stock_info(stock_code: str) -> dict:

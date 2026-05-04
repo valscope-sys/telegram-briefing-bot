@@ -392,72 +392,53 @@ def fetch_new_highlow():
         return results
 
     try:
-        from telegram_bot.kiwoom_client import kiwoom_post
+        from telegram_bot.kiwoom_client import kiwoom_paginated
 
-        # 1차 조회: dt = 신고가 기간 (일수)
-        # awakeplus처럼 (52주) + (역사적) 둘 다 잡으려면 250일·9999일(=상장 이래) 두 번 호출.
-        def _query_kiwoom(dt: str = "250"):
-            data = kiwoom_post("ka10016", {
-                "mrkt_tp": "000",           # 전체 (코스피+코스닥)
-                "ntl_tp": "1",              # 신고가
-                "high_low_close_tp": "2",   # 종가기준
-                "stk_cnd": "3",             # 우선주제외
-                "trde_qty_tp": "00010",     # 만주이상 (서버 측 1만주↑)
-                "crd_cnd": "0",             # 전체
-                "updown_incls": "0",        # 상하한 미포함
-                "dt": dt,                   # 250=52주, 9999=상장 이래
-                "stex_tp": "1",             # KRX
-            })
-            return data.get("ntl_pric", [])
+        # 키움 ka10016 — 신고가 (한 페이지 100건 limit, cont-yn=Y면 next-key로 다음 페이지)
+        # 페이지네이션 자동 누적 → awakeplus 수준의 전체 신고가 cover.
+        # dt=9999 (상장 이래)는 키움이 미지원 (응답 0건 확인됨) → 250(=52주)만 사용.
+        def _query_kiwoom_paginated():
+            return kiwoom_paginated(
+                "ka10016",
+                {
+                    "mrkt_tp": "000",           # 전체 (코스피+코스닥)
+                    "ntl_tp": "1",              # 신고가
+                    "high_low_close_tp": "2",   # 종가기준
+                    "stk_cnd": "3",             # 우선주제외
+                    "trde_qty_tp": "00010",     # 만주이상
+                    "crd_cnd": "0",             # 전체
+                    "updown_incls": "0",        # 상하한 미포함
+                    "dt": "250",                # 250일 = 52주
+                    "stex_tp": "1",             # KRX
+                },
+                result_field="ntl_pric",
+                max_pages=20,                   # 100*20 = 2000건 안전 limit
+            )
 
-        # 52주 신고가 + 역사적(상장 이래) 신고가 둘 다 fetch → dedup
-        stocks_52w = _query_kiwoom(dt="250")
-        try:
-            stocks_alltime = _query_kiwoom(dt="9999")
-        except Exception as e:
-            print(f"[KIWOOM] 역사적 신고가 fetch 실패 (52주만 사용): {e}")
-            stocks_alltime = []
+        stocks = _query_kiwoom_paginated()
+        # 모든 종목 (52주) 표기 — 키움 ka10016이 dt=9999 미지원이라 분리 불가
+        for item in stocks:
+            item["_high_kind"] = "52주"
 
-        # 종목코드 기준 dedup. (52주)/(역사적) 마커는 신고가 종류로 보존.
-        # 역사적 신고가는 자동으로 52주 신고가 = True (상위 집합).
-        # 두 응답 dedup: alltime 우선 (역사적 표기 우선)
-        seen_codes = set()
-        stocks = []
-        for item in stocks_alltime:
-            code = item.get("stk_cd", "")
-            if code and code not in seen_codes:
-                item["_high_kind"] = "역사적"
-                stocks.append(item)
-                seen_codes.add(code)
-        for item in stocks_52w:
-            code = item.get("stk_cd", "")
-            if code and code not in seen_codes:
-                item["_high_kind"] = "52주"
-                stocks.append(item)
-                seen_codes.add(code)
+        print(f"[KIWOOM] 신고가 raw {len(stocks)}건 (페이지네이션 누적)")
 
-        print(f"[KIWOOM] 신고가 raw — 52주 {len(stocks_52w)}건, 역사적 {len(stocks_alltime)}건, dedup {len(stocks)}건")
-
-        # 데이터 미확정 대응: 5종목 미만이면 60초 대기 후 재시도 (52주만)
+        # 데이터 미확정 대응: 5종목 미만이면 60초 대기 후 재시도
         if len(stocks) < 5:
             print(f"[KIWOOM] {len(stocks)}종목 — 데이터 미확정 가능, 60초 후 재시도")
             time.sleep(60)
-            stocks_52w = _query_kiwoom(dt="250")
-            for item in stocks_52w:
-                code = item.get("stk_cd", "")
-                if code and code not in seen_codes:
-                    item["_high_kind"] = "52주"
-                    stocks.append(item)
-                    seen_codes.add(code)
+            stocks = _query_kiwoom_paginated()
+            for item in stocks:
+                item["_high_kind"] = "52주"
             print(f"[KIWOOM] 재시도 결과: {len(stocks)}종목")
 
-        # ETF/리츠/머니마켓/펀드 필터
+        # ETF/ETN/리츠/머니마켓/펀드 필터
         exclude_kw = [
             "TIGER", "KODEX", "KBSTAR", "HANARO", "SOL", "ARIRANG", "ACE", "KOSEF",
             "BNK", "WOORI", "마이다스", "마이티", "FOCUS", "히어로즈", "WON",
             "스팩", "SPAC", "리츠", "KOFR", "RISE", "KIWOOM", "머니마켓", "1Q ",
-            "인프라", "액티브", "ITF ", "PLUS ", "KoAct", "TIMEFOLIO", "파워",
-            "레버리지", "인버스", "ETN",
+            "인프라", "액티브", "ITF ", "ITF", "PLUS ", "PLUS", "KoAct",
+            "TIMEFOLIO", "TIME ", "TIME", "파워", "DAISHIN", "UNICORN",
+            "레버리지", "인버스", "ETN", "ETF",
         ]
 
         filtered_stocks = []
