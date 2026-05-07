@@ -14,4 +14,11 @@ telegram_bot/history/issue_bot/seen_ids.jsonl
 telegram_bot/history/issue_bot/last_rcept_no.txt
 telegram_bot/history/issue_bot/sent/
 telegram_bot/history/issue_bot/rejected/
+telegram_bot/history/issue_bot/url_cache.json
+telegram_bot/history/issue_bot/dart_corp_codes.json
+telegram_bot/history/issue_bot/dart_corp_codes.meta.json
+
+# 자동 누적 캐시 (서버에서 매일 갱신, 로컬과 충돌 방지)
+telegram_bot/history/wics_cache.json
+telegram_bot/history/snapshot_*.json
 .claude/settings.local.json

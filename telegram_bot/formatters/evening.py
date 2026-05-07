@@ -110,20 +110,83 @@ def format_evening_briefing(domestic_data, global_data, commentary, sector_data,
             lines.append(f"▼ {bot_str}")
             lines.append("")
 
-    # 🔺 52주 신고가 — 섹터별 그룹핑
+    # 🔺 52주 신고가 — 한국 투자 테마 큰 묶음 (반도체·2차전지·전력·자동차·바이오·산업재·금융지주)
     if highlow_data:
         highs = [h for h in highlow_data.get("신고가", []) if h.get("현재가", 0) > 0]
         if highs:
             lines.append(f"🔺 *52주 신고가* ({len(highs)}종목)")
-            # 섹터별 그룹핑
-            sector_groups = {}
+
+            # theme_groups.json 매핑: 21개 세분 카테고리 → 7개 큰 묶음
+            sector_to_theme = _load_theme_mapping()
+
+            # 큰 묶음별 종목 모음
+            theme_groups = {}
             for item in highs:
                 sector = item.get("섹터", "기타")
-                if sector not in sector_groups:
-                    sector_groups[sector] = []
-                sector_groups[sector].append(item["종목명"])
-            # 종목 수 많은 섹터부터
-            for sector, names in sorted(sector_groups.items(), key=lambda x: -len(x[1])):
-                lines.append(f"({sector}) {', '.join(names)}")
+                theme = sector_to_theme.get(sector, "기타")
+                if theme not in theme_groups:
+                    theme_groups[theme] = []
+                # 등락률 표시까지 같이
+                theme_groups[theme].append({
+                    "name": item["종목명"],
+                    "rate": item.get("등락률", 0),
+                    "sector": sector,
+                })
+
+            # 우선순위 정렬: 반도체·2차전지·전력·자동차·바이오·산업재·금융지주·기타
+            priority = ["반도체", "2차전지", "전력/원전", "자동차", "바이오",
+                        "조선/방산/산업재", "금융/지주/소비재", "기타"]
+            for theme in priority:
+                items = theme_groups.get(theme)
+                if not items:
+                    continue
+                # 등락률 높은 순 정렬
+                items.sort(key=lambda x: x["rate"], reverse=True)
+                names = ", ".join(it["name"] for it in items)
+                lines.append(f"✅ *{theme}* ({len(items)}종목)")
+                lines.append(names)
+                lines.append("")
+
+            # 우선순위에 안 들어간 그룹 (있다면)
+            for theme, items in theme_groups.items():
+                if theme in priority:
+                    continue
+                items.sort(key=lambda x: x["rate"], reverse=True)
+                names = ", ".join(it["name"] for it in items)
+                lines.append(f"✅ *{theme}* ({len(items)}종목)")
+                lines.append(names)
+                lines.append("")
 
     return "\n".join(lines).strip()
+
+
+# 메모리 캐시
+_THEME_MAP_CACHE = None
+
+
+def _load_theme_mapping():
+    """theme_groups.json 로드 → {세분카테고리: 큰묶음} 변환."""
+    global _THEME_MAP_CACHE
+    if _THEME_MAP_CACHE is not None:
+        return _THEME_MAP_CACHE
+    import json as _json
+    import os as _os
+    path = _os.path.join(
+        _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))),
+        "history", "theme_groups.json",
+    )
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            data = _json.load(f)
+        groups = data.get("groups", {})
+        # 큰 묶음 → 세분 카테고리 list 를 역매핑: 세분 → 큰 묶음
+        result = {}
+        for theme, sectors in groups.items():
+            for s in sectors:
+                result[s] = theme
+        _THEME_MAP_CACHE = result
+        return result
+    except Exception as e:
+        print(f"[FORMATTER] theme_groups.json 로드 실패: {e}")
+        _THEME_MAP_CACHE = {}
+        return {}

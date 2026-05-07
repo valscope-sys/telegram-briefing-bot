@@ -61,12 +61,30 @@ def _save_json(path, data):
     os.replace(tmp, path)
 
 
+_manual_by_name = None  # {종목명: sector} — 코드 잘못 입력 케이스 fallback
+
+
 def _load_manual():
-    global _manual_mapping
+    global _manual_mapping, _manual_by_name
     if _manual_mapping is None:
         raw = _load_json(_MAPPING_PATH)
         _manual_mapping = {k: v for k, v in raw.items() if not k.startswith("_")}
+        # 종목명 역매핑 — 종목코드 잘못 입력했어도 종목명으로 매칭됨
+        _manual_by_name = {}
+        for code, info in _manual_mapping.items():
+            n = (info.get("name") or "").strip()
+            if n and info.get("sector"):
+                _manual_by_name[n] = info["sector"]
     return _manual_mapping
+
+
+def _lookup_manual_by_name(name: str):
+    """종목명으로 수동 매핑 조회 (코드 잘못 입력 fallback)."""
+    if _manual_by_name is None:
+        _load_manual()
+    if not name:
+        return None
+    return _manual_by_name.get(name.strip())
 
 
 def _load_wics_cache():
@@ -250,9 +268,25 @@ def classify_stocks_batch(stocks: list,
             code_to_sector[code] = "기타"
             continue
 
-        # 1차: 수동 매핑 (사용자가 명시 정정한 케이스만)
+        # 1차: 수동 매핑 (코드 우선)
         if code in manual:
             code_to_sector[code] = manual[code].get("sector", "기타")
+            continue
+
+        # 1.5차: 종목명 매칭 (코드 잘못 입력 케이스 fallback)
+        # 예: 심텍의 진짜 코드는 222800인데 우리가 036090으로 등록한 경우.
+        sec_by_name = _lookup_manual_by_name(name)
+        if sec_by_name:
+            code_to_sector[code] = sec_by_name
+            # 다음에 같은 종목 만나면 캐시에서 즉시 반환되도록 캐시에도 기록
+            with _lock:
+                cache[code] = {
+                    "name": name,
+                    "wics": "",
+                    "sector": sec_by_name,
+                    "fetched_at": datetime.datetime.now().isoformat(timespec="seconds"),
+                    "source": "name_match",
+                }
             continue
 
         # 2차: 캐시 (네이버 WICS 또는 Claude 분류 결과 누적)
