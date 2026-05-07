@@ -486,8 +486,22 @@ def fetch_new_highlow():
         if filtered_stocks:
             print(f"[THEME] {len(filtered_stocks)}종목 섹터 분류 중...")
             code_to_sector = _classify_stocks(filtered_stocks)
+
+            # 역사적 신고가 판정 — ka10081 5년 일봉 fetch + 캐시
+            # 첫 실행은 모든 종목 fetch (~50초+), 다음부터는 캐시 + 신규 종목만
+            try:
+                from telegram_bot.collectors.historical_max import batch_classify_high_kinds
+                print(f"[HIST_MAX] {len(filtered_stocks)}종목 (52주)/(역사적) 판정 중...")
+                high_kinds = batch_classify_high_kinds(filtered_stocks, max_fetch=100)
+            except Exception as e:
+                print(f"[HIST_MAX] 판정 실패: {e}")
+                high_kinds = {}
+
             for s in filtered_stocks:
                 s["섹터"] = code_to_sector.get(s["종목코드"], "기타")
+                # 신고가 종류 (52주 vs 역사적). historical 판정 결과 우선,
+                # 없으면 키움 ka10016 _high_kind 마커 사용 (기본 52주).
+                s["신고가종류"] = high_kinds.get(s["종목코드"]) or s.get("신고가종류", "52주")
                 results["신고가"].append(s)
 
     except Exception as e:

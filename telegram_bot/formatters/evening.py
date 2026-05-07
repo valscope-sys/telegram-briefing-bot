@@ -126,11 +126,12 @@ def format_evening_briefing(domestic_data, global_data, commentary, sector_data,
                 theme = sector_to_theme.get(sector, "기타")
                 if theme not in theme_groups:
                     theme_groups[theme] = []
-                # 등락률 표시까지 같이
+                # 등락률 + 신고가 종류 같이
                 theme_groups[theme].append({
                     "name": item["종목명"],
                     "rate": item.get("등락률", 0),
                     "sector": sector,
+                    "kind": item.get("신고가종류", "52주"),  # "52주" or "역사적"
                 })
 
             # 우선순위 정렬: 반도체·2차전지·전력·자동차·바이오·산업재·금융지주·기타
@@ -142,7 +143,12 @@ def format_evening_briefing(domestic_data, global_data, commentary, sector_data,
                     continue
                 # 등락률 높은 순 정렬
                 items.sort(key=lambda x: x["rate"], reverse=True)
-                names = ", ".join(it["name"] for it in items)
+                # 종목명 + (역사적) 마커 — 52주는 표기 생략 (기본)
+                tagged = [
+                    (f"{it['name']}(역)" if it.get("kind") == "역사적" else it["name"])
+                    for it in items
+                ]
+                names = ", ".join(tagged)
                 lines.append(f"✅ *{theme}* ({len(items)}종목)")
                 lines.append(names)
                 lines.append("")
@@ -152,7 +158,12 @@ def format_evening_briefing(domestic_data, global_data, commentary, sector_data,
                 if theme in priority:
                     continue
                 items.sort(key=lambda x: x["rate"], reverse=True)
-                names = ", ".join(it["name"] for it in items)
+                # 종목명 + (역사적) 마커 — 52주는 표기 생략 (기본)
+                tagged = [
+                    (f"{it['name']}(역)" if it.get("kind") == "역사적" else it["name"])
+                    for it in items
+                ]
+                names = ", ".join(tagged)
                 lines.append(f"✅ *{theme}* ({len(items)}종목)")
                 lines.append(names)
                 lines.append("")

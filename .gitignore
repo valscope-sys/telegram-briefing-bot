@@ -22,3 +22,4 @@ telegram_bot/history/issue_bot/dart_corp_codes.meta.json
 telegram_bot/history/wics_cache.json
 telegram_bot/history/snapshot_*.json
 .claude/settings.local.json
+telegram_bot/history/historical_max.json
