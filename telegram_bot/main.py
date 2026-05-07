@@ -204,6 +204,33 @@ def main():
         misfire_grace_time=GRACE,
     )
 
+    # ── 자체 신고가 KRX 전체 갱신: 평일 16:00 KST (이브닝 직전 30분 전) ──
+    # 키움 ka10001로 KRX 2,878 종목 검사 → self_new_high_cache.json
+    # awakeplus 수준 신고가 cover (ka10016 한계 우회).
+    # 약 10분 소요, 이브닝 16:30 발송 전 캐시 준비 완료.
+    def self_new_high_job():
+        from telegram_bot.market_calendar import is_market_day
+        if not is_market_day():
+            print(f"[SCHEDULER] 휴장일 ({datetime.date.today()}) - self_new_high cron 스킵")
+            return
+        print(f"[SCHEDULER] self_new_high KRX 전체 갱신 시작 - {datetime.datetime.now()}")
+        try:
+            from telegram_bot.jobs.cron_self_new_high import run_daily_self_new_high
+            result = run_daily_self_new_high()
+            print(f"[SCHEDULER] self_new_high 완료: {result}")
+        except Exception as e:
+            print(f"[SCHEDULER] self_new_high 실패: {e}")
+            import traceback
+            traceback.print_exc()
+
+    scheduler.add_job(
+        self_new_high_job,
+        CronTrigger(hour=16, minute=0, day_of_week="mon-fri", timezone=KST),
+        id="self_new_high_cron",
+        name="자체 신고가 KRX 전체 갱신",
+        misfire_grace_time=GRACE,
+    )
+
     # ===== 이슈 봇 통합 =====
     issue_bot_stop_event = None
     issue_bot_poller_holder = {"thread": None}  # 재시작 가능하도록 mutable holder

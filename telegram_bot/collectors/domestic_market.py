@@ -482,26 +482,87 @@ def fetch_new_highlow():
                 "신고가종류": item.get("_high_kind", "52주"),
             })
 
+        # ─── 자체 252일 신고가 판정 (사용자 정책: 365일 신고가가 핵심) ───
+        # 키움 ka10016이 awakeplus 잡는 종목 절반 누락 → ka10001로 직접 판정.
+        # 1) self_new_high_cache.json (새벽 cron이 KRX 전체 처리한 결과) 우선 사용
+        # 2) 캐시 없으면 매핑된 종목들 (~405) 즉시 ka10001 호출 (~90초)
+        # 3) 키움 raw + 자체 판정 합집합 → 진짜 awakeplus 수준
+        try:
+            from telegram_bot.collectors.self_new_high import (
+                detect_new_highs, merge_with_kiwoom_raw, _CACHE_PATH as SELF_CACHE_PATH,
+            )
+            import json as _json
+            today_str = datetime.date.today().strftime("%Y%m%d")
+
+            cache_results = []
+            cache_hit = False
+            if os.path.exists(SELF_CACHE_PATH):
+                try:
+                    with open(SELF_CACHE_PATH, "r", encoding="utf-8") as f:
+                        cache_data = _json.load(f)
+                    if cache_data.get("today") == today_str:
+                        cache_results = cache_data.get("highs", [])
+                        cache_hit = True
+                        print(f"[SELF_HIGH] 캐시 사용 ({today_str}, {len(cache_results)}건)")
+                except Exception as e:
+                    print(f"[SELF_HIGH] 캐시 로드 실패: {e}")
+
+            if not cache_hit:
+                # 캐시 없음 → 매핑된 종목 즉시 판정 (raw에 없는 것만)
+                mapping = _load_sector_mapping()
+                raw_codes = {s["종목코드"] for s in filtered_stocks}
+                candidates = [
+                    {"종목코드": code, "종목명": info.get("name", "")}
+                    for code, info in mapping.items()
+                    if not code.startswith("_") and code not in raw_codes
+                ]
+                print(f"[SELF_HIGH] 매핑 {len(candidates)}종목 자체 판정 시작 (~{len(candidates)*0.25:.0f}초)")
+                cache_results = detect_new_highs(candidates, today_str=today_str, max_fetch=500)
+
+            # raw 결과 + 자체 판정 합집합
+            kiwoom_pre = []
+            for it in filtered_stocks:
+                kiwoom_pre.append({
+                    "종목코드": it["종목코드"],
+                    "종목명": it["종목명"],
+                    "현재가": it["현재가"],
+                    "등락률": it["등락률"],
+                    "부호": it.get("부호", "▲"),
+                })
+            merged = merge_with_kiwoom_raw(kiwoom_pre, cache_results)
+            print(f"[SELF_HIGH] 통합: 키움 raw {len(filtered_stocks)} + 자체 {len(cache_results)} → {len(merged)} (자체 추가 {len(merged) - len(filtered_stocks)})")
+
+            # filtered_stocks 교체
+            new_filtered = []
+            seen_codes = set()
+            for it in merged:
+                code = it["종목코드"]
+                if code in seen_codes:
+                    continue
+                seen_codes.add(code)
+                new_filtered.append({
+                    "종목명": it["종목명"],
+                    "종목코드": code,
+                    "현재가": it.get("현재가", 0),
+                    "등락률": it.get("등락률", 0),
+                    "부호": it.get("부호", "▲"),
+                    "신고가종류": it.get("신고가종류", "52주"),
+                })
+            filtered_stocks = new_filtered
+        except Exception as e:
+            print(f"[SELF_HIGH] 자체 판정 실패 (키움 raw만 사용): {e}")
+            import traceback
+            traceback.print_exc()
+
         # 섹터 분류: 수동 매핑(JSON) 우선 → 미매칭은 Claude 폴백
         if filtered_stocks:
             print(f"[THEME] {len(filtered_stocks)}종목 섹터 분류 중...")
             code_to_sector = _classify_stocks(filtered_stocks)
 
-            # 역사적 신고가 판정 — ka10081 5년 일봉 fetch + 캐시
-            # 첫 실행은 모든 종목 fetch (~50초+), 다음부터는 캐시 + 신규 종목만
-            try:
-                from telegram_bot.collectors.historical_max import batch_classify_high_kinds
-                print(f"[HIST_MAX] {len(filtered_stocks)}종목 (52주)/(역사적) 판정 중...")
-                high_kinds = batch_classify_high_kinds(filtered_stocks, max_fetch=100)
-            except Exception as e:
-                print(f"[HIST_MAX] 판정 실패: {e}")
-                high_kinds = {}
-
             for s in filtered_stocks:
                 s["섹터"] = code_to_sector.get(s["종목코드"], "기타")
-                # 신고가 종류 (52주 vs 역사적). historical 판정 결과 우선,
-                # 없으면 키움 ka10016 _high_kind 마커 사용 (기본 52주).
-                s["신고가종류"] = high_kinds.get(s["종목코드"]) or s.get("신고가종류", "52주")
+                # 신고가종류는 self_new_high에서 이미 설정됨
+                s.setdefault("신고가종류", "52주")
                 results["신고가"].append(s)
 
     except Exception as e:
