@@ -262,5 +262,208 @@
     "sector": "반도체장비",
     "fetched_at": "2026-05-06T16:30:45",
     "source": "claude_fallback"
+  },
+  "004710": {
+    "name": "한솔테크닉스",
+    "wics": "전자장비와기기",
+    "sector": "전기전자",
+    "fetched_at": "2026-05-07T16:30:15",
+    "source": "naver"
+  },
+  "004800": {
+    "name": "효성",
+    "wics": "복합기업",
+    "sector": "지주",
+    "fetched_at": "2026-05-07T16:30:16",
+    "source": "naver"
+  },
+  "007280": {
+    "name": "한국특강",
+    "wics": "철강",
+    "sector": "철강/소재",
+    "fetched_at": "2026-05-07T16:30:16",
+    "source": "naver"
+  },
+  "007810": {
+    "name": "코리아써키트",
+    "wics": "전자장비와기기",
+    "sector": "전기전자",
+    "fetched_at": "2026-05-07T16:30:17",
+    "source": "naver"
+  },
+  "011080": {
+    "name": "형지I&C",
+    "wics": "섬유,의류,신발,호화품",
+    "sector": "기타",
+    "fetched_at": "2026-05-07T16:30:23",
+    "source": "naver"
+  },
+  "017510": {
+    "name": "세명전기",
+    "wics": "전기장비",
+    "sector": "전기전자",
+    "fetched_at": "2026-05-07T16:30:23",
+    "source": "naver"
+  },
+  "017550": {
+    "name": "수산세보틱스",
+    "wics": "기계",
+    "sector": "기계",
+    "fetched_at": "2026-05-07T16:30:24",
+    "source": "naver"
+  },
+  "024840": {
+    "name": "KBI메탈",
+    "wics": "전기장비",
+    "sector": "전기전자",
+    "fetched_at": "2026-05-07T16:30:25",
+    "source": "naver"
+  },
+  "025560": {
+    "name": "미래산업",
+    "wics": "반도체와반도체장비",
+    "sector": "반도체",
+    "fetched_at": "2026-05-07T16:30:25",
+    "source": "naver"
+  },
+  "033250": {
+    "name": "체시스",
+    "wics": "자동차부품",
+    "sector": "자동차부품",
+    "fetched_at": "2026-05-07T16:30:26",
+    "source": "naver"
+  },
+  "038620": {
+    "name": "위즈코프",
+    "wics": "운송인프라",
+    "sector": "건설/재건",
+    "fetched_at": "2026-05-07T16:30:26",
+    "source": "naver"
+  },
+  "041440": {
+    "name": "현대에버다임",
+    "wics": "기계",
+    "sector": "기계",
+    "fetched_at": "2026-05-07T16:30:27",
+    "source": "naver"
+  },
+  "043710": {
+    "name": "코스리거글로벌",
+    "wics": "건강관리업체및서비스",
+    "sector": "기타",
+    "fetched_at": "2026-05-07T16:30:28",
+    "source": "naver"
+  },
+  "053950": {
+    "name": "경남제약",
+    "wics": "제약",
+    "sector": "바이오/제약",
+    "fetched_at": "2026-05-07T16:30:28",
+    "source": "naver"
+  },
+  "065060": {
+    "name": "지엔코",
+    "wics": "섬유,의류,신발,호화품",
+    "sector": "기타",
+    "fetched_at": "2026-05-07T16:30:29",
+    "source": "naver"
+  },
+  "078150": {
+    "name": "HB테크놀러지",
+    "wics": "디스플레이장비및부품",
+    "sector": "디스플레이",
+    "fetched_at": "2026-05-07T16:30:29",
+    "source": "naver"
+  },
+  "078890": {
+    "name": "가온그룹",
+    "wics": "전자제품",
+    "sector": "기타",
+    "fetched_at": "2026-05-07T16:30:30",
+    "source": "naver"
+  },
+  "079190": {
+    "name": "케스피온",
+    "wics": "핸드셋",
+    "sector": "기타",
+    "fetched_at": "2026-05-07T16:30:31",
+    "source": "naver"
+  },
+  "089970": {
+    "name": "브이엠",
+    "wics": "반도체와반도체장비",
+    "sector": "반도체",
+    "fetched_at": "2026-05-07T16:30:31",
+    "source": "naver"
+  },
+  "094840": {
+    "name": "슈프리마에이치큐",
+    "wics": "전자장비와기기",
+    "sector": "전기전자",
+    "fetched_at": "2026-05-07T16:30:32",
+    "source": "naver"
+  },
+  "138080": {
+    "name": "오이솔루션",
+    "wics": "통신장비",
+    "sector": "통신장비",
+    "fetched_at": "2026-05-07T16:30:33",
+    "source": "naver"
+  },
+  "159010": {
+    "name": "아스플로",
+    "wics": "기계",
+    "sector": "기계",
+    "fetched_at": "2026-05-07T16:30:33",
+    "source": "naver"
+  },
+  "195870": {
+    "name": "해성디에스",
+    "wics": "반도체와반도체장비",
+    "sector": "반도체",
+    "fetched_at": "2026-05-07T16:30:34",
+    "source": "naver"
+  },
+  "199800": {
+    "name": "툴젠",
+    "wics": "생물공학",
+    "sector": "바이오/제약",
+    "fetched_at": "2026-05-07T16:30:34",
+    "source": "naver"
+  },
+  "262840": {
+    "name": "아이퀘스트",
+    "wics": "소프트웨어",
+    "sector": "AI/소프트웨어",
+    "fetched_at": "2026-05-07T16:30:35",
+    "source": "naver"
+  },
+  "276730": {
+    "name": "한울앤제주",
+    "wics": "음료",
+    "sector": "음식료",
+    "fetched_at": "2026-05-07T16:30:36",
+    "source": "naver"
+  },
+  "303030": {
+    "name": "지니틱스",
+    "wics": "반도체와반도체장비",
+    "sector": "반도체",
+    "fetched_at": "2026-05-07T16:30:36",
+    "source": "naver"
+  },
+  "317240": {
+    "name": "TS트릴리온",
+    "wics": "가정용품",
+    "sector": "기타",
+    "fetched_at": "2026-05-07T16:30:37",
+    "source": "naver"
+  },
+  "327260": {
+    "name": "RF머트리얼즈",
+    "wics": "우주항공과국방",
+    "sector": "기타",
+    "fetched_at": "2026-05-07T16:30:38",
+    "source": "naver"
   }
 }
