@@ -36240,7 +36240,7 @@
   },
   {
     "date": "2026-05-09",
-    "time": "20:21",
+    "time": "06:00",
     "category": "경제지표",
     "title": "🇨🇳 Exports (YoY)  (Apr)",
     "source": "investing",
@@ -36249,7 +36249,7 @@
   },
   {
     "date": "2026-05-09",
-    "time": "20:21",
+    "time": "06:00",
     "category": "경제지표",
     "title": "🇨🇳 Imports (YoY)  (Apr)",
     "source": "investing",
@@ -36258,7 +36258,7 @@
   },
   {
     "date": "2026-05-09",
-    "time": "20:21",
+    "time": "06:00",
     "category": "경제지표",
     "title": "🇨🇳 Trade Balance (USD)  (Apr)",
     "source": "investing",
@@ -36377,7 +36377,7 @@
     "auto": true,
     "date": "2026-05-11",
     "time": "",
-    "summary": "삼성전자 노사가 45일 만에 협상 재개. 11일과 12일 양일간 사후조정 진행"
+    "summary": "삼성전자 노조와 회사 간 사후조정 진행. 11일과 12일 양일간 실시"
   },
   {
     "date": "2026-05-11",
@@ -36805,6 +36805,15 @@
   },
   {
     "date": "2026-05-12",
+    "time": "13:40",
+    "category": "통화정책",
+    "title": "🇪🇺 ECB's Elderson Speaks",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-05-12",
     "time": "14:00",
     "category": "IR",
     "title": "메디쎄이 IR (경영현황)",
@@ -37199,6 +37208,24 @@
     "country": "🇺🇸"
   },
   {
+    "date": "2026-05-13",
+    "time": "22:00",
+    "category": "통화정책",
+    "title": "🇪🇺 ECB's Lane Speaks",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-05-13",
+    "time": "22:15",
+    "category": "통화정책",
+    "title": "🇪🇺 ECB President Lagarde Speaks",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
     "date": "2026-05-14",
     "time": "",
     "category": "IPO/공모",
@@ -37263,6 +37290,15 @@
     "auto": true
   },
   {
+    "category": "수동",
+    "title": "미국 암호화폐 법안 상원 위원회 표결",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2026-05-14",
+    "time": "",
+    "summary": "암호화폐 감독 결정 법안이 상원 은행위원회에서 표결 예정"
+  },
+  {
     "date": "2026-05-14",
     "time": "10:00",
     "category": "IR",
@@ -37294,6 +37330,15 @@
     "source": "investing",
     "auto": true,
     "country": "🇨🇳"
+  },
+  {
+    "date": "2026-05-14",
+    "time": "12:15",
+    "category": "통화정책",
+    "title": "🇪🇺 ECB President Lagarde Speaks",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
   },
   {
     "date": "2026-05-14",
@@ -37413,6 +37458,15 @@
     "time": "18:30",
     "category": "통화정책",
     "title": "🇺🇸 Atlanta Fed GDPNow  (Q2)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-14",
+    "time": "23:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Fed's Balance Sheet",
     "source": "investing",
     "auto": true,
     "country": "🇺🇸"
@@ -37590,6 +37644,15 @@
     "country": "🇺🇸"
   },
   {
+    "date": "2026-05-15",
+    "time": "22:30",
+    "category": "경제지표",
+    "title": "🇪🇺 CFTC EUR speculative net positions",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
     "date": "2026-05-16",
     "time": "",
     "category": "기업이벤트",
@@ -37604,6 +37667,42 @@
     "title": "지엔코 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "date": "2026-05-18",
+    "time": "05:00",
+    "category": "경제지표",
+    "title": "🇨🇳 Fixed Asset Investment (YoY)  (Apr)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇨🇳"
+  },
+  {
+    "date": "2026-05-18",
+    "time": "05:00",
+    "category": "경제지표",
+    "title": "🇨🇳 Industrial Production (YoY)  (Apr)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇨🇳"
+  },
+  {
+    "date": "2026-05-18",
+    "time": "05:00",
+    "category": "경제지표",
+    "title": "🇨🇳 Chinese Industrial Production YTD  (YoY)  (Apr)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇨🇳"
+  },
+  {
+    "date": "2026-05-18",
+    "time": "05:00",
+    "category": "경제지표",
+    "title": "🇨🇳 Chinese Unemployment Rate  (Apr)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇨🇳"
   },
   {
     "date": "2026-05-18",
@@ -37704,6 +37803,15 @@
   },
   {
     "date": "2026-05-19",
+    "time": "12:00",
+    "category": "경제지표",
+    "title": "🇪🇺 Trade Balance  (Mar)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-05-19",
     "time": "14:00",
     "category": "IR",
     "title": "EMB IR (경영현황)",
@@ -37725,6 +37833,15 @@
     "title": "제노레이 IR (경영현황)",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "date": "2026-05-19",
+    "time": "17:00",
+    "category": "경제지표",
+    "title": "🇺🇸 Pending Home Sales (MoM)  (Apr)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
   },
   {
     "date": "2026-05-20",
@@ -37773,6 +37890,42 @@
     "title": "광진실업 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "date": "2026-05-20",
+    "time": "04:00",
+    "category": "경제지표",
+    "title": "🇨🇳 China Loan Prime Rate 5Y  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇨🇳"
+  },
+  {
+    "date": "2026-05-20",
+    "time": "12:00",
+    "category": "경제지표",
+    "title": "🇪🇺 Core CPI (YoY)  (Apr)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-05-20",
+    "time": "12:00",
+    "category": "경제지표",
+    "title": "🇪🇺 CPI (YoY)  (Apr)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-05-20",
+    "time": "12:00",
+    "category": "경제지표",
+    "title": "🇪🇺 CPI (MoM)  (Apr)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
   },
   {
     "date": "2026-05-20",
@@ -37848,7 +38001,7 @@
     "date": "2026-05-21",
     "time": "",
     "unconfirmed": true,
-    "summary": "삼성전자 최대 노조가 21일 총파업 예정이었으나 사후조정으로 연기 가능성"
+    "summary": "삼성전자 최대 노조의 총파업 예정일. 사후조정 결과에 따라 변동 가능"
   },
   {
     "date": "2026-05-21",
