@@ -33500,6 +33500,18 @@
     "summary": "머스크의 X(구 트위터) 기반 결제 서비스 출시. SNS-결제 통합 플랫폼으로 핀테크 관련주에 영향"
   },
   {
+    "category": "수동",
+    "title": "포용금융추진단 출범",
+    "source": "ai_scan",
+    "auto": true,
+    "month": "2026-05",
+    "undated": true,
+    "date": "2026-05-01",
+    "endDate": "2026-05-31",
+    "unconfirmed": true,
+    "summary": "금융위원회가 취약계층 금융 소외 개선을 위한 태스크포스 이달 중 출범. 관련주: 금융주 전반"
+  },
+  {
     "category": "에너지",
     "title": "사우디 원유 5000만 배럴 한국 선적",
     "source": "ai_scan",
@@ -36362,6 +36374,15 @@
     "auto": true
   },
   {
+    "category": "반도체",
+    "title": "삼성전자 노사 중앙노동위원회 사후조정",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2026-05-11",
+    "time": "",
+    "summary": "삼성전자 노사가 11일부터 이틀간 중앙노동위원회 중재로 사후조정. 21일 총파업을 앞두고 막판 협상. 관련주: 삼성전자"
+  },
+  {
     "category": "수동",
     "title": "차량 5부제 보험 특약 신청 시작",
     "source": "ai_scan",
@@ -37976,6 +37997,15 @@
     "auto": true
   },
   {
+    "category": "반도체",
+    "title": "삼성전자 노조 총파업",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2026-05-21",
+    "time": "",
+    "summary": "삼성전자 노조가 예고한 총파업일. 파운드리 등 비메모리 사업부 성과급 관련 쟁점. 관련주: 삼성전자"
+  },
+  {
     "category": "수동",
     "title": "삼성전자 총파업",
     "source": "ai_scan",
@@ -38002,6 +38032,24 @@
     "time": "",
     "unconfirmed": true,
     "summary": "삼성전자 최대 노조의 총파업 예정일. 사후조정 결과에 따라 변동 가능"
+  },
+  {
+    "date": "2026-05-21",
+    "time": "11:00",
+    "category": "경제지표",
+    "title": "🇪🇺 HCOB Eurozone Manufacturing PMI  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-05-21",
+    "time": "11:00",
+    "category": "경제지표",
+    "title": "🇪🇺 HCOB Eurozone Composite PMI  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
   },
   {
     "date": "2026-05-21",
