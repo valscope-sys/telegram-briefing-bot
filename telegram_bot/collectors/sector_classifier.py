@@ -1,362 +1,116 @@
-"""신고가 종목 → 섹터 분류 — 하이브리드 (수동 매핑 + 네이버 WICS + Claude fallback)
+"""신고가 종목 → 섹터 분류 — 단일 데이터 소스 역색인.
 
-기존 _classify_stocks의 매핑률 ~10% (273/2,800 종목) 문제 + 잘못된 매핑(가온전선=통신/5G,
-하나마이크론=메모리 등) 해결.
+명세서 (2026-05-12 코드방):
+- 매핑 사전 폐기. WICS fetch 폐기. Claude fallback 폐기. 종목명 fallback 폐기.
+- 단일 소스: sector_universe_YYYYMMDD.json (KRX 지수 + ETF 구성종목)
+- 종목코드가 어떤 섹터들에 속하는지 역색인 lookup
+- 한 종목이 여러 섹터에 속하면 모두 표시 (중복 허용)
+- 어느 섹터에도 없으면 "기타"
 
-흐름:
-1. **stock_sector_mapping.json** (수동 큐레이션, 가장 정확)
-2. **wics_cache.json** (네이버에서 fetch 후 캐시, 영구)
-3. **fetch_naver_industry()** (캐시 미스 → 네이버 종목 페이지에서 WICS 추출)
-4. **wics_to_sector.json** (WICS 한국 표준 분류 → 우리 카테고리)
-5. **Claude fallback** (네이버 fetch 실패 시 종목명 추측)
-
-캐시 정책:
-- WICS는 산업분류 거의 안 바뀜 → 영구 캐시 (TTL 없음)
-- 매일 새 종목만 fetch → 점진적 누적
+운영 원칙:
+1. 종목코드 → 섹터 룩업 테이블을 새로 만들지 않는다.
+2. 분류 정확도 떨어지면 sector_config.json 섹터 추가/제거로만 조정.
+3. Claude API는 이 분류 로직에서 호출하지 않는다.
+4. "기타"가 많아 보여도 그대로 둔다.
 """
-import datetime
 import json
 import os
-import re
-import threading
-import time
+from collections import defaultdict
 from typing import Optional
-
-import requests
-from bs4 import BeautifulSoup
 
 
 _HISTORY_DIR = os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
     "history",
 )
-_MAPPING_PATH = os.path.join(_HISTORY_DIR, "stock_sector_mapping.json")
-_WICS_CACHE_PATH = os.path.join(_HISTORY_DIR, "wics_cache.json")
-_WICS_MAP_PATH = os.path.join(_HISTORY_DIR, "wics_to_sector.json")
-
-_lock = threading.Lock()
-
-# 메모리 캐시 (모듈 수명)
-_manual_mapping = None  # {code: {"name", "sector"}}
-_wics_cache = None      # {code: {"name", "wics", "fetched_at"}}
-_wics_to_sector = None  # {wics: sector}
 
 
-def _load_json(path):
-    if not os.path.exists(path):
-        return {}
-    try:
-        with open(path, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except Exception as e:
-        print(f"[SECTOR] {path} 로드 실패: {e}")
-        return {}
+def _load_today_universe() -> Optional[dict]:
+    """오늘 universe 로드. 없으면 가장 최근 fallback."""
+    from telegram_bot.collectors.sector_universe_fetcher import load_universe
+    return load_universe()
 
 
-def _save_json(path, data):
-    os.makedirs(os.path.dirname(path), exist_ok=True)
-    tmp = path + ".tmp"
-    with open(tmp, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
-    os.replace(tmp, path)
-
-
-_manual_by_name = None  # {종목명: sector} — 코드 잘못 입력 케이스 fallback
-
-
-def _load_manual():
-    global _manual_mapping, _manual_by_name
-    if _manual_mapping is None:
-        raw = _load_json(_MAPPING_PATH)
-        _manual_mapping = {k: v for k, v in raw.items() if not k.startswith("_")}
-        # 종목명 역매핑 — 종목코드 잘못 입력했어도 종목명으로 매칭됨
-        _manual_by_name = {}
-        for code, info in _manual_mapping.items():
-            n = (info.get("name") or "").strip()
-            if n and info.get("sector"):
-                _manual_by_name[n] = info["sector"]
-    return _manual_mapping
-
-
-def _lookup_manual_by_name(name: str):
-    """종목명으로 수동 매핑 조회 (코드 잘못 입력 fallback)."""
-    if _manual_by_name is None:
-        _load_manual()
-    if not name:
-        return None
-    return _manual_by_name.get(name.strip())
-
-
-def _load_wics_cache():
-    global _wics_cache
-    if _wics_cache is None:
-        _wics_cache = _load_json(_WICS_CACHE_PATH)
-    return _wics_cache
-
-
-def _load_wics_map():
-    global _wics_to_sector
-    if _wics_to_sector is None:
-        raw = _load_json(_WICS_MAP_PATH)
-        _wics_to_sector = {k: v for k, v in raw.items() if not k.startswith("_")}
-    return _wics_to_sector
-
-
-def fetch_kiwoom_industry(code: str) -> Optional[str]:
-    """키움 ka10001 (주식기본정보)에서 업종 추출.
-
-    사용자 정책 (2026-05-04): 데이터 출처 키움 단일화.
-    키움 응답에 업종 필드 있으면 그대로 사용, 없으면 네이버 fallback.
-
-    Returns:
-        업종 문자열 또는 None.
-    """
-    if not re.fullmatch(r"\d{6}", code or ""):
-        return None
-    try:
-        from telegram_bot.kiwoom_client import fetch_stock_info, extract_industry_from_stock_info
-        info = fetch_stock_info(code)
-        industry = extract_industry_from_stock_info(info)
-        return industry or None
-    except Exception as e:
-        # rate limit, 토큰 만료, 네트워크 등
-        if "rate" not in str(e).lower():
-            print(f"[SECTOR] 키움 ka10001 실패 ({code}): {str(e)[:100]}")
-        return None
-
-
-def fetch_naver_industry(code: str, timeout: int = 8) -> Optional[str]:
-    """네이버 증권 WICS 산업분류 추출 — 키움 fallback용.
-
-    Returns:
-        WICS 분류 문자열 또는 None.
-    """
-    if not re.fullmatch(r"\d{6}", code or ""):
-        return None
-    url = f"https://finance.naver.com/item/main.naver?code={code}"
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-    }
-    try:
-        r = requests.get(url, headers=headers, timeout=timeout)
-        if r.status_code != 200:
-            return None
-        r.encoding = r.apparent_encoding or "euc-kr"
-        soup = BeautifulSoup(r.text, "lxml")
-        for tag in soup.select('a[href*="sise_group_detail"]'):
-            wics = tag.get_text(strip=True)
-            if wics:
-                return wics
-    except Exception as e:
-        print(f"[SECTOR] 네이버 fetch 실패 ({code}): {e}")
-    return None
-
-
-def fetch_industry(code: str, name: str = "") -> tuple:
-    """키움 우선 → 네이버 fallback. (industry, source) 반환.
-
-    Returns:
-        (industry_str, source) — source: "kiwoom" 또는 "naver" 또는 None.
-    """
-    # 1차: 키움 ka10001
-    industry = fetch_kiwoom_industry(code)
-    if industry:
-        return (industry, "kiwoom")
-    # 2차: 네이버 WICS (fallback)
-    industry = fetch_naver_industry(code)
-    if industry:
-        return (industry, "naver")
-    return (None, None)
-
-
-def _normalize_wics(wics: str) -> str:
-    """WICS 문자열 정규화 (공백 제거)."""
-    return re.sub(r"\s+", "", (wics or "").strip())
-
-
-def wics_to_our_sector(wics: str, name: str = "") -> str:
-    """WICS 한국 표준 분류 → 우리 카테고리.
-
-    매핑 안 되면 "기타".
-    name은 예외 케이스 명시적 처리용 (예: 가온전선 = 건설로 표기되지만 전기전자).
-    """
-    if not wics:
-        return "기타"
-    mp = _load_wics_map()
-    norm = _normalize_wics(wics)
-    return mp.get(norm) or mp.get(wics) or "기타"
-
-
-def classify_stock(code: str, name: str = "",
-                   allow_fetch: bool = True,
-                   allow_claude: bool = True) -> str:
-    """단일 종목 → 섹터 분류 (캐시·WICS·Claude 순).
+def classify_stocks_batch(stocks: list) -> dict:
+    """신고가 종목들을 섹터별로 그룹핑.
 
     Args:
-        code: 6자리 종목코드
-        name: 종목명 (Claude fallback 시 사용)
-        allow_fetch: 네이버 fetch 허용 여부
-        allow_claude: Claude fallback 허용 여부
+        stocks: [{"종목코드", "종목명", "현재가", "등락률", ...}, ...]
 
     Returns:
-        섹터 문자열 (예: "반도체", "2차전지", "기타")
+        {
+          "반도체": [stock, stock, ...],
+          "밸류업": [...],
+          ...
+          "기타": [매칭 실패 종목들]
+        }
+        중복 허용 — 한 종목이 여러 섹터에 속하면 각 섹터에 모두 등장.
     """
-    if not code:
-        return "기타"
+    universe = _load_today_universe()
+    if not universe or not universe.get("sectors"):
+        print("[CLASSIFIER] sector_universe 로드 실패 — 모두 '기타'로 처리")
+        return {"기타": list(stocks)}
 
-    # 1차: 수동 매핑 (가장 신뢰)
-    manual = _load_manual()
-    if code in manual:
-        sec = manual[code].get("sector")
-        if sec:
-            return sec
+    sectors = universe.get("sectors", {})
+    result = defaultdict(list)
 
-    # 2차: WICS 캐시
-    cache = _load_wics_cache()
-    if code in cache:
-        wics = cache[code].get("wics", "")
-        if wics:
-            return wics_to_our_sector(wics, name)
-
-    # 3차: 네이버 fetch (한 번만 — 캐시 저장)
-    if allow_fetch:
-        wics = fetch_naver_industry(code)
-        if wics:
-            with _lock:
-                cache[code] = {
-                    "name": name,
-                    "wics": wics,
-                    "fetched_at": datetime.datetime.now().isoformat(timespec="seconds"),
-                }
-                _save_json(_WICS_CACHE_PATH, cache)
-            return wics_to_our_sector(wics, name)
-
-    # 4차: Claude fallback (호출 측에서 별도 처리)
-    return None if allow_claude else "기타"
-
-
-def classify_stocks_batch(stocks: list,
-                          allow_fetch: bool = True,
-                          allow_claude: bool = True,
-                          max_fetch_per_call: int = 200) -> dict:
-    """여러 종목 일괄 분류 — 자동 누적 캐시.
-
-    매번 신고가 종목이 바뀌어도 자동 분류:
-    1. 신규 종목 → 네이버 WICS 자동 fetch → 영구 캐시
-    2. Claude fallback 결과도 wics_cache에 저장 (다음 날 즉시 사용)
-    3. 한 번 분류한 종목은 영구 — 매일 새 종목만 fetch
-
-    Args:
-        stocks: [{"종목코드", "종목명"}, ...]
-        max_fetch_per_call: 1회 호출당 최대 네이버 fetch 횟수 (200 = 거의 무제한)
-
-    Returns:
-        {code: sector} dict.
-    """
-    code_to_sector = {}
-    fetch_count = 0
-    pending_for_claude = []  # [(name, code), ...]
-
-    manual = _load_manual()
-    cache = _load_wics_cache()
-    wics_map = _load_wics_map()
-
-    for s in stocks:
-        code = s.get("종목코드", "")
-        name = s.get("종목명", "")
+    for stock in stocks:
+        code = stock.get("종목코드") or stock.get("code", "")
         if not code:
-            code_to_sector[code] = "기타"
+            result["기타"].append(stock)
             continue
 
-        # 1차: 수동 매핑 (코드 우선)
-        if code in manual:
-            code_to_sector[code] = manual[code].get("sector", "기타")
+        matched = [
+            name for name, codes in sectors.items()
+            if code in codes
+        ]
+        if matched:
+            for name in matched:
+                result[name].append(stock)
+        else:
+            result["기타"].append(stock)
+
+    return dict(result)
+
+
+def get_sector_priority() -> list:
+    """sector_config.json 등록 순서로 섹터 우선순위 반환. '기타'는 마지막."""
+    config_path = os.path.join(_HISTORY_DIR, "sector_config.json")
+    if not os.path.exists(config_path):
+        return ["기타"]
+    try:
+        with open(config_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        order = [s["name"] for s in data.get("sectors", []) if s.get("name")]
+        order.append("기타")
+        return order
+    except Exception:
+        return ["기타"]
+
+
+# ─── 호환: domestic_market._classify_stocks가 호출하던 시그니처 ───
+def _classify_stocks_legacy(filtered_stocks: list) -> dict:
+    """기존 코드 호환: {종목코드: 섹터} 단일 매핑 반환.
+
+    한 종목이 여러 섹터일 때는 첫 번째 매칭 섹터만 반환 (호환용).
+    새 흐름은 classify_stocks_batch() 사용 권장 (중복 허용).
+    """
+    universe = _load_today_universe()
+    if not universe:
+        return {s.get("종목코드", ""): "기타" for s in filtered_stocks}
+    sectors = universe.get("sectors", {})
+
+    out = {}
+    for s in filtered_stocks:
+        code = s.get("종목코드", "")
+        if not code:
             continue
-
-        # 1.5차: 종목명 매칭 (코드 잘못 입력 케이스 fallback)
-        # 예: 심텍의 진짜 코드는 222800인데 우리가 036090으로 등록한 경우.
-        sec_by_name = _lookup_manual_by_name(name)
-        if sec_by_name:
-            code_to_sector[code] = sec_by_name
-            # 다음에 같은 종목 만나면 캐시에서 즉시 반환되도록 캐시에도 기록
-            with _lock:
-                cache[code] = {
-                    "name": name,
-                    "wics": "",
-                    "sector": sec_by_name,
-                    "fetched_at": datetime.datetime.now().isoformat(timespec="seconds"),
-                    "source": "name_match",
-                }
-            continue
-
-        # 2차: 캐시 (네이버 WICS 또는 Claude 분류 결과 누적)
-        if code in cache:
-            cached = cache[code]
-            # 캐시에 직접 sector가 있으면 그대로 사용 (Claude fallback 결과 저장된 것)
-            if cached.get("sector"):
-                code_to_sector[code] = cached["sector"]
-                continue
-            # WICS 만 있으면 매핑 변환
-            wics = cached.get("wics", "")
-            if wics:
-                code_to_sector[code] = wics_map.get(_normalize_wics(wics), "기타")
-                continue
-
-        # 3차: 키움 ka10001 자동 fetch (사용자 정책 — 키움 단일 우선) → 네이버 fallback
-        if allow_fetch and fetch_count < max_fetch_per_call:
-            industry, source = fetch_industry(code, name)
-            fetch_count += 1
-            time.sleep(0.3)  # 키움 rate limit (초당 5건) 안전 마진
-            if industry:
-                sector_resolved = wics_map.get(_normalize_wics(industry), "기타")
-                with _lock:
-                    cache[code] = {
-                        "name": name,
-                        "wics": industry,
-                        "sector": sector_resolved,
-                        "fetched_at": datetime.datetime.now().isoformat(timespec="seconds"),
-                        "source": source,  # "kiwoom" or "naver"
-                    }
-                code_to_sector[code] = sector_resolved
-                continue
-
-        # 4차: Claude fallback 후보
-        pending_for_claude.append((name, code))
-
-    # WICS 캐시 일괄 저장
-    if fetch_count > 0:
-        _save_json(_WICS_CACHE_PATH, cache)
-        print(f"[SECTOR] 네이버 fetch {fetch_count}건 → 영구 캐시 저장")
-
-    # Claude fallback (네이버 fetch 실패한 종목만) + 결과도 영구 캐시
-    if allow_claude and pending_for_claude:
-        try:
-            from telegram_bot.collectors.domestic_market import _classify_themes_with_claude
-            names = [n for n, _c in pending_for_claude]
-            name_to_sector = _classify_themes_with_claude(names)
-            with _lock:
-                for name, code in pending_for_claude:
-                    sec = name_to_sector.get(name, "기타")
-                    code_to_sector[code] = sec
-                    # 영구 캐시 (다음 날 같은 종목이면 Claude 다시 호출 안 함)
-                    cache[code] = {
-                        "name": name,
-                        "wics": "",
-                        "sector": sec,
-                        "fetched_at": datetime.datetime.now().isoformat(timespec="seconds"),
-                        "source": "claude_fallback",
-                    }
-            _save_json(_WICS_CACHE_PATH, cache)
-            print(f"[SECTOR] Claude fallback {len(pending_for_claude)}건 → 영구 캐시 저장")
-        except Exception as e:
-            print(f"[SECTOR] Claude fallback 실패: {e}")
-            for _name, code in pending_for_claude:
-                code_to_sector[code] = "기타"
-    else:
-        for _name, code in pending_for_claude:
-            code_to_sector[code] = "기타"
-
-    return code_to_sector
+        matched = next(
+            (name for name, codes in sectors.items() if code in codes),
+            "기타",
+        )
+        out[code] = matched
+    return out
 
 
 if __name__ == "__main__":
@@ -367,18 +121,14 @@ if __name__ == "__main__":
         except Exception:
             pass
 
-    # 테스트 — 사용자가 본 잘못 분류 케이스
+    # 테스트
     test = [
-        {"종목코드": "028050", "종목명": "가온전선"},
-        {"종목코드": "178920", "종목명": "PI첨단소재"},
-        {"종목코드": "248070", "종목명": "솔루엠"},
-        {"종목코드": "036890", "종목명": "진성티이씨"},
-        {"종목코드": "079960", "종목명": "동양이엔피"},
-        {"종목코드": "067310", "종목명": "하나마이크론"},
-        {"종목코드": "046890", "종목명": "서울반도체"},
-        {"종목코드": "126340", "종목명": "비나텍"},
-        {"종목코드": "178320", "종목명": "서진시스템"},
+        {"종목코드": "005930", "종목명": "삼성전자"},
+        {"종목코드": "000660", "종목명": "SK하이닉스"},
+        {"종목코드": "005380", "종목명": "현대차"},
+        {"종목코드": "999999", "종목명": "없는종목"},
     ]
-    result = classify_stocks_batch(test, allow_claude=False)
-    for s in test:
-        print(f"  {s['종목코드']} {s['종목명']:15s} → {result.get(s['종목코드'])}")
+    result = classify_stocks_batch(test)
+    for sector, items in result.items():
+        names = ", ".join(it.get("종목명", "") for it in items)
+        print(f"  [{sector}] {len(items)}: {names}")

@@ -1,0 +1,35 @@
+{
+  "_comment": "섹터명 ↔ KRX 지수 코드 / ETF 종목코드 매핑. 종목 정보 X — 데이터 소스만.",
+  "_purpose": "stock_sector_mapping 폐기. KRX/운용사가 매일 갱신하는 구성종목을 그대로 받는 단일 데이터 소스.",
+  "_principle": "종목코드 → 섹터 룩업 테이블 새로 만들지 않음. 분류 정확도 떨어지면 sector_config에서 섹터 추가/제거로만 조정.",
+
+  "sectors": [
+    {"name": "반도체",       "source": "KRX_index", "code": "1028"},
+    {"name": "자동차",       "source": "KRX_index", "code": "1031"},
+    {"name": "헬스케어",     "source": "KRX_index", "code": "1029"},
+    {"name": "은행",         "source": "KRX_index", "code": "1024"},
+    {"name": "보험",         "source": "KRX_index", "code": "1032"},
+    {"name": "증권",         "source": "KRX_index", "code": "1027"},
+    {"name": "건설",         "source": "KRX_index", "code": "1026"},
+    {"name": "에너지화학",   "source": "KRX_index", "code": "1025"},
+    {"name": "철강소재",     "source": "KRX_index", "code": "1023"},
+    {"name": "기계장비",     "source": "KRX_index", "code": "1034"},
+    {"name": "운송",         "source": "KRX_index", "code": "1035"},
+    {"name": "정보기술",     "source": "KRX_index", "code": "1033"},
+    {"name": "미디어통신",   "source": "KRX_index", "code": "1030"},
+    {"name": "필수소비재",   "source": "KRX_index", "code": "1021"},
+    {"name": "경기소비재",   "source": "KRX_index", "code": "1022"},
+    {"name": "밸류업",       "source": "KRX_index", "code": "1980"},
+
+    {"name": "로봇",         "source": "ETF",       "code": "445290"},
+    {"name": "방산",         "source": "ETF",       "code": "449450"},
+    {"name": "2차전지",      "source": "ETF",       "code": "305720"},
+    {"name": "조선",         "source": "ETF",       "code": "466920"},
+    {"name": "원전",         "source": "ETF",       "code": "442320"},
+    {"name": "바이오",       "source": "ETF",       "code": "244580"},
+    {"name": "우주항공",     "source": "ETF",       "code": "479850"},
+    {"name": "AI반도체",     "source": "ETF",       "code": "469150"},
+    {"name": "게임",         "source": "ETF",       "code": "300610"},
+    {"name": "K뷰티",        "source": "ETF",       "code": "244670"}
+  ]
+}

@@ -204,30 +204,30 @@ def main():
         misfire_grace_time=GRACE,
     )
 
-    # ── 자체 신고가 KRX 전체 갱신: 평일 16:00 KST (이브닝 직전 30분 전) ──
-    # 키움 ka10001로 KRX 2,878 종목 검사 → self_new_high_cache.json
-    # awakeplus 수준 신고가 cover (ka10016 한계 우회).
-    # 약 10분 소요, 이브닝 16:30 발송 전 캐시 준비 완료.
-    def self_new_high_job():
+    # ── KRX 지수/ETF 구성종목 일괄 갱신: 평일 06:00 KST ──
+    # 명세서 (2026-05-12 코드방):
+    # 매핑 사전 폐기. sector_config.json의 KRX 지수 + ETF 코드로 구성종목 fetch.
+    # 결과 → sector_universe_YYYYMMDD.json. evening 발송 시 역색인 매칭.
+    def sector_universe_job():
         from telegram_bot.market_calendar import is_market_day
         if not is_market_day():
-            print(f"[SCHEDULER] 휴장일 ({datetime.date.today()}) - self_new_high cron 스킵")
+            print(f"[SCHEDULER] 휴장일 ({datetime.date.today()}) - sector_universe 스킵")
             return
-        print(f"[SCHEDULER] self_new_high KRX 전체 갱신 시작 - {datetime.datetime.now()}")
+        print(f"[SCHEDULER] sector_universe 갱신 시작 - {datetime.datetime.now()}")
         try:
-            from telegram_bot.jobs.cron_self_new_high import run_daily_self_new_high
-            result = run_daily_self_new_high()
-            print(f"[SCHEDULER] self_new_high 완료: {result}")
+            from telegram_bot.collectors.sector_universe_fetcher import run_daily_fetch
+            result = run_daily_fetch()
+            print(f"[SCHEDULER] sector_universe 완료: {result}")
         except Exception as e:
-            print(f"[SCHEDULER] self_new_high 실패: {e}")
+            print(f"[SCHEDULER] sector_universe 실패: {e}")
             import traceback
             traceback.print_exc()
 
     scheduler.add_job(
-        self_new_high_job,
-        CronTrigger(hour=16, minute=0, day_of_week="mon-fri", timezone=KST),
-        id="self_new_high_cron",
-        name="자체 신고가 KRX 전체 갱신",
+        sector_universe_job,
+        CronTrigger(hour=6, minute=0, day_of_week="mon-fri", timezone=KST),
+        id="sector_universe_cron",
+        name="KRX 지수/ETF 구성종목 갱신",
         misfire_grace_time=GRACE,
     )
 

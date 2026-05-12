@@ -305,14 +305,22 @@ def _classify_themes_with_claude(stock_names):
 - 종목명에 "반도체"가 들어있다고 반도체로 분류하지 마세요. 실제 사업을 확인하세요.
 - 잘 모르는 종목은 반드시 "기타"로 분류하세요. 추측으로 반도체나 다른 테마에 넣지 마세요.
 - 지주사는 주된 자회사 섹터로. 예: 솔브레인홀딩스 → 반도체소재.
-- 카테고리 세분 가이드:
+- 카테고리 세분 가이드 (한국 투자 시장 시각):
   · 반도체/메모리 = 삼성전자·SK하이닉스 같은 메모리 IDM
-  · 반도체부품 = OSAT(후공정·하나마이크론), 패키지 자재, 테스트 핸들러
-  · 반도체장비 = 노광·식각·증착·검사 장비
+  · 반도체부품 = OSAT(후공정·하나마이크론), PCB(심텍·코리아써키트), 패키지 자재
+  · 반도체장비 = 노광·식각·증착·검사 장비 (브이엠·기가비스·HB테크놀러지)
   · 반도체소재 = 포토레지스트·CMP·솔더볼·식각액
-  · 디스플레이 = LED·OLED·LCD·디스플레이장비
-  · 전기전자 = MLCC·기판(PCB)·전선·케이블·전원공급장치·슈퍼캡 (삼성전기·LG이노텍·가온전선 등)
+  · 디스플레이 = LED·OLED·LCD·디스플레이장비 (라온텍·서울반도체·아바코)
+  · 전기전자 = MLCC·전선·케이블·전원공급장치 (삼성전기·가온전선·KBI메탈)
+  · 원전/전력 = 한전·중전기(효성중공업·LS ELECTRIC)·원전 정비·전력 케이블
+  · 통신/5G = SK텔레콤·KT·LG유플러스 (이동통신 서비스)
+  · 통신장비 = RFHIC·대한광통신·오이솔루션·케이엠더블유 (네트워크 장비)
   · 기계 = 건설중장비·산업기계·진성티이씨 등
+
+⚠️ 통신과 전력은 절대 같은 카테고리 아님:
+- SK텔레콤·KT = 통신/5G (전력 X)
+- RFHIC·대한광통신·오이솔루션 = 통신장비 (전력 X)
+- 효성중공업·LS ELECTRIC·산일전기 = 원전/전력
 - 주요 오분류 사례:
   레이 = 치과의료기기 (반도체 아님)
   에이치케이 = 부동산 (반도체 아님)
@@ -482,86 +490,15 @@ def fetch_new_highlow():
                 "신고가종류": item.get("_high_kind", "52주"),
             })
 
-        # ─── 자체 252일 신고가 판정 (사용자 정책: 365일 신고가가 핵심) ───
-        # 키움 ka10016이 awakeplus 잡는 종목 절반 누락 → ka10001로 직접 판정.
-        # 1) self_new_high_cache.json (새벽 cron이 KRX 전체 처리한 결과) 우선 사용
-        # 2) 캐시 없으면 매핑된 종목들 (~405) 즉시 ka10001 호출 (~90초)
-        # 3) 키움 raw + 자체 판정 합집합 → 진짜 awakeplus 수준
-        try:
-            from telegram_bot.collectors.self_new_high import (
-                detect_new_highs, merge_with_kiwoom_raw, _CACHE_PATH as SELF_CACHE_PATH,
-            )
-            import json as _json
-            today_str = datetime.date.today().strftime("%Y%m%d")
-
-            cache_results = []
-            cache_hit = False
-            if os.path.exists(SELF_CACHE_PATH):
-                try:
-                    with open(SELF_CACHE_PATH, "r", encoding="utf-8") as f:
-                        cache_data = _json.load(f)
-                    if cache_data.get("today") == today_str:
-                        cache_results = cache_data.get("highs", [])
-                        cache_hit = True
-                        print(f"[SELF_HIGH] 캐시 사용 ({today_str}, {len(cache_results)}건)")
-                except Exception as e:
-                    print(f"[SELF_HIGH] 캐시 로드 실패: {e}")
-
-            if not cache_hit:
-                # 캐시 없음 → 매핑된 종목 즉시 판정 (raw에 없는 것만)
-                mapping = _load_sector_mapping()
-                raw_codes = {s["종목코드"] for s in filtered_stocks}
-                candidates = [
-                    {"종목코드": code, "종목명": info.get("name", "")}
-                    for code, info in mapping.items()
-                    if not code.startswith("_") and code not in raw_codes
-                ]
-                print(f"[SELF_HIGH] 매핑 {len(candidates)}종목 자체 판정 시작 (~{len(candidates)*0.25:.0f}초)")
-                cache_results = detect_new_highs(candidates, today_str=today_str, max_fetch=500)
-
-            # raw 결과 + 자체 판정 합집합
-            kiwoom_pre = []
-            for it in filtered_stocks:
-                kiwoom_pre.append({
-                    "종목코드": it["종목코드"],
-                    "종목명": it["종목명"],
-                    "현재가": it["현재가"],
-                    "등락률": it["등락률"],
-                    "부호": it.get("부호", "▲"),
-                })
-            merged = merge_with_kiwoom_raw(kiwoom_pre, cache_results)
-            print(f"[SELF_HIGH] 통합: 키움 raw {len(filtered_stocks)} + 자체 {len(cache_results)} → {len(merged)} (자체 추가 {len(merged) - len(filtered_stocks)})")
-
-            # filtered_stocks 교체
-            new_filtered = []
-            seen_codes = set()
-            for it in merged:
-                code = it["종목코드"]
-                if code in seen_codes:
-                    continue
-                seen_codes.add(code)
-                new_filtered.append({
-                    "종목명": it["종목명"],
-                    "종목코드": code,
-                    "현재가": it.get("현재가", 0),
-                    "등락률": it.get("등락률", 0),
-                    "부호": it.get("부호", "▲"),
-                    "신고가종류": it.get("신고가종류", "52주"),
-                })
-            filtered_stocks = new_filtered
-        except Exception as e:
-            print(f"[SELF_HIGH] 자체 판정 실패 (키움 raw만 사용): {e}")
-            import traceback
-            traceback.print_exc()
-
-        # 섹터 분류: 수동 매핑(JSON) 우선 → 미매칭은 Claude 폴백
+        # ─── 신고가 종목 그대로 반환 (분류는 evening.py에서 KRX universe 역색인) ───
+        # 명세서 (2026-05-12 코드방):
+        # - 매핑·WICS·Claude·self_new_high·historical_max 의존 분류 모두 폐기
+        # - 단일 데이터 소스 = sector_universe_*.json (KRX 지수/ETF 구성종목)
+        # - 분류는 formatters/evening.py에서 classify_stocks_batch로 처리
         if filtered_stocks:
-            print(f"[THEME] {len(filtered_stocks)}종목 섹터 분류 중...")
-            code_to_sector = _classify_stocks(filtered_stocks)
-
+            print(f"[NEW_HIGH] {len(filtered_stocks)}종목 신고가 확보 (분류는 evening 단계)")
             for s in filtered_stocks:
-                s["섹터"] = code_to_sector.get(s["종목코드"], "기타")
-                # 신고가종류는 self_new_high에서 이미 설정됨
+                # 섹터 필드 비워둠 — evening.py가 sector_universe로 분류
                 s.setdefault("신고가종류", "52주")
                 results["신고가"].append(s)
 
