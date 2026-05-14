@@ -37485,8 +37485,256 @@
   {
     "date": "2026-05-13",
     "time": "",
+    "category": "IR",
+    "title": "미래에셋증권 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-13",
+    "time": "",
+    "category": "IR",
+    "title": "삼성물산 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-13",
+    "time": "",
+    "category": "IR",
+    "title": "삼성E&A IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-13",
+    "time": "",
     "category": "기업이벤트",
     "title": "엑시온그룹 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-13",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "NE능률 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-13",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "이마트 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-13",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "가비아 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-13",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "바이오노트 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-13",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "한국가스공사 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-13",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "HS애드 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-13",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "SK네트웍스 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-13",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "에스피지 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-13",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "하나투어 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-13",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "일동홀딩스 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-13",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "더블유게임즈 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-13",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "일동제약 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-13",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "한국앤컴퍼니 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-13",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "코오롱글로벌 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-13",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "경동나비엔 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-13",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "지구홀딩스 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-13",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "SK이노베이션 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-13",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "JW생명과학 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-13",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "JW신약 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-13",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "컴투스 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-13",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "SK아이이테크놀로지 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-13",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "에이유브랜즈 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-13",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "CJ대한통운 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-13",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "키다리스튜디오 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-13",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "한국전력 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-13",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "컴투스홀딩스 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-13",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "GS 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-13",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "웅진씽크빅 잠정실적발표",
     "source": "fnguide",
     "auto": true
   },
@@ -37641,6 +37889,14 @@
   },
   {
     "date": "2026-05-13",
+    "time": "14:00",
+    "category": "IR",
+    "title": "롯데칠성음료 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-13",
     "time": "15:00",
     "category": "한국실적",
     "title": "HD현대 실적발표",
@@ -37723,7 +37979,7 @@
     "time": "",
     "category": "IPO/공모",
     "title": "폴레드 신규상장",
-    "source": "38cr",
+    "source": "fnguide",
     "auto": true
   },
   {
@@ -37731,6 +37987,22 @@
     "time": "",
     "category": "IR",
     "title": "iM금융지주 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-14",
+    "time": "",
+    "category": "IR",
+    "title": "미래에셋증권 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-14",
+    "time": "",
+    "category": "IR",
+    "title": "한국항공우주 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -37793,9 +38065,33 @@
   },
   {
     "date": "2026-05-14",
+    "time": "09:00",
+    "category": "IR",
+    "title": "한섬 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-14",
+    "time": "09:00",
+    "category": "IR",
+    "title": "한국콜마 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-14",
     "time": "10:00",
     "category": "IR",
     "title": "쏘카 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-14",
+    "time": "10:00",
+    "category": "IR",
+    "title": "LG디스플레이 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -37923,6 +38219,14 @@
   {
     "date": "2026-05-14",
     "time": "16:00",
+    "category": "IR",
+    "title": "디에스엠 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-14",
+    "time": "16:00",
     "category": "한국실적",
     "title": "JYP Ent. 실적발표",
     "source": "fnguide",
@@ -38022,18 +38326,18 @@
   },
   {
     "date": "2026-05-15",
-    "time": "00:30",
+    "time": "00:45",
     "category": "통화정책",
-    "title": "🇺🇸 Fed Vice Chair for Supervision Barr Speaks",
+    "title": "🇺🇸 FOMC Member Williams Speaks",
     "source": "investing",
     "auto": true,
     "country": "🇺🇸"
   },
   {
     "date": "2026-05-15",
-    "time": "00:45",
+    "time": "02:00",
     "category": "통화정책",
-    "title": "🇺🇸 FOMC Member Williams Speaks",
+    "title": "🇺🇸 Fed Vice Chair for Supervision Barr Speaks",
     "source": "investing",
     "auto": true,
     "country": "🇺🇸"
@@ -38052,6 +38356,14 @@
     "time": "14:00",
     "category": "한국실적",
     "title": "현대해상 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-15",
+    "time": "14:00",
+    "category": "한국실적",
+    "title": "금호건설 실적발표",
     "source": "fnguide",
     "auto": true
   },
@@ -38215,17 +38527,25 @@
   },
   {
     "date": "2026-05-18",
-    "time": "09:10",
-    "category": "한국실적",
-    "title": "SK가스 실적발표",
+    "time": "09:00",
+    "category": "IR",
+    "title": "성호전자 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
   {
     "date": "2026-05-18",
-    "time": "14:30",
+    "time": "09:00",
     "category": "IR",
-    "title": "성호전자 IR (경영현황)",
+    "title": "태광 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-18",
+    "time": "09:10",
+    "category": "한국실적",
+    "title": "SK가스 실적발표",
     "source": "fnguide",
     "auto": true
   },
@@ -38250,6 +38570,22 @@
     "time": "",
     "category": "IR",
     "title": "한화에어로스페이스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-19",
+    "time": "",
+    "category": "IR",
+    "title": "이수스페셜티케미컬 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-19",
+    "time": "",
+    "category": "IR",
+    "title": "진에어 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -38320,6 +38656,14 @@
   },
   {
     "date": "2026-05-19",
+    "time": "09:00",
+    "category": "IR",
+    "title": "덕산하이메탈 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-19",
     "time": "12:00",
     "category": "경제지표",
     "title": "🇪🇺 Trade Balance  (Mar)",
@@ -38334,6 +38678,31 @@
     "title": "EMB IR (경영현황)",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "date": "2026-05-19",
+    "time": "14:00",
+    "category": "IR",
+    "title": "에코프로에이치엔 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-19",
+    "time": "14:00",
+    "category": "한국실적",
+    "title": "아이에스동서 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-19",
+    "time": "15:15",
+    "category": "경제지표",
+    "title": "🇺🇸 ADP Employment Change Weekly",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
   },
   {
     "date": "2026-05-19",
@@ -38356,6 +38725,15 @@
     "time": "17:00",
     "category": "경제지표",
     "title": "🇺🇸 Pending Home Sales (MoM)  (Apr)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-19",
+    "time": "23:30",
+    "category": "경제지표",
+    "title": "🇺🇸 API Weekly Crude Oil Stock",
     "source": "investing",
     "auto": true,
     "country": "🇺🇸"
@@ -38435,6 +38813,24 @@
   },
   {
     "date": "2026-05-20",
+    "time": "04:15",
+    "category": "경제지표",
+    "title": "🇨🇳 PBoC Loan Prime Rate",
+    "source": "investing",
+    "auto": true,
+    "country": "🇨🇳"
+  },
+  {
+    "date": "2026-05-20",
+    "time": "10:00",
+    "category": "통화정책",
+    "title": "🇪🇺 European Central Bank Non-monetary Policy Meeting",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-05-20",
     "time": "12:00",
     "category": "경제지표",
     "title": "🇪🇺 Core CPI (YoY)  (Apr)",
@@ -38470,11 +38866,28 @@
   },
   {
     "date": "2026-05-20",
+    "time": "14:00",
+    "category": "IR",
+    "title": "레드캡투어 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-20",
     "time": "14:30",
     "category": "IR",
     "title": "LG씨엔에스 IR (경영현황)",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "date": "2026-05-20",
+    "time": "21:00",
+    "category": "통화정책",
+    "title": "🇺🇸 FOMC Meeting Minutes",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
   },
   {
     "date": "2026-05-21",
@@ -38505,6 +38918,22 @@
     "time": "",
     "category": "기업이벤트",
     "title": "이스트아시아홀딩스 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-21",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "동양 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-21",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "판타지오 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -38547,6 +38976,14 @@
   },
   {
     "date": "2026-05-21",
+    "time": "09:00",
+    "category": "IR",
+    "title": "펄어비스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-21",
     "time": "11:00",
     "category": "경제지표",
     "title": "🇪🇺 HCOB Eurozone Manufacturing PMI  (May)",
@@ -38571,6 +39008,14 @@
     "source": "investing",
     "auto": true,
     "country": "🇪🇺"
+  },
+  {
+    "date": "2026-05-21",
+    "time": "14:00",
+    "category": "IR",
+    "title": "누보 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-05-21",
@@ -38619,6 +39064,51 @@
   },
   {
     "date": "2026-05-21",
+    "time": "15:30",
+    "category": "통화정책",
+    "title": "🇺🇸 Philadelphia Fed Manufacturing Index  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-21",
+    "time": "15:30",
+    "category": "통화정책",
+    "title": "🇺🇸 Philly Fed Employment  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-21",
+    "time": "16:45",
+    "category": "경제지표",
+    "title": "🇺🇸 S&P Global Manufacturing PMI  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-21",
+    "time": "16:45",
+    "category": "경제지표",
+    "title": "🇺🇸 S&P Global Composite PMI  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-21",
+    "time": "16:45",
+    "category": "경제지표",
+    "title": "🇺🇸 S&P Global Services PMI  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-21",
     "time": "17:00",
     "category": "통화정책",
     "title": "🇺🇸 Atlanta Fed GDPNow  (Q2)",
@@ -38655,6 +39145,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "핑거 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-22",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "알체라 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -38784,6 +39282,46 @@
   },
   {
     "date": "2026-05-27",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "코미코 무상증자",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-27",
+    "time": "10:00",
+    "category": "IR",
+    "title": "SOOP IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-27",
+    "time": "13:10",
+    "category": "IR",
+    "title": "이수스페셜티케미컬 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-27",
+    "time": "14:00",
+    "category": "IR",
+    "title": "에스제이켐 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-27",
+    "time": "14:20",
+    "category": "IR",
+    "title": "아이엠바이오로직스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-27",
     "time": "16:00",
     "category": "IR",
     "title": "애니메디솔루션 IR (경영현황)",
@@ -38897,6 +39435,14 @@
     "auto": false,
     "country": "",
     "summary": "MSCI 반기 리밸런싱. 대규모 편출입 가능"
+  },
+  {
+    "date": "2026-05-29",
+    "time": "15:30",
+    "category": "IR",
+    "title": "이수스페셜티케미컬 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-05-29",
@@ -39224,6 +39770,14 @@
   {
     "date": "2026-06-05",
     "time": "",
+    "category": "기업이벤트",
+    "title": "네오티스 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-05",
+    "time": "",
     "category": "제약/바이오",
     "title": "ASCO 2026 (미국종양학회)",
     "source": "news",
@@ -39269,6 +39823,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "레몬헬스케어 유상증자(일반공모)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-07",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "매드업 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -39389,6 +39951,14 @@
   },
   {
     "date": "2026-06-10",
+    "time": "14:00",
+    "category": "IR",
+    "title": "바스칸바이오제약 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-10",
     "time": "21:30",
     "category": "경제지표",
     "title": "미국 CPI (5월)",
@@ -39475,6 +40045,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "대양금속 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-12",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "알엔티엑스 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -39587,6 +40165,14 @@
   },
   {
     "date": "2026-06-17",
+    "time": "14:00",
+    "category": "IR",
+    "title": "마이크로엔엑스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-17",
     "time": "18:30",
     "category": "통화정책",
     "title": "🇺🇸 Atlanta Fed GDPNow  (Q2)",
@@ -39680,6 +40266,14 @@
     "country": ""
   },
   {
+    "date": "2026-06-19",
+    "time": "16:00",
+    "category": "IR",
+    "title": "썬테크 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-06-20",
     "time": "",
     "category": "기업이벤트",
@@ -39748,6 +40342,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "빅웨이브로보틱스 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-24",
+    "time": "16:00",
+    "category": "IR",
+    "title": "엔에스컴퍼니 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -40071,6 +40673,14 @@
   },
   {
     "date": "2026-07-07",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "플루토스 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-07",
     "time": "18:30",
     "category": "통화정책",
     "title": "🇺🇸 Atlanta Fed GDPNow  (Q2)",
@@ -40359,6 +40969,14 @@
     "source": "investing",
     "auto": true,
     "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-30",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "코미코 액면분할",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-07-30",
