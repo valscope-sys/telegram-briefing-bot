@@ -38065,6 +38065,94 @@
   },
   {
     "date": "2026-05-14",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "한국금융지주 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-14",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "미투온 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-14",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "삼성화재 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-14",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "삼성생명 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-14",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "인스피언 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-14",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "한국공항 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-14",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "메리츠금융지주 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-14",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "고스트스튜디오 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-14",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "마스턴프리미어리츠 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-14",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "옵티시스 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-14",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "케이카 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-14",
     "time": "09:00",
     "category": "IR",
     "title": "한섬 IR (경영현황)",
@@ -38076,6 +38164,14 @@
     "time": "09:00",
     "category": "IR",
     "title": "한국콜마 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-14",
+    "time": "09:00",
+    "category": "IR",
+    "title": "현대건설 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -38108,6 +38204,14 @@
     "time": "10:00",
     "category": "한국실적",
     "title": "SK네트웍스 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-14",
+    "time": "10:00",
+    "category": "한국실적(잠정)",
+    "title": "코오롱글로벌 잠정실적발표",
     "source": "fnguide",
     "auto": true
   },
@@ -38344,6 +38448,14 @@
   },
   {
     "date": "2026-05-15",
+    "time": "09:00",
+    "category": "한국실적(잠정)",
+    "title": "코오롱글로벌 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-15",
     "time": "11:00",
     "category": "통화정책",
     "title": "🇪🇺 ECB Economic Bulletin",
@@ -38483,6 +38595,14 @@
   },
   {
     "date": "2026-05-18",
+    "time": "",
+    "category": "IR",
+    "title": "이마트 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-18",
     "time": "05:00",
     "category": "경제지표",
     "title": "🇨🇳 Fixed Asset Investment (YoY)  (Apr)",
@@ -38519,17 +38639,18 @@
   },
   {
     "date": "2026-05-18",
-    "time": "09:00",
-    "category": "IR",
-    "title": "파두 IR (경영현황)",
-    "source": "fnguide",
-    "auto": true
+    "time": "05:00",
+    "category": "경제지표",
+    "title": "🇨🇳 NBS Press Conference",
+    "source": "investing",
+    "auto": true,
+    "country": "🇨🇳"
   },
   {
     "date": "2026-05-18",
     "time": "09:00",
     "category": "IR",
-    "title": "성호전자 IR (경영현황)",
+    "title": "파두 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -38543,6 +38664,70 @@
   },
   {
     "date": "2026-05-18",
+    "time": "09:00",
+    "category": "IR",
+    "title": "미래에셋생명 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-18",
+    "time": "09:00",
+    "category": "IR",
+    "title": "고영 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-18",
+    "time": "09:00",
+    "category": "IR",
+    "title": "에스티팜 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-18",
+    "time": "09:00",
+    "category": "IR",
+    "title": "세미파이브 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-18",
+    "time": "09:00",
+    "category": "IR",
+    "title": "한국콜마 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-18",
+    "time": "09:00",
+    "category": "한국실적",
+    "title": "이엔에프테크놀로지 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-18",
+    "time": "09:00",
+    "category": "한국실적",
+    "title": "퓨릿 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-18",
+    "time": "09:00",
+    "category": "한국실적",
+    "title": "한국알콜 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-18",
     "time": "09:10",
     "category": "한국실적",
     "title": "SK가스 실적발표",
@@ -38551,9 +38736,33 @@
   },
   {
     "date": "2026-05-18",
+    "time": "10:00",
+    "category": "IR",
+    "title": "파라다이스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-18",
+    "time": "14:30",
+    "category": "IR",
+    "title": "성호전자 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-18",
     "time": "14:30",
     "category": "IR",
     "title": "자연과환경 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-18",
+    "time": "14:30",
+    "category": "IR",
+    "title": "보로노이 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -38664,6 +38873,14 @@
   },
   {
     "date": "2026-05-19",
+    "time": "09:00",
+    "category": "한국실적",
+    "title": "삼양엔씨켐 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-19",
     "time": "12:00",
     "category": "경제지표",
     "title": "🇪🇺 Trade Balance  (Mar)",
@@ -38703,6 +38920,14 @@
     "source": "investing",
     "auto": true,
     "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-19",
+    "time": "15:30",
+    "category": "IR",
+    "title": "현대건설 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-05-19",
@@ -38874,11 +39099,36 @@
   },
   {
     "date": "2026-05-20",
+    "time": "14:00",
+    "category": "한국실적",
+    "title": "데이원컴퍼니 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-20",
     "time": "14:30",
     "category": "IR",
     "title": "LG씨엔에스 IR (경영현황)",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "date": "2026-05-20",
+    "time": "14:40",
+    "category": "IR",
+    "title": "현대건설 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-20",
+    "time": "17:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Crude Oil Inventories",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
   },
   {
     "date": "2026-05-20",
@@ -38888,6 +39138,14 @@
     "source": "investing",
     "auto": true,
     "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-21",
+    "time": "",
+    "category": "IR",
+    "title": "기아 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-05-21",
@@ -38938,6 +39196,14 @@
     "auto": true
   },
   {
+    "date": "2026-05-21",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "딥커머스 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "category": "반도체",
     "title": "삼성전자 노조 총파업",
     "source": "ai_scan",
@@ -38979,6 +39245,22 @@
     "time": "09:00",
     "category": "IR",
     "title": "펄어비스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-21",
+    "time": "09:00",
+    "category": "IR",
+    "title": "덕산네오룩스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-21",
+    "time": "09:30",
+    "category": "IR",
+    "title": "현대건설 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -39117,6 +39399,15 @@
     "country": "🇺🇸"
   },
   {
+    "date": "2026-05-21",
+    "time": "23:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Fed's Balance Sheet",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
     "date": "2026-05-22",
     "time": "",
     "category": "기업이벤트",
@@ -39176,6 +39467,23 @@
   },
   {
     "date": "2026-05-22",
+    "time": "09:30",
+    "category": "IR",
+    "title": "큐리오시스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-22",
+    "time": "13:00",
+    "category": "경제지표",
+    "title": "🇪🇺 Eurogroup Meetings",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-05-22",
     "time": "13:10",
     "category": "IR",
     "title": "비엠티 IR (경영현황)",
@@ -39189,6 +39497,69 @@
     "title": "아이엠지티 IR (경영현황)",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "date": "2026-05-22",
+    "time": "17:00",
+    "category": "경제지표",
+    "title": "🇺🇸 Michigan 1-Year Inflation Expectations  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-22",
+    "time": "17:00",
+    "category": "경제지표",
+    "title": "🇺🇸 Michigan 5-Year Inflation Expectations  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-22",
+    "time": "17:00",
+    "category": "경제지표",
+    "title": "🇺🇸 Michigan Consumer Expectations  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-22",
+    "time": "17:00",
+    "category": "경제지표",
+    "title": "🇺🇸 Michigan Consumer Sentiment  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-22",
+    "time": "17:00",
+    "category": "경제지표",
+    "title": "🇺🇸 US Leading Index (MoM)  (Apr)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-22",
+    "time": "20:00",
+    "category": "경제지표",
+    "title": "🇺🇸 U.S. Baker Hughes Oil Rig Count",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-22",
+    "time": "20:00",
+    "category": "경제지표",
+    "title": "🇺🇸 U.S. Baker Hughes Total Rig Count",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
   },
   {
     "date": "2026-05-23",
@@ -39250,9 +39621,33 @@
   },
   {
     "date": "2026-05-26",
+    "time": "",
+    "category": "IR",
+    "title": "신한지주 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-26",
     "time": "09:00",
     "category": "IR",
     "title": "미코 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-26",
+    "time": "09:00",
+    "category": "IR",
+    "title": "현대건설 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-26",
+    "time": "10:00",
+    "category": "IR",
+    "title": "KG파이낸셜 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -39329,6 +39724,14 @@
     "auto": true
   },
   {
+    "date": "2026-05-27",
+    "time": "16:00",
+    "category": "IR",
+    "title": "롯데지주 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-05-28",
     "time": "",
     "category": "기업이벤트",
@@ -39374,6 +39777,22 @@
     "time": "14:00",
     "category": "IR",
     "title": "미래엔에듀파트너 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-28",
+    "time": "14:00",
+    "category": "한국실적",
+    "title": "씨이랩 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-28",
+    "time": "15:10",
+    "category": "IR",
+    "title": "에스투더블유 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -40156,6 +40575,14 @@
   },
   {
     "date": "2026-06-17",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "져스텍 유상증자(일반공모)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-17",
     "time": "04:00",
     "category": "통화정책",
     "title": "FOMC 금리 결정",
@@ -40598,6 +41025,14 @@
   },
   {
     "date": "2026-07-02",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "예선테크 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-02",
     "time": "21:30",
     "category": "경제지표",
     "title": "미국 비농업 고용 (6월)",
@@ -40676,6 +41111,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "플루토스 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-07",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "세니젠 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -40911,6 +41354,14 @@
     "auto": true
   },
   {
+    "date": "2026-07-24",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "아이윈 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-07-25",
     "time": "",
     "category": "기업이벤트",
@@ -40926,6 +41377,14 @@
     "source": "investing",
     "auto": true,
     "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-28",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "파라텍 액면병합",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-07-28",
@@ -41140,6 +41599,14 @@
   {
     "date": "2026-08-12",
     "time": "",
+    "category": "기업이벤트",
+    "title": "하이퍼코퍼레이션 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-12",
+    "time": "",
     "category": "미국실적",
     "title": "SNDK 실적발표 [EPS est. $18.7402]",
     "source": "finnhub",
@@ -41267,6 +41734,14 @@
     "source": "news",
     "auto": true,
     "endDate": "2026-08-23"
+  },
+  {
+    "date": "2026-08-20",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "HLB제약 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-08-25",
