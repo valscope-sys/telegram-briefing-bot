@@ -38914,6 +38914,15 @@
   },
   {
     "date": "2026-05-19",
+    "time": "15:00",
+    "category": "통화정책",
+    "title": "🇺🇸 Fed Waller Speaks",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-19",
     "time": "15:15",
     "category": "경제지표",
     "title": "🇺🇸 ADP Employment Change Weekly",
@@ -39120,6 +39129,15 @@
     "title": "현대건설 IR (경영현황)",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "date": "2026-05-20",
+    "time": "16:15",
+    "category": "통화정책",
+    "title": "🇺🇸 Fed Vice Chair for Supervision Barr Speaks",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
   },
   {
     "date": "2026-05-20",
@@ -39545,6 +39563,15 @@
   },
   {
     "date": "2026-05-22",
+    "time": "17:00",
+    "category": "통화정책",
+    "title": "🇺🇸 Fed Waller Speaks",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-22",
     "time": "20:00",
     "category": "경제지표",
     "title": "🇺🇸 U.S. Baker Hughes Oil Rig Count",
@@ -39560,6 +39587,51 @@
     "source": "investing",
     "auto": true,
     "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-22",
+    "time": "22:30",
+    "category": "경제지표",
+    "title": "🇺🇸 CFTC Crude Oil speculative net positions",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-22",
+    "time": "22:30",
+    "category": "경제지표",
+    "title": "🇺🇸 CFTC Gold speculative net positions",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-22",
+    "time": "22:30",
+    "category": "경제지표",
+    "title": "🇺🇸 CFTC Nasdaq 100 speculative net positions",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-22",
+    "time": "22:30",
+    "category": "경제지표",
+    "title": "🇺🇸 CFTC S&P 500 speculative net positions",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-22",
+    "time": "22:30",
+    "category": "경제지표",
+    "title": "🇪🇺 CFTC EUR speculative net positions",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
   },
   {
     "date": "2026-05-23",
@@ -39658,6 +39730,33 @@
     "title": "비엠티 IR (경영현황)",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "date": "2026-05-26",
+    "time": "16:00",
+    "category": "경제지표",
+    "title": "🇺🇸 S&P/CS HPI Composite - 20 n.s.a. (YoY)  (Mar)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-26",
+    "time": "16:00",
+    "category": "경제지표",
+    "title": "🇺🇸 S&P/CS HPI Composite - 20 n.s.a. (MoM)  (Mar)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-26",
+    "time": "17:00",
+    "category": "경제지표",
+    "title": "🇺🇸 CB Consumer Confidence  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
   },
   {
     "date": "2026-05-27",
@@ -40128,6 +40227,14 @@
     "auto": true
   },
   {
+    "date": "2026-06-02",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "파이온엑스 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-06-03",
     "time": "",
     "category": "기업이벤트",
@@ -40165,6 +40272,14 @@
   {
     "date": "2026-06-05",
     "time": "",
+    "category": "IPO/공모",
+    "title": "피스피스스튜디오 신규상장",
+    "source": "38cr",
+    "auto": true
+  },
+  {
+    "date": "2026-06-05",
+    "time": "",
     "category": "기업이벤트",
     "title": "에스아이리소스 액면병합",
     "source": "fnguide",
@@ -40191,6 +40306,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "네오티스 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-05",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "애드바이오텍 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -40412,6 +40535,14 @@
   {
     "date": "2026-06-11",
     "time": "",
+    "category": "기업이벤트",
+    "title": "아이텍 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-11",
+    "time": "",
     "category": "만기일",
     "title": "KOSPI200 정기변경",
     "source": "fixed",
@@ -40529,6 +40660,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "영흥 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-16",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "에스아이리소스 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -41222,6 +41361,14 @@
   },
   {
     "date": "2026-07-15",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "엔피 기업합병",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-15",
     "time": "21:30",
     "category": "경제지표",
     "title": "미국 CPI (6월)",
@@ -41338,10 +41485,26 @@
     "auto": true
   },
   {
+    "date": "2026-07-22",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "한화솔루션 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-07-23",
     "time": "",
     "category": "기업이벤트",
     "title": "한솔테크닉스 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-23",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "엣지파운드리 액면병합",
     "source": "fnguide",
     "auto": true
   },
@@ -41408,6 +41571,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "상지건설 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-29",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "엔피 액면병합",
     "source": "fnguide",
     "auto": true
   },
