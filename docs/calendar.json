@@ -38744,6 +38744,15 @@
   },
   {
     "date": "2026-05-18",
+    "time": "10:30",
+    "category": "통화정책",
+    "title": "🇪🇺 ECB's Elderson Speaks",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-05-18",
     "time": "14:30",
     "category": "IR",
     "title": "성호전자 IR (경영현황)",
@@ -38920,6 +38929,15 @@
     "source": "investing",
     "auto": true,
     "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-19",
+    "time": "15:00",
+    "category": "통화정책",
+    "title": "🇪🇺 ECB's Lane Speaks",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
   },
   {
     "date": "2026-05-19",
@@ -39311,6 +39329,15 @@
   },
   {
     "date": "2026-05-21",
+    "time": "12:00",
+    "category": "경제지표",
+    "title": "🇪🇺 EU Economic Forecasts",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-05-21",
     "time": "14:00",
     "category": "IR",
     "title": "누보 IR (경영현황)",
@@ -39418,6 +39445,15 @@
   },
   {
     "date": "2026-05-21",
+    "time": "18:30",
+    "category": "통화정책",
+    "title": "🇪🇺 ECB's Elderson Speaks",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-05-21",
     "time": "23:30",
     "category": "경제지표",
     "title": "🇺🇸 Fed's Balance Sheet",
@@ -39485,11 +39521,29 @@
   },
   {
     "date": "2026-05-22",
+    "time": "04:15",
+    "category": "통화정책",
+    "title": "🇪🇺 ECB's Lane Speaks",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-05-22",
     "time": "09:30",
     "category": "IR",
     "title": "큐리오시스 IR (경영현황)",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "date": "2026-05-22",
+    "time": "11:30",
+    "category": "통화정책",
+    "title": "🇪🇺 ECB President Lagarde Speaks",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
   },
   {
     "date": "2026-05-22",
@@ -39894,6 +39948,51 @@
     "title": "에스투더블유 IR (경영현황)",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "date": "2026-05-28",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Core Durable Goods Orders (MoM)  (Apr)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-28",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Core PCE Price Index (MoM)  (Apr)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-28",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Core PCE Price Index (YoY)  (Apr)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-28",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Core PCE Prices  (Q1)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-28",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Durable Goods Orders (MoM)  (Apr)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
   },
   {
     "date": "2026-05-28",
@@ -41877,6 +41976,14 @@
     "time": "",
     "category": "미국실적",
     "title": "AMAT 실적발표 (장후) [EPS est. $2.9297]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-08-13",
+    "time": "",
+    "category": "미국실적",
+    "title": "AMAT 실적발표 (장후) [EPS est. $3.3822]",
     "source": "finnhub",
     "auto": true
   },
