@@ -39996,6 +39996,15 @@
   },
   {
     "date": "2026-05-28",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Continuing Jobless Claims",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-28",
     "time": "16:00",
     "category": "IR",
     "title": "지앤이헬스케어 IR (경영현황)",
@@ -40330,6 +40339,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "파이온엑스 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-02",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "아이톡시 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -40873,6 +40890,14 @@
   {
     "date": "2026-06-18",
     "time": "",
+    "category": "IPO/공모",
+    "title": "져스텍 공모청약 (06/18~06/19)",
+    "source": "38cr",
+    "auto": true
+  },
+  {
+    "date": "2026-06-18",
+    "time": "",
     "category": "기업이벤트",
     "title": "성안머티리얼스 유상증자(3자배정)",
     "source": "fnguide",
@@ -40894,6 +40919,14 @@
     "source": "fixed",
     "auto": false,
     "country": "🇯🇵"
+  },
+  {
+    "date": "2026-06-18",
+    "time": "14:00",
+    "category": "IR",
+    "title": "메디안디노스틱 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-06-19",
@@ -40975,6 +41008,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "스트라드비젼 유상증자(일반공모)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-23",
+    "time": "16:00",
+    "category": "IR",
+    "title": "퓨쳐메디신 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -41279,6 +41320,14 @@
   },
   {
     "date": "2026-07-02",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "뉴인텍 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-02",
     "time": "21:30",
     "category": "경제지표",
     "title": "미국 비농업 고용 (6월)",
@@ -41431,6 +41480,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "미래산업 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-13",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "플루토스 액면병합",
     "source": "fnguide",
     "auto": true
   },
