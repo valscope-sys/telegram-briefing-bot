@@ -194,6 +194,7 @@ def _build_schedule(target_date):
 
     events = []
     earnings = []
+    ir_meetings = []  # IR(경영현황)은 별도 — 실적발표와 혼동 방지
 
     for e in cal_events:
         # 미확인(AI 스캔) / 미확정(월중/주차) 일정은 텔레그램에서 제외
@@ -209,10 +210,11 @@ def _build_schedule(target_date):
             earnings.append({"기업명": corp, "보고서명": title})
             continue
 
-        # 2. IR → 시총 상위 50만 earnings에 포함
+        # 2. IR(경영현황) → 시총 상위 50만 별도 ir_meetings 섹션
+        # 실적발표가 아니므로 earnings에 합치지 않음
         if cat == "IR":
             if corp in TOP50_CORPS:
-                earnings.append({"기업명": corp, "보고서명": title})
+                ir_meetings.append({"기업명": corp, "보고서명": title, "시간": e.get("time", "")})
             continue
 
         # 3. 기업이벤트 → 노이즈 제외
@@ -256,6 +258,7 @@ def _build_schedule(target_date):
         "target_date_obj": target_date,  # 동적 라벨 생성용 (format_tomorrow_schedule)
         "events": events,
         "earnings": earnings,
+        "ir_meetings": ir_meetings,
     }
 
 
