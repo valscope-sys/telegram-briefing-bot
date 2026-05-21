@@ -213,7 +213,6 @@ def _format_schedule(title, schedule_data):
     date_str = schedule_data.get("date", "")
     events = schedule_data.get("events", [])
     earnings = schedule_data.get("earnings", [])
-    ir_meetings = schedule_data.get("ir_meetings", [])
 
     # 저중요 필터링
     filtered = []
@@ -310,22 +309,6 @@ def _format_schedule(title, schedule_data):
             lines.append("")
             lines.append("📊 *실적발표*")
             lines.extend(earnings_lines)
-
-    # IR(경영현황) 별도 섹션 — 시총 상위 50 기업 한정
-    if ir_meetings:
-        # 중복 기업 제거 (같은 날 동일 기업 IR 여러 건 가능)
-        seen_corp = set()
-        ir_names = []
-        for ir in ir_meetings:
-            corp = (ir.get("기업명") or "").strip()
-            if not corp or corp in seen_corp:
-                continue
-            seen_corp.add(corp)
-            ir_names.append(corp)
-        if ir_names:
-            lines.append("")
-            lines.append("📋 *IR (경영현황)*")
-            lines.append(f"🇰🇷 국내  {', '.join(ir_names)}")
 
     if not lines:
         lines.append("주요 일정 없음")
