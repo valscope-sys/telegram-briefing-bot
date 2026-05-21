@@ -209,10 +209,8 @@ def _build_schedule(target_date):
             earnings.append({"기업명": corp, "보고서명": title})
             continue
 
-        # 2. IR → 시총 상위 50만 earnings에 포함
+        # 2. IR(경영현황) → 텔레그램 일정 메시지에는 표시 안 함 (캘린더 웹에만 노출)
         if cat == "IR":
-            if corp in TOP50_CORPS:
-                earnings.append({"기업명": corp, "보고서명": title})
             continue
 
         # 3. 기업이벤트 → 노이즈 제외
