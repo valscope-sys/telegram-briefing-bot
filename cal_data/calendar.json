@@ -40259,6 +40259,22 @@
   },
   {
     "date": "2026-05-26",
+    "time": "",
+    "category": "IR",
+    "title": "우리금융지주 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-26",
+    "time": "08:00",
+    "category": "IR",
+    "title": "HEM파마 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-26",
     "time": "09:00",
     "category": "IR",
     "title": "미코 IR (경영현황)",
@@ -40283,6 +40299,22 @@
   },
   {
     "date": "2026-05-26",
+    "time": "09:00",
+    "category": "IR",
+    "title": "현대모비스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-26",
+    "time": "09:20",
+    "category": "IR",
+    "title": "삼양컴텍 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-26",
     "time": "10:00",
     "category": "IR",
     "title": "KG파이낸셜 IR (경영현황)",
@@ -40299,9 +40331,25 @@
   },
   {
     "date": "2026-05-26",
+    "time": "13:10",
+    "category": "IR",
+    "title": "태광 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-26",
     "time": "14:20",
     "category": "IR",
     "title": "비엠티 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-26",
+    "time": "14:30",
+    "category": "IR",
+    "title": "JB금융지주 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -40390,6 +40438,14 @@
   },
   {
     "date": "2026-05-27",
+    "time": "09:00",
+    "category": "한국실적",
+    "title": "엠로 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-27",
     "time": "09:10",
     "category": "IR",
     "title": "샘씨엔에스 IR (경영현황)",
@@ -40422,6 +40478,14 @@
   },
   {
     "date": "2026-05-27",
+    "time": "10:00",
+    "category": "IR",
+    "title": "쿼드메디슨 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-27",
     "time": "13:00",
     "category": "IR",
     "title": "큐렉소 IR (경영현황)",
@@ -40433,6 +40497,14 @@
     "time": "13:10",
     "category": "IR",
     "title": "이수스페셜티케미컬 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-27",
+    "time": "13:10",
+    "category": "IR",
+    "title": "씨에스윈드 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -40465,6 +40537,22 @@
     "time": "14:20",
     "category": "IR",
     "title": "현대자동차 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-27",
+    "time": "14:20",
+    "category": "IR",
+    "title": "컴투스홀딩스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-27",
+    "time": "15:30",
+    "category": "IR",
+    "title": "라이콤 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -40559,6 +40647,14 @@
   },
   {
     "date": "2026-05-28",
+    "time": "13:00",
+    "category": "IR",
+    "title": "큐렉소 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-28",
     "time": "14:00",
     "category": "IR",
     "title": "미래엔에듀파트너 IR (경영현황)",
@@ -40570,6 +40666,14 @@
     "time": "14:00",
     "category": "IR",
     "title": "유한양행 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-28",
+    "time": "14:00",
+    "category": "IR",
+    "title": "심플랫폼 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -40610,6 +40714,14 @@
     "time": "15:10",
     "category": "IR",
     "title": "에스투더블유 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-28",
+    "time": "15:30",
+    "category": "IR",
+    "title": "포스코인터내셔널 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -41041,6 +41153,14 @@
   {
     "date": "2026-06-02",
     "time": "",
+    "category": "IR",
+    "title": "LIG디펜스앤에어로스페이스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-02",
+    "time": "",
     "category": "기업이벤트",
     "title": "크리스탈신소재 액면병합",
     "source": "fnguide",
@@ -41385,6 +41505,14 @@
   },
   {
     "date": "2026-06-10",
+    "time": "16:00",
+    "category": "IR",
+    "title": "본시스템즈 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-10",
     "time": "21:30",
     "category": "경제지표",
     "title": "미국 CPI (5월)",
@@ -41440,6 +41568,14 @@
     "category": "만기일",
     "title": "6월 선물옵션 동시만기 (쿼드러플위칭)",
     "source": "news",
+    "auto": true
+  },
+  {
+    "date": "2026-06-11",
+    "time": "13:30",
+    "category": "IR",
+    "title": "탑선 IR (경영현황)",
+    "source": "fnguide",
     "auto": true
   },
   {
@@ -42259,6 +42395,14 @@
   },
   {
     "date": "2026-07-07",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "에이비프로바이오 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-07",
     "time": "18:30",
     "category": "통화정책",
     "title": "🇺🇸 Atlanta Fed GDPNow  (Q2)",
@@ -42381,6 +42525,14 @@
   },
   {
     "date": "2026-07-15",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "웨이버스 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-15",
     "time": "21:30",
     "category": "경제지표",
     "title": "미국 CPI (6월)",
@@ -42420,6 +42572,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "더코디 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-17",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "금호전기 액면병합",
     "source": "fnguide",
     "auto": true
   },
@@ -42537,6 +42697,14 @@
     "auto": true
   },
   {
+    "date": "2026-07-23",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "손오공 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-07-24",
     "time": "",
     "category": "기업이벤트",
@@ -42549,6 +42717,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "아이윈 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-24",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "포커스에이아이 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -42796,6 +42972,22 @@
   },
   {
     "date": "2026-08-07",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "조아제약 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-07",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "에이전트AI 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-07",
     "time": "21:30",
     "category": "경제지표",
     "title": "미국 비농업 고용 (7월)",
@@ -42808,6 +43000,22 @@
     "time": "",
     "category": "기업이벤트",
     "title": "셀피글로벌 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-08",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "체리부로 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-09",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "세기상사 기업합병",
     "source": "fnguide",
     "auto": true
   },
@@ -42856,6 +43064,22 @@
     "time": "",
     "category": "기업이벤트",
     "title": "툴젠 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-12",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "휴림에이텍 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-12",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "경남제약 유상증자(주주배정)",
     "source": "fnguide",
     "auto": true
   },
