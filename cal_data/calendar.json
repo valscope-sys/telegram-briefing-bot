@@ -40267,6 +40267,14 @@
   },
   {
     "date": "2026-05-26",
+    "time": "",
+    "category": "IR",
+    "title": "삼성물산 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-26",
     "time": "08:00",
     "category": "IR",
     "title": "HEM파마 IR (경영현황)",
@@ -40302,6 +40310,14 @@
     "time": "09:00",
     "category": "IR",
     "title": "현대모비스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-26",
+    "time": "09:00",
+    "category": "IR",
+    "title": "두산에너빌리티 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -40384,6 +40400,14 @@
     "time": "16:00",
     "category": "한국실적",
     "title": "옵티팜 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-26",
+    "time": "16:00",
+    "category": "한국실적(잠정)",
+    "title": "현대백화점 잠정실적발표",
     "source": "fnguide",
     "auto": true
   },
@@ -43157,6 +43181,22 @@
   },
   {
     "date": "2026-08-12",
+    "time": "",
+    "category": "미국실적",
+    "title": "SNDK 실적발표 [EPS est. $33.8951]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-08-12",
+    "time": "",
+    "category": "미국실적",
+    "title": "DE 실적발표 (장전) [EPS est. $4.8696]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-08-12",
     "time": "21:30",
     "category": "경제지표",
     "title": "미국 CPI (7월)",
@@ -43209,6 +43249,14 @@
     "time": "",
     "category": "미국실적",
     "title": "AMAT 실적발표 (장후) [EPS est. $3.43]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-08-13",
+    "time": "",
+    "category": "미국실적",
+    "title": "AMAT 실적발표 (장후) [EPS est. $3.4571]",
     "source": "finnhub",
     "auto": true
   },
