@@ -40379,6 +40379,22 @@
   },
   {
     "date": "2026-05-26",
+    "time": "15:00",
+    "category": "IR",
+    "title": "마스턴프리미어리츠 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-26",
+    "time": "15:30",
+    "category": "IR",
+    "title": "에코프로비엠 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-26",
     "time": "16:00",
     "category": "경제지표",
     "title": "🇺🇸 S&P/CS HPI Composite - 20 n.s.a. (YoY)  (Mar)",
@@ -40423,6 +40439,22 @@
   {
     "date": "2026-05-27",
     "time": "",
+    "category": "IR",
+    "title": "미래에셋증권 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-27",
+    "time": "",
+    "category": "IR",
+    "title": "삼성E&A IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-27",
+    "time": "",
     "category": "기업이벤트",
     "title": "피스피스스튜디오 유상증자(일반공모)",
     "source": "fnguide",
@@ -40445,6 +40477,15 @@
     "auto": true
   },
   {
+    "category": "반도체",
+    "title": "삼성전자·SK하이닉스 레버리지 ETF 상장",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2026-05-27",
+    "time": "",
+    "summary": "삼성전자와 SK하이닉스 주가를 ±2배로 추종하는 단일종목 레버리지 상품 상장. 관련주: 삼성전자, SK하이닉스"
+  },
+  {
     "date": "2026-05-27",
     "time": "09:00",
     "category": "IR",
@@ -40457,6 +40498,22 @@
     "time": "09:00",
     "category": "IR",
     "title": "쎄크 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-27",
+    "time": "09:00",
+    "category": "IR",
+    "title": "한라캐스트 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-27",
+    "time": "09:00",
+    "category": "IR",
+    "title": "에스케이바이오팜 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -40645,6 +40702,15 @@
     "auto": true
   },
   {
+    "category": "정치/외교",
+    "title": "신현송 한은 총재 첫 금통위",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2026-05-28",
+    "time": "",
+    "summary": "신현송 한국은행 총재 취임 후 첫 금리 결정 회의. 매파적 동결 전망"
+  },
+  {
     "date": "2026-05-28",
     "time": "09:00",
     "category": "IR",
@@ -40662,6 +40728,30 @@
   },
   {
     "date": "2026-05-28",
+    "time": "09:00",
+    "category": "IR",
+    "title": "에이디테크놀로지 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-28",
+    "time": "09:00",
+    "category": "IR",
+    "title": "네오위즈 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-28",
+    "time": "09:00",
+    "category": "IR",
+    "title": "아모레퍼시픽 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-28",
     "time": "10:00",
     "category": "통화정책",
     "title": "한국은행 금통위 금리 결정",
@@ -40674,6 +40764,14 @@
     "time": "13:00",
     "category": "IR",
     "title": "큐렉소 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-28",
+    "time": "13:10",
+    "category": "IR",
+    "title": "한화비전 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -40839,6 +40937,14 @@
   {
     "date": "2026-05-29",
     "time": "",
+    "category": "IR",
+    "title": "한화비전 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-29",
+    "time": "",
     "category": "기업이벤트",
     "title": "스코넥 유상증자(3자배정)",
     "source": "fnguide",
@@ -40891,6 +40997,14 @@
     "time": "14:00",
     "category": "IR",
     "title": "시너지이노베이션 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-29",
+    "time": "14:10",
+    "category": "IR",
+    "title": "엔비알모션 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -41126,6 +41240,27 @@
     "summary": "연 최고 17% 이율의 청년미래적금 출시. 19-34세 청년 대상, 월 50만원까지 납입 가능"
   },
   {
+    "category": "수동",
+    "title": "시간대별 전기요금제 시행",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2026-06-01",
+    "time": "",
+    "summary": "상가·사무실 대상 시간대별 전기요금제 시행. 자동 최저요금제도 함께 도입. 관련주: 한국전력"
+  },
+  {
+    "category": "수동",
+    "title": "SpaceX 나스닥 상장",
+    "source": "ai_scan",
+    "auto": true,
+    "month": "2026-06",
+    "undated": true,
+    "date": "2026-06-01",
+    "endDate": "2026-06-30",
+    "unconfirmed": true,
+    "summary": "SpaceX가 다음 달 공개시장 상장 예정. Tesla와의 합병 추측도 제기"
+  },
+  {
     "date": "2026-06-01",
     "time": "",
     "category": "자동차/배터리",
@@ -41155,6 +41290,17 @@
     "endDate": "2026-06-30",
     "unconfirmed": true,
     "summary": "김정관 산업통상부 장관이 대미투자특별법 시행에 맞춰 6월 중 대미투자 1호 프로젝트 발표 예정"
+  },
+  {
+    "category": "정치/외교",
+    "title": "최저임금위원회 3차 전원회의",
+    "source": "ai_scan",
+    "auto": true,
+    "month": "2026-06",
+    "undated": true,
+    "date": "2026-06-01",
+    "endDate": "2026-06-30",
+    "summary": "6월 4일 개최 예정. 배달 라이더 등 도급제 근로자 최저임금 적용 여부 논의"
   },
   {
     "date": "2026-06-01",
@@ -41215,10 +41361,26 @@
     "auto": true
   },
   {
+    "date": "2026-06-02",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "광진실업 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-06-03",
     "time": "",
     "category": "기업이벤트",
     "title": "알엔티엑스 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-03",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "오에스피 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -41239,6 +41401,14 @@
     "source": "fixed",
     "auto": false,
     "country": ""
+  },
+  {
+    "date": "2026-06-04",
+    "time": "09:00",
+    "category": "IR",
+    "title": "펄어비스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-06-04",
@@ -41316,6 +41486,14 @@
   {
     "date": "2026-06-05",
     "time": "",
+    "category": "기업이벤트",
+    "title": "디와이씨 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-05",
+    "time": "",
     "category": "제약/바이오",
     "title": "ASCO 2026 (미국종양학회)",
     "source": "news",
@@ -41378,6 +41556,14 @@
     "category": "기업이벤트",
     "title": "매드업 유상증자(일반공모)",
     "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-08",
+    "time": "",
+    "category": "IPO/공모",
+    "title": "피스피스스튜디오 신규상장",
+    "source": "38cr",
     "auto": true
   },
   {
@@ -41508,6 +41694,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "알엔티엑스 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-10",
+    "time": "10:00",
+    "category": "IR",
+    "title": "그리드위즈 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -41867,6 +42061,14 @@
   {
     "date": "2026-06-19",
     "time": "",
+    "category": "IPO/공모",
+    "title": "빅웨이브로보틱스 공모청약 (06/19~06/22)",
+    "source": "38cr",
+    "auto": true
+  },
+  {
+    "date": "2026-06-19",
+    "time": "",
     "category": "기업이벤트",
     "title": "이엔플러스 유상증자(3자배정)",
     "source": "fnguide",
@@ -41928,6 +42130,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "비트맥스 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-20",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "로지스몬 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -42105,6 +42315,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "매드업 유상증자(일반공모)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-27",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "빅웨이브로보틱스 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -42566,6 +42784,14 @@
   },
   {
     "date": "2026-07-16",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "디에이치엑스컴퍼니 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-16",
     "time": "10:00",
     "category": "통화정책",
     "title": "한국은행 금통위 금리 결정",
@@ -42905,6 +43131,14 @@
   },
   {
     "date": "2026-08-01",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "한국캐피탈 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-01",
     "time": "09:00",
     "category": "경제지표",
     "title": "한국 수출입 통계 (7월)",
@@ -43110,6 +43344,22 @@
   {
     "date": "2026-08-12",
     "time": "",
+    "category": "기업이벤트",
+    "title": "아모텍 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-12",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "세화피앤씨 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-12",
+    "time": "",
     "category": "미국실적",
     "title": "SNDK 실적발표 [EPS est. $18.7402]",
     "source": "finnhub",
@@ -43261,6 +43511,14 @@
     "auto": true
   },
   {
+    "date": "2026-08-14",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "아모텍 무상증자",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-08-15",
     "time": "",
     "category": "기업이벤트",
@@ -43315,6 +43573,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "와이즈버즈 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-22",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "젬백스 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
