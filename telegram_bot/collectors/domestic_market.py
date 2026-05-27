@@ -439,13 +439,19 @@ def fetch_new_highlow():
                 item["_high_kind"] = "52주"
             print(f"[KIWOOM] 재시도 결과: {len(stocks)}종목")
 
-        # ETF/ETN/리츠/머니마켓/펀드 필터
+        # ETF/ETN/리츠/머니마켓/펀드 필터 (사용자 보고 5/13·5/27 — IBK·HK 등 누락 보강)
         exclude_kw = [
+            # 운용사 브랜드 (전부 ETF 또는 펀드)
             "TIGER", "KODEX", "KBSTAR", "HANARO", "SOL", "ARIRANG", "ACE", "KOSEF",
             "BNK", "WOORI", "마이다스", "마이티", "FOCUS", "히어로즈", "WON",
-            "스팩", "SPAC", "리츠", "KOFR", "RISE", "KIWOOM", "머니마켓", "1Q ",
-            "인프라", "액티브", "ITF ", "ITF", "PLUS ", "PLUS", "KoAct",
-            "TIMEFOLIO", "TIME ", "TIME", "파워", "DAISHIN", "UNICORN",
+            "RISE", "KIWOOM", "1Q ",
+            "ITF ", "ITF", "PLUS ", "PLUS", "KoAct",
+            "TIMEFOLIO", "TIME ", "TIME", "DAISHIN", "UNICORN",
+            "IBK ", "IBK", "HK ", "KCGI", "한국투자", "미래에셋",
+            "삼성자산", "신한자산", "신한운용", "흥국", "한화자산", "DB자산",
+            "스팩", "SPAC", "리츠", "KOFR", "머니마켓",
+            # 상품 키워드
+            "인프라", "액티브", "파워",
             "레버리지", "인버스", "ETN", "ETF",
         ]
 
