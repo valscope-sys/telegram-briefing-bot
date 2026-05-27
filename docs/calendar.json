@@ -40487,6 +40487,22 @@
   },
   {
     "date": "2026-05-27",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "3S 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-27",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "메이슨캐피탈 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-27",
     "time": "09:00",
     "category": "IR",
     "title": "카카오페이 IR (경영현황)",
@@ -40562,6 +40578,14 @@
     "time": "10:00",
     "category": "IR",
     "title": "쿼드메디슨 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-27",
+    "time": "10:00",
+    "category": "IR",
+    "title": "쓰리에이로직스 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -40664,6 +40688,30 @@
   {
     "date": "2026-05-28",
     "time": "",
+    "category": "IR",
+    "title": "iM금융지주 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-28",
+    "time": "",
+    "category": "IR",
+    "title": "호텔신라 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-28",
+    "time": "",
+    "category": "IR",
+    "title": "LG화학 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-28",
+    "time": "",
     "category": "기업이벤트",
     "title": "조이웍스앤코 무상증자",
     "source": "fnguide",
@@ -40752,6 +40800,22 @@
   },
   {
     "date": "2026-05-28",
+    "time": "09:00",
+    "category": "IR",
+    "title": "제이씨케미칼 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-28",
+    "time": "09:10",
+    "category": "IR",
+    "title": "제놀루션 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-28",
     "time": "10:00",
     "category": "통화정책",
     "title": "한국은행 금통위 금리 결정",
@@ -40828,6 +40892,30 @@
     "time": "14:20",
     "category": "IR",
     "title": "에이치피오 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-28",
+    "time": "14:30",
+    "category": "IR",
+    "title": "에이직랜드 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-28",
+    "time": "15:00",
+    "category": "IR",
+    "title": "삼성FN리츠 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-28",
+    "time": "15:00",
+    "category": "IR",
+    "title": "한국콜마 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -40983,6 +41071,22 @@
     "auto": false,
     "country": "",
     "summary": "MSCI 반기 리밸런싱. 대규모 편출입 가능"
+  },
+  {
+    "date": "2026-05-29",
+    "time": "10:00",
+    "category": "IR",
+    "title": "아이언디바이스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-29",
+    "time": "13:10",
+    "category": "IR",
+    "title": "삼양컴텍 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-05-29",
@@ -41187,6 +41291,14 @@
   },
   {
     "date": "2026-06-01",
+    "time": "",
+    "category": "IR",
+    "title": "iM금융지주 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-01",
     "endDate": "2026-06-30",
     "time": "",
     "category": "게임",
@@ -41301,6 +41413,15 @@
     "date": "2026-06-01",
     "endDate": "2026-06-30",
     "summary": "6월 4일 개최 예정. 배달 라이더 등 도급제 근로자 최저임금 적용 여부 논의"
+  },
+  {
+    "category": "정치/외교",
+    "title": "고용노동부 한국형 사회연대임금 긴급 토론회",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2026-06-01",
+    "time": "",
+    "summary": "김영훈 고용노동부 장관이 대기업 초과이윤의 사회적 재분배를 위한 '한국형 사회연대임금' 가능성을 모색하는 토론회 개최. 노동계와 경영계 의견 수렴"
   },
   {
     "date": "2026-06-01",
@@ -41528,6 +41649,14 @@
   {
     "date": "2026-06-06",
     "time": "",
+    "category": "기업이벤트",
+    "title": "휴림로봇 유상증자(일반공모)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-06",
+    "time": "",
     "category": "만기일",
     "title": "🇰🇷 한국 휴장 (현충일)",
     "source": "fixed",
@@ -41649,6 +41778,15 @@
     "endDate": "2026-06-11"
   },
   {
+    "category": "자동차/배터리",
+    "title": "Rivian R2 SUV 첫 고객 배송",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2026-06-09",
+    "time": "",
+    "summary": "Rivian이 R2 SUV의 첫 고객 배송을 시작. CEO가 '가장 중요한 출시'라고 언급한 차량. 관련주: Rivian, 전기차 관련주"
+  },
+  {
     "date": "2026-06-09",
     "time": "09:00",
     "category": "IR",
@@ -41669,6 +41807,14 @@
     "time": "14:00",
     "category": "IR",
     "title": "파마리서치바이오 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-09",
+    "time": "14:00",
+    "category": "IR",
+    "title": "가비아 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -42192,6 +42338,14 @@
   {
     "date": "2026-06-24",
     "time": "",
+    "category": "IPO/공모",
+    "title": "레몬헬스케어 공모청약 (06/24~06/25)",
+    "source": "38cr",
+    "auto": true
+  },
+  {
+    "date": "2026-06-24",
+    "time": "",
     "category": "기업이벤트",
     "title": "CSA 코스믹 유상증자(3자배정)",
     "source": "fnguide",
@@ -42382,6 +42536,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "지슨 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-30",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "레몬헬스케어 유상증자(일반공모)",
     "source": "fnguide",
     "auto": true
   },
@@ -43098,6 +43260,14 @@
   },
   {
     "date": "2026-07-31",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "한화솔루션 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-31",
     "time": "10:30",
     "category": "경제지표",
     "title": "중국 제조업 PMI (7월)",
@@ -43241,6 +43411,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "에이전트AI 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-07",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "시그네틱스 액면병합",
     "source": "fnguide",
     "auto": true
   },
@@ -43536,6 +43714,22 @@
     "country": ""
   },
   {
+    "date": "2026-08-17",
+    "time": "",
+    "category": "미국실적",
+    "title": "FN 실적발표 (장후) [EPS est. $3.9222]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-08-17",
+    "time": "",
+    "category": "미국실적",
+    "title": "PANW 실적발표 (장후) [EPS est. $0.9593]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
     "date": "2026-08-19",
     "time": "",
     "category": "기업이벤트",
@@ -43569,6 +43763,22 @@
     "auto": true
   },
   {
+    "date": "2026-08-20",
+    "time": "",
+    "category": "미국실적",
+    "title": "WMT 실적발표 [EPS est. $0.7517]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-08-20",
+    "time": "",
+    "category": "미국실적",
+    "title": "DE 실적발표 (장전) [EPS est. $4.8696]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
     "date": "2026-08-22",
     "time": "",
     "category": "기업이벤트",
@@ -43590,6 +43800,22 @@
     "category": "기업이벤트",
     "title": "엔젠바이오 유상증자(주주배정)",
     "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-25",
+    "time": "",
+    "category": "미국실적",
+    "title": "NVDA 실적발표 (장후) [EPS est. $2.1196]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-08-25",
+    "time": "",
+    "category": "미국실적",
+    "title": "SNOW 실적발표 (장후) [EPS est. $0.428]",
+    "source": "finnhub",
     "auto": true
   },
   {
