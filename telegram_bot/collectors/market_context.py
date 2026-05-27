@@ -82,12 +82,18 @@ def get_market_context_for_prompt():
 
 
 def update_market_context(new_commentary, market_data=None):
-    """시황 생성 후 컨텍스트 업데이트"""
+    """시황 생성 후 컨텍스트 업데이트 (이브닝 후 호출).
+
+    2026-05-28 fix: 하드코딩된 claude-sonnet-4-20250514 모델이 deprecated 되어
+    5/13 이후 16일째 호출 실패. COMMENTARY_MODEL 환경변수 사용 + 폴백 모델.
+    """
     if not new_commentary:
+        print("[CONTEXT] new_commentary 없음 — 업데이트 스킵")
         return
 
     from telegram_bot.config import ANTHROPIC_API_KEY
     if not ANTHROPIC_API_KEY:
+        print("[CONTEXT] ANTHROPIC_API_KEY 없음 — 업데이트 스킵")
         return
 
     existing = ""
@@ -121,18 +127,46 @@ def update_market_context(new_commentary, market_data=None):
 
 업데이트된 컨텍스트만 작성하세요."""
 
-    try:
-        response = client.messages.create(
-            model="claude-sonnet-4-20250514",
-            max_tokens=1500,
-            messages=[{"role": "user", "content": prompt}],
-        )
-        updated = response.content[0].text.strip()
+    # 모델 fallback 체인: 환경변수 → 최신 안정 모델들
+    commentary_model = os.environ.get("COMMENTARY_MODEL", "").strip()
+    model_candidates = []
+    if commentary_model:
+        model_candidates.append(commentary_model)
+    # 최신 안정 모델들 (deprecated 되면 다음으로 fallback)
+    model_candidates.extend([
+        "claude-sonnet-4-5",
+        "claude-sonnet-4-6",
+        "claude-sonnet-4-7-20251215",
+        "claude-sonnet-4-20250514",  # 옛 버전 (혹시 살아있다면)
+    ])
+    # 중복 제거 (순서 유지)
+    seen = set()
+    model_candidates = [m for m in model_candidates if not (m in seen or seen.add(m))]
 
-        with open(CONTEXT_FILE, "w", encoding="utf-8") as f:
-            f.write(updated)
-        print(f"[CONTEXT] 시장 컨텍스트 업데이트 완료 ({today})")
-    except Exception as e:
-        print(f"[CONTEXT] 시장 컨텍스트 업데이트 실패: {e}")
-        import traceback
-        traceback.print_exc()
+    last_err = None
+    for model in model_candidates:
+        try:
+            response = client.messages.create(
+                model=model,
+                max_tokens=1500,
+                messages=[{"role": "user", "content": prompt}],
+            )
+            updated = response.content[0].text.strip()
+
+            with open(CONTEXT_FILE, "w", encoding="utf-8") as f:
+                f.write(updated)
+            print(f"[CONTEXT] 시장 컨텍스트 업데이트 완료 ({today}, model={model})")
+            return
+        except Exception as e:
+            err_str = str(e)
+            last_err = e
+            # not_found_error (모델 없음) → 다음 모델 시도
+            if "not_found" in err_str or "model" in err_str.lower():
+                print(f"[CONTEXT] {model} 사용 불가, 다음 모델 시도: {err_str[:120]}")
+                continue
+            # 다른 에러 (인증 등)는 즉시 실패
+            break
+
+    print(f"[CONTEXT] 시장 컨텍스트 업데이트 실패 (모든 모델 시도): {last_err}")
+    import traceback
+    traceback.print_exc()
