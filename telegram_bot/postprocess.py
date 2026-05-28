@@ -88,50 +88,101 @@ _AWKWARD_PHRASES = [
 ]
 
 
+# 작업 멘트 종결형 — 미래형 + 과거형 모두 (5/28 이브닝 "확인했습니다" 누락 fix)
+_META_ENDINGS = [
+    # 미래형 (작성 의도 표명)
+    "확인하겠습니다", "살펴보겠습니다", "점검하겠습니다",
+    "검토하겠습니다", "정리해보겠습니다", "정리합니다",
+    "확인해보겠습니다", "살펴봅니다", "보겠습니다",
+    "작성하겠습니다", "작성합니다",
+    "쓰겠습니다", "전달드리겠습니다",
+    # 과거형 (작성 직전 확인 멘트)
+    "확인했습니다", "확인하였습니다", "살펴봤습니다", "살펴보았습니다",
+    "정리했습니다", "정리하였습니다", "점검했습니다", "검토했습니다",
+    "파악했습니다", "확보했습니다",
+]
+# 작업 멘트 도입부
+_META_STARTS = [
+    "먼저 ", "우선 ", "데이터로 살펴보면", "데이터를 보면",
+    "주요 지표를", "주요 동인부터", "주요 촉매를",
+    "필요한 정보를", "필요한 항목을",
+    "핵심 촉매를", "핵심 동인을", "핵심 이벤트를",
+    "오늘 시장의 핵심", "오늘의 핵심",
+]
+
+
+def _is_meta_sentence(sentence):
+    """한 문장이 작업 메타 텍스트인지 판별."""
+    s = sentence.strip()
+    if not s:
+        return False
+    # 짧고 명백한 작업 멘트
+    if s in ("시황 작성합니다.", "시황 작성합니다", "시황을 작성합니다.", "시황을 작성합니다"):
+        return True
+    # 어미·문장 안 등장 패턴
+    if any(e in s for e in _META_ENDINGS):
+        return True
+    if any(s.startswith(p) for p in _META_STARTS):
+        return True
+    return False
+
+
 def _strip_first_sentence_if_meta(text):
-    """첫 문장이 메타 prefix로 시작하면 통째 제거.
+    """본문 앞부분의 작업 메타 문장·구분선을 연속 제거.
 
-    5/28 시황 사례: "전일 미국 장 마감 후 새벽 발표된 주요 지표나 이벤트를 확인하겠습니다."
-    → 이런 패턴은 첫 문장 그대로 작업 도입부. 잘라낸다.
+    5/28 이브닝 시황 사례:
+        "이란 혁명수비대의 미군 기지 공격, 한은 금통위, ... 핵심 촉매를 확인했습니다.
 
-    제거 조건: 첫 문장(~. 또는 ~다.) 안에 다음 패턴이 포함됨
-    - "확인하겠습니다"·"살펴보겠습니다" 같은 종결형 작업 멘트
-    - "데이터로 살펴보면"·"주요 지표를 먼저" 같은 도입부 멘트
-    - "먼저 X부터/X을"·"우선 Y을/를 보면" 같은 작업 순서
+        시황 작성합니다.
+
+        ---
+
+        코스피(8,185.29, ...)"
+    → 본문 시작까지 메타 문장·구분선이 연속될 수 있음. 한 문장만 자르면 못 잡음.
+    실제 시장 데이터 문장 만날 때까지 메타 문장·빈 줄·구분선을 잘라낸다.
     """
     if not text:
         return text
 
-    # 첫 문장 추출 — 마침표 + 공백/줄바꿈
-    m = re.search(r"^(.+?[.!?])\s+", text, re.DOTALL)
-    if not m:
+    lines = text.split("\n")
+    head_strip_idx = 0
+    consumed_any = False
+
+    # 문장 단위로 잘라보며 메타 여부 검사 (한 줄에 여러 문장 있을 수 있어 문장 split도 함께)
+    i = 0
+    while i < len(lines):
+        ln = lines[i].strip()
+        # 빈 줄·구분선은 건너뜀 (앞부분에 있을 때만)
+        if ln == "" or re.match(r"^[-━═─=]{3,}\s*$", ln):
+            head_strip_idx = i + 1
+            i += 1
+            continue
+        # 줄 안의 첫 문장이 메타면 라인 통째 제거
+        # 라인에 여러 문장 있을 수 있어 첫 마침표 기준 split
+        sentences = re.split(r"(?<=[.!?])\s+", ln, maxsplit=1)
+        first = sentences[0]
+        if _is_meta_sentence(first):
+            # 첫 문장이 메타 — 그 문장만 제거하고 나머지는 보존
+            rest = sentences[1] if len(sentences) > 1 else ""
+            if rest.strip():
+                # 나머지 문장이 있으면 그것부터 시작 (메타만 잘라냄)
+                lines[i] = rest
+                head_strip_idx = i
+                consumed_any = True
+                break
+            else:
+                # 라인 전체가 메타 — 통째 제거
+                head_strip_idx = i + 1
+                consumed_any = True
+                i += 1
+                continue
+        # 메타 아님 — 멈춤
+        break
+
+    if not consumed_any and head_strip_idx == 0:
         return text
-    first = m.group(1)
 
-    # 작업 멘트 종결형
-    meta_endings = [
-        "확인하겠습니다", "살펴보겠습니다", "점검하겠습니다",
-        "검토하겠습니다", "정리해보겠습니다", "정리합니다",
-        "확인해보겠습니다", "보겠습니다",
-        "작성하겠습니다", "작성합니다",
-    ]
-    # 작업 멘트 도입부
-    meta_starts = [
-        "먼저 ", "우선 ", "데이터로 살펴보면", "데이터를 보면",
-        "주요 지표를", "주요 동인부터",
-        "필요한 정보를", "필요한 항목을",
-    ]
-
-    is_meta = (
-        any(first.rstrip("다.").endswith(e.rstrip("다.")) or e in first for e in meta_endings)
-        or any(first.startswith(s) for s in meta_starts)
-    )
-    if not is_meta:
-        return text
-
-    # 첫 문장 제거 후 남은 본문
-    rest = text[m.end():]
-    return rest.lstrip()
+    return "\n".join(lines[head_strip_idx:]).lstrip()
 
 
 def _strip_meta_preface(text):
