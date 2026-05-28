@@ -40760,6 +40760,15 @@
   },
   {
     "date": "2026-05-28",
+    "time": "03:00",
+    "category": "통화정책",
+    "title": "🇪🇺 ECB's Lane Speaks",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-05-28",
     "time": "09:00",
     "category": "IR",
     "title": "파두 IR (경영현황)",
@@ -40808,6 +40817,14 @@
   },
   {
     "date": "2026-05-28",
+    "time": "09:00",
+    "category": "IR",
+    "title": "코웨이 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-28",
     "time": "09:10",
     "category": "IR",
     "title": "제놀루션 IR (경영현황)",
@@ -40822,6 +40839,31 @@
     "source": "fixed",
     "auto": false,
     "country": "🇰🇷"
+  },
+  {
+    "date": "2026-05-28",
+    "time": "10:10",
+    "category": "통화정책",
+    "title": "🇪🇺 ECB President Lagarde Speaks",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-05-28",
+    "time": "10:20",
+    "category": "IR",
+    "title": "코리아에프티 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-28",
+    "time": "10:30",
+    "category": "IR",
+    "title": "아이마켓코리아 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-05-28",
@@ -40905,6 +40947,15 @@
   },
   {
     "date": "2026-05-28",
+    "time": "14:30",
+    "category": "통화정책",
+    "title": "🇪🇺 ECB Publishes Account of Monetary Policy Meeting",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-05-28",
     "time": "15:00",
     "category": "IR",
     "title": "삼성FN리츠 IR (경영현황)",
@@ -40921,6 +40972,30 @@
   },
   {
     "date": "2026-05-28",
+    "time": "15:00",
+    "category": "IR",
+    "title": "신한글로벌액티브리츠 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-28",
+    "time": "15:00",
+    "category": "IR",
+    "title": "NH올원리츠 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-28",
+    "time": "15:00",
+    "category": "IR",
+    "title": "ESR켄달스퀘어리츠 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-28",
     "time": "15:10",
     "category": "IR",
     "title": "에스투더블유 IR (경영현황)",
@@ -40929,9 +41004,25 @@
   },
   {
     "date": "2026-05-28",
+    "time": "15:20",
+    "category": "IR",
+    "title": "바이오플러스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-28",
     "time": "15:30",
     "category": "IR",
     "title": "포스코인터내셔널 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-28",
+    "time": "15:30",
+    "category": "IR",
+    "title": "현대모비스 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -40991,6 +41082,78 @@
   },
   {
     "date": "2026-05-28",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Building Permits  (Apr)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-28",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 GDP (QoQ)  (Q1)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-28",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 GDP Price Index (QoQ)  (Q1)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-28",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Initial Jobless Claims",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-28",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 PCE price index (MoM)  (Apr)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-28",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 PCE Price index (YoY)  (Apr)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-28",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Personal Spending (MoM)  (Apr)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-28",
+    "time": "15:55",
+    "category": "통화정책",
+    "title": "🇺🇸 FOMC Member Williams Speaks",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-28",
     "time": "16:00",
     "category": "IR",
     "title": "지앤이헬스케어 IR (경영현황)",
@@ -41007,9 +41170,62 @@
   },
   {
     "date": "2026-05-28",
+    "time": "16:10",
+    "category": "IR",
+    "title": "페스카로 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-28",
+    "time": "17:00",
+    "category": "경제지표",
+    "title": "🇺🇸 New Home Sales  (Apr)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-28",
+    "time": "17:00",
+    "category": "경제지표",
+    "title": "🇺🇸 New Home Sales (MoM)  (Apr)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-28",
     "time": "18:30",
     "category": "통화정책",
     "title": "🇺🇸 Atlanta Fed GDPNow  (Q2)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-28",
+    "time": "18:45",
+    "category": "통화정책",
+    "title": "🇪🇺 ECB's Schnabel Speaks",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-05-28",
+    "time": "19:00",
+    "category": "경제지표",
+    "title": "🇺🇸 Crude Oil Inventories",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-28",
+    "time": "23:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Fed's Balance Sheet",
     "source": "investing",
     "auto": true,
     "country": "🇺🇸"
@@ -41074,9 +41290,42 @@
   },
   {
     "date": "2026-05-29",
+    "time": "09:00",
+    "category": "IR",
+    "title": "한올바이오파마 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-29",
+    "time": "09:00",
+    "category": "IR",
+    "title": "한국토지신탁 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-29",
+    "time": "09:00",
+    "category": "통화정책",
+    "title": "🇺🇸 FOMC Member Kashkari Speaks",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-29",
     "time": "10:00",
     "category": "IR",
     "title": "아이언디바이스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-29",
+    "time": "10:00",
+    "category": "IR",
+    "title": "마크로젠 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -41130,11 +41379,119 @@
   },
   {
     "date": "2026-05-29",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Goods Trade Balance  (Apr)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-29",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Retail Inventories Ex Auto  (Apr)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-29",
     "time": "16:00",
     "category": "IR",
     "title": "엔솔바이오사이언스 IR (경영현황)",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "date": "2026-05-29",
+    "time": "16:10",
+    "category": "통화정책",
+    "title": "🇺🇸 FOMC Member Bowman Speaks",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-29",
+    "time": "16:45",
+    "category": "경제지표",
+    "title": "🇺🇸 Chicago PMI  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-29",
+    "time": "19:40",
+    "category": "통화정책",
+    "title": "🇺🇸 FOMC Member Daly Speaks",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-29",
+    "time": "20:00",
+    "category": "경제지표",
+    "title": "🇺🇸 U.S. Baker Hughes Oil Rig Count",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-29",
+    "time": "20:00",
+    "category": "경제지표",
+    "title": "🇺🇸 U.S. Baker Hughes Total Rig Count",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-29",
+    "time": "22:30",
+    "category": "경제지표",
+    "title": "🇺🇸 CFTC Crude Oil speculative net positions",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-29",
+    "time": "22:30",
+    "category": "경제지표",
+    "title": "🇺🇸 CFTC Gold speculative net positions",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-29",
+    "time": "22:30",
+    "category": "경제지표",
+    "title": "🇺🇸 CFTC Nasdaq 100 speculative net positions",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-29",
+    "time": "22:30",
+    "category": "경제지표",
+    "title": "🇺🇸 CFTC S&P 500 speculative net positions",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-05-29",
+    "time": "22:30",
+    "category": "경제지표",
+    "title": "🇪🇺 CFTC EUR speculative net positions",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
   },
   {
     "date": "2026-05-30",
@@ -41265,6 +41622,41 @@
     "auto": true
   },
   {
+    "date": "2026-05-30",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "아리바이오랩 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-05-31",
+    "time": "04:30",
+    "category": "경제지표",
+    "title": "🇨🇳 Chinese Composite PMI  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇨🇳"
+  },
+  {
+    "date": "2026-05-31",
+    "time": "04:30",
+    "category": "경제지표",
+    "title": "🇨🇳 Manufacturing PMI  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇨🇳"
+  },
+  {
+    "date": "2026-05-31",
+    "time": "04:30",
+    "category": "경제지표",
+    "title": "🇨🇳 Non-Manufacturing PMI  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇨🇳"
+  },
+  {
     "date": "2026-05-31",
     "time": "10:30",
     "category": "경제지표",
@@ -41272,6 +41664,15 @@
     "source": "fixed",
     "auto": false,
     "country": "🇨🇳"
+  },
+  {
+    "date": "2026-05-31",
+    "time": "15:30",
+    "category": "통화정책",
+    "title": "🇺🇸 Fed Waller Speaks",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
   },
   {
     "date": "2026-06-01",
@@ -41425,12 +41826,102 @@
   },
   {
     "date": "2026-06-01",
+    "time": "03:30",
+    "category": "통화정책",
+    "title": "🇺🇸 Fed Chair Powell Speaks",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-06-01",
+    "time": "04:45",
+    "category": "경제지표",
+    "title": "🇨🇳 RatingDog Manufacturing PMI (MoM)  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇨🇳"
+  },
+  {
+    "date": "2026-06-01",
     "time": "09:00",
     "category": "경제지표",
     "title": "한국 수출입 통계 (5월)",
     "source": "fixed",
     "auto": false,
     "country": "🇰🇷"
+  },
+  {
+    "date": "2026-06-01",
+    "time": "11:00",
+    "category": "경제지표",
+    "title": "🇪🇺 HCOB Eurozone Manufacturing PMI  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-06-01",
+    "time": "12:00",
+    "category": "경제지표",
+    "title": "🇪🇺 Unemployment Rate  (Apr)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-06-01",
+    "time": "15:30",
+    "category": "통화정책",
+    "title": "🇺🇸 Fed Waller Speaks",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-06-01",
+    "time": "16:45",
+    "category": "경제지표",
+    "title": "🇺🇸 S&P Global Manufacturing PMI  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-06-01",
+    "time": "17:00",
+    "category": "경제지표",
+    "title": "🇺🇸 Construction Spending (MoM)  (Apr)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-06-01",
+    "time": "17:00",
+    "category": "경제지표",
+    "title": "🇺🇸 ISM Manufacturing Employment  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-06-01",
+    "time": "17:00",
+    "category": "경제지표",
+    "title": "🇺🇸 ISM Manufacturing PMI  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-06-01",
+    "time": "17:00",
+    "category": "경제지표",
+    "title": "🇺🇸 ISM Manufacturing Prices  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
   },
   {
     "date": "2026-06-01",
@@ -41490,6 +41981,42 @@
     "auto": true
   },
   {
+    "date": "2026-06-02",
+    "time": "12:00",
+    "category": "경제지표",
+    "title": "🇪🇺 Core CPI (YoY)  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-06-02",
+    "time": "12:00",
+    "category": "경제지표",
+    "title": "🇪🇺 CPI (YoY)  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-06-02",
+    "time": "12:00",
+    "category": "경제지표",
+    "title": "🇪🇺 CPI (MoM)  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-06-02",
+    "time": "17:00",
+    "category": "경제지표",
+    "title": "🇺🇸 JOLTS Job Openings  (Apr)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
     "date": "2026-06-03",
     "time": "",
     "category": "기업이벤트",
@@ -41515,6 +42042,85 @@
     "summary": "6·3 지방선거. 노동정책과 부동산 정책 등이 주요 이슈로 부각되어 관련 업종에 영향 예상"
   },
   {
+    "date": "2026-06-03",
+    "time": "04:45",
+    "category": "경제지표",
+    "title": "🇨🇳 RatingDog Services PMI  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇨🇳"
+  },
+  {
+    "date": "2026-06-03",
+    "time": "09:00",
+    "category": "IR",
+    "title": "클래시스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-03",
+    "time": "11:00",
+    "category": "경제지표",
+    "title": "🇪🇺 HCOB Eurozone Composite PMI  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-06-03",
+    "time": "11:00",
+    "category": "경제지표",
+    "title": "🇪🇺 HCOB Eurozone Services PMI  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-06-03",
+    "time": "15:15",
+    "category": "경제지표",
+    "title": "🇺🇸 ADP Nonfarm Employment Change  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-06-03",
+    "time": "16:45",
+    "category": "경제지표",
+    "title": "🇺🇸 S&P Global Composite PMI  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-06-03",
+    "time": "16:45",
+    "category": "경제지표",
+    "title": "🇺🇸 S&P Global Services PMI  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-06-03",
+    "time": "17:00",
+    "category": "경제지표",
+    "title": "🇺🇸 Factory Orders (MoM)  (Apr)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-06-04",
+    "time": "",
+    "category": "IR",
+    "title": "신한지주 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-06-04",
     "time": "",
     "category": "반도체",
@@ -41528,6 +42134,14 @@
     "time": "09:00",
     "category": "IR",
     "title": "펄어비스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-04",
+    "time": "15:00",
+    "category": "IR",
+    "title": "휴온스글로벌 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -41609,6 +42223,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "디와이씨 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-05",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "포커스에이아이 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -41756,6 +42378,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "인스코비 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-09",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "다이나믹솔루션 액면병합",
     "source": "fnguide",
     "auto": true
   },
@@ -41943,6 +42573,14 @@
     "auto": true
   },
   {
+    "date": "2026-06-11",
+    "time": "16:00",
+    "category": "IR",
+    "title": "탈로스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-06-12",
     "time": "",
     "category": "기업이벤트",
@@ -42022,6 +42660,14 @@
     "source": "news",
     "auto": true,
     "endDate": "2026-06-19"
+  },
+  {
+    "date": "2026-06-15",
+    "time": "09:00",
+    "category": "IR",
+    "title": "엘브이엠씨 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-06-16",
@@ -42178,6 +42824,15 @@
     "title": "우성머티리얼스 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "category": "산업컨퍼런스",
+    "title": "StrictlyVC Los Angeles 컨퍼런스",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2026-06-18",
+    "time": "",
+    "summary": "로스앤젤레스에서 열리는 VC 컨퍼런스. Mach Industries, Shinkei Systems 등 참여"
   },
   {
     "date": "2026-06-18",
@@ -42400,6 +43055,15 @@
     "auto": true
   },
   {
+    "category": "자동차/배터리",
+    "title": "Slate Auto EV 가격 발표 및 사전 주문",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2026-06-24",
+    "time": "",
+    "summary": "베조스가 투자한 EV 스타트업의 차량 가격 발표 및 사전 주문 시작"
+  },
+  {
     "date": "2026-06-24",
     "time": "16:00",
     "category": "IR",
@@ -42477,6 +43141,30 @@
     "time": "",
     "category": "기업이벤트",
     "title": "빅웨이브로보틱스 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-27",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "빅웨이브로보틱스 유상증자(일반공모)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-27",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "스코넥 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-27",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "디와이디 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -42607,6 +43295,17 @@
     "source": "fixed",
     "auto": false,
     "country": "🇰🇷"
+  },
+  {
+    "category": "정치/외교",
+    "title": "한국은행 기준금리 인상",
+    "source": "ai_scan",
+    "auto": true,
+    "month": "2026-07",
+    "undated": true,
+    "date": "2026-07-01",
+    "endDate": "2026-07-31",
+    "summary": "신현송 총재가 예고한 기준금리 인상. 현재 2.5%에서 상향 조정 예상"
   },
   {
     "date": "2026-07-01",
@@ -42807,6 +43506,14 @@
   },
   {
     "date": "2026-07-07",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "레메디 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-07",
     "time": "18:30",
     "category": "통화정책",
     "title": "🇺🇸 Atlanta Fed GDPNow  (Q2)",
@@ -42896,6 +43603,14 @@
     "auto": true
   },
   {
+    "date": "2026-07-14",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "에이비프로바이오 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-07-15",
     "time": "",
     "category": "기업이벤트",
@@ -42951,6 +43666,15 @@
     "title": "디에이치엑스컴퍼니 액면병합",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "category": "정치/외교",
+    "title": "미국 연준 FOMC 회의",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2026-07-16",
+    "time": "",
+    "summary": "케빈 워시 연준의장이 주재하는 첫 FOMC 회의. 금리 인하 여부 주목"
   },
   {
     "date": "2026-07-16",
@@ -43061,6 +43785,14 @@
     "auto": true
   },
   {
+    "date": "2026-07-21",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "다보링크 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-07-22",
     "time": "",
     "category": "기업이벤트",
@@ -43089,6 +43821,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "지엘팜텍 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-22",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "프롬바이오 액면병합",
     "source": "fnguide",
     "auto": true
   },
@@ -43145,6 +43885,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "클로봇 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-27",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "우듬지팜 액면병합",
     "source": "fnguide",
     "auto": true
   },
@@ -43268,6 +44016,14 @@
   },
   {
     "date": "2026-07-31",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "페니트리움바이오 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-31",
     "time": "10:30",
     "category": "경제지표",
     "title": "중국 제조업 PMI (7월)",
@@ -43304,6 +44060,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "한국캐피탈 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-01",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "탑선 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -43354,6 +44118,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "미스터블루 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-05",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "GRT 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -43460,6 +44232,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "이렘 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-11",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "아스트 액면병합",
     "source": "fnguide",
     "auto": true
   },
@@ -43701,6 +44481,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "엣지파운드리 유상증자(일반공모)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-15",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "디모아 유상증자(주주배정)",
     "source": "fnguide",
     "auto": true
   },
