@@ -25,5 +25,10 @@ telegram_bot/history/snapshot_*.json
 telegram_bot/history/historical_max.json
 telegram_bot/history/self_new_high_cache.json
 
+# 외부 애널리스트 시각 누적 (서버에서 매일 fetch, 로컬과 충돌 방지)
+telegram_bot/history/analyst_raw.txt
+telegram_bot/history/analyst_raw_*.txt
+telegram_bot/history/market_context.txt
+
 # stocknow.ai 외부 API 다운로드 결과 (ToS 미확인 — 로컬 작업용)
 data/earnings_calls/
