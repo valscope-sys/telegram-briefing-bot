@@ -35,13 +35,12 @@ ANALYST_SOURCES = [
         "url": "https://t.me/s/hedgecat0301",
         "label": "키움증권 한지영",
     },
-    # 김경민 CFA 네이버 블로그 추가 대기 (사용자 URL 확정 후 등록)
-    # {
-    #     "name": "kkm_cfa",
-    #     "type": "naver_blog_rss",
-    #     "url": "https://rss.blog.naver.com/{blog_id}.xml",
-    #     "label": "애널리스트 김경민 CFA",
-    # },
+    {
+        "name": "kkm_cfa",
+        "type": "naver_blog_rss",
+        "url": "https://rss.blog.naver.com/bboyanaga.xml",
+        "label": "애널리스트 김경민 CFA",
+    },
 ]
 
 
