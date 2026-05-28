@@ -56,7 +56,82 @@ _META_PREFIXES = [
     "시황을 작성", "시황 작성합니다", "시황을 정리",
     "정보를 종합", "정보를 모두", "분석을 시작",
     "지금부터 작성", "이제 작성", "작성하겠습니다",
+    # 2026-05-28 추가 — 실제 5/28 시황 위반 사례 + v2 폐기한 14가지
+    "확인하겠습니다", "살펴보겠습니다", "점검하겠습니다",
+    "검토하겠습니다", "검토해보겠", "정리해보겠",
+    "데이터로 살펴보면", "데이터를 보면", "데이터를 확인",
+    "필요한 정보를 확인", "필요한 항목을 먼저",
+    "주요 지표를 먼저", "주요 동인부터", "먼저 미국", "먼저 전일",
+    "여기서 주목할 점", "주목할 부분은",
 ]
+
+
+# 본문에서 어색한 채움말·강조 멘트 자연 치환 (룰 다이어트 — postprocess로 이동)
+_AWKWARD_PHRASES = [
+    ("주목됩니다", ""),
+    ("주목할 만합니다", ""),
+    ("참고점이 될 수 있습니다", ""),
+    ("참고할 만합니다", ""),
+    ("눈여겨볼 만합니다", ""),
+    ("기억할 만합니다", ""),
+    # 환율 "상대적" 표현 (5/28 commit으로 절대 금지된 표현)
+    ("상대적 강세", "강세"),
+    ("상대적 약세", "약세"),
+    ("상대적으로 강세", "강세"),
+    ("상대적으로 약세", "약세"),
+    # 뉴스 인용 투
+    ("검색 결과에 따르면 ", ""),
+    ("검색해보니 ", ""),
+    ("조사에 따르면 ", ""),
+    ("웹에서 확인한 바 ", ""),
+    ("확인한 결과 ", ""),
+]
+
+
+def _strip_first_sentence_if_meta(text):
+    """첫 문장이 메타 prefix로 시작하면 통째 제거.
+
+    5/28 시황 사례: "전일 미국 장 마감 후 새벽 발표된 주요 지표나 이벤트를 확인하겠습니다."
+    → 이런 패턴은 첫 문장 그대로 작업 도입부. 잘라낸다.
+
+    제거 조건: 첫 문장(~. 또는 ~다.) 안에 다음 패턴이 포함됨
+    - "확인하겠습니다"·"살펴보겠습니다" 같은 종결형 작업 멘트
+    - "데이터로 살펴보면"·"주요 지표를 먼저" 같은 도입부 멘트
+    - "먼저 X부터/X을"·"우선 Y을/를 보면" 같은 작업 순서
+    """
+    if not text:
+        return text
+
+    # 첫 문장 추출 — 마침표 + 공백/줄바꿈
+    m = re.search(r"^(.+?[.!?])\s+", text, re.DOTALL)
+    if not m:
+        return text
+    first = m.group(1)
+
+    # 작업 멘트 종결형
+    meta_endings = [
+        "확인하겠습니다", "살펴보겠습니다", "점검하겠습니다",
+        "검토하겠습니다", "정리해보겠습니다", "정리합니다",
+        "확인해보겠습니다", "보겠습니다",
+        "작성하겠습니다", "작성합니다",
+    ]
+    # 작업 멘트 도입부
+    meta_starts = [
+        "먼저 ", "우선 ", "데이터로 살펴보면", "데이터를 보면",
+        "주요 지표를", "주요 동인부터",
+        "필요한 정보를", "필요한 항목을",
+    ]
+
+    is_meta = (
+        any(first.rstrip("다.").endswith(e.rstrip("다.")) or e in first for e in meta_endings)
+        or any(first.startswith(s) for s in meta_starts)
+    )
+    if not is_meta:
+        return text
+
+    # 첫 문장 제거 후 남은 본문
+    rest = text[m.end():]
+    return rest.lstrip()
 
 
 def _strip_meta_preface(text):
@@ -97,11 +172,23 @@ def _strip_meta_preface(text):
 
 
 def postprocess_commentary(text):
-    """시황 텍스트를 후처리해서 가독성 개선"""
+    """시황 텍스트를 후처리해서 가독성 개선.
+
+    역할 (룰 다이어트 — 2026-05-28):
+    - 프롬프트에 박혀있던 표현 룰을 여기로 이동. LLM은 본문 사고에 집중하고,
+      형식·금지어·메타 텍스트 같은 기계적 룰은 후처리가 잡음.
+    """
     if not text:
         return text
 
-    # 0. 메타 텍스트 제거 (모델이 생각 과정 노출한 경우)
+    # 0a. Extended thinking 블록이 본문에 누설된 경우 제거 (드물지만 안전 가드)
+    # Anthropic API의 thinking은 별도 content 블록이라 type 분리로 이미 필터되지만,
+    # 모델이 본문 안에 <thinking>...</thinking> 형태로 새 쓸 경우만 대비.
+    text = re.sub(r'<thinking>.*?</thinking>', '', text, flags=re.DOTALL)
+    text = re.sub(r'<think>.*?</think>', '', text, flags=re.DOTALL)
+    # 0b. 첫 문장이 작업 도입부면 통째 제거 (5/28 시황 사례 fix)
+    text = _strip_first_sentence_if_meta(text)
+    # 0c. 첫 이모지 소제목 전 메타 prefix 라인 제거 (기존 로직)
     text = _strip_meta_preface(text)
 
     # 1. 화살표(→) 제거 — 자연어로 변환 (하이픈 보존)
@@ -113,7 +200,11 @@ def postprocess_commentary(text):
     text = text.replace("미이란", "미-이란")
     text = text.replace("미중", "미-중")
 
-    # 2. 전환어 앞에 빈 줄
+    # 2. 어색한 채움말 + 금지 표현 자동 치환 (prompts_v2 룰 다이어트)
+    for old, new in _AWKWARD_PHRASES:
+        text = text.replace(old, new)
+
+    # 3. 전환어 앞에 빈 줄
     transition_words = [
         "다만 ", "다만,", "반면 ", "반면,",
         "한편 ", "한편,", "한편으로",
@@ -122,7 +213,7 @@ def postprocess_commentary(text):
         text = text.replace(f". {word}", f".\n\n{word}")
         text = text.replace(f".\n{word}", f".\n\n{word}")
 
-    # 3. 주제 전환 앞에 빈 줄
+    # 4. 주제 전환 앞에 빈 줄
     topic_changes = [
         "오늘 한국 증시", "오늘 국내 증시",
         "수급 측면", "수급에서", "수급 면에서",
@@ -132,7 +223,7 @@ def postprocess_commentary(text):
         text = text.replace(f". {phrase}", f".\n\n{phrase}")
         text = text.replace(f".\n{phrase}", f".\n\n{phrase}")
 
-    # 4. 국면 정의 첫 문장 뒤 빈 줄
+    # 5. 국면 정의 첫 문장 뒤 빈 줄
     # "~습니다." "~입니다." 등 한국어 서술형 마침표 뒤에서만 줄바꿈
     # 숫자 뒤 마침표(0.08%)나 영문 약어(S&P) 등에서 잘리지 않도록
     match = re.search(r'[가-힣]\.\s', text[:200])
@@ -142,10 +233,18 @@ def postprocess_commentary(text):
         if after and not after.startswith("\n\n"):
             text = text[:pos + 1] + "\n\n" + text[pos + 1:].lstrip("\n ")
 
-    # 5. 중복 빈 줄 정리 (3줄 이상 → 2줄로)
+    # 6. 중복 빈 줄 정리 (3줄 이상 → 2줄로) + 치환 후 발생한 이중 공백
     text = re.sub(r'\n{3,}', '\n\n', text)
+    text = re.sub(r' {2,}', ' ', text)
+    # 치환 결과 ". ." 같은 공허한 마침표 정리
+    text = re.sub(r'\.\s+\.', '.', text)
+    # 어색한 치환 잔여물 — "단어 ." → "단어." (공백+마침표 결합)
+    text = re.sub(r'\s+\.', '.', text)
+    text = re.sub(r'\s+,', ',', text)
+    # 치환 결과 어미 비어 끝나는 라인 — "강세로 마감해." 같은 자연스러운 마무리 보장
+    # "단어해."·"단어어." 같은 어색한 한 글자 어미는 LLM이 잘 안 쓰므로 별도 처리 X
 
-    # 6. 어색한 표현 제거
+    # 7. 어색한 관용 표현 치환
     awkward = [
         ("반가운 신호입니다", "긍정적 요인입니다"),
         ("쌍끌이 수급을 형성했습니다", "동반 순매수에 나섰습니다"),
@@ -154,7 +253,7 @@ def postprocess_commentary(text):
     for old, new in awkward:
         text = text.replace(old, new)
 
-    # 7. 한영 혼용 오타 수정 (Sonnet 한영 전환 버그)
+    # 8. 한영 혼용 오타 수정 (Sonnet 한영 전환 버그)
     mixed_fixes = [
         ("아마zon", "아마존"), ("테슬la", "테슬라"), ("구글le", "구글"),
     ]

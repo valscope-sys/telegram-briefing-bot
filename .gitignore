@@ -24,3 +24,6 @@ telegram_bot/history/snapshot_*.json
 .claude/settings.local.json
 telegram_bot/history/historical_max.json
 telegram_bot/history/self_new_high_cache.json
+
+# stocknow.ai 외부 API 다운로드 결과 (ToS 미확인 — 로컬 작업용)
+data/earnings_calls/

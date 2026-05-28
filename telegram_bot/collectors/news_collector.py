@@ -395,6 +395,45 @@ def _build_news_section(news_list, max_items=10):
     return "\n".join(lines)
 
 
+def _build_upcoming_schedule_section():
+    """차주 5영업일 일정 — 시황 본문 'D-day' 자연 녹임용.
+
+    별도 일정 카드와 다른 용도: 시황 마지막 문단에서 다가오는 매크로 이벤트(PCE·FOMC·CPI)나
+    중요 실적 발표를 한지영처럼 본문에 녹이도록 LLM에 컨텍스트로 전달.
+    """
+    try:
+        from telegram_bot.collectors.schedule_collector import fetch_upcoming_week_schedule
+        upcoming = fetch_upcoming_week_schedule()
+    except Exception:
+        return ""
+
+    if not upcoming:
+        return ""
+
+    lines = ["다가오는 5영업일 주요 일정 (시황 본문 D-day 자연 녹임용 — 별도 리스트 형식 금지):"]
+    for s in upcoming:
+        date_label = s.get("date", "")
+        events = s.get("events", [])
+        earnings = s.get("earnings", [])
+        if not events and not earnings:
+            continue
+        bits = []
+        for ev in events[:6]:
+            t = ev.get("이벤트", "").strip()
+            tm = ev.get("시간", "")
+            if tm:
+                bits.append(f"{tm} {t}")
+            else:
+                bits.append(t)
+        for er in earnings[:4]:
+            bits.append(f"실적 {er.get('기업명','')}")
+        if bits:
+            lines.append(f"  {date_label}: {' / '.join(bits)}")
+    if len(lines) == 1:
+        return ""
+    return "\n".join(lines)
+
+
 def _match_news_to_movers(news_list, top_gainers, top_losers, sectors):
     """급등락 종목/섹터와 뉴스를 자동 매칭"""
     matches = []
@@ -470,7 +509,24 @@ def generate_market_commentary(market_data, news_list, intraday_text="", trend_t
     data_summary = "=== 오늘 시장 데이터 ===\n"
     for name, info in indices.items():
         if isinstance(info, dict) and "error" not in info:
-            data_summary += f"{name}: {info.get('현재가', 0)} ({info.get('등락률', 0):+.2f}%)\n"
+            line = f"{name}: {info.get('현재가', 0)} ({info.get('등락률', 0):+.2f}%)"
+            adv = info.get("상승")
+            dec = info.get("하락")
+            stl = info.get("보합")
+            if adv is not None and dec is not None:
+                diff = adv - dec
+                line += f" — 상승 {adv} / 하락 {dec}"
+                if stl is not None:
+                    line += f" / 보합 {stl}"
+                line += f" (차이 {diff:+d})"
+            trv = info.get("거래대금")
+            trv_avg = info.get("거래대금_20일평균")
+            if trv:
+                line += f", 거래대금 {trv/1e8:,.0f}억"
+                if trv_avg:
+                    ratio = trv / trv_avg * 100
+                    line += f" (20일 평균 대비 {ratio:.0f}%)"
+            data_summary += line + "\n"
 
     if isinstance(investors, dict) and "error" not in investors:
         frgn = investors.get("외국인금액", 0) / 100
@@ -496,9 +552,25 @@ def generate_market_commentary(market_data, news_list, intraday_text="", trend_t
             data_summary += f"  {sector}: {info.get('등락률', 0):+.2f}%  {stock_str}\n"
 
     if trade_rank:
-        data_summary += "\n거래대금 상위 30종목:\n"
+        data_summary += "\n거래대금 상위 30종목 (단위: 억원):\n"
         for i, item in enumerate(trade_rank):
-            data_summary += f"  {i+1}. {item.get('종목명', '')} {item.get('등락률', 0):+.2f}%\n"
+            trv = item.get("거래대금", 0) / 1e8
+            data_summary += f"  {i+1}. {item.get('종목명', '')} {item.get('등락률', 0):+.2f}%  {trv:,.0f}억\n"
+
+        # 거래대금 집중도 자동 계산 (시장 전체 거래대금 vs 상위 N종목)
+        kospi_trv = indices.get("KOSPI", {}).get("거래대금", 0) if isinstance(indices.get("KOSPI"), dict) else 0
+        kosdaq_trv = indices.get("KOSDAQ", {}).get("거래대금", 0) if isinstance(indices.get("KOSDAQ"), dict) else 0
+        market_total = kospi_trv + kosdaq_trv
+        if market_total > 0:
+            top2 = sum(item.get("거래대금", 0) for item in trade_rank[:2])
+            top5 = sum(item.get("거래대금", 0) for item in trade_rank[:5])
+            top10 = sum(item.get("거래대금", 0) for item in trade_rank[:10])
+            data_summary += (
+                f"  ※ 거래대금 집중도: "
+                f"상위 2종목 {top2/market_total*100:.1f}% / "
+                f"상위 5종목 {top5/market_total*100:.1f}% / "
+                f"상위 10종목 {top10/market_total*100:.1f}% (KOSPI+KOSDAQ 합계 대비)\n"
+            )
 
     if top_gainers:
         data_summary += "\n상승률 상위 종목:\n"
@@ -572,6 +644,11 @@ def generate_market_commentary(market_data, news_list, intraday_text="", trend_t
     # 실적 컨센서스 데이터
     if consensus_text:
         data_summary += f"\n{consensus_text}\n"
+
+    # 차주 일정 (시황 본문 D-day 자연 녹임용)
+    upcoming_text = _build_upcoming_schedule_section()
+    if upcoming_text:
+        data_summary += f"\n{upcoming_text}\n"
 
     if _PROMPT_VERSION == "v2":
         from telegram_bot.prompts_v2 import PROMPT_EVENING_TEMPLATE_V2, PROMPT_SYSTEM_V2
@@ -721,29 +798,39 @@ def generate_market_commentary(market_data, news_list, intraday_text="", trend_t
 시황만 작성하세요."""
         sys_prompt = PROMPT_SYSTEM
 
-    print(f"[COMMENTARY] 이브닝 시황 모델: {COMMENTARY_MODEL} / prompt {_PROMPT_VERSION}")
+    print(f"[COMMENTARY] 이브닝 시황 모델: {COMMENTARY_MODEL} / prompt {_PROMPT_VERSION} / thinking=ON")
     try:
         response = client.messages.create(
             model=COMMENTARY_MODEL,
-            max_tokens=2800,
-            temperature=0.3,  # 시황 일관성 + 최소 창의성
+            max_tokens=8000,  # thinking 5K + output 3K 여유
+            # temperature 명시 X — Extended thinking 모드는 temperature=1 강제
+            thinking={
+                "type": "enabled",
+                "budget_tokens": 5000,  # 사고 깊이 — 김경민·한지영 수준의 사건 연결·테마 묶기 유도
+            },
             tools=[{
                 "type": "web_search_20260209",
                 "name": "web_search",
-                "max_uses": 2,  # 이브닝은 장중 데이터 이미 수집돼있어 2회로 제한
+                "max_uses": 2,
                 "allowed_callers": ["direct"],
             }],
             system=sys_prompt,
             messages=[{"role": "user", "content": prompt}],
         )
-        # 웹 검색 사용 시 server_tool_use/web_search_tool_result 블록 섞임 → text 블록만 추출
         for b in response.content:
             if b.type == "server_tool_use" and getattr(b, "name", "") == "web_search":
                 q = (b.input or {}).get("query", "")
                 print(f"[WEB_SEARCH] \"{q}\"")
         search_count = sum(1 for b in response.content if b.type == "server_tool_use")
+        thinking_tokens = sum(
+            len(getattr(b, "thinking", "")) for b in response.content if b.type == "thinking"
+        )
         u = response.usage
-        print(f"[USAGE] 이브닝 시황 — 검색 {search_count}회, input={u.input_tokens}, output={u.output_tokens}")
+        print(
+            f"[USAGE] 이브닝 시황 — 검색 {search_count}회, thinking 블록 글자수 {thinking_tokens}, "
+            f"input={u.input_tokens}, output={u.output_tokens}"
+        )
+        # type="text" 블록만 추출 (thinking 블록 자동 제외)
         text_parts = [b.text for b in response.content if b.type == "text"]
         return "\n".join(text_parts).strip()
     except Exception as e:
@@ -791,6 +878,27 @@ def generate_morning_commentary(global_data, news_list, trend_text="", domestic_
                     f"전일 KOSPI: {kospi.get('현재가', 0):,.2f} ({kospi.get('등락률', 0):+.2f}%) / "
                     f"KOSDAQ: {kosdaq.get('현재가', 0):,.2f} ({kosdaq.get('등락률', 0):+.2f}%)\n"
                 )
+                # 전일 시장 폭 + 거래대금 (한지영 수준 인용 가능하게)
+                kospi_adv = kospi.get("상승")
+                kospi_dec = kospi.get("하락")
+                kosdaq_adv = kosdaq.get("상승") if isinstance(kosdaq, dict) else None
+                kosdaq_dec = kosdaq.get("하락") if isinstance(kosdaq, dict) else None
+                if kospi_adv is not None and kospi_dec is not None:
+                    kr_investors_section += (
+                        f"전일 시장 폭 — KOSPI 상승 {kospi_adv} / 하락 {kospi_dec} (차이 {kospi_adv-kospi_dec:+d})"
+                    )
+                    if kosdaq_adv is not None and kosdaq_dec is not None:
+                        kr_investors_section += (
+                            f", KOSDAQ 상승 {kosdaq_adv} / 하락 {kosdaq_dec} (차이 {kosdaq_adv-kosdaq_dec:+d})"
+                        )
+                    kr_investors_section += "\n"
+                kospi_trv = kospi.get("거래대금", 0)
+                kospi_trv_avg = kospi.get("거래대금_20일평균", 0)
+                if kospi_trv:
+                    line = f"전일 KOSPI 거래대금: {kospi_trv/1e8:,.0f}억"
+                    if kospi_trv_avg:
+                        line += f" (20일 평균 대비 {kospi_trv/kospi_trv_avg*100:.0f}%)"
+                    kr_investors_section += line + "\n"
 
     data_summary = "=== 전일 미국 증시 데이터 ===\n"
     for name, info in indices.items():
@@ -877,6 +985,11 @@ def generate_morning_commentary(global_data, news_list, trend_text="", domestic_
     # 수급 트렌드
     if trend_text:
         data_summary += f"\n{trend_text}\n"
+
+    # 차주 일정 (시황 본문 D-day 자연 녹임용)
+    upcoming_text = _build_upcoming_schedule_section()
+    if upcoming_text:
+        data_summary += f"\n{upcoming_text}\n"
 
     if _PROMPT_VERSION == "v2":
         from telegram_bot.prompts_v2 import PROMPT_MORNING_TEMPLATE_V2, PROMPT_SYSTEM_V2
@@ -1019,17 +1132,21 @@ def generate_morning_commentary(global_data, news_list, trend_text="", domestic_
 
 시황만 작성하세요."""
 
-    print(f"[COMMENTARY] 모닝 시황 모델: {COMMENTARY_MODEL} / prompt {_PROMPT_VERSION}")
+    print(f"[COMMENTARY] 모닝 시황 모델: {COMMENTARY_MODEL} / prompt {_PROMPT_VERSION} / thinking=ON")
     try:
         response = client.messages.create(
             model=COMMENTARY_MODEL,
-            max_tokens=2800,
-            temperature=0.3,  # 시황 일관성 + 최소 창의성
+            max_tokens=8000,  # thinking 5K + output 3K 여유
+            # temperature 명시 X — Extended thinking 모드는 temperature=1 강제
+            thinking={
+                "type": "enabled",
+                "budget_tokens": 5000,
+            },
             tools=[{
                 "type": "web_search_20260209",
                 "name": "web_search",
                 "max_uses": 3,
-                "allowed_callers": ["direct"],  # 모델이 PTC 미지원 → 직접 호출만
+                "allowed_callers": ["direct"],
             }],
             system=sys_prompt,
             messages=[{"role": "user", "content": prompt}],
@@ -1039,8 +1156,14 @@ def generate_morning_commentary(global_data, news_list, trend_text="", domestic_
                 q = (b.input or {}).get("query", "")
                 print(f"[WEB_SEARCH] \"{q}\"")
         search_count = sum(1 for b in response.content if b.type == "server_tool_use")
+        thinking_tokens = sum(
+            len(getattr(b, "thinking", "")) for b in response.content if b.type == "thinking"
+        )
         u = response.usage
-        print(f"[USAGE] 모닝 시황 — 검색 {search_count}회, input={u.input_tokens}, output={u.output_tokens}")
+        print(
+            f"[USAGE] 모닝 시황 — 검색 {search_count}회, thinking 블록 글자수 {thinking_tokens}, "
+            f"input={u.input_tokens}, output={u.output_tokens}"
+        )
         text_parts = [b.text for b in response.content if b.type == "text"]
         return "\n".join(text_parts).strip()
     except Exception as e:

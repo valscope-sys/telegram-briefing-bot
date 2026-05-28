@@ -32,11 +32,52 @@
 - **5/13부터 신고가 모두 "기타"로 분류** — 21~24/24 모두 기타
 - sector_universe 06:00 cron이 실행되는지, KRX 지수 코드(1028 등 추정값)가 정확한지 검증 안 됨
 - pykrx Windows 인코딩 영구 이슈 → Linux 서버 첫 cron 결과로만 검증 가능
-- 서버에서 실행 확인 필요:
-  ```bash
-  ls -la ~/telegram-briefing-bot/telegram_bot/history/sector_universe*.json
-  cat ~/telegram-briefing-bot/telegram_bot/history/sector_universe_latest.json | head -50
-  ```
+
+**5/28 진단 (로컬)**: `sector_universe_latest.json` (5/26) 전 26개 섹터 모두 0건 / 모두 failures.
+로컬은 pykrx Windows 이슈로 예상 결과이지만, **이전 정상 데이터마저 0건 결과로 덮어쓰여진 상태**.
+→ `save_universe()`에 가드 추가 (commit 5e8a777 이후): 전 섹터 실패 시 latest_link 덮어쓰기 스킵.
+서버에 배포되면 다음부터는 일시 장애도 이전 정상 데이터 보존.
+
+**서버에서 실행할 검증 명령**:
+```bash
+# 1) 파일 상태 — 가장 최근 정상 생성일 확인
+ls -la ~/telegram-briefing-bot/telegram_bot/history/sector_universe*.json | tail -10
+
+# 2) latest 내용 (섹터별 종목 수, failures)
+~/telegram-briefing-bot/venv/bin/python3 -c "
+import json
+with open('/home/ubuntu/telegram-briefing-bot/telegram_bot/history/sector_universe_latest.json') as f:
+    u = json.load(f)
+print('trd_dd:', u.get('trd_dd'))
+print('generated_at:', u.get('generated_at'))
+print('failures:', len(u.get('failures', [])), '/', len(u.get('sectors', {})))
+for n, c in u.get('sectors', {}).items():
+    print(f'  {n}: {len(c)}')
+"
+
+# 3) 06:00 cron 실행 로그 (어제+오늘)
+sudo journalctl -u telegram-bot --since "yesterday 05:30" --no-pager | grep -E "FETCHER|sector_universe" | head -40
+
+# 4) pykrx 직접 호출 — 반도체 지수 1028
+cd ~/telegram-briefing-bot && venv/bin/python3 -c "
+from pykrx import stock
+import datetime
+date_str = (datetime.date.today() - datetime.timedelta(days=1)).strftime('%Y%m%d')
+print('Date:', date_str)
+tickers = stock.get_index_portfolio_deposit_file(date_str, '1028')
+print('반도체(1028):', len(tickers) if tickers is not None else 'None')
+print('샘플:', list(tickers)[:5] if tickers is not None else None)
+"
+
+# 5) 수동 1회 실행 — cron 디버깅 (출력 보면 어느 섹터에서 실패하는지 즉시 확인)
+cd ~/telegram-briefing-bot && venv/bin/python3 -m telegram_bot.collectors.sector_universe_fetcher
+```
+
+**결과 해석 가이드**:
+- 모든 섹터 200건 이상 → 정상. 신고가 분류도 정상화될 것
+- KRX_index만 실패, ETF만 성공 → 지수 코드 잘못. `sector_config.json`의 code 검증 필요
+- 전 섹터 0건 → pykrx Linux도 실패. KRX API 자체 변경 의심, raw HTTP 호출 검토
+- pykrx 직접 호출은 OK인데 cron만 실패 → 환경변수·작업 디렉토리·권한 문제
 
 #### Task #9·#10·#11 — 시황 품질 ↑ (한지영 수준)
 한지영 5/28 모닝과 비교 시 우리 봇이 잡지 못한 것:

@@ -170,7 +170,11 @@ def fetch_sector_universe(date_str: Optional[str] = None) -> dict:
 
 
 def save_universe(universe: dict) -> str:
-    """sector_universe_YYYYMMDD.json + 최신 symlink 저장."""
+    """sector_universe_YYYYMMDD.json + 최신 symlink 저장.
+
+    가드: 전 섹터 fetch 실패 시 latest_link 덮어쓰기 스킵 — 이전 정상 데이터 보존.
+    pykrx 일시 장애 / KRX API 다운 시 분류 시스템 전체가 무너지는 사고 방지.
+    """
     date_str = universe.get("trd_dd", _today_str())
     path = _universe_path(date_str)
     os.makedirs(os.path.dirname(path), exist_ok=True)
@@ -178,6 +182,13 @@ def save_universe(universe: dict) -> str:
     with open(tmp, "w", encoding="utf-8") as f:
         json.dump(universe, f, ensure_ascii=False, indent=2)
     os.replace(tmp, path)
+
+    # 데이터 유효성 — 한 섹터라도 종목이 있어야 latest 갱신
+    sectors = universe.get("sectors", {})
+    has_any_data = any(len(codes) > 0 for codes in sectors.values())
+    if not has_any_data:
+        print(f"[FETCHER] ⚠️ 전 {len(sectors)} 섹터 fetch 실패 — latest_link 갱신 스킵 (이전 정상 데이터 보존)")
+        return path
 
     # latest 복사 (symlink 대신 일반 복사 — Windows/Linux 호환)
     try:

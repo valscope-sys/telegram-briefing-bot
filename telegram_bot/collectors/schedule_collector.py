@@ -364,3 +364,27 @@ def fetch_tomorrow_schedule():
     while tomorrow.weekday() >= 5:
         tomorrow += datetime.timedelta(days=1)
     return _build_schedule(tomorrow)
+
+
+def fetch_upcoming_week_schedule(start_date=None, business_days=5, lookahead_cap=14):
+    """다음 N영업일 일정 통합 조회 — 시황 본문에 자연 녹임용.
+
+    별도 일정 카드와 다르게 시황 마지막 문단 'D-day 임박' 인용용.
+    business_days 만큼 평일을 모으되, 일정 비어있는 날도 카운트.
+    lookahead_cap 일 안에서만 탐색 (월 말 등 비어있을 때 무한 탐색 방지).
+    """
+    if start_date is None:
+        start_date = datetime.date.today() + datetime.timedelta(days=1)
+
+    schedules = []
+    cur = start_date
+    collected = 0
+    while collected < business_days:
+        if (cur - start_date).days > lookahead_cap:
+            break
+        if cur.weekday() < 5:
+            s = _build_schedule(cur)
+            schedules.append(s)
+            collected += 1
+        cur += datetime.timedelta(days=1)
+    return schedules
