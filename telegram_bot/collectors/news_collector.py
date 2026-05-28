@@ -798,29 +798,39 @@ def generate_market_commentary(market_data, news_list, intraday_text="", trend_t
 시황만 작성하세요."""
         sys_prompt = PROMPT_SYSTEM
 
-    print(f"[COMMENTARY] 이브닝 시황 모델: {COMMENTARY_MODEL} / prompt {_PROMPT_VERSION}")
+    print(f"[COMMENTARY] 이브닝 시황 모델: {COMMENTARY_MODEL} / prompt {_PROMPT_VERSION} / thinking=ON")
     try:
         response = client.messages.create(
             model=COMMENTARY_MODEL,
-            max_tokens=2800,
-            temperature=0.3,  # 시황 일관성 + 최소 창의성
+            max_tokens=8000,  # thinking 5K + output 3K 여유
+            # temperature 명시 X — Extended thinking 모드는 temperature=1 강제
+            thinking={
+                "type": "enabled",
+                "budget_tokens": 5000,  # 사고 깊이 — 김경민·한지영 수준의 사건 연결·테마 묶기 유도
+            },
             tools=[{
                 "type": "web_search_20260209",
                 "name": "web_search",
-                "max_uses": 2,  # 이브닝은 장중 데이터 이미 수집돼있어 2회로 제한
+                "max_uses": 2,
                 "allowed_callers": ["direct"],
             }],
             system=sys_prompt,
             messages=[{"role": "user", "content": prompt}],
         )
-        # 웹 검색 사용 시 server_tool_use/web_search_tool_result 블록 섞임 → text 블록만 추출
         for b in response.content:
             if b.type == "server_tool_use" and getattr(b, "name", "") == "web_search":
                 q = (b.input or {}).get("query", "")
                 print(f"[WEB_SEARCH] \"{q}\"")
         search_count = sum(1 for b in response.content if b.type == "server_tool_use")
+        thinking_tokens = sum(
+            len(getattr(b, "thinking", "")) for b in response.content if b.type == "thinking"
+        )
         u = response.usage
-        print(f"[USAGE] 이브닝 시황 — 검색 {search_count}회, input={u.input_tokens}, output={u.output_tokens}")
+        print(
+            f"[USAGE] 이브닝 시황 — 검색 {search_count}회, thinking 블록 글자수 {thinking_tokens}, "
+            f"input={u.input_tokens}, output={u.output_tokens}"
+        )
+        # type="text" 블록만 추출 (thinking 블록 자동 제외)
         text_parts = [b.text for b in response.content if b.type == "text"]
         return "\n".join(text_parts).strip()
     except Exception as e:
@@ -1122,17 +1132,21 @@ def generate_morning_commentary(global_data, news_list, trend_text="", domestic_
 
 시황만 작성하세요."""
 
-    print(f"[COMMENTARY] 모닝 시황 모델: {COMMENTARY_MODEL} / prompt {_PROMPT_VERSION}")
+    print(f"[COMMENTARY] 모닝 시황 모델: {COMMENTARY_MODEL} / prompt {_PROMPT_VERSION} / thinking=ON")
     try:
         response = client.messages.create(
             model=COMMENTARY_MODEL,
-            max_tokens=2800,
-            temperature=0.3,  # 시황 일관성 + 최소 창의성
+            max_tokens=8000,  # thinking 5K + output 3K 여유
+            # temperature 명시 X — Extended thinking 모드는 temperature=1 강제
+            thinking={
+                "type": "enabled",
+                "budget_tokens": 5000,
+            },
             tools=[{
                 "type": "web_search_20260209",
                 "name": "web_search",
                 "max_uses": 3,
-                "allowed_callers": ["direct"],  # 모델이 PTC 미지원 → 직접 호출만
+                "allowed_callers": ["direct"],
             }],
             system=sys_prompt,
             messages=[{"role": "user", "content": prompt}],
@@ -1142,8 +1156,14 @@ def generate_morning_commentary(global_data, news_list, trend_text="", domestic_
                 q = (b.input or {}).get("query", "")
                 print(f"[WEB_SEARCH] \"{q}\"")
         search_count = sum(1 for b in response.content if b.type == "server_tool_use")
+        thinking_tokens = sum(
+            len(getattr(b, "thinking", "")) for b in response.content if b.type == "thinking"
+        )
         u = response.usage
-        print(f"[USAGE] 모닝 시황 — 검색 {search_count}회, input={u.input_tokens}, output={u.output_tokens}")
+        print(
+            f"[USAGE] 모닝 시황 — 검색 {search_count}회, thinking 블록 글자수 {thinking_tokens}, "
+            f"input={u.input_tokens}, output={u.output_tokens}"
+        )
         text_parts = [b.text for b in response.content if b.type == "text"]
         return "\n".join(text_parts).strip()
     except Exception as e:

@@ -181,9 +181,14 @@ def postprocess_commentary(text):
     if not text:
         return text
 
-    # 0a. 첫 문장이 작업 도입부면 통째 제거 (5/28 시황 사례 fix)
+    # 0a. Extended thinking 블록이 본문에 누설된 경우 제거 (드물지만 안전 가드)
+    # Anthropic API의 thinking은 별도 content 블록이라 type 분리로 이미 필터되지만,
+    # 모델이 본문 안에 <thinking>...</thinking> 형태로 새 쓸 경우만 대비.
+    text = re.sub(r'<thinking>.*?</thinking>', '', text, flags=re.DOTALL)
+    text = re.sub(r'<think>.*?</think>', '', text, flags=re.DOTALL)
+    # 0b. 첫 문장이 작업 도입부면 통째 제거 (5/28 시황 사례 fix)
     text = _strip_first_sentence_if_meta(text)
-    # 0b. 첫 이모지 소제목 전 메타 prefix 라인 제거 (기존 로직)
+    # 0c. 첫 이모지 소제목 전 메타 prefix 라인 제거 (기존 로직)
     text = _strip_meta_preface(text)
 
     # 1. 화살표(→) 제거 — 자연어로 변환 (하이픈 보존)
