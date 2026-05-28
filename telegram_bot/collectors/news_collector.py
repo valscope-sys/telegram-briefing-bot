@@ -373,14 +373,18 @@ def filter_news_with_claude(news_list, count=5, context=""):
         return news_list[:count]
 
 
-def _build_news_section(news_list, max_items=10):
-    """뉴스 데이터를 프롬프트용 텍스트로 변환 (본문 포함)"""
-    lines = ["\n주요 뉴스:"]
+def _build_news_section(news_list, max_items=6):
+    """뉴스 데이터를 프롬프트용 텍스트로 변환.
+
+    2026-05-29 축소: 뉴스 블록이 비대(10개×최대500자≈5,000자)해 LLM이 "다 써야 하나"
+    압박을 받고 본문에 뉴스를 과다 삽입. 6개·요약 150자로 줄이고 본문(body 300자) 제거.
+    뉴스는 시황의 '왜'를 붙이는 증거일 뿐 — 전문 주입 불필요. 깊은 맥락은 web_search로.
+    """
+    lines = ["\n주요 뉴스 (시황 해석의 증거용 — 본문에 나열·전재 금지):"]
     for n in news_list[:max_items]:
         title = n.get('summary_title', n.get('title', ''))
         detail = n.get('detail', '')
         sector = n.get('sector', '')
-        body = n.get('body_text', '')
         direction = n.get('direction', '')
 
         header = f"- [{sector}] {title}" if sector else f"- {title}"
@@ -389,9 +393,7 @@ def _build_news_section(news_list, max_items=10):
         lines.append(header)
 
         if detail:
-            lines.append(f"  요약: {detail[:200]}")
-        if body:
-            lines.append(f"  본문: {body[:300]}")
+            lines.append(f"  요약: {detail[:150]}")
     return "\n".join(lines)
 
 
@@ -625,13 +627,13 @@ def generate_market_commentary(market_data, news_list, intraday_text="", trend_t
             if pc:
                 data_summary += f"  Put/Call Ratio: {pc.get('비율', 0)} ({pc.get('해석', '')})\n"
 
-    # 뉴스 (제목 + 본문 포함)
+    # 뉴스 (제목 + 요약)
     data_summary += _build_news_section(news_list)
 
-    # 종목-뉴스 자동 매칭
-    news_match = _match_news_to_movers(news_list, top_gainers, top_losers, sectors)
-    if news_match:
-        data_summary += f"\n{news_match}\n"
+    # NOTE: 종목-뉴스 자동 매칭(_match_news_to_movers) 주입 제거 (2026-05-29).
+    # 종목↔뉴스를 1:1로 떠먹여주면 LLM이 본문에 기계적으로 끼워넣어 "강제 삽입" 느낌 +
+    # 부정확 매칭이 할루시네이션(예: 오라클-정부계약) 유발. 뉴스는 _build_news_section으로
+    # 이미 제공되고 web_search도 가능하므로 매칭 블록은 과잉. 함수는 보존(다른 용도 대비).
 
     # 장중 흐름 데이터
     if intraday_text:
@@ -980,7 +982,7 @@ def generate_morning_commentary(global_data, news_list, trend_text="", domestic_
         data_summary += kr_investors_section
 
     # 뉴스 (본문 포함)
-    data_summary += _build_news_section(news_list, max_items=8)
+    data_summary += _build_news_section(news_list, max_items=6)
 
     # 수급 트렌드
     if trend_text:
