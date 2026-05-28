@@ -99,7 +99,10 @@ def format_investor_trend_for_prompt(trend_data):
     if not trend_data:
         return ""
 
-    lines = ["=== 수급 트렌드 ==="]
+    lines = [
+        "=== 수급 트렌드 (최근 10거래일 조회 기준) ===",
+        "※ 누적치는 '연속 매매 기간'의 누적입니다. 월간·전월·연간 누적은 제공되지 않으니 시황에서 그런 기간 수급을 쓰지 마세요.",
+    ]
 
     frgn_s = trend_data.get("외국인연속", 0)
     frgn_t = trend_data.get("외국인누적", 0)
@@ -107,19 +110,19 @@ def format_investor_trend_for_prompt(trend_data):
     inst_t = trend_data.get("기관누적", 0)
 
     if frgn_s > 0:
-        lines.append(f"외국인: {frgn_s}거래일 연속 순매수 (누적 {frgn_t:+,.0f}억원)")
+        lines.append(f"외국인: 최근 {frgn_s}거래일 연속 순매수 (그 기간 누적 {frgn_t:+,.0f}억원)")
     elif frgn_s < 0:
-        lines.append(f"외국인: {abs(frgn_s)}거래일 연속 순매도 (누적 {frgn_t:+,.0f}억원)")
+        lines.append(f"외국인: 최근 {abs(frgn_s)}거래일 연속 순매도 (그 기간 누적 {frgn_t:+,.0f}억원)")
 
     if inst_s > 0:
-        lines.append(f"기관: {inst_s}거래일 연속 순매수 (누적 {inst_t:+,.0f}억원)")
+        lines.append(f"기관: 최근 {inst_s}거래일 연속 순매수 (그 기간 누적 {inst_t:+,.0f}억원)")
     elif inst_s < 0:
-        lines.append(f"기관: {abs(inst_s)}거래일 연속 순매도 (누적 {inst_t:+,.0f}억원)")
+        lines.append(f"기관: 최근 {abs(inst_s)}거래일 연속 순매도 (그 기간 누적 {inst_t:+,.0f}억원)")
 
     # 최근 5일 일별
     daily = trend_data.get("일별데이터", [])
     if daily:
-        lines.append("\n최근 5일 수급 (백만원):")
+        lines.append("\n최근 5일 일별 수급 (억원):")
         for d in daily:
             frgn = d["외국인"] / 100
             inst = d["기관"] / 100

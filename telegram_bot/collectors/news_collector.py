@@ -534,7 +534,11 @@ def generate_market_commentary(market_data, news_list, intraday_text="", trend_t
         frgn = investors.get("외국인금액", 0) / 100
         inst = investors.get("기관금액", 0) / 100
         pers = investors.get("개인금액", 0) / 100
-        data_summary += f"\n수급: 외국인 {frgn:+,.0f}억 / 기관 {inst:+,.0f}억 / 개인 {pers:+,.0f}억\n"
+        # 당일 수급은 장 직후 잠정치 — 익일 확정 시 조정 가능 (이브닝↔익일 모닝 값 불일치 원인 명시)
+        inv_date = investors.get("날짜", "")
+        today_str = datetime.date.today().strftime("%Y%m%d")
+        label = " (장 직후 잠정치, 익일 확정 시 소폭 조정 가능)" if inv_date == today_str else ""
+        data_summary += f"\n수급{label}: 외국인 {frgn:+,.0f}억 / 기관 {inst:+,.0f}억 / 개인 {pers:+,.0f}억\n"
 
     # 업종별 수급 (키움 API)
     sector_flow = market_data.get("sector_investor_flow", [])
