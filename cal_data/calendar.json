@@ -42334,6 +42334,15 @@
     "auto": true
   },
   {
+    "category": "산업컨퍼런스",
+    "title": "TechCrunch Startup Battlefield 2026 지원 마감",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2026-06-08",
+    "time": "",
+    "summary": "테크크런치 스타트업 배틀필드 2026 지원 마감일. 관련주: 스타트업 투자 관련 기업"
+  },
+  {
     "date": "2026-06-08",
     "time": "09:00",
     "category": "IR",
@@ -42943,6 +42952,15 @@
     "auto": true
   },
   {
+    "category": "수동",
+    "title": "청년미래적금 출시",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2026-06-22",
+    "time": "",
+    "summary": "청년 자산형성 지원 정책형 적금 출시. 6월 22일~7월 3일 가입 신청 기간. 관련주: 시중은행"
+  },
+  {
     "date": "2026-06-23",
     "time": "",
     "category": "IPO/공모",
@@ -43286,6 +43304,15 @@
     "date": "2026-07-01",
     "endDate": "2026-07-31",
     "summary": "중신용자 대상 카드사·캐피털사에서 사잇돌대출 취급 시작. 금융권 실적에 영향"
+  },
+  {
+    "category": "수동",
+    "title": "삼양그룹-소다 아로마틱 인수 절차 완료",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2026-07-01",
+    "time": "",
+    "summary": "삼양그룹이 일본 향료기업 소다 아로마틱 인수 관련 행정절차와 업무조정을 6월 말~7월 초 완료 예정. 관련주: 삼양사"
   },
   {
     "date": "2026-07-01",
@@ -45471,5 +45498,14 @@
     "source": "fixed",
     "auto": false,
     "country": "🇨🇳"
+  },
+  {
+    "category": "수동",
+    "title": "가상자산 과세 시행",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2027-01-01",
+    "time": "",
+    "summary": "코인 등 가상자산에 대한 과세가 내년 1월부터 시행 예정. 관련주: 가상자산 거래소, 블록체인 관련 기업"
   }
 ]
