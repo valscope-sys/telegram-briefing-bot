@@ -41722,6 +41722,17 @@
     "summary": "중소벤처기업부가 첨단 GPU 264장을 중소기업 제조현장과 창업기업에 지원 예정. AI 관련 반도체 수요 증가"
   },
   {
+    "category": "산업컨퍼런스",
+    "title": "컴퓨텍스 2026",
+    "source": "ai_scan",
+    "auto": true,
+    "month": "2026-06",
+    "undated": true,
+    "date": "2026-06-01",
+    "endDate": "2026-06-30",
+    "summary": "대만 컴퓨텍스에서 엔비디아와 마이크로소프트가 AI PC 공개 예정. 관련주: 엔비디아, 마이크로소프트"
+  },
+  {
     "category": "수동",
     "title": "Amazon Luna 제3자 구독/게임스토어 지원 종료",
     "source": "ai_scan",
