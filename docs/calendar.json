@@ -41785,6 +41785,18 @@
     "summary": "SpaceX가 다음 달 공개시장 상장 예정. Tesla와의 합병 추측도 제기"
   },
   {
+    "category": "수동",
+    "title": "빌 게이츠 제프리 엡스타인 관련 인터뷰",
+    "source": "ai_scan",
+    "auto": true,
+    "month": "2026-06",
+    "undated": true,
+    "date": "2026-06-01",
+    "endDate": "2026-06-30",
+    "unconfirmed": true,
+    "summary": "마이크로소프트 공동 창립자 빌 게이츠가 제프리 엡스타인과의 관계에 대해 인터뷰 예정"
+  },
+  {
     "date": "2026-06-01",
     "time": "",
     "category": "자동차/배터리",
@@ -41856,6 +41868,22 @@
   {
     "date": "2026-06-01",
     "time": "09:00",
+    "category": "IR",
+    "title": "제이엘케이 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-01",
+    "time": "09:00",
+    "category": "IR",
+    "title": "HLB이노베이션 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-01",
+    "time": "09:00",
     "category": "경제지표",
     "title": "한국 수출입 통계 (5월)",
     "source": "fixed",
@@ -41888,6 +41916,14 @@
     "source": "investing",
     "auto": true,
     "country": "🇺🇸"
+  },
+  {
+    "date": "2026-06-01",
+    "time": "15:40",
+    "category": "IR",
+    "title": "HLB IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-06-01",
@@ -41954,6 +41990,22 @@
   {
     "date": "2026-06-02",
     "time": "",
+    "category": "IR",
+    "title": "기업은행 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-02",
+    "time": "",
+    "category": "IR",
+    "title": "LG화학 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-02",
+    "time": "",
     "category": "기업이벤트",
     "title": "크리스탈신소재 액면병합",
     "source": "fnguide",
@@ -41988,6 +42040,22 @@
     "time": "",
     "category": "기업이벤트",
     "title": "광진실업 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-02",
+    "time": "09:00",
+    "category": "IR",
+    "title": "고영 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-02",
+    "time": "09:00",
+    "category": "IR",
+    "title": "아모레퍼시픽 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -42256,6 +42324,14 @@
   },
   {
     "date": "2026-06-05",
+    "time": "09:00",
+    "category": "IR",
+    "title": "제너셈 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-05",
     "time": "21:30",
     "category": "경제지표",
     "title": "미국 비농업 고용 (5월)",
@@ -42441,6 +42517,14 @@
     "time": "09:00",
     "category": "IR",
     "title": "에스앤에스텍 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-09",
+    "time": "10:00",
+    "category": "IR",
+    "title": "유바이오로직스 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -42723,6 +42807,14 @@
   },
   {
     "date": "2026-06-16",
+    "time": "16:00",
+    "category": "IR",
+    "title": "에스테크엠 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-16",
     "time": "17:00",
     "category": "통화정책",
     "title": "🇺🇸 Atlanta Fed GDPNow  (Q2)",
@@ -42784,6 +42876,14 @@
     "time": "14:00",
     "category": "IR",
     "title": "마이크로엔엑스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-17",
+    "time": "16:00",
+    "category": "IR",
+    "title": "타임기술 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -43326,6 +43426,16 @@
     "summary": "삼양그룹이 일본 향료기업 소다 아로마틱 인수 관련 행정절차와 업무조정을 6월 말~7월 초 완료 예정. 관련주: 삼양사"
   },
   {
+    "category": "수동",
+    "title": "미국 학자금 대출 새 규칙 시행",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2026-07-01",
+    "time": "",
+    "unconfirmed": true,
+    "summary": "미국에서 학자금 대출 관련 새로운 규정 시행. 미국 교육 관련 기업에 영향 가능"
+  },
+  {
     "date": "2026-07-01",
     "time": "",
     "category": "자동차/배터리",
@@ -43485,6 +43595,15 @@
     "title": "퓨쳐메디신 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "category": "수동",
+    "title": "서울 외환시장 24시간 원-달러 거래 시작",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2026-07-06",
+    "time": "",
+    "summary": "서울 외환시장의 원-달러 거래 시간이 24시간 무중단 방식으로 확대. 외환 관련 금융기관에 영향"
   },
   {
     "date": "2026-07-07",
@@ -43893,6 +44012,16 @@
     "title": "손오공 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "category": "수동",
+    "title": "전 바클레이스 CEO 제프리 엡스타인 관련 청문회",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2026-07-23",
+    "time": "",
+    "unconfirmed": true,
+    "summary": "전 바클레이스 CEO가 제프리 엡스타인과의 관계에 대해 감독 위원회 인터뷰 예정"
   },
   {
     "date": "2026-07-24",
@@ -44736,6 +44865,14 @@
     "country": "🇰🇷"
   },
   {
+    "date": "2026-09-03",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "크라우드웍스 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-09-04",
     "time": "",
     "category": "반도체",
@@ -44770,6 +44907,14 @@
     "source": "news",
     "auto": true,
     "endDate": "2026-09-10"
+  },
+  {
+    "date": "2026-09-08",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "엣지파운드리 유상증자(일반공모)",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-09-09",
@@ -44863,6 +45008,14 @@
   {
     "date": "2026-09-24",
     "time": "",
+    "category": "기업이벤트",
+    "title": "휴온스 기업합병",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-09-24",
+    "time": "",
     "category": "만기일",
     "title": "🇰🇷 한국 휴장 (추석 연휴)",
     "source": "fixed",
@@ -44886,6 +45039,14 @@
     "source": "fixed",
     "auto": false,
     "country": ""
+  },
+  {
+    "date": "2026-09-30",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "소룩스 기업합병",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-09-30",
