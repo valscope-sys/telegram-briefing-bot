@@ -184,23 +184,41 @@ def fetch_bond_rates():
         return {"error": str(e)}
 
 
-def _fetch_yf_yield(ticker):
-    """yfinance 로 금리 지수/선물 조회 (2Y, 3M 등 KIS 미제공분)"""
+def _fetch_yf_yield(ticker, max_stale_days=3, max_daily_bp=0.15):
+    """yfinance 로 금리 지수/선물 조회 (2Y, 3M 등 KIS 미제공분).
+
+    2026-06-02 가드 추가 — 2YY=F(2Y 선물) stale 사고 대응:
+    거래량 적은 선물(2YY=F)이 며칠간 갱신 안 되면 마지막 2봉 차이가 고정되어
+    매일 시황에 "+18.9bp 급등" 같은 틀린 전일대비가 박힘 (5/29~6/2 실제 발생).
+
+    - stale 가드: 마지막 봉 날짜가 max_stale_days(3일, 주말 고려) 초과 → {} 반환 (제외)
+    - delta sanity: 일간 변동 ±max_daily_bp(15bp) 초과 → 전일대비 신뢰 안 함
+      (단기 금리 하루 15bp 변동은 FOMC 서프라이즈급 — 일상적으론 stale 점프 의심)
+    """
     try:
         import yfinance as yf
-        hist = yf.Ticker(ticker).history(period="5d")
+        import datetime
+        hist = yf.Ticker(ticker).history(period="10d")
         if hist.empty or len(hist) < 2:
+            return {}
+        # stale 가드 — 마지막 봉이 너무 오래됐으면 제외
+        last_date = hist.index[-1].date()
+        today = datetime.date.today()
+        if (today - last_date).days > max_stale_days:
+            print(f"[BOND] {ticker} stale: 마지막 봉 {last_date} ({(today-last_date).days}일 경과) — 제외")
             return {}
         last = float(hist["Close"].iloc[-1])
         prev = float(hist["Close"].iloc[-2])
         delta = last - prev
+        result = {"이름": ticker, "금리": round(last, 3)}
+        # delta sanity — 비현실적 일간 변동이면 전일대비 제외 (금리 레벨은 유지)
+        if abs(delta) > max_daily_bp:
+            print(f"[BOND] {ticker} delta 이상치 {delta*100:+.1f}bp — 전일대비 제외 (stale 점프 의심)")
+            return result  # 전일대비/부호 없이 금리 레벨만
         sign = "▲" if delta > 0 else ("▼" if delta < 0 else "─")
-        return {
-            "이름": ticker,
-            "금리": round(last, 3),
-            "전일대비": round(delta, 3),
-            "부호": sign,
-        }
+        result["전일대비"] = round(delta, 3)
+        result["부호"] = sign
+        return result
     except Exception:
         return {}
 
