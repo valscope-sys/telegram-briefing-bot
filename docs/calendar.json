@@ -42202,6 +42202,14 @@
   {
     "date": "2026-06-04",
     "time": "",
+    "category": "IR",
+    "title": "한미반도체 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-04",
+    "time": "",
     "category": "반도체",
     "title": "DRAMeXchange 6월 메모리 계약가 발표",
     "source": "fixed",
@@ -42554,6 +42562,14 @@
   },
   {
     "date": "2026-06-09",
+    "time": "16:00",
+    "category": "IR",
+    "title": "NH농우바이오 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-09",
     "time": "18:30",
     "category": "통화정책",
     "title": "🇺🇸 Atlanta Fed GDPNow  (Q2)",
@@ -42678,6 +42694,14 @@
   },
   {
     "date": "2026-06-11",
+    "time": "14:00",
+    "category": "IR",
+    "title": "원포유 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-11",
     "time": "16:00",
     "category": "IR",
     "title": "탈로스 IR (경영현황)",
@@ -42757,6 +42781,22 @@
     "auto": true
   },
   {
+    "date": "2026-06-13",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "테라사이언스 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-15",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "우진비앤지 무상증자",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-06-15",
     "time": "",
     "category": "방산",
@@ -42770,6 +42810,22 @@
     "time": "09:00",
     "category": "IR",
     "title": "엘브이엠씨 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-15",
+    "time": "10:00",
+    "category": "IR",
+    "title": "한국미라클피플사 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-15",
+    "time": "15:30",
+    "category": "IR",
+    "title": "SGC에너지 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -42802,6 +42858,22 @@
     "time": "",
     "category": "기업이벤트",
     "title": "에스아이리소스 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-16",
+    "time": "10:45",
+    "category": "IR",
+    "title": "바이오프로테크 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-16",
+    "time": "14:15",
+    "category": "IR",
+    "title": "루켄테크놀러지스 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -43032,6 +43104,22 @@
   },
   {
     "date": "2026-06-19",
+    "time": "09:30",
+    "category": "IR",
+    "title": "NH농우바이오 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-19",
+    "time": "13:30",
+    "category": "IR",
+    "title": "이엠티 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-19",
     "time": "14:00",
     "category": "IR",
     "title": "대동고려삼 IR (경영현황)",
@@ -43059,6 +43147,22 @@
     "time": "",
     "category": "기업이벤트",
     "title": "로지스몬 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-20",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "카카오게임즈 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-22",
+    "time": "",
+    "category": "IR",
+    "title": "호텔신라 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -43226,6 +43330,14 @@
     "auto": true
   },
   {
+    "date": "2026-06-26",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "아리바이오랩 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-06-27",
     "time": "",
     "category": "기업이벤트",
@@ -43294,6 +43406,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "디와이디 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-27",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "앤로보틱스 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -43550,6 +43670,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "뉴인텍 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-02",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "다보링크 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -44048,10 +44176,26 @@
     "auto": true
   },
   {
+    "date": "2026-07-24",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "헝셩그룹 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-07-25",
     "time": "",
     "category": "기업이벤트",
     "title": "클로봇 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-25",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "더코디 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -44110,6 +44254,22 @@
     "time": "",
     "category": "기업이벤트",
     "title": "엔피 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-29",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "대신정보통신 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-29",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "한국제지 액면병합",
     "source": "fnguide",
     "auto": true
   },
@@ -44572,6 +44732,14 @@
   },
   {
     "date": "2026-08-12",
+    "time": "",
+    "category": "미국실적",
+    "title": "SNDK 실적발표 [EPS est. $33.5616]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-08-12",
     "time": "21:30",
     "category": "경제지표",
     "title": "미국 CPI (7월)",
@@ -44685,6 +44853,22 @@
     "auto": true
   },
   {
+    "date": "2026-08-17",
+    "time": "",
+    "category": "미국실적",
+    "title": "FN 실적발표 (장후) [EPS est. $3.9233]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-08-18",
+    "time": "",
+    "category": "미국실적",
+    "title": "HD 실적발표 [EPS est. $4.873]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
     "date": "2026-08-19",
     "time": "",
     "category": "기업이벤트",
@@ -44734,6 +44918,22 @@
     "auto": true
   },
   {
+    "date": "2026-08-20",
+    "time": "",
+    "category": "미국실적",
+    "title": "WMT 실적발표 [EPS est. $0.7499]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-08-20",
+    "time": "",
+    "category": "미국실적",
+    "title": "DE 실적발표 (장전) [EPS est. $4.8409]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
     "date": "2026-08-22",
     "time": "",
     "category": "기업이벤트",
@@ -44770,6 +44970,30 @@
     "time": "",
     "category": "미국실적",
     "title": "SNOW 실적발표 (장후) [EPS est. $0.428]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-08-25",
+    "time": "",
+    "category": "미국실적",
+    "title": "NVDA 실적발표 (장후) [EPS est. $2.1227]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-08-25",
+    "time": "",
+    "category": "미국실적",
+    "title": "SNOW 실적발표 (장후) [EPS est. $0.4513]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-08-26",
+    "time": "",
+    "category": "미국실적",
+    "title": "MRVL 실적발표 [EPS est. $0.9383]",
     "source": "finnhub",
     "auto": true
   },
@@ -44814,6 +45038,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "캐리 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-29",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "넥스턴앤롤코리아 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -44942,6 +45174,14 @@
     "country": "🇪🇺"
   },
   {
+    "date": "2026-09-12",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "퓨쳐켐 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-09-15",
     "time": "21:30",
     "category": "경제지표",
@@ -44985,6 +45225,14 @@
     "source": "fixed",
     "auto": false,
     "country": "🇯🇵"
+  },
+  {
+    "date": "2026-09-18",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "퓨쳐켐 무상증자",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-09-18",
