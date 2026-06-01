@@ -133,12 +133,21 @@ def _strip_meta_before_divider(text):
     """
     if not text:
         return text
-    # 본문 앞쪽 900자 안에서 첫 구분선 탐색
-    m = re.search(r'(?:^|\n)[ \t]*[-—–━═]{3,}[ \t]*(?:\n|$)', text[:900])
+    # 본문 앞쪽 2500자 안에서 첫 구분선 탐색 (긴 sanity check 메타 블록 수용 — 6/1 모닝)
+    m = re.search(r'(?:^|\n)[ \t]*[-—–━═]{3,}[ \t]*(?:\n|$)', text[:2500])
     if m:
+        before = text[:m.start()]
         rest = text[m.end():].lstrip()
-        # 구분선 뒤에 실제 본문이 충분히 남을 때만 적용 (안전장치)
-        if len(rest) >= 80:
+        # 구분선 앞에 메타 신호가 있을 때만 제거 (정상 본문 오삭제 방지)
+        meta_signals = [
+            "sanity", "check", "검증", "정합성", "시황 작성", "시황을 작성",
+            "작성하겠", "작성합니다", "이제 시황", "데이터 카드", "확인됩니다",
+            "확인하겠", "확인했", "살펴보", "정리하", "보이며", "하겠습니다",
+        ]
+        before_low = before.lower()
+        has_signal = any(s.lower() in before_low for s in meta_signals)
+        # 구분선 뒤에 실제 본문이 충분히 남고(80자+) 앞이 메타일 때만 제거
+        if has_signal and len(rest) >= 80:
             return rest
     return text
 
