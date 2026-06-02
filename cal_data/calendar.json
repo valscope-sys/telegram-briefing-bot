@@ -42088,6 +42088,14 @@
   },
   {
     "date": "2026-06-02",
+    "time": "14:20",
+    "category": "IR",
+    "title": "LG씨엔에스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-02",
     "time": "17:00",
     "category": "경제지표",
     "title": "🇺🇸 JOLTS Job Openings  (Apr)",
@@ -42221,6 +42229,54 @@
     "time": "09:00",
     "category": "IR",
     "title": "펄어비스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-04",
+    "time": "09:00",
+    "category": "IR",
+    "title": "휴메딕스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-04",
+    "time": "09:00",
+    "category": "IR",
+    "title": "디앤디파마텍 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-04",
+    "time": "09:00",
+    "category": "IR",
+    "title": "보로노이 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-04",
+    "time": "09:00",
+    "category": "IR",
+    "title": "루미르 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-04",
+    "time": "09:30",
+    "category": "IR",
+    "title": "LF IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-04",
+    "time": "10:00",
+    "category": "IR",
+    "title": "에코프로비엠 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -42415,6 +42471,22 @@
   {
     "date": "2026-06-08",
     "time": "",
+    "category": "IR",
+    "title": "NAVER IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-08",
+    "time": "",
+    "category": "IR",
+    "title": "킵스파마 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-08",
+    "time": "",
     "category": "기업이벤트",
     "title": "네오펙트 액면병합",
     "source": "fnguide",
@@ -42446,11 +42518,35 @@
     "auto": true
   },
   {
+    "date": "2026-06-08",
+    "time": "09:00",
+    "category": "IR",
+    "title": "아모레퍼시픽 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-08",
+    "time": "09:00",
+    "category": "IR",
+    "title": "에이피알 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-06-09",
     "time": "",
     "category": "IPO/공모",
     "title": "레몬헬스케어 공모청약 (06/09~06/10)",
     "source": "38cr",
+    "auto": true
+  },
+  {
+    "date": "2026-06-09",
+    "time": "",
+    "category": "IR",
+    "title": "기아 IR (경영현황)",
+    "source": "fnguide",
     "auto": true
   },
   {
@@ -42530,9 +42626,33 @@
   },
   {
     "date": "2026-06-09",
+    "time": "09:00",
+    "category": "IR",
+    "title": "씨어스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-09",
     "time": "10:00",
     "category": "IR",
     "title": "유바이오로직스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-09",
+    "time": "10:00",
+    "category": "IR",
+    "title": "KG파이낸셜 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-09",
+    "time": "10:00",
+    "category": "IR",
+    "title": "KG이니시스 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -42603,6 +42723,14 @@
   },
   {
     "date": "2026-06-10",
+    "time": "10:30",
+    "category": "IR",
+    "title": "LG씨엔에스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-10",
     "time": "11:30",
     "category": "IR",
     "title": "엑스게이트 IR (경영현황)",
@@ -42614,6 +42742,14 @@
     "time": "14:00",
     "category": "IR",
     "title": "바스칸바이오제약 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-10",
+    "time": "14:00",
+    "category": "IR",
+    "title": "강스템바이오텍 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -42669,6 +42805,22 @@
   {
     "date": "2026-06-11",
     "time": "",
+    "category": "기업이벤트",
+    "title": "다산솔루에타 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-11",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "본시스템즈 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-11",
+    "time": "",
     "category": "만기일",
     "title": "KOSPI200 정기변경",
     "source": "fixed",
@@ -42682,6 +42834,14 @@
     "category": "만기일",
     "title": "6월 선물옵션 동시만기 (쿼드러플위칭)",
     "source": "news",
+    "auto": true
+  },
+  {
+    "date": "2026-06-11",
+    "time": "13:10",
+    "category": "IR",
+    "title": "오픈엣지테크놀로지 IR (경영현황)",
+    "source": "fnguide",
     "auto": true
   },
   {
@@ -42789,6 +42949,14 @@
     "auto": true
   },
   {
+    "date": "2026-06-13",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "해성옵틱스 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-06-15",
     "time": "",
     "category": "기업이벤트",
@@ -42818,6 +42986,14 @@
     "time": "10:00",
     "category": "IR",
     "title": "한국미라클피플사 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-15",
+    "time": "14:00",
+    "category": "IR",
+    "title": "프로젠 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -42948,6 +43124,14 @@
     "time": "14:00",
     "category": "IR",
     "title": "마이크로엔엑스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-17",
+    "time": "14:00",
+    "category": "IR",
+    "title": "로지스몬 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -43101,6 +43285,15 @@
     "source": "fixed",
     "auto": false,
     "country": ""
+  },
+  {
+    "category": "산업컨퍼런스",
+    "title": "한미글로벌 AI 시대 글로벌 PM의 미래 국제 서밋",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2026-06-19",
+    "time": "",
+    "summary": "한미글로벌 창립 30주년 기념 AI 시대 PM 역할과 성장 전략 서밋. 관련주: 한미글로벌"
   },
   {
     "date": "2026-06-19",
@@ -43428,6 +43621,14 @@
   {
     "date": "2026-06-29",
     "time": "",
+    "category": "IPO/공모",
+    "title": "져스텍 신규상장",
+    "source": "38cr",
+    "auto": true
+  },
+  {
+    "date": "2026-06-29",
+    "time": "",
     "category": "기업이벤트",
     "title": "중간배당 기준일 (대형주)",
     "source": "fixed",
@@ -43481,6 +43682,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "레몬헬스케어 유상증자(일반공모)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-30",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "올릭스 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -44639,6 +44848,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "세화피앤씨 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-12",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "한울반도체 유상증자(주주배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -45927,5 +46144,14 @@
     "date": "2027-01-01",
     "time": "",
     "summary": "코인 등 가상자산에 대한 과세가 내년 1월부터 시행 예정. 관련주: 가상자산 거래소, 블록체인 관련 기업"
+  },
+  {
+    "category": "에너지",
+    "title": "삼성중공업 FLNG 설비 인도",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2030-07-01",
+    "time": "",
+    "summary": "삼성중공업이 북미 발주처에 4.3조원 규모 부유식 액화천연가스 생산설비 인도 예정. 관련주: 삼성중공업"
   }
 ]
