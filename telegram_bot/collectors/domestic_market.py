@@ -137,6 +137,52 @@ def fetch_kospi_kosdaq():
     return results
 
 
+def fetch_index_period_returns():
+    """지수 기간 수익률 (5/20/60거래일) — 시장 쏠림 정량화용.
+
+    2026-06-02 추가: 한지영 수준의 "대형주 +42% vs 소형주 -14%" 같은 쏠림 정량화를
+    우리 봇도 데이터로 제공. 당일 등락률만으론 며칠~한 달 누적 쏠림을 못 보여줌.
+    지수 코드 (KIS 표준): 0001 코스피, 1001 코스닥, 0002/0003/0004 대형/중형/소형주.
+    """
+    indices = [
+        ("KOSPI", "0001"), ("KOSDAQ", "1001"),
+        ("대형주", "0002"), ("중형주", "0003"), ("소형주", "0004"),
+    ]
+    today = datetime.date.today()
+    start = (today - datetime.timedelta(days=120)).strftime("%Y%m%d")
+    end = today.strftime("%Y%m%d")
+    results = {}
+    for name, code in indices:
+        try:
+            daily = kis_get(
+                "/uapi/domestic-stock/v1/quotations/inquire-daily-indexchartprice",
+                "FHKUP03500100",
+                {
+                    "FID_COND_MRKT_DIV_CODE": "U",
+                    "FID_INPUT_ISCD": code,
+                    "FID_INPUT_DATE_1": start,
+                    "FID_INPUT_DATE_2": end,
+                    "FID_PERIOD_DIV_CODE": "D",
+                },
+            )
+            rows = daily.get("output2", [])
+            closes = [c for c in (_safe_float(r.get("bstp_nmix_prpr")) for r in rows) if c > 0]
+            if len(closes) < 21:
+                continue
+            cur = closes[0]  # 가장 최근
+
+            def _ret(n):
+                if len(closes) > n and closes[n] > 0:
+                    return round((cur - closes[n]) / closes[n] * 100, 1)
+                return None
+
+            results[name] = {"5일": _ret(5), "20일": _ret(20), "60일": _ret(60)}
+        except Exception:
+            pass
+        time.sleep(0.2)
+    return results
+
+
 def fetch_investor_trends(market_code="0001"):
     """시장별 투자자 매매동향 (당일 우선, 없으면 전영업일)"""
     market_sym = "KSP" if market_code == "0001" else "KSQ"
@@ -677,4 +723,5 @@ def fetch_all_domestic():
         "top_gainers": fetch_fluctuation_rank("1"),
         "top_losers": fetch_fluctuation_rank("2"),
         "sector_investor_flow": fetch_sector_investor_flow(),
+        "period_returns": fetch_index_period_returns(),
     }

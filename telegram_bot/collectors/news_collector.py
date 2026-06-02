@@ -436,6 +436,28 @@ def _build_upcoming_schedule_section():
     return "\n".join(lines)
 
 
+def _build_period_returns_section(period_returns):
+    """지수 기간 수익률 — 쏠림 정량화용 (압축). 본문엔 의미있는 격차만 인용 유도."""
+    if not period_returns:
+        return ""
+    lines = [
+        "지수 기간 수익률 % (5일/20일/60일) — 시장 쏠림 정량화용 (예: 대형주 vs 소형주 격차).",
+        "  ※ 본문엔 그 날 의미있는 격차 1~2개만 압축 인용. 전부 나열 금지.",
+    ]
+    has_data = False
+    for name in ["KOSPI", "KOSDAQ", "대형주", "중형주", "소형주"]:
+        r = period_returns.get(name)
+        if not r:
+            continue
+        parts = []
+        for k in ["5일", "20일", "60일"]:
+            v = r.get(k)
+            parts.append(f"{v:+.1f}" if v is not None else "—")
+        lines.append(f"  {name}: {' / '.join(parts)}")
+        has_data = True
+    return "\n".join(lines) if has_data else ""
+
+
 def _match_news_to_movers(news_list, top_gainers, top_losers, sectors):
     """급등락 종목/섹터와 뉴스를 자동 매칭"""
     matches = []
@@ -507,6 +529,7 @@ def generate_market_commentary(market_data, news_list, intraday_text="", trend_t
     trade_rank = market_data.get("trade_value_rank", [])
     top_gainers = market_data.get("top_gainers", [])
     top_losers = market_data.get("top_losers", [])
+    period_returns = market_data.get("period_returns", {})
 
     data_summary = "=== 오늘 시장 데이터 ===\n"
     for name, info in indices.items():
@@ -539,6 +562,11 @@ def generate_market_commentary(market_data, news_list, intraday_text="", trend_t
         today_str = datetime.date.today().strftime("%Y%m%d")
         label = " (장 직후 잠정치, 익일 확정 시 소폭 조정 가능)" if inv_date == today_str else ""
         data_summary += f"\n수급{label}: 외국인 {frgn:+,.0f}억 / 기관 {inst:+,.0f}억 / 개인 {pers:+,.0f}억\n"
+
+    # 지수 기간 수익률 (쏠림 정량화용 — 압축 인용)
+    pr_text = _build_period_returns_section(period_returns)
+    if pr_text:
+        data_summary += f"\n{pr_text}\n"
 
     # 업종별 수급 (키움 API)
     sector_flow = market_data.get("sector_investor_flow", [])
@@ -905,6 +933,10 @@ def generate_morning_commentary(global_data, news_list, trend_text="", domestic_
                     if kospi_trv_avg:
                         line += f" (20일 평균 대비 {kospi_trv/kospi_trv_avg*100:.0f}%)"
                     kr_investors_section += line + "\n"
+        # 전일 한국 지수 기간 수익률 (쏠림 정량화 — 대형 vs 소형 격차)
+        pr_text = _build_period_returns_section(domestic_data.get("period_returns", {}))
+        if pr_text:
+            kr_investors_section += f"\n{pr_text}\n"
 
     data_summary = "=== 전일 미국 증시 데이터 ===\n"
     for name, info in indices.items():
