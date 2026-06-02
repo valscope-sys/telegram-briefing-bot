@@ -42,7 +42,7 @@ def merge_events(existing: list[dict], new_events: list[dict]) -> list[dict]:
     수동(auto=False) 이벤트는 절대 덮어쓰지 않음.
     동일 (date, category, normalized_title) → 소스 우선순위로 결정.
     """
-    SOURCE_PRIORITY = {"fixed": 10, "fnguide": 8, "finnhub": 6, "38cr": 4, "manual": 100}
+    SOURCE_PRIORITY = {"holidays": 12, "fixed": 10, "fnguide": 8, "finnhub": 6, "38cr": 4, "manual": 100}
 
     indexed = {}
     for ev in existing:
@@ -142,6 +142,15 @@ def _dedupe_provisional_official_close(events: list[dict]) -> list[dict]:
 def collect_all(from_date: datetime.date, to_date: datetime.date, skip_ai: bool = False) -> list[dict]:
     """모든 collector 실행 후 결과 합산"""
     all_events = []
+
+    # 0. 한국 증시 휴장일 (holidays 라이브러리 — 법정공휴일·대체공휴일·선거일·음력 자동)
+    try:
+        from cal_data.collectors.holidays_kr import get_market_holidays
+        hols = get_market_holidays(from_date, to_date)
+        print(f"[Calendar] 휴장일: {len(hols)}건")
+        all_events.extend(hols)
+    except Exception as e:
+        print(f"[Calendar] 휴장일 실패: {e}")
 
     # 1. 고정 이벤트
     try:
