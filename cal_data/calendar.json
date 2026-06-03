@@ -42225,6 +42225,24 @@
     "country": ""
   },
   {
+    "category": "반도체",
+    "title": "젠슨 황 엔비디아 CEO 한국 방한",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2026-06-04",
+    "time": "",
+    "summary": "젠슨 황 CEO가 컴퓨텍스 2026 일정 후 한국 입국. 예능 출연, 대학 방문 등 파격 일정 예정"
+  },
+  {
+    "category": "수동",
+    "title": "스페이스X IPO 로드쇼 시작",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2026-06-04",
+    "time": "",
+    "summary": "스페이스X가 기관투자가 대상 로드쇼 시작. 12일 나스닥 상장 목표"
+  },
+  {
     "date": "2026-06-04",
     "time": "09:00",
     "category": "IR",
@@ -42915,6 +42933,15 @@
     "title": "알엔티엑스 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "category": "수동",
+    "title": "SpaceX 나스닥 상장",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2026-06-12",
+    "time": "",
+    "summary": "스페이스X가 기업가치 1조7500억 달러 목표로 사상 최대 IPO. 주당 135달러에 5억5560만 주 발행 계획"
   },
   {
     "date": "2026-06-13",
@@ -43611,6 +43638,14 @@
     "auto": true
   },
   {
+    "date": "2026-06-27",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "매드업 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-06-29",
     "time": "",
     "category": "IPO/공모",
@@ -43785,6 +43820,16 @@
     "summary": "신현송 총재가 예고한 기준금리 인상. 현재 2.5%에서 상향 조정 예상"
   },
   {
+    "category": "정치/외교",
+    "title": "한국은행 기준금리 인상 예상",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2026-07-01",
+    "time": "",
+    "unconfirmed": true,
+    "summary": "이르면 7월 기준금리 인상 가능성. 현재 연 2.50%에서 인상 시 은행 예금금리 상승 예상"
+  },
+  {
     "date": "2026-07-01",
     "time": "09:00",
     "category": "경제지표",
@@ -43892,6 +43937,14 @@
   },
   {
     "date": "2026-07-02",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "캔버스엔 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-02",
     "time": "21:30",
     "category": "경제지표",
     "title": "미국 비농업 고용 (6월)",
@@ -43941,6 +43994,15 @@
     "date": "2026-07-06",
     "time": "",
     "summary": "서울 외환시장의 원-달러 거래 시간이 24시간 무중단 방식으로 확대. 외환 관련 금융기관에 영향"
+  },
+  {
+    "category": "정치/외교",
+    "title": "미국 강제노동 관세 공개 의견 수렴 마감",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2026-07-06",
+    "time": "",
+    "summary": "USTR이 한국 등 54개국에 12.5% 추가관세 부과 관련 공개 의견 수렴을 7월 6일까지 진행"
   },
   {
     "date": "2026-07-07",
@@ -44005,6 +44067,15 @@
     "title": "레메디 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "category": "정치/외교",
+    "title": "미국 강제노동 관세 공청회",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2026-07-07",
+    "time": "",
+    "summary": "USTR이 한국 등에 대한 강제노동 관세 부과 관련 공청회 개최. 이후 관세 부과 예정"
   },
   {
     "date": "2026-07-07",
