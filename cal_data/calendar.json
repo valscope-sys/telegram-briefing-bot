@@ -42414,6 +42414,22 @@
   },
   {
     "date": "2026-06-05",
+    "time": "15:00",
+    "category": "IR",
+    "title": "닷밀 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-05",
+    "time": "15:30",
+    "category": "IR",
+    "title": "HLB IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-05",
     "time": "21:30",
     "category": "경제지표",
     "title": "미국 비농업 고용 (5월)",
@@ -42552,6 +42568,22 @@
     "auto": true
   },
   {
+    "date": "2026-06-08",
+    "time": "09:00",
+    "category": "IR",
+    "title": "클래시스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-08",
+    "time": "09:00",
+    "category": "IR",
+    "title": "디오 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-06-09",
     "time": "",
     "category": "IPO/공모",
@@ -42564,6 +42596,14 @@
     "time": "",
     "category": "IR",
     "title": "기아 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-09",
+    "time": "",
+    "category": "IR",
+    "title": "솔루엠 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -42671,6 +42711,14 @@
     "time": "10:00",
     "category": "IR",
     "title": "KG이니시스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-09",
+    "time": "10:00",
+    "category": "IR",
+    "title": "KG모빌리티 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -42833,6 +42881,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "본시스템즈 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-11",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "위지트 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -43238,6 +43294,15 @@
     "summary": "로스앤젤레스에서 열리는 VC 컨퍼런스. Mach Industries, Shinkei Systems 등 참여"
   },
   {
+    "category": "산업컨퍼런스",
+    "title": "StrictlyVC Los Angeles",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2026-06-18",
+    "time": "",
+    "summary": "6월 18일 캘리포니아 에어로스페이스 코퍼레이션 캠퍼스에서 개최. 방산기술, AI, 벤처캐피털 관련 컨퍼런스"
+  },
+  {
     "date": "2026-06-18",
     "time": "",
     "category": "통화정책",
@@ -43387,6 +43452,14 @@
     "auto": true
   },
   {
+    "date": "2026-06-22",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "오에스피 무상증자",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "category": "수동",
     "title": "청년미래적금 출시",
     "source": "ai_scan",
@@ -43521,6 +43594,14 @@
     "time": "16:00",
     "category": "IR",
     "title": "엔에스컴퍼니 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-25",
+    "time": "14:00",
+    "category": "IR",
+    "title": "코스텍시스템 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -43730,6 +43811,14 @@
   },
   {
     "date": "2026-06-30",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "NH투자증권 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-30",
     "time": "10:30",
     "category": "경제지표",
     "title": "중국 제조업 PMI (6월)",
@@ -43798,6 +43887,18 @@
     "time": "",
     "unconfirmed": true,
     "summary": "미국에서 학자금 대출 관련 새로운 규정 시행. 미국 교육 관련 기업에 영향 가능"
+  },
+  {
+    "category": "에너지",
+    "title": "유가 최고가격제 해제 검토",
+    "source": "ai_scan",
+    "auto": true,
+    "month": "2026-07",
+    "undated": true,
+    "date": "2026-07-01",
+    "endDate": "2026-07-31",
+    "unconfirmed": true,
+    "summary": "정부가 7월 유가 상황에 따라 최고가격제 해제를 검토할 예정"
   },
   {
     "date": "2026-07-01",
@@ -44680,6 +44781,14 @@
   },
   {
     "date": "2026-08-01",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "티엔엔터테인먼트 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-01",
     "time": "09:00",
     "category": "경제지표",
     "title": "한국 수출입 통계 (7월)",
@@ -44739,6 +44848,14 @@
   {
     "date": "2026-08-05",
     "time": "",
+    "category": "기업이벤트",
+    "title": "뉴로메카 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-05",
+    "time": "",
     "category": "미국실적",
     "title": "AAOI 실적발표 [EPS est. $0.0743]",
     "source": "finnhub",
@@ -44760,6 +44877,22 @@
     "source": "fixed",
     "auto": false,
     "country": ""
+  },
+  {
+    "date": "2026-08-06",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "뉴로메카 무상증자",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-06",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "파루 액면병합",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-08-07",
@@ -44851,6 +44984,14 @@
     "auto": true
   },
   {
+    "date": "2026-08-11",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "더라미 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-08-12",
     "time": "",
     "category": "기업이벤트",
@@ -44927,6 +45068,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "한울반도체 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-12",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "센서뷰 유상증자(주주배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -45165,6 +45314,15 @@
     "auto": true
   },
   {
+    "category": "산업컨퍼런스",
+    "title": "Startup Battlefield 시드니",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2026-08-19",
+    "time": "",
+    "summary": "8월 19일 시드니에서 Stripe 파트너십으로 개최되는 스타트업 컨퍼런스"
+  },
+  {
     "date": "2026-08-20",
     "time": "",
     "category": "게임",
@@ -45238,10 +45396,26 @@
     "auto": true
   },
   {
+    "date": "2026-08-22",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "노을 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-08-25",
     "time": "",
     "category": "기업이벤트",
     "title": "엔젠바이오 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-25",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "클로봇 유상증자(주주배정)",
     "source": "fnguide",
     "auto": true
   },
