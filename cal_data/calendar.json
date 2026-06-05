@@ -42499,7 +42499,7 @@
     "time": "",
     "category": "IPO/공모",
     "title": "피스피스스튜디오 신규상장",
-    "source": "38cr",
+    "source": "fnguide",
     "auto": true
   },
   {
@@ -42766,6 +42766,14 @@
   {
     "date": "2026-06-10",
     "time": "",
+    "category": "IR",
+    "title": "ISC IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-10",
+    "time": "",
     "category": "기업이벤트",
     "title": "블루산업개발 액면분할",
     "source": "fnguide",
@@ -42776,6 +42784,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "알엔티엑스 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-10",
+    "time": "08:30",
+    "category": "IR",
+    "title": "오리온 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -43040,6 +43056,22 @@
     "auto": true
   },
   {
+    "date": "2026-06-13",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "씨엑스아이 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-13",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "티사이언티픽 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-06-15",
     "time": "",
     "category": "기업이벤트",
@@ -43122,9 +43154,33 @@
   },
   {
     "date": "2026-06-16",
+    "time": "09:00",
+    "category": "IR",
+    "title": "카카오페이 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-16",
+    "time": "10:00",
+    "category": "IR",
+    "title": "로젠 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-16",
     "time": "10:45",
     "category": "IR",
     "title": "바이오프로테크 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-16",
+    "time": "14:00",
+    "category": "IR",
+    "title": "모다이노칩 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -43362,6 +43418,14 @@
   {
     "date": "2026-06-19",
     "time": "",
+    "category": "기업이벤트",
+    "title": "이노스페이스 무상증자",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-19",
+    "time": "",
     "category": "만기일",
     "title": "FTSE 리밸런싱 (6월)",
     "source": "fixed",
@@ -43440,6 +43504,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "카카오게임즈 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-20",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "엔솔바이오사이언스 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -43588,6 +43660,14 @@
     "date": "2026-06-24",
     "time": "",
     "summary": "베조스가 투자한 EV 스타트업의 차량 가격 발표 및 사전 주문 시작"
+  },
+  {
+    "date": "2026-06-24",
+    "time": "14:00",
+    "category": "IR",
+    "title": "코셋 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-06-24",
@@ -44170,6 +44250,22 @@
     "auto": true
   },
   {
+    "date": "2026-07-07",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "레메디 유상증자(일반공모)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-07",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "동양 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "category": "정치/외교",
     "title": "미국 강제노동 관세 공청회",
     "source": "ai_scan",
@@ -44249,6 +44345,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "미래산업 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-11",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "플루토스 액면병합",
     "source": "fnguide",
     "auto": true
   },
@@ -44499,6 +44603,14 @@
     "auto": true
   },
   {
+    "date": "2026-07-22",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "모아라이프플러스 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-07-23",
     "time": "",
     "category": "기업이벤트",
@@ -44565,6 +44677,14 @@
     "auto": true
   },
   {
+    "date": "2026-07-24",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "엑사이엔씨 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-07-25",
     "time": "",
     "category": "기업이벤트",
@@ -44602,6 +44722,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "파라텍 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-28",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "모아데이타 액면병합",
     "source": "fnguide",
     "auto": true
   },
@@ -44727,6 +44855,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "페니트리움바이오 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-31",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "나이스정보통신 액면분할",
     "source": "fnguide",
     "auto": true
   },
