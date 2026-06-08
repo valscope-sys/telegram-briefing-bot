@@ -46109,10 +46109,26 @@
     "auto": true
   },
   {
+    "date": "2026-08-17",
+    "time": "",
+    "category": "미국실적",
+    "title": "PANW 실적발표 (장후) [EPS est. $0.9954]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
     "date": "2026-08-18",
     "time": "",
     "category": "미국실적",
     "title": "HD 실적발표 [EPS est. $4.873]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-08-18",
+    "time": "",
+    "category": "미국실적",
+    "title": "HD 실적발표 [EPS est. $4.872]",
     "source": "finnhub",
     "auto": true
   },
@@ -46191,6 +46207,22 @@
     "auto": true
   },
   {
+    "date": "2026-08-20",
+    "time": "",
+    "category": "미국실적",
+    "title": "WMT 실적발표 [EPS est. $0.7502]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-08-20",
+    "time": "",
+    "category": "미국실적",
+    "title": "DE 실적발표 (장전) [EPS est. $4.8445]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
     "date": "2026-08-22",
     "time": "",
     "category": "기업이벤트",
@@ -46263,10 +46295,26 @@
     "auto": true
   },
   {
+    "date": "2026-08-25",
+    "time": "",
+    "category": "미국실적",
+    "title": "SNOW 실적발표 (장후) [EPS est. $0.4515]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
     "date": "2026-08-26",
     "time": "",
     "category": "미국실적",
     "title": "MRVL 실적발표 [EPS est. $0.9383]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-08-26",
+    "time": "",
+    "category": "미국실적",
+    "title": "MRVL 실적발표 [EPS est. $0.938]",
     "source": "finnhub",
     "auto": true
   },
@@ -46694,6 +46742,14 @@
   },
   {
     "date": "2026-10-13",
+    "time": "",
+    "category": "미국실적",
+    "title": "JPM 실적발표 [EPS est. $5.5109]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-10-13",
     "time": "21:30",
     "category": "경제지표",
     "title": "미국 CPI (9월)",
@@ -46766,6 +46822,22 @@
     "auto": true
   },
   {
+    "date": "2026-10-14",
+    "time": "",
+    "category": "미국실적",
+    "title": "BAC 실적발표 (장전) [EPS est. $1.1457]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-10-14",
+    "time": "",
+    "category": "미국실적",
+    "title": "WFC 실적발표 (장전) [EPS est. $1.8248]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
     "date": "2026-10-15",
     "time": "10:00",
     "category": "통화정책",
@@ -46795,6 +46867,14 @@
     "time": "",
     "category": "미국실적",
     "title": "RTX 실적발표 (장전) [EPS est. $1.7418]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-10-19",
+    "time": "",
+    "category": "미국실적",
+    "title": "RTX 실적발표 (장전) [EPS est. $1.7429]",
     "source": "finnhub",
     "auto": true
   },
@@ -46845,6 +46925,14 @@
     "time": "",
     "category": "미국실적",
     "title": "MRK 실적발표 [EPS est. $2.319]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-10-29",
+    "time": "",
+    "category": "미국실적",
+    "title": "MRK 실적발표 [EPS est. $2.2971]",
     "source": "finnhub",
     "auto": true
   },
