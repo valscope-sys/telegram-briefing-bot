@@ -42983,6 +42983,22 @@
   },
   {
     "date": "2026-06-10",
+    "time": "09:00",
+    "category": "IR",
+    "title": "휴메딕스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-10",
+    "time": "09:30",
+    "category": "IR",
+    "title": "미스토홀딩스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-10",
     "time": "10:00",
     "category": "IR",
     "title": "그리드위즈 IR (경영현황)",
@@ -43200,6 +43216,38 @@
   },
   {
     "date": "2026-06-11",
+    "time": "09:00",
+    "category": "IR",
+    "title": "코스메카코리아 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-11",
+    "time": "10:00",
+    "category": "IR",
+    "title": "디앤디파마텍 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-11",
+    "time": "12:00",
+    "category": "IR",
+    "title": "한국콜마 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-11",
+    "time": "13:00",
+    "category": "IR",
+    "title": "삼천당제약 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-11",
     "time": "13:00",
     "category": "경제지표",
     "title": "🇺🇸 OPEC Monthly Report",
@@ -43404,6 +43452,30 @@
   },
   {
     "date": "2026-06-12",
+    "time": "09:00",
+    "category": "IR",
+    "title": "액트로 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-12",
+    "time": "09:00",
+    "category": "IR",
+    "title": "오름테라퓨틱 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-12",
+    "time": "12:30",
+    "category": "IR",
+    "title": "달바글로벌 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-12",
     "time": "17:00",
     "category": "경제지표",
     "title": "🇺🇸 Michigan 1-Year Inflation Expectations  (Jun)",
@@ -43569,6 +43641,22 @@
   {
     "date": "2026-06-15",
     "time": "",
+    "category": "IR",
+    "title": "대한항공 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-15",
+    "time": "",
+    "category": "IR",
+    "title": "기업은행 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-15",
+    "time": "",
     "category": "기업이벤트",
     "title": "우진비앤지 무상증자",
     "source": "fnguide",
@@ -43683,6 +43771,14 @@
     "source": "investing",
     "auto": true,
     "country": "🇺🇸"
+  },
+  {
+    "date": "2026-06-16",
+    "time": "",
+    "category": "IR",
+    "title": "기업은행 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-06-16",
@@ -43891,6 +43987,14 @@
   {
     "date": "2026-06-17",
     "time": "",
+    "category": "IR",
+    "title": "한국항공우주 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-17",
+    "time": "",
     "category": "기업이벤트",
     "title": "수성웹툰 유상증자(3자배정)",
     "source": "fnguide",
@@ -43942,6 +44046,22 @@
     "time": "09:00",
     "category": "IR",
     "title": "파마리서치 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-17",
+    "time": "09:00",
+    "category": "IR",
+    "title": "현대건설 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-17",
+    "time": "10:00",
+    "category": "IR",
+    "title": "젬백스 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -44305,6 +44425,14 @@
   },
   {
     "date": "2026-06-19",
+    "time": "13:30",
+    "category": "IR",
+    "title": "대한항공 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-19",
     "time": "14:00",
     "category": "IR",
     "title": "대동고려삼 IR (경영현황)",
@@ -44316,6 +44444,14 @@
     "time": "16:00",
     "category": "IR",
     "title": "썬테크 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-19",
+    "time": "16:30",
+    "category": "IR",
+    "title": "아시아나항공 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -44389,6 +44525,14 @@
     "time": "10:00",
     "category": "IR",
     "title": "티엘엔지니어링 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-22",
+    "time": "13:30",
+    "category": "IR",
+    "title": "인바이츠바이오코아 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -44793,6 +44937,14 @@
   {
     "date": "2026-07-01",
     "time": "",
+    "category": "IPO/공모",
+    "title": "매드업 신규상장",
+    "source": "38cr",
+    "auto": true
+  },
+  {
+    "date": "2026-07-01",
+    "time": "",
     "category": "기업이벤트",
     "title": "한화솔루션 유상증자(주주배정)",
     "source": "fnguide",
@@ -45150,6 +45302,14 @@
     "auto": true
   },
   {
+    "date": "2026-07-07",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "CSA 코스믹 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "category": "정치/외교",
     "title": "미국 강제노동 관세 공청회",
     "source": "ai_scan",
@@ -45497,6 +45657,14 @@
   {
     "date": "2026-07-23",
     "time": "",
+    "category": "IPO/공모",
+    "title": "인제니아테라퓨틱스 공모청약 (07/23~07/24)",
+    "source": "38cr",
+    "auto": true
+  },
+  {
+    "date": "2026-07-23",
+    "time": "",
     "category": "기업이벤트",
     "title": "한솔테크닉스 유상증자(주주배정)",
     "source": "fnguide",
@@ -45836,6 +46004,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "티엔엔터테인먼트 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-01",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "유니켐 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
