@@ -42637,6 +42637,14 @@
   {
     "date": "2026-06-09",
     "time": "",
+    "category": "IR",
+    "title": "AP시스템 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-09",
+    "time": "",
     "category": "기업이벤트",
     "title": "씨엔알리서치 액면병합",
     "source": "fnguide",
@@ -42781,6 +42789,14 @@
     "time": "13:00",
     "category": "IR",
     "title": "쏠리드 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-09",
+    "time": "13:00",
+    "category": "IR",
+    "title": "케이엠더블유 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -42959,6 +42975,14 @@
   },
   {
     "date": "2026-06-10",
+    "time": "09:00",
+    "category": "IR",
+    "title": "펨트론 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-10",
     "time": "10:00",
     "category": "IR",
     "title": "그리드위즈 IR (경영현황)",
@@ -42967,9 +42991,33 @@
   },
   {
     "date": "2026-06-10",
+    "time": "10:00",
+    "category": "IR",
+    "title": "현대그린푸드 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-10",
+    "time": "10:00",
+    "category": "IR",
+    "title": "인포뱅크 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-10",
     "time": "10:30",
     "category": "IR",
     "title": "LG씨엔에스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-10",
+    "time": "10:30",
+    "category": "IR",
+    "title": "파미셀 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -43087,6 +43135,14 @@
   {
     "date": "2026-06-11",
     "time": "",
+    "category": "IR",
+    "title": "호텔신라 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-11",
+    "time": "",
     "category": "기업이벤트",
     "title": "기가레인 액면병합",
     "source": "fnguide",
@@ -43159,6 +43215,14 @@
     "source": "investing",
     "auto": true,
     "country": "🇪🇺"
+  },
+  {
+    "date": "2026-06-11",
+    "time": "13:00",
+    "category": "한국실적",
+    "title": "티쓰리 실적발표",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-06-11",
@@ -43261,6 +43325,14 @@
     "time": "16:00",
     "category": "IR",
     "title": "탈로스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-11",
+    "time": "16:00",
+    "category": "IR",
+    "title": "교촌에프앤비 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -43521,9 +43593,33 @@
   },
   {
     "date": "2026-06-15",
+    "time": "09:00",
+    "category": "IR",
+    "title": "LX인터내셔널 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-15",
+    "time": "09:00",
+    "category": "IR",
+    "title": "파두 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-15",
     "time": "10:00",
     "category": "IR",
     "title": "한국미라클피플사 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-15",
+    "time": "10:00",
+    "category": "IR",
+    "title": "페스카로 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -43661,6 +43757,14 @@
     "time": "09:00",
     "category": "IR",
     "title": "카카오페이 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-16",
+    "time": "09:00",
+    "category": "IR",
+    "title": "파두 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -43824,6 +43928,22 @@
     "source": "fixed",
     "auto": false,
     "country": "🇺🇸"
+  },
+  {
+    "date": "2026-06-17",
+    "time": "09:00",
+    "category": "IR",
+    "title": "두산로보틱스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-17",
+    "time": "09:00",
+    "category": "IR",
+    "title": "파마리서치 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-06-17",
@@ -44025,6 +44145,22 @@
     "auto": true
   },
   {
+    "date": "2026-06-18",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "핸즈코퍼레이션 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-18",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "메타랩스 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "category": "산업컨퍼런스",
     "title": "StrictlyVC Los Angeles 컨퍼런스",
     "source": "ai_scan",
@@ -44050,6 +44186,14 @@
     "source": "fixed",
     "auto": false,
     "country": "🇯🇵"
+  },
+  {
+    "date": "2026-06-18",
+    "time": "10:00",
+    "category": "IR",
+    "title": "케이엔제이 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-06-18",
@@ -44104,6 +44248,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "이노스페이스 무상증자",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-19",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "메타케어 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -44200,6 +44352,14 @@
     "auto": true
   },
   {
+    "date": "2026-06-20",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "인스코비 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-06-22",
     "time": "",
     "category": "IR",
@@ -44223,6 +44383,14 @@
     "date": "2026-06-22",
     "time": "",
     "summary": "청년 자산형성 지원 정책형 적금 출시. 6월 22일~7월 3일 가입 신청 기간. 관련주: 시중은행"
+  },
+  {
+    "date": "2026-06-22",
+    "time": "10:00",
+    "category": "IR",
+    "title": "티엘엔지니어링 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-06-23",
@@ -44366,6 +44534,22 @@
     "time": "14:00",
     "category": "IR",
     "title": "코스텍시스템 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-25",
+    "time": "16:00",
+    "category": "IR",
+    "title": "이비테크 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-25",
+    "time": "16:00",
+    "category": "IR",
+    "title": "제이엠멀티 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -45435,6 +45619,14 @@
   },
   {
     "date": "2026-07-28",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "베셀 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-28",
     "time": "17:00",
     "category": "통화정책",
     "title": "🇺🇸 Atlanta Fed GDPNow  (Q2)",
@@ -45511,6 +45703,14 @@
   {
     "date": "2026-07-30",
     "time": "",
+    "category": "기업이벤트",
+    "title": "서울전자통신 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-30",
+    "time": "",
     "category": "통화정책",
     "title": "BOJ 금리 결정",
     "source": "fixed",
@@ -45563,6 +45763,22 @@
     "time": "",
     "category": "기업이벤트",
     "title": "나이스정보통신 액면분할",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-31",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "우리이앤엘하루틴 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-31",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "상지건설 유상증자(주주배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -45692,6 +45908,14 @@
   {
     "date": "2026-08-05",
     "time": "",
+    "category": "기업이벤트",
+    "title": "피플바이오 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-05",
+    "time": "",
     "category": "미국실적",
     "title": "AAOI 실적발표 [EPS est. $0.0743]",
     "source": "finnhub",
@@ -45792,6 +46016,22 @@
     "time": "",
     "category": "기업이벤트",
     "title": "체리부로 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-08",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "이렘 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-08",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "소프트센 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -46162,6 +46402,22 @@
     "time": "",
     "category": "기업이벤트",
     "title": "휴온스 기업합병",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-19",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "우리바이오 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-19",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "우리엔터프라이즈 액면병합",
     "source": "fnguide",
     "auto": true
   },
