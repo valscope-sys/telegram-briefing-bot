@@ -43878,6 +43878,14 @@
   },
   {
     "date": "2026-06-15",
+    "time": "14:00",
+    "category": "IR",
+    "title": "세방전지 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-15",
     "time": "15:30",
     "category": "IR",
     "title": "SGC에너지 IR (경영현황)",
@@ -44115,6 +44123,14 @@
     "time": "13:00",
     "category": "IR",
     "title": "티쓰리 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-16",
+    "time": "13:00",
+    "category": "IR",
+    "title": "CJ대한통운 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -44650,6 +44666,14 @@
     "time": "10:00",
     "category": "IR",
     "title": "케이엔제이 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-18",
+    "time": "11:30",
+    "category": "IR",
+    "title": "메타바이오메드 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
