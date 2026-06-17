@@ -43962,6 +43962,38 @@
   {
     "date": "2026-06-16",
     "time": "",
+    "category": "IR",
+    "title": "LG유플러스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-16",
+    "time": "",
+    "category": "IR",
+    "title": "삼성물산 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-16",
+    "time": "",
+    "category": "IR",
+    "title": "JB금융지주 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-16",
+    "time": "",
+    "category": "IR",
+    "title": "이마트 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-16",
+    "time": "",
     "category": "기업이벤트",
     "title": "포커스에이아이 유상증자(3자배정)",
     "source": "fnguide",
@@ -44110,6 +44142,14 @@
   },
   {
     "date": "2026-06-16",
+    "time": "09:00",
+    "category": "IR",
+    "title": "두산에너빌리티 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-16",
     "time": "10:00",
     "category": "IR",
     "title": "로젠 IR (경영현황)",
@@ -44129,6 +44169,14 @@
     "time": "10:00",
     "category": "IR",
     "title": "에코프로비엠 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-16",
+    "time": "10:00",
+    "category": "IR",
+    "title": "현대모비스 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -44278,7 +44326,16 @@
   },
   {
     "date": "2026-06-16",
-    "time": "17:00",
+    "time": "16:10",
+    "category": "통화정책",
+    "title": "🇪🇺 ECB's Lane Speaks",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-06-16",
+    "time": "19:00",
     "category": "통화정책",
     "title": "🇺🇸 Atlanta Fed GDPNow  (Q2)",
     "source": "investing",
@@ -44369,6 +44426,14 @@
   {
     "date": "2026-06-17",
     "time": "",
+    "category": "IR",
+    "title": "기아 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-17",
+    "time": "",
     "category": "기업이벤트",
     "title": "수성웹툰 유상증자(3자배정)",
     "source": "fnguide",
@@ -44449,6 +44514,14 @@
   },
   {
     "date": "2026-06-17",
+    "time": "09:00",
+    "category": "IR",
+    "title": "알테오젠 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-17",
     "time": "10:00",
     "category": "IR",
     "title": "젬백스 IR (경영현황)",
@@ -44490,6 +44563,23 @@
     "source": "investing",
     "auto": true,
     "country": "🇺🇸"
+  },
+  {
+    "date": "2026-06-17",
+    "time": "13:10",
+    "category": "IR",
+    "title": "에이아이코리아 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-17",
+    "time": "13:50",
+    "category": "통화정책",
+    "title": "🇪🇺 ECB President Lagarde Speaks",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
   },
   {
     "date": "2026-06-17",
@@ -44557,6 +44647,15 @@
     "title": "포스코인터내셔널 IR (경영현황)",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "date": "2026-06-17",
+    "time": "16:30",
+    "category": "경제지표",
+    "title": "🇺🇸 U.S. President Trump Speaks",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
   },
   {
     "date": "2026-06-17",
@@ -44653,6 +44752,15 @@
     "time": "21:00",
     "category": "통화정책",
     "title": "🇺🇸 FOMC Statement",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-06-17",
+    "time": "21:00",
+    "category": "통화정책",
+    "title": "🇺🇸 FOMC Economic Projections",
     "source": "investing",
     "auto": true,
     "country": "🇺🇸"
@@ -44775,11 +44883,37 @@
   },
   {
     "date": "2026-06-18",
+    "time": "13:10",
+    "category": "통화정책",
+    "title": "🇪🇺 ECB's Elderson Speaks",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-06-18",
+    "time": "13:30",
+    "category": "IR",
+    "title": "강원랜드 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-18",
     "time": "14:00",
     "category": "IR",
     "title": "메디안디노스틱 IR (경영현황)",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "date": "2026-06-18",
+    "time": "15:15",
+    "category": "통화정책",
+    "title": "🇪🇺 ECB's Lane Speaks",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
   },
   {
     "date": "2026-06-18",
@@ -44840,6 +44974,15 @@
     "time": "20:00",
     "category": "경제지표",
     "title": "🇺🇸 U.S. Baker Hughes Total Rig Count",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-06-18",
+    "time": "23:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Fed's Balance Sheet",
     "source": "investing",
     "auto": true,
     "country": "🇺🇸"
@@ -44962,6 +45105,15 @@
   },
   {
     "date": "2026-06-19",
+    "time": "10:10",
+    "category": "통화정책",
+    "title": "🇪🇺 ECB's Lane Speaks",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-06-19",
     "time": "13:30",
     "category": "IR",
     "title": "이엠티 IR (경영현황)",
@@ -44975,6 +45127,15 @@
     "title": "대한항공 IR (경영현황)",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "date": "2026-06-19",
+    "time": "13:30",
+    "category": "통화정책",
+    "title": "🇪🇺 ECB's Elderson Speaks",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
   },
   {
     "date": "2026-06-19",
@@ -45007,6 +45168,51 @@
     "title": "아시아나항공 IR (경영현황)",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "date": "2026-06-19",
+    "time": "22:30",
+    "category": "경제지표",
+    "title": "🇺🇸 CFTC Crude Oil speculative net positions",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-06-19",
+    "time": "22:30",
+    "category": "경제지표",
+    "title": "🇺🇸 CFTC Gold speculative net positions",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-06-19",
+    "time": "22:30",
+    "category": "경제지표",
+    "title": "🇺🇸 CFTC Nasdaq 100 speculative net positions",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-06-19",
+    "time": "22:30",
+    "category": "경제지표",
+    "title": "🇺🇸 CFTC S&P 500 speculative net positions",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-06-19",
+    "time": "22:30",
+    "category": "경제지표",
+    "title": "🇪🇺 CFTC EUR speculative net positions",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
   },
   {
     "date": "2026-06-20",
@@ -45181,6 +45387,41 @@
   },
   {
     "date": "2026-06-23",
+    "time": "10:00",
+    "category": "IR",
+    "title": "현대건설 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-23",
+    "time": "11:00",
+    "category": "경제지표",
+    "title": "🇪🇺 HCOB Eurozone Manufacturing PMI  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-06-23",
+    "time": "11:00",
+    "category": "경제지표",
+    "title": "🇪🇺 HCOB Eurozone Composite PMI  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-06-23",
+    "time": "11:00",
+    "category": "경제지표",
+    "title": "🇪🇺 HCOB Eurozone Services PMI  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-06-23",
     "time": "14:00",
     "category": "IR",
     "title": "코이즈 IR (경영현황)",
@@ -45194,6 +45435,33 @@
     "title": "퓨쳐메디신 IR (경영현황)",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "date": "2026-06-23",
+    "time": "16:45",
+    "category": "경제지표",
+    "title": "🇺🇸 S&P Global Manufacturing PMI  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-06-23",
+    "time": "16:45",
+    "category": "경제지표",
+    "title": "🇺🇸 S&P Global Composite PMI  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-06-23",
+    "time": "16:45",
+    "category": "경제지표",
+    "title": "🇺🇸 S&P Global Services PMI  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
   },
   {
     "date": "2026-06-24",
@@ -45278,6 +45546,14 @@
   },
   {
     "date": "2026-06-24",
+    "time": "10:20",
+    "category": "IR",
+    "title": "지슨 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-24",
     "time": "14:00",
     "category": "IR",
     "title": "코셋 IR (경영현황)",
@@ -45286,11 +45562,38 @@
   },
   {
     "date": "2026-06-24",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Current Account  (Q1)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-06-24",
     "time": "16:00",
     "category": "IR",
     "title": "엔에스컴퍼니 IR (경영현황)",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "date": "2026-06-24",
+    "time": "17:00",
+    "category": "경제지표",
+    "title": "🇺🇸 New Home Sales  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-06-24",
+    "time": "17:00",
+    "category": "경제지표",
+    "title": "🇺🇸 New Home Sales (MoM)  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
   },
   {
     "date": "2026-06-25",
@@ -45302,11 +45605,127 @@
   },
   {
     "date": "2026-06-25",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "핸즈코퍼레이션 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-25",
     "time": "14:00",
     "category": "IR",
     "title": "코스텍시스템 IR (경영현황)",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "date": "2026-06-25",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Continuing Jobless Claims",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-06-25",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Core Durable Goods Orders (MoM)  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-06-25",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Core PCE Price Index (MoM)  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-06-25",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Core PCE Price Index (YoY)  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-06-25",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Core PCE Prices  (Q1)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-06-25",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Durable Goods Orders (MoM)  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-06-25",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 GDP (QoQ)  (Q1)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-06-25",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 GDP Price Index (QoQ)  (Q1)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-06-25",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Initial Jobless Claims",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-06-25",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 PCE price index (MoM)  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-06-25",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 PCE Price index (YoY)  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-06-25",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Personal Spending (MoM)  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
   },
   {
     "date": "2026-06-25",
@@ -45602,6 +46021,14 @@
   },
   {
     "date": "2026-06-30",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "알지노믹스 무상증자",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-30",
     "time": "10:30",
     "category": "경제지표",
     "title": "중국 제조업 PMI (6월)",
@@ -45646,6 +46073,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "캔버스엔 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-01",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "가온전선 무상증자",
     "source": "fnguide",
     "auto": true
   },
@@ -46110,6 +46545,14 @@
   {
     "date": "2026-07-13",
     "time": "",
+    "category": "IPO/공모",
+    "title": "에이치엘지노믹스 공모청약 (07/13~07/14)",
+    "source": "38cr",
+    "auto": true
+  },
+  {
+    "date": "2026-07-13",
+    "time": "",
     "category": "기업이벤트",
     "title": "플루토스 액면병합",
     "source": "fnguide",
@@ -46184,6 +46627,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "웨이버스 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-15",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "에이루트 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -46599,6 +47050,14 @@
   },
   {
     "date": "2026-07-29",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "에이루트 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-29",
     "time": "04:00",
     "category": "통화정책",
     "title": "FOMC 금리 결정",
@@ -46710,6 +47169,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "케이앤에스아이앤씨 유상증자(일반공모)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-31",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "덕신이피씨 액면병합",
     "source": "fnguide",
     "auto": true
   },
@@ -47660,6 +48127,22 @@
     "time": "",
     "category": "기업이벤트",
     "title": "큐브엔터 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-09-01",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "삼보산업 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-09-01",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "유비온 액면병합",
     "source": "fnguide",
     "auto": true
   },
