@@ -44434,6 +44434,14 @@
   {
     "date": "2026-06-17",
     "time": "",
+    "category": "IR",
+    "title": "신세계 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-17",
+    "time": "",
     "category": "기업이벤트",
     "title": "수성웹툰 유상증자(3자배정)",
     "source": "fnguide",
@@ -44522,9 +44530,25 @@
   },
   {
     "date": "2026-06-17",
+    "time": "09:00",
+    "category": "IR",
+    "title": "클래시스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-17",
     "time": "10:00",
     "category": "IR",
     "title": "젬백스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-17",
+    "time": "10:00",
+    "category": "IR",
+    "title": "효성중공업 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -44859,6 +44883,14 @@
   },
   {
     "date": "2026-06-18",
+    "time": "09:00",
+    "category": "IR",
+    "title": "아이티센글로벌 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-18",
     "time": "10:00",
     "category": "IR",
     "title": "케이엔제이 IR (경영현황)",
@@ -45105,12 +45137,28 @@
   },
   {
     "date": "2026-06-19",
+    "time": "10:00",
+    "category": "IR",
+    "title": "나우로보틱스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-19",
     "time": "10:10",
     "category": "통화정책",
     "title": "🇪🇺 ECB's Lane Speaks",
     "source": "investing",
     "auto": true,
     "country": "🇪🇺"
+  },
+  {
+    "date": "2026-06-19",
+    "time": "13:00",
+    "category": "IR",
+    "title": "브이원텍 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-06-19",
@@ -45348,6 +45396,14 @@
   {
     "date": "2026-06-23",
     "time": "",
+    "category": "IR",
+    "title": "신한지주 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-23",
+    "time": "",
     "category": "기업이벤트",
     "title": "스트라드비젼 유상증자(3자배정)",
     "source": "fnguide",
@@ -45422,9 +45478,25 @@
   },
   {
     "date": "2026-06-23",
+    "time": "13:10",
+    "category": "IR",
+    "title": "드림씨아이에스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-23",
     "time": "14:00",
     "category": "IR",
     "title": "코이즈 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-23",
+    "time": "14:00",
+    "category": "IR",
+    "title": "월덱스 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -45557,6 +45629,14 @@
     "time": "14:00",
     "category": "IR",
     "title": "코셋 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-24",
+    "time": "14:00",
+    "category": "IR",
+    "title": "현대백화점 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -45781,6 +45861,22 @@
     "time": "",
     "category": "기업이벤트",
     "title": "엑시온그룹 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-26",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "노브메타파마 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-26",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "광진실업 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -46717,6 +46813,14 @@
   },
   {
     "date": "2026-07-17",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "에이치엘지노믹스 유상증자(일반공모)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-17",
     "time": "17:45",
     "category": "통화정책",
     "title": "🇺🇸 Atlanta Fed GDPNow  (Q2)",
@@ -46988,6 +47092,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "베셀 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-28",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "오에스피 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -47697,6 +47809,14 @@
     "source": "fixed",
     "auto": false,
     "country": "🇺🇸"
+  },
+  {
+    "date": "2026-08-13",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "영화금속 액면병합",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-08-13",
