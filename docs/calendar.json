@@ -46649,6 +46649,14 @@
   {
     "date": "2026-07-13",
     "time": "",
+    "category": "IPO/공모",
+    "title": "레메디 신규상장",
+    "source": "38cr",
+    "auto": true
+  },
+  {
+    "date": "2026-07-13",
+    "time": "",
     "category": "기업이벤트",
     "title": "플루토스 액면병합",
     "source": "fnguide",
@@ -48942,11 +48950,27 @@
     "country": "🇺🇸"
   },
   {
+    "date": "2026-11-11",
+    "time": "",
+    "category": "미국실적",
+    "title": "DIS 실적발표 (장후) [EPS est. $1.7922]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
     "date": "2026-11-12",
     "time": "",
     "category": "만기일",
     "title": "11월 옵션만기일",
     "source": "news",
+    "auto": true
+  },
+  {
+    "date": "2026-11-12",
+    "time": "",
+    "category": "미국실적",
+    "title": "AMAT 실적발표 (장후) [EPS est. $3.687]",
+    "source": "finnhub",
     "auto": true
   },
   {
@@ -48966,6 +48990,38 @@
     "source": "news",
     "auto": true,
     "endDate": "2026-11-19"
+  },
+  {
+    "date": "2026-11-17",
+    "time": "",
+    "category": "미국실적",
+    "title": "NVDA 실적발표 (장후) [EPS est. $2.3985]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-11-17",
+    "time": "",
+    "category": "미국실적",
+    "title": "PANW 실적발표 [EPS est. $0.9496]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-11-19",
+    "time": "",
+    "category": "미국실적",
+    "title": "WMT 실적발표 [EPS est. $0.6878]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-11-25",
+    "time": "",
+    "category": "미국실적",
+    "title": "DE 실적발표 (장후) [EPS est. $4.5653]",
+    "source": "finnhub",
+    "auto": true
   },
   {
     "date": "2026-11-26",
@@ -48997,12 +49053,36 @@
   },
   {
     "date": "2026-11-30",
+    "time": "",
+    "category": "미국실적",
+    "title": "MRVL 실적발표 [EPS est. $1.086]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-11-30",
     "time": "10:30",
     "category": "경제지표",
     "title": "중국 제조업 PMI (11월)",
     "source": "fixed",
     "auto": false,
     "country": "🇨🇳"
+  },
+  {
+    "date": "2026-12-01",
+    "time": "",
+    "category": "미국실적",
+    "title": "CRM 실적발표 (장후) [EPS est. $3.3913]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-12-01",
+    "time": "",
+    "category": "미국실적",
+    "title": "SNOW 실적발표 (장후) [EPS est. $0.5254]",
+    "source": "finnhub",
+    "auto": true
   },
   {
     "category": "에너지",
@@ -49072,6 +49152,38 @@
     "country": "🇺🇸"
   },
   {
+    "date": "2026-12-08",
+    "time": "",
+    "category": "미국실적",
+    "title": "ADBE 실적발표 (장후) [EPS est. $6.4089]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-12-08",
+    "time": "",
+    "category": "미국실적",
+    "title": "ORCL 실적발표 [EPS est. $1.9193]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-12-09",
+    "time": "",
+    "category": "미국실적",
+    "title": "AVGO 실적발표 (장후) [EPS est. $3.9429]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-12-09",
+    "time": "",
+    "category": "미국실적",
+    "title": "COST 실적발표 [EPS est. $4.9698]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
     "date": "2026-12-09",
     "time": "22:00",
     "category": "통화정책",
@@ -49106,6 +49218,22 @@
     "source": "fixed",
     "auto": false,
     "country": "🇺🇸"
+  },
+  {
+    "date": "2026-12-15",
+    "time": "",
+    "category": "미국실적",
+    "title": "MU 실적발표 (장후) [EPS est. $28.2964]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-12-16",
+    "time": "",
+    "category": "미국실적",
+    "title": "NKE 실적발표 [EPS est. $0.5998]",
+    "source": "finnhub",
+    "auto": true
   },
   {
     "date": "2026-12-16",
