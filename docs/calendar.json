@@ -45321,6 +45321,14 @@
   {
     "date": "2026-06-22",
     "time": "",
+    "category": "IR",
+    "title": "KB금융 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-22",
+    "time": "",
     "category": "기업이벤트",
     "title": "오에스피 무상증자",
     "source": "fnguide",
@@ -45355,6 +45363,22 @@
   },
   {
     "date": "2026-06-22",
+    "time": "09:00",
+    "category": "IR",
+    "title": "HLB이노베이션 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-22",
+    "time": "09:00",
+    "category": "IR",
+    "title": "루닛 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-22",
     "time": "09:10",
     "category": "IR",
     "title": "퀀타매트릭스 IR (경영현황)",
@@ -45371,9 +45395,26 @@
   },
   {
     "date": "2026-06-22",
+    "time": "13:00",
+    "category": "통화정책",
+    "title": "🇪🇺 ECB President Lagarde Speaks",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-06-22",
     "time": "13:30",
     "category": "IR",
     "title": "인바이츠바이오코아 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-22",
+    "time": "14:00",
+    "category": "IR",
+    "title": "현대모비스 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -45388,11 +45429,10 @@
   {
     "date": "2026-06-22",
     "time": "15:30",
-    "category": "통화정책",
-    "title": "🇪🇺 ECB President Lagarde Speaks",
-    "source": "investing",
-    "auto": true,
-    "country": "🇪🇺"
+    "category": "IR",
+    "title": "HLB IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-06-22",
@@ -45402,6 +45442,15 @@
     "source": "investing",
     "auto": true,
     "country": "🇺🇸"
+  },
+  {
+    "date": "2026-06-22",
+    "time": "17:10",
+    "category": "통화정책",
+    "title": "🇪🇺 ECB's Lane Speaks",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
   },
   {
     "date": "2026-06-22",
@@ -45467,6 +45516,14 @@
   {
     "date": "2026-06-23",
     "time": "",
+    "category": "IR",
+    "title": "하나금융지주 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-23",
+    "time": "",
     "category": "기업이벤트",
     "title": "스트라드비젼 유상증자(3자배정)",
     "source": "fnguide",
@@ -45506,9 +45563,41 @@
   },
   {
     "date": "2026-06-23",
+    "time": "09:00",
+    "category": "IR",
+    "title": "씨엠티엑스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-23",
+    "time": "09:00",
+    "category": "IR",
+    "title": "컴투스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-23",
     "time": "10:00",
     "category": "IR",
     "title": "현대건설 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-23",
+    "time": "10:00",
+    "category": "IR",
+    "title": "아모레퍼시픽 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-23",
+    "time": "10:00",
+    "category": "IR",
+    "title": "현대자동차 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -45535,6 +45624,15 @@
     "time": "11:00",
     "category": "경제지표",
     "title": "🇪🇺 HCOB Eurozone Services PMI  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-06-23",
+    "time": "11:30",
+    "category": "통화정책",
+    "title": "🇪🇺 ECB's Lane Speaks",
     "source": "investing",
     "auto": true,
     "country": "🇪🇺"
@@ -45582,6 +45680,15 @@
   },
   {
     "date": "2026-06-23",
+    "time": "16:15",
+    "category": "통화정책",
+    "title": "🇪🇺 ECB's Elderson Speaks",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-06-23",
     "time": "16:45",
     "category": "경제지표",
     "title": "🇺🇸 S&P Global Manufacturing PMI  (Jun)",
@@ -45622,6 +45729,14 @@
     "category": "IPO/공모",
     "title": "레몬헬스케어 공모청약 (06/24~06/25)",
     "source": "38cr",
+    "auto": true
+  },
+  {
+    "date": "2026-06-24",
+    "time": "",
+    "category": "IR",
+    "title": "기아 IR (경영현황)",
+    "source": "fnguide",
     "auto": true
   },
   {
@@ -45699,9 +45814,33 @@
   },
   {
     "date": "2026-06-24",
+    "time": "09:00",
+    "category": "IR",
+    "title": "성호전자 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-24",
     "time": "10:20",
     "category": "IR",
     "title": "지슨 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-24",
+    "time": "10:30",
+    "category": "IR",
+    "title": "티쓰리 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-24",
+    "time": "13:10",
+    "category": "IR",
+    "title": "에이치와이티씨 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -45718,6 +45857,14 @@
     "time": "14:00",
     "category": "IR",
     "title": "현대백화점 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-24",
+    "time": "14:00",
+    "category": "IR",
+    "title": "뉴엔AI IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -45801,12 +45948,37 @@
   },
   {
     "date": "2026-06-25",
+    "time": "10:30",
+    "category": "IR",
+    "title": "바이오포트 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-25",
     "time": "11:00",
     "category": "통화정책",
     "title": "🇪🇺 ECB Economic Bulletin",
     "source": "investing",
     "auto": true,
     "country": "🇪🇺"
+  },
+  {
+    "date": "2026-06-25",
+    "time": "13:00",
+    "category": "통화정책",
+    "title": "🇪🇺 ECB's Lane Speaks",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-06-25",
+    "time": "13:10",
+    "category": "IR",
+    "title": "지니언스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-06-25",
@@ -46217,6 +46389,31 @@
     "auto": true
   },
   {
+    "date": "2026-06-27",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "넥써쓰 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-27",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "테라사이언스 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-27",
+    "time": "16:45",
+    "category": "통화정책",
+    "title": "🇪🇺 ECB's Schnabel Speaks",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
     "date": "2026-06-29",
     "time": "",
     "category": "IPO/공모",
@@ -46255,6 +46452,22 @@
     "time": "",
     "category": "기업이벤트",
     "title": "엠앤씨솔루션 무상증자",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-29",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "프리티 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-29",
+    "time": "09:00",
+    "category": "IR",
+    "title": "테크윙 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -46341,6 +46554,30 @@
   },
   {
     "date": "2026-06-30",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "비트맥스 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-30",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "비비안 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-30",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "제테마 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-30",
     "time": "04:30",
     "category": "경제지표",
     "title": "🇨🇳 Chinese Composite PMI  (Jun)",
@@ -46374,6 +46611,14 @@
     "source": "fixed",
     "auto": false,
     "country": "🇨🇳"
+  },
+  {
+    "date": "2026-06-30",
+    "time": "14:00",
+    "category": "IR",
+    "title": "경동인베스트 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-06-30",
