@@ -45742,6 +45742,22 @@
   {
     "date": "2026-06-24",
     "time": "",
+    "category": "IR",
+    "title": "카카오페이 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-24",
+    "time": "",
+    "category": "IR",
+    "title": "티엠씨 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-24",
+    "time": "",
     "category": "기업이벤트",
     "title": "CSA 코스믹 유상증자(3자배정)",
     "source": "fnguide",
@@ -46191,6 +46207,14 @@
     "time": "09:00",
     "category": "IR",
     "title": "인터로이드 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-26",
+    "time": "10:00",
+    "category": "IR",
+    "title": "SK시그넷 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -46946,6 +46970,14 @@
   {
     "date": "2026-07-03",
     "time": "",
+    "category": "기업이벤트",
+    "title": "테라사이언스 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-03",
+    "time": "",
     "category": "만기일",
     "title": "🇺🇸 미국 휴장 (Independence Day)",
     "source": "fixed",
@@ -46960,6 +46992,86 @@
     "source": "fixed",
     "auto": false,
     "country": ""
+  },
+  {
+    "date": "2026-07-03",
+    "time": "09:30",
+    "category": "IR",
+    "title": "티엘엔지니어링 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-03",
+    "time": "09:30",
+    "category": "IR",
+    "title": "진코스텍 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-03",
+    "time": "09:30",
+    "category": "IR",
+    "title": "유비씨 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-03",
+    "time": "09:30",
+    "category": "IR",
+    "title": "한국미라클피플사 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-03",
+    "time": "09:30",
+    "category": "IR",
+    "title": "이엠티 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-03",
+    "time": "09:30",
+    "category": "IR",
+    "title": "바스칸바이오제약 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-03",
+    "time": "09:30",
+    "category": "IR",
+    "title": "엔솔바이오사이언스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-03",
+    "time": "09:30",
+    "category": "IR",
+    "title": "노브메타파마 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-03",
+    "time": "09:30",
+    "category": "IR",
+    "title": "메디쎄이 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-03",
+    "time": "09:30",
+    "category": "IR",
+    "title": "루켄테크놀러지스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-07-04",
@@ -47389,6 +47501,14 @@
   },
   {
     "date": "2026-07-17",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "에이치엘지노믹스 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-17",
     "time": "17:45",
     "category": "통화정책",
     "title": "🇺🇸 Atlanta Fed GDPNow  (Q2)",
@@ -47549,6 +47669,14 @@
     "auto": true
   },
   {
+    "date": "2026-07-23",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "디에이치엑스컴퍼니 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "category": "수동",
     "title": "전 바클레이스 CEO 제프리 엡스타인 관련 청문회",
     "source": "ai_scan",
@@ -47595,6 +47723,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "엑사이엔씨 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-24",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "모아라이프플러스 액면병합",
     "source": "fnguide",
     "auto": true
   },
@@ -48186,6 +48322,14 @@
     "auto": true
   },
   {
+    "date": "2026-08-11",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "트리니티항공 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-08-12",
     "time": "",
     "category": "기업이벤트",
@@ -48696,6 +48840,14 @@
   {
     "date": "2026-08-25",
     "time": "",
+    "category": "기업이벤트",
+    "title": "센서뷰 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-25",
+    "time": "",
     "category": "미국실적",
     "title": "NVDA 실적발표 (장후) [EPS est. $2.1196]",
     "source": "finnhub",
@@ -48798,6 +48950,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "넥스턴앤롤코리아 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-29",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "프리티 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -48974,6 +49134,22 @@
     "auto": true
   },
   {
+    "date": "2026-09-12",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "SG 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-09-15",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "휴림에이텍 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-09-15",
     "time": "21:30",
     "category": "경제지표",
@@ -49035,6 +49211,22 @@
     "auto": false,
     "country": "",
     "summary": "FTSE 분기 리밸런싱"
+  },
+  {
+    "date": "2026-09-19",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "우성머티리얼스 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-09-19",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "HLB제약 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-09-23",
