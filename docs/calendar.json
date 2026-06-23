@@ -45524,6 +45524,14 @@
   {
     "date": "2026-06-23",
     "time": "",
+    "category": "IR",
+    "title": "한미반도체 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-23",
+    "time": "",
     "category": "기업이벤트",
     "title": "스트라드비젼 유상증자(3자배정)",
     "source": "fnguide",
@@ -45603,6 +45611,14 @@
   },
   {
     "date": "2026-06-23",
+    "time": "10:00",
+    "category": "IR",
+    "title": "LG IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-23",
     "time": "11:00",
     "category": "경제지표",
     "title": "🇪🇺 HCOB Eurozone Manufacturing PMI  (Jun)",
@@ -45658,6 +45674,14 @@
     "time": "14:00",
     "category": "IR",
     "title": "월덱스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-23",
+    "time": "14:00",
+    "category": "IR",
+    "title": "유비온 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -45838,6 +45862,14 @@
   },
   {
     "date": "2026-06-24",
+    "time": "10:00",
+    "category": "IR",
+    "title": "성광벤드 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-24",
     "time": "10:20",
     "category": "IR",
     "title": "지슨 IR (경영현황)",
@@ -45862,6 +45894,14 @@
   },
   {
     "date": "2026-06-24",
+    "time": "13:30",
+    "category": "IR",
+    "title": "아바코 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-24",
     "time": "14:00",
     "category": "IR",
     "title": "코셋 IR (경영현황)",
@@ -45881,6 +45921,22 @@
     "time": "14:00",
     "category": "IR",
     "title": "뉴엔AI IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-24",
+    "time": "14:10",
+    "category": "IR",
+    "title": "이노메트리 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-24",
+    "time": "15:10",
+    "category": "IR",
+    "title": "오공 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -46602,6 +46658,14 @@
   },
   {
     "date": "2026-06-30",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "SK시그넷 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-30",
     "time": "04:30",
     "category": "경제지표",
     "title": "🇨🇳 Chinese Composite PMI  (Jun)",
@@ -46955,6 +47019,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "풍전약품 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-02",
+    "time": "14:00",
+    "category": "IR",
+    "title": "POSCO홀딩스 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -47998,6 +48070,14 @@
   },
   {
     "date": "2026-07-31",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "케이앤에스아이앤씨 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-31",
     "time": "10:30",
     "category": "경제지표",
     "title": "중국 제조업 PMI (7월)",
@@ -48527,6 +48607,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "영화금속 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-13",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "사조동아원 액면병합",
     "source": "fnguide",
     "auto": true
   },
@@ -49157,6 +49245,14 @@
     "source": "fixed",
     "auto": false,
     "country": "🇺🇸"
+  },
+  {
+    "date": "2026-09-16",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "툴젠 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-09-16",
