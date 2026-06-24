@@ -45587,6 +45587,14 @@
   },
   {
     "date": "2026-06-23",
+    "time": "09:00",
+    "category": "IR",
+    "title": "현대모비스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-23",
     "time": "10:00",
     "category": "IR",
     "title": "현대건설 IR (경영현황)",
@@ -45614,6 +45622,14 @@
     "time": "10:00",
     "category": "IR",
     "title": "LG IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-23",
+    "time": "10:00",
+    "category": "IR",
+    "title": "효성중공업 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -45846,6 +45862,14 @@
   },
   {
     "date": "2026-06-24",
+    "time": "08:00",
+    "category": "IR",
+    "title": "HLB IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-24",
     "time": "09:00",
     "category": "IR",
     "title": "제이에스링크 IR (경영현황)",
@@ -45862,9 +45886,25 @@
   },
   {
     "date": "2026-06-24",
+    "time": "09:00",
+    "category": "IR",
+    "title": "코스맥스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-24",
     "time": "10:00",
     "category": "IR",
     "title": "성광벤드 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-24",
+    "time": "10:00",
+    "category": "IR",
+    "title": "유진테크놀로지 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -45894,9 +45934,25 @@
   },
   {
     "date": "2026-06-24",
+    "time": "13:10",
+    "category": "IR",
+    "title": "대명에너지 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-24",
     "time": "13:30",
     "category": "IR",
     "title": "아바코 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-24",
+    "time": "13:30",
+    "category": "IR",
+    "title": "저스템 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -45937,6 +45993,14 @@
     "time": "15:10",
     "category": "IR",
     "title": "오공 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-24",
+    "time": "15:10",
+    "category": "IR",
+    "title": "선익시스템 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -46167,6 +46231,14 @@
     "source": "investing",
     "auto": true,
     "country": "🇺🇸"
+  },
+  {
+    "date": "2026-06-25",
+    "time": "15:40",
+    "category": "IR",
+    "title": "리센스메디컬 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-06-25",
@@ -46553,6 +46625,14 @@
   },
   {
     "date": "2026-06-29",
+    "time": "10:00",
+    "category": "IR",
+    "title": "케이피에프 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-29",
     "time": "14:00",
     "category": "IR",
     "title": "크로넥스 IR (경영현황)",
@@ -46802,6 +46882,14 @@
     "auto": true
   },
   {
+    "date": "2026-07-01",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "아리바이오랩 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "category": "수동",
     "title": "사잇돌대출 확대 시행",
     "source": "ai_scan",
@@ -47024,9 +47112,33 @@
   },
   {
     "date": "2026-07-02",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "트리니티항공 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-02",
+    "time": "09:30",
+    "category": "IR",
+    "title": "보로노이 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-02",
     "time": "14:00",
     "category": "IR",
     "title": "POSCO홀딩스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-02",
+    "time": "14:30",
+    "category": "IR",
+    "title": "선익시스템 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -47488,6 +47600,14 @@
   },
   {
     "date": "2026-07-15",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "핑거스토리 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-15",
     "time": "21:30",
     "category": "경제지표",
     "title": "미국 CPI (6월)",
@@ -47500,6 +47620,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "디에이치엑스컴퍼니 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-16",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "아미코젠 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -47803,6 +47931,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "모아라이프플러스 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-24",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "압타머사이언스 액면병합",
     "source": "fnguide",
     "auto": true
   },
@@ -48146,6 +48282,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "대양금속 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-01",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "비비안 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -48691,6 +48835,14 @@
     "auto": true
   },
   {
+    "date": "2026-08-14",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "서한 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-08-15",
     "time": "",
     "category": "기업이벤트",
@@ -48800,6 +48952,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "우리엔터프라이즈 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-19",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "진흥기업 액면병합",
     "source": "fnguide",
     "auto": true
   },
