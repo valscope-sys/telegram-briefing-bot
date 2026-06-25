@@ -45798,6 +45798,14 @@
   {
     "date": "2026-06-24",
     "time": "",
+    "category": "IR",
+    "title": "삼성물산 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-24",
+    "time": "",
     "category": "기업이벤트",
     "title": "CSA 코스믹 유상증자(3자배정)",
     "source": "fnguide",
@@ -45982,9 +45990,25 @@
   },
   {
     "date": "2026-06-24",
+    "time": "14:00",
+    "category": "IR",
+    "title": "하이텍팜 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-24",
     "time": "14:10",
     "category": "IR",
     "title": "이노메트리 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-24",
+    "time": "14:10",
+    "category": "IR",
+    "title": "지투파워 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -46084,9 +46108,25 @@
   },
   {
     "date": "2026-06-25",
+    "time": "10:20",
+    "category": "IR",
+    "title": "동방메디컬 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-25",
     "time": "10:30",
     "category": "IR",
     "title": "바이오포트 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-25",
+    "time": "10:30",
+    "category": "IR",
+    "title": "메카로 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -46118,9 +46158,25 @@
   },
   {
     "date": "2026-06-25",
+    "time": "13:10",
+    "category": "IR",
+    "title": "더블유씨피 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-25",
     "time": "14:00",
     "category": "IR",
     "title": "코스텍시스템 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-25",
+    "time": "15:10",
+    "category": "IR",
+    "title": "조이시티 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -46253,6 +46309,14 @@
     "time": "16:00",
     "category": "IR",
     "title": "제이엠멀티 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-25",
+    "time": "16:00",
+    "category": "IR",
+    "title": "나우로보틱스 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -46620,6 +46684,14 @@
     "time": "09:00",
     "category": "IR",
     "title": "테크윙 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-29",
+    "time": "09:00",
+    "category": "IR",
+    "title": "레이저쎌 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -46999,6 +47071,14 @@
   },
   {
     "date": "2026-07-01",
+    "time": "13:30",
+    "category": "IR",
+    "title": "클래시스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-01",
     "time": "18:30",
     "category": "통화정책",
     "title": "🇺🇸 Atlanta Fed GDPNow  (Q2)",
@@ -47120,6 +47200,14 @@
   },
   {
     "date": "2026-07-02",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "경남제약 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-02",
     "time": "09:30",
     "category": "IR",
     "title": "보로노이 IR (경영현황)",
@@ -47156,6 +47244,22 @@
     "time": "",
     "category": "기업이벤트",
     "title": "테라사이언스 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-03",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "오가닉티코스메틱 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-03",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "인콘 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -47443,6 +47547,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "미래산업 액면분할",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-09",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "오리엔트정공 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -47943,6 +48055,14 @@
     "auto": true
   },
   {
+    "date": "2026-07-24",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "아센디오 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-07-25",
     "time": "",
     "category": "기업이벤트",
@@ -48012,6 +48132,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "오에스피 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-28",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "헝셩그룹 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
