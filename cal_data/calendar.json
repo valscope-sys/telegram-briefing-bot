@@ -46183,6 +46183,14 @@
   {
     "date": "2026-06-25",
     "time": "15:30",
+    "category": "IR",
+    "title": "뉴로메카 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-25",
+    "time": "15:30",
     "category": "경제지표",
     "title": "🇺🇸 Continuing Jobless Claims",
     "source": "investing",
@@ -46407,6 +46415,14 @@
     "time": "10:00",
     "category": "IR",
     "title": "SK시그넷 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-26",
+    "time": "10:00",
+    "category": "IR",
+    "title": "DH오토웨어 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -46845,6 +46861,14 @@
   },
   {
     "date": "2026-06-30",
+    "time": "09:00",
+    "category": "IR",
+    "title": "클로봇 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-30",
     "time": "10:30",
     "category": "경제지표",
     "title": "중국 제조업 PMI (6월)",
@@ -46857,6 +46881,14 @@
     "time": "14:00",
     "category": "IR",
     "title": "경동인베스트 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-30",
+    "time": "14:00",
+    "category": "IR",
+    "title": "현대백화점 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -47500,6 +47532,14 @@
     "auto": true
   },
   {
+    "date": "2026-07-07",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "케이지에이 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "category": "정치/외교",
     "title": "미국 강제노동 관세 공청회",
     "source": "ai_scan",
@@ -48063,6 +48103,14 @@
     "auto": true
   },
   {
+    "date": "2026-07-24",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "에이프릴바이오 유상증자(3자배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-07-25",
     "time": "",
     "category": "기업이벤트",
@@ -48441,6 +48489,14 @@
   {
     "date": "2026-08-03",
     "time": "",
+    "category": "IPO/공모",
+    "title": "딜리셔스 공모청약 (08/03~08/04)",
+    "source": "38cr",
+    "auto": true
+  },
+  {
+    "date": "2026-08-03",
+    "time": "",
     "category": "기업이벤트",
     "title": "뉴로메카 무상증자",
     "source": "fnguide",
@@ -48581,6 +48637,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "시그네틱스 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-07",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "딜리셔스 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -49198,6 +49262,14 @@
     "auto": true
   },
   {
+    "date": "2026-08-22",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "디알텍 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-08-25",
     "time": "",
     "category": "기업이벤트",
@@ -49218,6 +49290,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "센서뷰 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-25",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "SDN 액면병합",
     "source": "fnguide",
     "auto": true
   },
@@ -49522,6 +49602,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "휴림에이텍 유상증자(주주배정)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-09-15",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "셀레믹스 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
