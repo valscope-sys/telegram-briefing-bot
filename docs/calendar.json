@@ -46658,7 +46658,23 @@
     "time": "",
     "category": "IPO/공모",
     "title": "져스텍 신규상장",
-    "source": "38cr",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-29",
+    "time": "",
+    "category": "IR",
+    "title": "LG화학 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-29",
+    "time": "",
+    "category": "IR",
+    "title": "카카오뱅크 IR (경영현황)",
+    "source": "fnguide",
     "auto": true
   },
   {
@@ -46708,6 +46724,22 @@
     "time": "09:00",
     "category": "IR",
     "title": "레이저쎌 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-29",
+    "time": "09:00",
+    "category": "IR",
+    "title": "두산에너빌리티 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-06-29",
+    "time": "09:00",
+    "category": "IR",
+    "title": "파마리서치 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
@@ -47444,6 +47476,22 @@
     "summary": "USTR이 한국 등 54개국에 12.5% 추가관세 부과 관련 공개 의견 수렴을 7월 6일까지 진행"
   },
   {
+    "date": "2026-07-06",
+    "time": "16:00",
+    "category": "IR",
+    "title": "엘디티 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-06",
+    "time": "16:00",
+    "category": "IR",
+    "title": "티에스이 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-07-07",
     "time": "",
     "category": "기업이벤트",
@@ -47547,6 +47595,14 @@
     "date": "2026-07-07",
     "time": "",
     "summary": "USTR이 한국 등에 대한 강제노동 관세 부과 관련 공청회 개최. 이후 관세 부과 예정"
+  },
+  {
+    "date": "2026-07-07",
+    "time": "15:00",
+    "category": "IR",
+    "title": "펄어비스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-07-07",
@@ -48530,6 +48586,14 @@
   {
     "date": "2026-08-05",
     "time": "",
+    "category": "IPO/공모",
+    "title": "니어스랩 공모청약 (08/05~08/06)",
+    "source": "38cr",
+    "auto": true
+  },
+  {
+    "date": "2026-08-05",
+    "time": "",
     "category": "기업이벤트",
     "title": "미스터블루 액면병합",
     "source": "fnguide",
@@ -48650,6 +48714,14 @@
   },
   {
     "date": "2026-08-07",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "딜리셔스 유상증자(일반공모)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-07",
     "time": "21:30",
     "category": "경제지표",
     "title": "미국 비농업 고용 (7월)",
@@ -48742,6 +48814,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "트리니티항공 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-11",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "니어스랩 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
   },
@@ -49545,6 +49625,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "엣지파운드리 유상증자(일반공모)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-09-08",
+    "time": "",
+    "category": "기업이벤트",
+    "title": "이렘 유상증자(주주배정)",
     "source": "fnguide",
     "auto": true
   },
