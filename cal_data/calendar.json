@@ -46764,7 +46764,7 @@
     "time": "",
     "category": "IPO/공모",
     "title": "스트라드비젼 신규상장",
-    "source": "38cr",
+    "source": "fnguide",
     "auto": true
   },
   {
@@ -47422,6 +47422,14 @@
     "time": "09:30",
     "category": "IR",
     "title": "루켄테크놀러지스 IR (경영현황)",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-03",
+    "time": "13:30",
+    "category": "IR",
+    "title": "에코앤드림 IR (경영현황)",
     "source": "fnguide",
     "auto": true
   },
