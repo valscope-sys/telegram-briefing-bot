@@ -48028,9 +48028,45 @@
   },
   {
     "date": "2026-07-07",
+    "time": "15:15",
+    "category": "경제지표",
+    "title": "🇺🇸 ADP Employment Change Weekly",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-07",
     "time": "15:30",
     "category": "경제지표",
     "title": "🇺🇸 Trade Balance  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-07",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Exports",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-07",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Imports",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-07",
+    "time": "18:00",
+    "category": "통화정책",
+    "title": "🇺🇸 NY Fed 1-Year Consumer Inflation Expectations",
     "source": "investing",
     "auto": true,
     "country": "🇺🇸"
@@ -48128,6 +48164,42 @@
     "source": "investing",
     "auto": true,
     "country": "🇨🇳"
+  },
+  {
+    "date": "2026-07-09",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Continuing Jobless Claims",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-09",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Initial Jobless Claims",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-09",
+    "time": "17:00",
+    "category": "경제지표",
+    "title": "🇺🇸 Existing Home Sales  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-09",
+    "time": "17:00",
+    "category": "경제지표",
+    "title": "🇺🇸 Existing Home Sales (MoM)  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
   },
   {
     "date": "2026-07-10",
@@ -48560,6 +48632,14 @@
     "time": "",
     "unconfirmed": true,
     "summary": "전 바클레이스 CEO가 제프리 엡스타인과의 관계에 대해 감독 위원회 인터뷰 예정"
+  },
+  {
+    "date": "2026-07-24",
+    "time": "",
+    "category": "IPO/공모",
+    "title": "에이치엘지노믹스 신규상장",
+    "source": "38cr",
+    "auto": true
   },
   {
     "date": "2026-07-24",
