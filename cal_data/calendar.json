@@ -47215,6 +47215,15 @@
   },
   {
     "date": "2026-07-01",
+    "time": "14:45",
+    "category": "통화정책",
+    "title": "🇺🇸 FOMC Member Daly Speaks",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-01",
     "time": "15:15",
     "category": "경제지표",
     "title": "🇺🇸 ADP Nonfarm Employment Change  (Jun)",
@@ -47296,9 +47305,18 @@
   },
   {
     "date": "2026-07-01",
-    "time": "18:30",
+    "time": "19:30",
     "category": "통화정책",
     "title": "🇺🇸 Atlanta Fed GDPNow  (Q2)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-01",
+    "time": "22:15",
+    "category": "경제지표",
+    "title": "🇺🇸 U.S. President Trump Speaks",
     "source": "investing",
     "auto": true,
     "country": "🇺🇸"
@@ -48064,6 +48082,24 @@
   },
   {
     "date": "2026-07-07",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Exports  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-07",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Imports  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-07",
     "time": "18:00",
     "category": "통화정책",
     "title": "🇺🇸 NY Fed 1-Year Consumer Inflation Expectations",
@@ -48073,9 +48109,27 @@
   },
   {
     "date": "2026-07-07",
+    "time": "18:00",
+    "category": "통화정책",
+    "title": "🇺🇸 NY Fed 1-Year Consumer Inflation Expectations  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-07",
     "time": "18:30",
     "category": "통화정책",
     "title": "🇺🇸 Atlanta Fed GDPNow  (Q2)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-07",
+    "time": "23:30",
+    "category": "경제지표",
+    "title": "🇺🇸 API Weekly Crude Oil Stock",
     "source": "investing",
     "auto": true,
     "country": "🇺🇸"
@@ -48093,6 +48147,15 @@
     "time": "18:30",
     "category": "통화정책",
     "title": "🇺🇸 Atlanta Fed GDPNow  (Q2)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-08",
+    "time": "21:00",
+    "category": "통화정책",
+    "title": "🇺🇸 FOMC Meeting Minutes",
     "source": "investing",
     "auto": true,
     "country": "🇺🇸"
@@ -48167,6 +48230,15 @@
   },
   {
     "date": "2026-07-09",
+    "time": "13:00",
+    "category": "경제지표",
+    "title": "🇪🇺 Eurogroup Meetings",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-07-09",
     "time": "15:30",
     "category": "경제지표",
     "title": "🇺🇸 Continuing Jobless Claims",
@@ -48179,6 +48251,15 @@
     "time": "15:30",
     "category": "경제지표",
     "title": "🇺🇸 Initial Jobless Claims",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-09",
+    "time": "16:00",
+    "category": "통화정책",
+    "title": "🇺🇸 FOMC Member Williams Speaks",
     "source": "investing",
     "auto": true,
     "country": "🇺🇸"
@@ -48216,6 +48297,23 @@
     "title": "아이텍 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "date": "2026-07-10",
+    "time": "",
+    "category": "한국실적",
+    "title": "세나테크놀로지 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-10",
+    "time": "12:00",
+    "category": "경제지표",
+    "title": "🇺🇸 IEA Monthly Report",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
   },
   {
     "date": "2026-07-11",
@@ -48580,6 +48678,14 @@
     "time": "",
     "category": "기업이벤트",
     "title": "모아라이프플러스 액면병합",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-22",
+    "time": "",
+    "category": "한국실적",
+    "title": "LG디스플레이 실적발표",
     "source": "fnguide",
     "auto": true
   },
@@ -49135,6 +49241,14 @@
     "time": "",
     "category": "IPO/공모",
     "title": "니어스랩 공모청약 (08/05~08/06)",
+    "source": "38cr",
+    "auto": true
+  },
+  {
+    "date": "2026-08-05",
+    "time": "",
+    "category": "IPO/공모",
+    "title": "빅웨이브로보틱스 공모청약 (08/05~08/06)",
     "source": "38cr",
     "auto": true
   },
