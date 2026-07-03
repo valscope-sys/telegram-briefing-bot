@@ -47485,6 +47485,15 @@
   },
   {
     "date": "2026-07-02",
+    "time": "14:45",
+    "category": "통화정책",
+    "title": "🇺🇸 FOMC Member Daly Speaks",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-02",
     "time": "15:30",
     "category": "경제지표",
     "title": "🇺🇸 Average Hourly Earnings (MoM)  (Jun)",
@@ -47932,6 +47941,51 @@
     "country": "🇺🇸"
   },
   {
+    "date": "2026-07-06",
+    "time": "22:30",
+    "category": "경제지표",
+    "title": "🇺🇸 CFTC Crude Oil speculative net positions",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-06",
+    "time": "22:30",
+    "category": "경제지표",
+    "title": "🇺🇸 CFTC Gold speculative net positions",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-06",
+    "time": "22:30",
+    "category": "경제지표",
+    "title": "🇺🇸 CFTC Nasdaq 100 speculative net positions",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-06",
+    "time": "22:30",
+    "category": "경제지표",
+    "title": "🇺🇸 CFTC S&P 500 speculative net positions",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-06",
+    "time": "22:30",
+    "category": "경제지표",
+    "title": "🇪🇺 CFTC EUR speculative net positions",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
     "date": "2026-07-07",
     "time": "",
     "category": "기업이벤트",
@@ -48127,6 +48181,15 @@
   },
   {
     "date": "2026-07-07",
+    "time": "19:00",
+    "category": "경제지표",
+    "title": "🇺🇸 EIA Short-Term Energy Outlook",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-07",
     "time": "23:30",
     "category": "경제지표",
     "title": "🇺🇸 API Weekly Crude Oil Stock",
@@ -48141,6 +48204,15 @@
     "title": "알엔티엑스 액면병합",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "date": "2026-07-08",
+    "time": "17:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Crude Oil Inventories",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
   },
   {
     "date": "2026-07-08",
@@ -48239,6 +48311,15 @@
   },
   {
     "date": "2026-07-09",
+    "time": "14:30",
+    "category": "통화정책",
+    "title": "🇪🇺 ECB Publishes Account of Monetary Policy Meeting",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-07-09",
     "time": "15:30",
     "category": "경제지표",
     "title": "🇺🇸 Continuing Jobless Claims",
@@ -48316,6 +48397,33 @@
     "country": "🇺🇸"
   },
   {
+    "date": "2026-07-10",
+    "time": "19:00",
+    "category": "경제지표",
+    "title": "🇺🇸 WASDE Report",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-10",
+    "time": "20:00",
+    "category": "경제지표",
+    "title": "🇺🇸 U.S. Baker Hughes Oil Rig Count",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-10",
+    "time": "20:00",
+    "category": "경제지표",
+    "title": "🇺🇸 U.S. Baker Hughes Total Rig Count",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
     "date": "2026-07-11",
     "time": "",
     "category": "기업이벤트",
@@ -48364,6 +48472,15 @@
     "auto": true
   },
   {
+    "date": "2026-07-13",
+    "time": "21:00",
+    "category": "경제지표",
+    "title": "🇺🇸 Federal Budget Balance  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
     "date": "2026-07-14",
     "time": "",
     "category": "기업이벤트",
@@ -48394,6 +48511,69 @@
     "title": "올릭스 IR (경영현황)",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "date": "2026-07-14",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Core CPI (MoM)  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-14",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Core CPI (YoY)  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-14",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 CPI (MoM)  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-14",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 CPI (YoY)  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-14",
+    "time": "19:03",
+    "category": "경제지표",
+    "title": "🇨🇳 Exports (YoY)  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇨🇳"
+  },
+  {
+    "date": "2026-07-14",
+    "time": "19:03",
+    "category": "경제지표",
+    "title": "🇨🇳 Imports (YoY)  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇨🇳"
+  },
+  {
+    "date": "2026-07-14",
+    "time": "19:04",
+    "category": "경제지표",
+    "title": "🇨🇳 Trade Balance (USD)  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇨🇳"
   },
   {
     "date": "2026-07-15",
@@ -48450,6 +48630,60 @@
     "title": "핑거스토리 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "date": "2026-07-15",
+    "time": "05:00",
+    "category": "경제지표",
+    "title": "🇨🇳 Fixed Asset Investment (YoY)  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇨🇳"
+  },
+  {
+    "date": "2026-07-15",
+    "time": "05:00",
+    "category": "경제지표",
+    "title": "🇨🇳 GDP (YoY)  (Q2)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇨🇳"
+  },
+  {
+    "date": "2026-07-15",
+    "time": "05:00",
+    "category": "경제지표",
+    "title": "🇨🇳 GDP (QoQ)  (Q2)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇨🇳"
+  },
+  {
+    "date": "2026-07-15",
+    "time": "05:00",
+    "category": "경제지표",
+    "title": "🇨🇳 Chinese GDP YTD  (YoY)  (Q2)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇨🇳"
+  },
+  {
+    "date": "2026-07-15",
+    "time": "05:00",
+    "category": "경제지표",
+    "title": "🇨🇳 Industrial Production (YoY)  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇨🇳"
+  },
+  {
+    "date": "2026-07-15",
+    "time": "05:00",
+    "category": "경제지표",
+    "title": "🇨🇳 Chinese Industrial Production YTD  (YoY)  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇨🇳"
   },
   {
     "date": "2026-07-15",
