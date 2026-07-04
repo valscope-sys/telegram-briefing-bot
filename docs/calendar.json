@@ -47662,6 +47662,14 @@
   },
   {
     "date": "2026-07-03",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "셀트리온 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-03",
     "time": "04:45",
     "category": "경제지표",
     "title": "🇨🇳 RatingDog Services PMI  (Jun)",
@@ -47936,6 +47944,15 @@
     "time": "17:00",
     "category": "경제지표",
     "title": "🇺🇸 ISM Non-Manufacturing Prices  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-06",
+    "time": "18:00",
+    "category": "통화정책",
+    "title": "🇺🇸 Fed Waller Speaks",
     "source": "investing",
     "auto": true,
     "country": "🇺🇸"
@@ -48687,6 +48704,51 @@
   },
   {
     "date": "2026-07-15",
+    "time": "05:00",
+    "category": "경제지표",
+    "title": "🇨🇳 Chinese Unemployment Rate  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇨🇳"
+  },
+  {
+    "date": "2026-07-15",
+    "time": "12:00",
+    "category": "경제지표",
+    "title": "🇪🇺 Industrial Production (MoM)  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-07-15",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Core PPI (MoM)  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-15",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 NY Empire State Manufacturing Index  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-15",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 PPI (MoM)  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-15",
     "time": "21:30",
     "category": "경제지표",
     "title": "미국 CPI (6월)",
@@ -48727,6 +48789,15 @@
     "source": "fixed",
     "auto": false,
     "country": "🇰🇷"
+  },
+  {
+    "date": "2026-07-16",
+    "time": "12:00",
+    "category": "경제지표",
+    "title": "🇪🇺 Trade Balance  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
   },
   {
     "date": "2026-07-16",
@@ -49542,6 +49613,14 @@
     "source": "fixed",
     "auto": false,
     "country": ""
+  },
+  {
+    "date": "2026-08-05",
+    "time": "",
+    "category": "한국실적",
+    "title": "카카오뱅크 실적발표",
+    "source": "fnguide",
+    "auto": true
   },
   {
     "date": "2026-08-06",
