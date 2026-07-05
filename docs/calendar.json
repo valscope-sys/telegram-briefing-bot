@@ -47862,6 +47862,15 @@
     "auto": true
   },
   {
+    "date": "2026-07-05",
+    "time": "13:00",
+    "category": "경제지표",
+    "title": "🇺🇸 OPEC Meeting",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
     "date": "2026-07-06",
     "time": "",
     "category": "IPO/공모",
@@ -47956,6 +47965,33 @@
     "source": "investing",
     "auto": true,
     "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-06",
+    "time": "18:00",
+    "category": "통화정책",
+    "title": "🇪🇺 ECB's Schnabel Speaks",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-07-06",
+    "time": "19:00",
+    "category": "통화정책",
+    "title": "🇪🇺 ECB President Lagarde Speaks",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-07-06",
+    "time": "21:30",
+    "category": "통화정책",
+    "title": "🇪🇺 ECB's Lane Speaks",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
   },
   {
     "date": "2026-07-06",
@@ -48567,7 +48603,7 @@
   },
   {
     "date": "2026-07-14",
-    "time": "19:03",
+    "time": "18:36",
     "category": "경제지표",
     "title": "🇨🇳 Exports (YoY)  (Jun)",
     "source": "investing",
@@ -48576,7 +48612,7 @@
   },
   {
     "date": "2026-07-14",
-    "time": "19:03",
+    "time": "18:36",
     "category": "경제지표",
     "title": "🇨🇳 Imports (YoY)  (Jun)",
     "source": "investing",
@@ -48585,7 +48621,7 @@
   },
   {
     "date": "2026-07-14",
-    "time": "19:04",
+    "time": "18:36",
     "category": "경제지표",
     "title": "🇨🇳 Trade Balance (USD)  (Jun)",
     "source": "investing",
@@ -48798,6 +48834,78 @@
     "source": "investing",
     "auto": true,
     "country": "🇪🇺"
+  },
+  {
+    "date": "2026-07-16",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Core Retail Sales (MoM)  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-16",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Retail Control (MoM)  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-16",
+    "time": "15:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Retail Sales (MoM)  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-16",
+    "time": "15:30",
+    "category": "통화정책",
+    "title": "🇺🇸 Philadelphia Fed Manufacturing Index  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-16",
+    "time": "15:30",
+    "category": "통화정책",
+    "title": "🇺🇸 Philly Fed Employment  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-16",
+    "time": "17:00",
+    "category": "경제지표",
+    "title": "🇺🇸 Business Inventories (MoM)  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-16",
+    "time": "17:00",
+    "category": "경제지표",
+    "title": "🇺🇸 Pending Home Sales (MoM)  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-16",
+    "time": "17:00",
+    "category": "경제지표",
+    "title": "🇺🇸 Retail Inventories Ex Auto  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
   },
   {
     "date": "2026-07-16",
