@@ -48284,6 +48284,14 @@
   },
   {
     "date": "2026-07-08",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "한진 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-08",
     "time": "17:30",
     "category": "경제지표",
     "title": "🇺🇸 Crude Oil Inventories",
@@ -49123,6 +49131,14 @@
     "time": "",
     "category": "한국실적",
     "title": "LG디스플레이 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-22",
+    "time": "",
+    "category": "한국실적",
+    "title": "유니드 실적발표",
     "source": "fnguide",
     "auto": true
   },
