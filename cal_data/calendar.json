@@ -48145,6 +48145,30 @@
   },
   {
     "date": "2026-07-07",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "LG에너지솔루션 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-07",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "LG전자 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-07",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "삼성전자 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-07",
     "time": "15:00",
     "category": "IR",
     "title": "펄어비스 IR (경영현황)",
@@ -49423,6 +49447,14 @@
   },
   {
     "date": "2026-07-30",
+    "time": "",
+    "category": "한국실적",
+    "title": "삼성에스디에스 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-30",
     "time": "17:00",
     "category": "통화정책",
     "title": "🇺🇸 Atlanta Fed GDPNow  (Q3)",
@@ -50115,6 +50147,14 @@
     "source": "fixed",
     "auto": false,
     "country": "🇺🇸"
+  },
+  {
+    "date": "2026-08-13",
+    "time": "",
+    "category": "IPO/공모",
+    "title": "스카이랩스 공모청약 (08/13~08/14)",
+    "source": "38cr",
+    "auto": true
   },
   {
     "date": "2026-08-13",
