@@ -48360,6 +48360,14 @@
   },
   {
     "date": "2026-07-09",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "비츠로셀 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-09",
     "time": "04:30",
     "category": "경제지표",
     "title": "🇨🇳 CPI (YoY)  (Jun)",
@@ -49680,6 +49688,14 @@
     "source": "fixed",
     "auto": false,
     "country": "🇰🇷"
+  },
+  {
+    "date": "2026-08-04",
+    "time": "",
+    "category": "IPO/공모",
+    "title": "케이앤에스아이앤씨 공모청약 (08/04~08/05)",
+    "source": "38cr",
+    "auto": true
   },
   {
     "date": "2026-08-04",
