@@ -48566,6 +48566,54 @@
   },
   {
     "date": "2026-07-13",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "ESR켄달스퀘어리츠 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-13",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "서울반도체 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-13",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "모비데이즈 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-13",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "대한항공 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-13",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "서울바이오시스 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-13",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "테크윙 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-13",
     "time": "21:00",
     "category": "경제지표",
     "title": "🇺🇸 Federal Budget Balance  (Jun)",
@@ -50573,6 +50621,14 @@
     "category": "기업이벤트",
     "title": "디알텍 액면병합",
     "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-25",
+    "time": "",
+    "category": "IPO/공모",
+    "title": "브릴스 공모청약 (08/25~08/26)",
+    "source": "38cr",
     "auto": true
   },
   {
