@@ -48647,6 +48647,46 @@
   },
   {
     "date": "2026-07-14",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "캠시스 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-14",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "소프트캠프 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-14",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "메카로 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-14",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "티앤알바이오팹 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-14",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "한미반도체 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-14",
     "time": "13:00",
     "category": "IR",
     "title": "올릭스 IR (경영현황)",
@@ -49519,6 +49559,14 @@
   {
     "date": "2026-07-30",
     "time": "",
+    "category": "IPO/공모",
+    "title": "인제니아테라퓨틱스 공모청약 (07/30~07/31)",
+    "source": "38cr",
+    "auto": true
+  },
+  {
+    "date": "2026-07-30",
+    "time": "",
     "category": "기업이벤트",
     "title": "코미코 액면분할",
     "source": "fnguide",
@@ -50089,6 +50137,14 @@
     "category": "기업이벤트",
     "title": "니어스랩 유상증자(3자배정)",
     "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-12",
+    "time": "",
+    "category": "IPO/공모",
+    "title": "니어스랩 공모청약 (08/12~08/13)",
+    "source": "38cr",
     "auto": true
   },
   {
