@@ -49457,6 +49457,14 @@
     "auto": true
   },
   {
+    "date": "2026-07-24",
+    "time": "",
+    "category": "한국실적",
+    "title": "두산퓨얼셀 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-07-25",
     "time": "",
     "category": "기업이벤트",
@@ -49631,6 +49639,14 @@
     "time": "",
     "category": "한국실적",
     "title": "LG생활건강 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-29",
+    "time": "",
+    "category": "한국실적",
+    "title": "삼성물산 실적발표",
     "source": "fnguide",
     "auto": true
   },
@@ -49827,6 +49843,14 @@
     "time": "",
     "category": "한국실적",
     "title": "LG씨엔에스 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-31",
+    "time": "",
+    "category": "한국실적",
+    "title": "대덕전자 실적발표",
     "source": "fnguide",
     "auto": true
   },
@@ -50292,6 +50316,14 @@
     "auto": true
   },
   {
+    "date": "2026-08-11",
+    "time": "",
+    "category": "한국실적",
+    "title": "펄어비스 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
     "date": "2026-08-12",
     "time": "",
     "category": "IPO/공모",
@@ -50489,6 +50521,22 @@
     "category": "미국실적",
     "title": "SNDK 실적발표 [EPS est. $33.5616]",
     "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-08-12",
+    "time": "",
+    "category": "한국실적",
+    "title": "위메이드맥스 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-12",
+    "time": "",
+    "category": "한국실적",
+    "title": "위메이드 실적발표",
+    "source": "fnguide",
     "auto": true
   },
   {
