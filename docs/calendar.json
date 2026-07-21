@@ -49023,6 +49023,24 @@
     "auto": true
   },
   {
+    "date": "2026-07-21",
+    "time": "18:00",
+    "category": "경제지표",
+    "title": "🇪🇺 ZEW Economic Sentiment  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-07-21",
+    "time": "21:15",
+    "category": "경제지표",
+    "title": "🇺🇸 ADP Employment Change Weekly",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
     "date": "2026-07-22",
     "time": "",
     "category": "기업이벤트",
@@ -49127,6 +49145,24 @@
     "auto": true
   },
   {
+    "date": "2026-07-22",
+    "time": "05:30",
+    "category": "경제지표",
+    "title": "🇺🇸 API Weekly Crude Oil Stock",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-22",
+    "time": "23:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Crude Oil Inventories",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
     "date": "2026-07-23",
     "time": "",
     "category": "IPO/공모",
@@ -49223,6 +49259,69 @@
     "title": "삼성바이오로직스 실적발표",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "date": "2026-07-23",
+    "time": "21:15",
+    "category": "경제지표",
+    "title": "🇪🇺 Deposit Facility Rate  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-07-23",
+    "time": "21:15",
+    "category": "통화정책",
+    "title": "🇪🇺 ECB Marginal Lending Facility",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-07-23",
+    "time": "21:15",
+    "category": "통화정책",
+    "title": "🇪🇺 ECB Monetary Policy Statement",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-07-23",
+    "time": "21:15",
+    "category": "통화정책",
+    "title": "🇪🇺 ECB Interest Rate Decision  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-07-23",
+    "time": "21:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Continuing Jobless Claims",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-23",
+    "time": "21:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Initial Jobless Claims",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-23",
+    "time": "21:45",
+    "category": "통화정책",
+    "title": "🇪🇺 ECB Press Conference",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
   },
   {
     "date": "2026-07-24",
@@ -49353,6 +49452,87 @@
     "auto": true
   },
   {
+    "date": "2026-07-24",
+    "time": "17:00",
+    "category": "경제지표",
+    "title": "🇪🇺 HCOB Eurozone Manufacturing PMI  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-07-24",
+    "time": "17:00",
+    "category": "경제지표",
+    "title": "🇪🇺 HCOB Eurozone Composite PMI  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-07-24",
+    "time": "17:00",
+    "category": "경제지표",
+    "title": "🇪🇺 HCOB Eurozone Services PMI  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-07-24",
+    "time": "21:00",
+    "category": "경제지표",
+    "title": "🇺🇸 Building Permits  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-24",
+    "time": "22:45",
+    "category": "경제지표",
+    "title": "🇺🇸 S&P Global Manufacturing PMI  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-24",
+    "time": "22:45",
+    "category": "경제지표",
+    "title": "🇺🇸 S&P Global Composite PMI  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-24",
+    "time": "22:45",
+    "category": "경제지표",
+    "title": "🇺🇸 S&P Global Services PMI  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-24",
+    "time": "23:00",
+    "category": "경제지표",
+    "title": "🇺🇸 New Home Sales  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-24",
+    "time": "23:00",
+    "category": "경제지표",
+    "title": "🇺🇸 New Home Sales (MoM)  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
     "date": "2026-07-25",
     "time": "",
     "category": "기업이벤트",
@@ -49367,6 +49547,78 @@
     "title": "더코디 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "date": "2026-07-25",
+    "time": "00:30",
+    "category": "통화정책",
+    "title": "🇪🇺 ECB's Lane Speaks",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-07-25",
+    "time": "02:00",
+    "category": "경제지표",
+    "title": "🇺🇸 U.S. Baker Hughes Oil Rig Count",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-25",
+    "time": "02:00",
+    "category": "경제지표",
+    "title": "🇺🇸 U.S. Baker Hughes Total Rig Count",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-25",
+    "time": "04:30",
+    "category": "경제지표",
+    "title": "🇺🇸 CFTC Crude Oil speculative net positions",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-25",
+    "time": "04:30",
+    "category": "경제지표",
+    "title": "🇺🇸 CFTC Gold speculative net positions",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-25",
+    "time": "04:30",
+    "category": "경제지표",
+    "title": "🇺🇸 CFTC Nasdaq 100 speculative net positions",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-25",
+    "time": "04:30",
+    "category": "경제지표",
+    "title": "🇺🇸 CFTC S&P 500 speculative net positions",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-25",
+    "time": "04:30",
+    "category": "경제지표",
+    "title": "🇪🇺 CFTC EUR speculative net positions",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
   },
   {
     "date": "2026-07-27",
@@ -49407,6 +49659,33 @@
     "title": "한화오션 실적발표",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "date": "2026-07-27",
+    "time": "21:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Core Durable Goods Orders (MoM)  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-27",
+    "time": "21:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Durable Goods Orders (MoM)  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-27",
+    "time": "23:00",
+    "category": "통화정책",
+    "title": "🇺🇸 Atlanta Fed GDPNow  (Q2)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
   },
   {
     "date": "2026-07-28",
@@ -49479,6 +49758,60 @@
     "title": "V 실적발표 (장후) [EPS est. $3.2901]",
     "source": "finnhub",
     "auto": true
+  },
+  {
+    "date": "2026-07-28",
+    "time": "21:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Goods Trade Balance  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-28",
+    "time": "21:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Retail Inventories Ex Auto  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-28",
+    "time": "22:00",
+    "category": "경제지표",
+    "title": "🇺🇸 S&P/CS HPI Composite - 20 n.s.a. (YoY)  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-28",
+    "time": "22:00",
+    "category": "경제지표",
+    "title": "🇺🇸 S&P/CS HPI Composite - 20 n.s.a. (MoM)  (May)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-28",
+    "time": "23:00",
+    "category": "경제지표",
+    "title": "🇺🇸 CB Consumer Confidence  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-28",
+    "time": "23:00",
+    "category": "통화정책",
+    "title": "🇺🇸 Atlanta Fed GDPNow  (Q2)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
   },
   {
     "date": "2026-07-29",
@@ -49690,6 +50023,123 @@
     "country": "🇺🇸"
   },
   {
+    "date": "2026-07-30",
+    "time": "03:00",
+    "category": "통화정책",
+    "title": "🇺🇸 Fed Interest Rate Decision",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-30",
+    "time": "18:00",
+    "category": "경제지표",
+    "title": "🇪🇺 GDP (YoY)  (Q2)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-07-30",
+    "time": "18:00",
+    "category": "경제지표",
+    "title": "🇪🇺 GDP (QoQ)  (Q2)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-07-30",
+    "time": "18:00",
+    "category": "경제지표",
+    "title": "🇪🇺 Unemployment Rate  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-07-30",
+    "time": "21:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Core PCE Price Index (MoM)  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-30",
+    "time": "21:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Core PCE Price Index (YoY)  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-30",
+    "time": "21:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Core PCE Prices  (Q2)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-30",
+    "time": "21:30",
+    "category": "경제지표",
+    "title": "🇺🇸 GDP (QoQ)  (Q2)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-30",
+    "time": "21:30",
+    "category": "경제지표",
+    "title": "🇺🇸 GDP Price Index (QoQ)  (Q2)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-30",
+    "time": "21:30",
+    "category": "경제지표",
+    "title": "🇺🇸 PCE price index (MoM)  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-30",
+    "time": "21:30",
+    "category": "경제지표",
+    "title": "🇺🇸 PCE Price index (YoY)  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-30",
+    "time": "21:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Personal Spending (MoM)  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-30",
+    "time": "23:00",
+    "category": "통화정책",
+    "title": "🇺🇸 Atlanta Fed GDPNow  (Q3)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
     "date": "2026-07-31",
     "time": "",
     "category": "기업이벤트",
@@ -49844,6 +50294,96 @@
     "country": "🇨🇳"
   },
   {
+    "date": "2026-07-31",
+    "time": "10:30",
+    "category": "경제지표",
+    "title": "🇨🇳 Chinese Composite PMI  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇨🇳"
+  },
+  {
+    "date": "2026-07-31",
+    "time": "10:30",
+    "category": "경제지표",
+    "title": "🇨🇳 Manufacturing PMI  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇨🇳"
+  },
+  {
+    "date": "2026-07-31",
+    "time": "10:30",
+    "category": "경제지표",
+    "title": "🇨🇳 Non-Manufacturing PMI  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇨🇳"
+  },
+  {
+    "date": "2026-07-31",
+    "time": "18:00",
+    "category": "경제지표",
+    "title": "🇪🇺 CPI (YoY)  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-07-31",
+    "time": "21:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Employment Cost Index (QoQ)  (Q2)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-31",
+    "time": "22:45",
+    "category": "경제지표",
+    "title": "🇺🇸 Chicago PMI  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-31",
+    "time": "23:00",
+    "category": "경제지표",
+    "title": "🇺🇸 Michigan 1-Year Inflation Expectations  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-31",
+    "time": "23:00",
+    "category": "경제지표",
+    "title": "🇺🇸 Michigan 5-Year Inflation Expectations  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-31",
+    "time": "23:00",
+    "category": "경제지표",
+    "title": "🇺🇸 Michigan Consumer Expectations  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-31",
+    "time": "23:00",
+    "category": "경제지표",
+    "title": "🇺🇸 Michigan Consumer Sentiment  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
     "date": "2026-08-01",
     "time": "",
     "category": "기업이벤트",
@@ -49974,6 +50514,69 @@
     "country": "🇰🇷"
   },
   {
+    "date": "2026-08-03",
+    "time": "10:45",
+    "category": "경제지표",
+    "title": "🇨🇳 RatingDog Manufacturing PMI (MoM)  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇨🇳"
+  },
+  {
+    "date": "2026-08-03",
+    "time": "17:00",
+    "category": "경제지표",
+    "title": "🇪🇺 HCOB Eurozone Manufacturing PMI  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-08-03",
+    "time": "22:45",
+    "category": "경제지표",
+    "title": "🇺🇸 S&P Global Manufacturing PMI  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-08-03",
+    "time": "23:00",
+    "category": "경제지표",
+    "title": "🇺🇸 Construction Spending (MoM)  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-08-03",
+    "time": "23:00",
+    "category": "경제지표",
+    "title": "🇺🇸 ISM Manufacturing Employment  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-08-03",
+    "time": "23:00",
+    "category": "경제지표",
+    "title": "🇺🇸 ISM Manufacturing PMI  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-08-03",
+    "time": "23:00",
+    "category": "경제지표",
+    "title": "🇺🇸 ISM Manufacturing Prices  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
     "date": "2026-08-04",
     "time": "",
     "category": "IPO/공모",
@@ -50052,6 +50655,33 @@
     "title": "에코프로머티 실적발표",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "date": "2026-08-04",
+    "time": "21:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Trade Balance  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-08-04",
+    "time": "23:00",
+    "category": "경제지표",
+    "title": "🇺🇸 Factory Orders (MoM)  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-08-04",
+    "time": "23:00",
+    "category": "경제지표",
+    "title": "🇺🇸 JOLTS Job Openings  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
   },
   {
     "date": "2026-08-05",
@@ -50143,6 +50773,87 @@
     "auto": true
   },
   {
+    "date": "2026-08-05",
+    "time": "10:45",
+    "category": "경제지표",
+    "title": "🇨🇳 RatingDog Services PMI  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇨🇳"
+  },
+  {
+    "date": "2026-08-05",
+    "time": "17:00",
+    "category": "경제지표",
+    "title": "🇪🇺 HCOB Eurozone Composite PMI  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-08-05",
+    "time": "17:00",
+    "category": "경제지표",
+    "title": "🇪🇺 HCOB Eurozone Services PMI  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-08-05",
+    "time": "21:15",
+    "category": "경제지표",
+    "title": "🇺🇸 ADP Nonfarm Employment Change  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-08-05",
+    "time": "22:45",
+    "category": "경제지표",
+    "title": "🇺🇸 S&P Global Composite PMI  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-08-05",
+    "time": "22:45",
+    "category": "경제지표",
+    "title": "🇺🇸 S&P Global Services PMI  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-08-05",
+    "time": "23:00",
+    "category": "경제지표",
+    "title": "🇺🇸 ISM Non-Manufacturing Employment  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-08-05",
+    "time": "23:00",
+    "category": "경제지표",
+    "title": "🇺🇸 ISM Non-Manufacturing PMI  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-08-05",
+    "time": "23:00",
+    "category": "경제지표",
+    "title": "🇺🇸 ISM Non-Manufacturing Prices  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
     "date": "2026-08-06",
     "time": "",
     "category": "IPO/공모",
@@ -50205,6 +50916,24 @@
     "title": "카카오 실적발표",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "date": "2026-08-06",
+    "time": "21:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Nonfarm Productivity (QoQ)  (Q2)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-08-06",
+    "time": "21:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Unit Labor Costs (QoQ)  (Q2)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
   },
   {
     "date": "2026-08-07",
@@ -50272,6 +51001,69 @@
     "country": "🇺🇸"
   },
   {
+    "date": "2026-08-07",
+    "time": "21:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Average Hourly Earnings (MoM)  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-08-07",
+    "time": "21:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Average Hourly Earnings (YoY) (YoY)  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-08-07",
+    "time": "21:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Nonfarm Payrolls  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-08-07",
+    "time": "21:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Participation Rate  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-08-07",
+    "time": "21:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Private Nonfarm Payrolls  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-08-07",
+    "time": "21:30",
+    "category": "경제지표",
+    "title": "🇺🇸 U6 Unemployment Rate  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-08-07",
+    "time": "21:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Unemployment Rate  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
     "date": "2026-08-08",
     "time": "",
     "category": "기업이벤트",
@@ -50304,12 +51096,75 @@
     "auto": true
   },
   {
+    "date": "2026-08-08",
+    "time": "02:03",
+    "category": "경제지표",
+    "title": "🇨🇳 Trade Balance (USD)  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇨🇳"
+  },
+  {
+    "date": "2026-08-08",
+    "time": "02:04",
+    "category": "경제지표",
+    "title": "🇨🇳 Exports (YoY)  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇨🇳"
+  },
+  {
+    "date": "2026-08-08",
+    "time": "02:04",
+    "category": "경제지표",
+    "title": "🇨🇳 Imports (YoY)  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇨🇳"
+  },
+  {
+    "date": "2026-08-08",
+    "time": "04:00",
+    "category": "경제지표",
+    "title": "🇺🇸 Consumer Credit  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
     "date": "2026-08-09",
     "time": "",
     "category": "기업이벤트",
     "title": "세기상사 기업합병",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "date": "2026-08-09",
+    "time": "10:30",
+    "category": "경제지표",
+    "title": "🇨🇳 CPI (YoY)  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇨🇳"
+  },
+  {
+    "date": "2026-08-09",
+    "time": "10:30",
+    "category": "경제지표",
+    "title": "🇨🇳 CPI (MoM)  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇨🇳"
+  },
+  {
+    "date": "2026-08-09",
+    "time": "10:30",
+    "category": "경제지표",
+    "title": "🇨🇳 PPI (YoY)  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇨🇳"
   },
   {
     "date": "2026-08-11",
@@ -51156,6 +52011,24 @@
     "title": "FOMC 금리 결정",
     "source": "fixed",
     "auto": false,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-09-17",
+    "time": "03:00",
+    "category": "통화정책",
+    "title": "🇺🇸 Interest Rate Projection - 3rd Yr  (Q1)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-09-17",
+    "time": "03:00",
+    "category": "통화정책",
+    "title": "🇺🇸 Fed Interest Rate Decision",
+    "source": "investing",
+    "auto": true,
     "country": "🇺🇸"
   },
   {
