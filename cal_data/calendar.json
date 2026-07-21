@@ -50658,6 +50658,14 @@
   },
   {
     "date": "2026-08-04",
+    "time": "",
+    "category": "한국실적",
+    "title": "카카오페이 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-04",
     "time": "21:30",
     "category": "경제지표",
     "title": "🇺🇸 Trade Balance  (Jun)",
@@ -50769,6 +50777,14 @@
     "time": "",
     "category": "한국실적",
     "title": "카카오뱅크 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-05",
+    "time": "",
+    "category": "한국실적",
+    "title": "롯데칠성 실적발표",
     "source": "fnguide",
     "auto": true
   },
@@ -51237,6 +51253,48 @@
     "title": "펄어비스 실적발표",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "date": "2026-08-11",
+    "time": "",
+    "category": "한국실적",
+    "title": "CJ제일제당 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-11",
+    "time": "",
+    "category": "한국실적",
+    "title": "시프트업 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-11",
+    "time": "",
+    "category": "한국실적",
+    "title": "NHN 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-11",
+    "time": "23:00",
+    "category": "경제지표",
+    "title": "🇺🇸 Existing Home Sales  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-08-11",
+    "time": "23:00",
+    "category": "경제지표",
+    "title": "🇺🇸 Existing Home Sales (MoM)  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
   },
   {
     "date": "2026-08-12",
