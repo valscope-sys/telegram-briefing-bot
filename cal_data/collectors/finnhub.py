@@ -1,5 +1,6 @@
 """Finnhub API - 미국 실적 + 경제지표 수집"""
 import os
+import time
 import datetime
 import requests
 from dotenv import load_dotenv
@@ -69,8 +70,17 @@ def _get(endpoint: str, params: dict) -> dict | list | None:
         return None
 
 
-def fetch_us_earnings(from_date: datetime.date, to_date: datetime.date) -> list[dict]:
-    """미국 실적 발표 일정 (관심종목만)"""
+# Finnhub /calendar/earnings 하드캡: 날짜 내림차순 1500행에서 무음 절단됨
+_EARNINGS_ROW_CAP = 1500
+# 어닝시즌 피크(하루 수백 건)에도 캡을 안 넘도록 분할 단위는 7일
+_EARNINGS_CHUNK_DAYS = 7
+
+
+def _fetch_earnings_raw(from_date: datetime.date, to_date: datetime.date) -> list[dict]:
+    """실적 캘린더 raw 조회 (청크 단위).
+
+    1500행 하드캡 감지 시 청크를 반으로 쪼개 재귀 재요청 — 무음 소실 방지.
+    """
     data = _get("/calendar/earnings", {
         "from": from_date.isoformat(),
         "to": to_date.isoformat(),
@@ -78,8 +88,42 @@ def fetch_us_earnings(from_date: datetime.date, to_date: datetime.date) -> list[
     if not data:
         return []
 
-    earnings_list = data.get("earningsCalendar", [])
+    rows = data.get("earningsCalendar", [])
+    print(f"[Finnhub] 실적 청크 {from_date}~{to_date}: raw {len(rows)}행")
+
+    if len(rows) >= _EARNINGS_ROW_CAP:
+        if from_date >= to_date:
+            # 단일 일자가 캡에 걸리면 더 쪼갤 수 없음 — 경고만 남기고 그대로 사용
+            # 주의: 로그에 em-dash 대신 하이픈 사용 (Windows cp949 콘솔 인코딩 크래시 방지)
+            print(f"[Finnhub] WARNING: 1500행 절단 - 단일 일자({from_date}) 재분할 불가, 일부 소실 가능")
+            return rows
+        print("[Finnhub] WARNING: 1500행 절단 - 청크 재분할")
+        mid = from_date + (to_date - from_date) // 2
+        left = _fetch_earnings_raw(from_date, mid)
+        time.sleep(0.5)
+        right = _fetch_earnings_raw(mid + datetime.timedelta(days=1), to_date)
+        return left + right
+
+    return rows
+
+
+def fetch_us_earnings(from_date: datetime.date, to_date: datetime.date) -> list[dict]:
+    """미국 실적 발표 일정 (관심종목만)
+
+    Finnhub은 날짜 내림차순 + 1500행 하드캡이라 긴 범위 단일 호출 시
+    앞쪽(가까운) 날짜가 통째로 절단됨 → 7일 청크로 분할 순회 후 합산.
+    """
+    earnings_list = []
+    chunk_start = from_date
+    while chunk_start <= to_date:
+        chunk_end = min(chunk_start + datetime.timedelta(days=_EARNINGS_CHUNK_DAYS - 1), to_date)
+        earnings_list.extend(_fetch_earnings_raw(chunk_start, chunk_end))
+        chunk_start = chunk_end + datetime.timedelta(days=1)
+        if chunk_start <= to_date:
+            time.sleep(0.5)  # rate limit 여유 (429 재시도는 _get에서 처리)
+
     results = []
+    seen = set()
 
     for item in earnings_list:
         symbol = item.get("symbol", "")
@@ -89,6 +133,12 @@ def fetch_us_earnings(from_date: datetime.date, to_date: datetime.date) -> list[
         ev_date = item.get("date", "")
         if not ev_date:
             continue
+
+        # 청크 경계/재분할 시 중복 방지
+        dedupe_key = (ev_date, symbol)
+        if dedupe_key in seen:
+            continue
+        seen.add(dedupe_key)
 
         hour = EARNINGS_TIME_MAP.get(item.get("hour", ""), "")
         eps_est = item.get("epsEstimate")

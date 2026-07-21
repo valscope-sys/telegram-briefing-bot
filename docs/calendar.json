@@ -29999,23 +29999,7 @@
     "date": "2026-04-21",
     "time": "",
     "category": "미국실적",
-    "title": "GE 실적발표 (장전) [EPS est. $1.6364]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-04-21",
-    "time": "",
-    "category": "미국실적",
-    "title": "RTX 실적발표 (장전) [EPS est. $1.5114]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-04-21",
-    "time": "",
-    "category": "미국실적",
-    "title": "UNH 실적발표 (장전) [EPS est. $6.7111]",
+    "title": "GE 실적발표 (장전) [EPS est. $1.6437]",
     "source": "finnhub",
     "auto": true
   },
@@ -30024,14 +30008,6 @@
     "time": "",
     "category": "미국실적",
     "title": "RTX 실적발표 (장전) [EPS est. $1.532]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-04-21",
-    "time": "",
-    "category": "미국실적",
-    "title": "GE 실적발표 (장전) [EPS est. $1.6437]",
     "source": "finnhub",
     "auto": true
   },
@@ -30274,39 +30250,7 @@
     "date": "2026-04-22",
     "time": "",
     "category": "미국실적",
-    "title": "LRCX 실적발표 (장후) [EPS est. $1.3771]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-04-22",
-    "time": "",
-    "category": "미국실적",
-    "title": "TXN 실적발표 (장후) [EPS est. $1.3844]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-04-22",
-    "time": "",
-    "category": "미국실적",
-    "title": "TSLA 실적발표 (장후) [EPS est. $0.3957]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-04-22",
-    "time": "",
-    "category": "미국실적",
-    "title": "NOW 실적발표 (장후) [EPS est. $0.9739]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-04-22",
-    "time": "",
-    "category": "미국실적",
-    "title": "BA 실적발표 (장전) [EPS est. $-0.632]",
+    "title": "LRCX 실적발표 (장후) [EPS est. $1.3845]",
     "source": "finnhub",
     "auto": true
   },
@@ -30315,6 +30259,14 @@
     "time": "",
     "category": "미국실적",
     "title": "TXN 실적발표 (장후) [EPS est. $1.3837]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-04-22",
+    "time": "",
+    "category": "미국실적",
+    "title": "TSLA 실적발표 (장후) [EPS est. $0.3802]",
     "source": "finnhub",
     "auto": true
   },
@@ -30331,22 +30283,6 @@
     "time": "",
     "category": "미국실적",
     "title": "BA 실적발표 (장전) [EPS est. $-0.8498]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-04-22",
-    "time": "",
-    "category": "미국실적",
-    "title": "LRCX 실적발표 (장후) [EPS est. $1.3845]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-04-22",
-    "time": "",
-    "category": "미국실적",
-    "title": "TSLA 실적발표 (장후) [EPS est. $0.3802]",
     "source": "finnhub",
     "auto": true
   },
@@ -30466,63 +30402,7 @@
     "date": "2026-04-23",
     "time": "",
     "category": "미국실적",
-    "title": "KLAC 실적발표 (장후) [EPS est. $9.3356]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-04-23",
-    "time": "",
-    "category": "미국실적",
-    "title": "INTC 실적발표 (장후) [EPS est. $0.0018]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-04-23",
-    "time": "",
-    "category": "미국실적",
-    "title": "TMO 실적발표 (장전) [EPS est. $5.2873]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-04-23",
-    "time": "",
-    "category": "미국실적",
-    "title": "LMT 실적발표 (장전) [EPS est. $6.8193]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-04-23",
-    "time": "",
-    "category": "미국실적",
-    "title": "CMCSA 실적발표 (장전) [EPS est. $0.7719]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-04-23",
-    "time": "",
-    "category": "미국실적",
-    "title": "AMZN 실적발표 (장후) [EPS est. $1.6603]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-04-23",
-    "time": "",
-    "category": "미국실적",
-    "title": "CAT 실적발표 (장전) [EPS est. $4.5998]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-04-23",
-    "time": "",
-    "category": "미국실적",
-    "title": "TMO 실적발표 (장전) [EPS est. $5.281]",
+    "title": "KLAC 실적발표 (장후) [EPS est. $9.3245]",
     "source": "finnhub",
     "auto": true
   },
@@ -30531,6 +30411,14 @@
     "time": "",
     "category": "미국실적",
     "title": "INTC 실적발표 (장후) [EPS est. $0.0092]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-04-23",
+    "time": "",
+    "category": "미국실적",
+    "title": "TMO 실적발표 (장전) [EPS est. $5.281]",
     "source": "finnhub",
     "auto": true
   },
@@ -30554,7 +30442,15 @@
     "date": "2026-04-23",
     "time": "",
     "category": "미국실적",
-    "title": "KLAC 실적발표 (장후) [EPS est. $9.3245]",
+    "title": "AMZN 실적발표 (장후) [EPS est. $1.6603]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-04-23",
+    "time": "",
+    "category": "미국실적",
+    "title": "CAT 실적발표 (장전) [EPS est. $4.5998]",
     "source": "finnhub",
     "auto": true
   },
@@ -30906,7 +30802,7 @@
     "date": "2026-04-24",
     "time": "",
     "category": "미국실적",
-    "title": "PG 실적발표 (장전) [EPS est. $1.6147]",
+    "title": "PG 실적발표 (장전) [EPS est. $1.6034]",
     "source": "finnhub",
     "auto": true
   },
@@ -30915,14 +30811,6 @@
     "time": "",
     "category": "미국실적",
     "title": "XOM 실적발표 (장전) [EPS est. $1.7721]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-04-24",
-    "time": "",
-    "category": "미국실적",
-    "title": "PG 실적발표 (장전) [EPS est. $1.6034]",
     "source": "finnhub",
     "auto": true
   },
@@ -31718,15 +31606,7 @@
     "date": "2026-04-28",
     "time": "",
     "category": "미국실적",
-    "title": "V 실적발표 (장후) [EPS est. $3.1543]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-04-28",
-    "time": "",
-    "category": "미국실적",
-    "title": "KO 실적발표 (장전) [EPS est. $0.8364]",
+    "title": "V 실적발표 (장후) [EPS est. $3.1587]",
     "source": "finnhub",
     "auto": true
   },
@@ -31743,14 +31623,6 @@
     "time": "",
     "category": "미국실적",
     "title": "SBUX 실적발표 (장후) [EPS est. $0.4303]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-04-28",
-    "time": "",
-    "category": "미국실적",
-    "title": "V 실적발표 (장후) [EPS est. $3.1587]",
     "source": "finnhub",
     "auto": true
   },
@@ -31990,55 +31862,7 @@
     "date": "2026-04-29",
     "time": "",
     "category": "미국실적",
-    "title": "MSFT 실적발표 (장후) [EPS est. $4.1402]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-04-29",
-    "time": "",
-    "category": "미국실적",
-    "title": "META 실적발표 (장후) [EPS est. $6.8456]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-04-29",
-    "time": "",
-    "category": "미국실적",
-    "title": "GOOGL 실적발표 (장후) [EPS est. $2.6842]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-04-29",
-    "time": "",
-    "category": "미국실적",
-    "title": "QCOM 실적발표 (장후) [EPS est. $2.6083]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-04-29",
-    "time": "",
-    "category": "미국실적",
-    "title": "ABBV 실적발표 (장전) [EPS est. $3.0561]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-04-29",
-    "time": "",
-    "category": "미국실적",
-    "title": "ABBV 실적발표 (장전) [EPS est. $2.6372]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-04-29",
-    "time": "",
-    "category": "미국실적",
-    "title": "GOOGL 실적발표 (장후) [EPS est. $2.7567]",
+    "title": "MSFT 실적발표 (장후) [EPS est. $4.1399]",
     "source": "finnhub",
     "auto": true
   },
@@ -32054,7 +31878,7 @@
     "date": "2026-04-29",
     "time": "",
     "category": "미국실적",
-    "title": "AMZN 실적발표 (장후) [EPS est. $1.6619]",
+    "title": "GOOGL 실적발표 (장후) [EPS est. $2.7567]",
     "source": "finnhub",
     "auto": true
   },
@@ -32062,7 +31886,23 @@
     "date": "2026-04-29",
     "time": "",
     "category": "미국실적",
-    "title": "MSFT 실적발표 (장후) [EPS est. $4.1399]",
+    "title": "QCOM 실적발표 (장후) [EPS est. $2.6083]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-04-29",
+    "time": "",
+    "category": "미국실적",
+    "title": "ABBV 실적발표 (장전) [EPS est. $2.6372]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-04-29",
+    "time": "",
+    "category": "미국실적",
+    "title": "AMZN 실적발표 (장후) [EPS est. $1.6619]",
     "source": "finnhub",
     "auto": true
   },
@@ -32575,7 +32415,7 @@
     "date": "2026-04-30",
     "time": "",
     "category": "미국실적",
-    "title": "LLY 실적발표 [EPS est. $7.2604]",
+    "title": "LLY 실적발표 [EPS est. $6.9914]",
     "source": "finnhub",
     "auto": true
   },
@@ -32583,39 +32423,7 @@
     "date": "2026-04-30",
     "time": "",
     "category": "미국실적",
-    "title": "AAPL 실적발표 (장후) [EPS est. $1.9836]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-04-30",
-    "time": "",
-    "category": "미국실적",
-    "title": "MRK 실적발표 [EPS est. $-1.3451]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-04-30",
-    "time": "",
-    "category": "미국실적",
-    "title": "MA 실적발표 (장전) [EPS est. $4.5236]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-04-30",
-    "time": "",
-    "category": "미국실적",
-    "title": "SNDK 실적발표 [EPS est. $14.1775]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-04-30",
-    "time": "",
-    "category": "미국실적",
-    "title": "SNDK 실적발표 [EPS est. $14.4591]",
+    "title": "AAPL 실적발표 (장후) [EPS est. $1.9801]",
     "source": "finnhub",
     "auto": true
   },
@@ -32631,14 +32439,6 @@
     "date": "2026-04-30",
     "time": "",
     "category": "미국실적",
-    "title": "LLY 실적발표 [EPS est. $6.9914]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-04-30",
-    "time": "",
-    "category": "미국실적",
     "title": "MA 실적발표 (장전) [EPS est. $4.5359]",
     "source": "finnhub",
     "auto": true
@@ -32647,7 +32447,7 @@
     "date": "2026-04-30",
     "time": "",
     "category": "미국실적",
-    "title": "CAT 실적발표 (장전) [EPS est. $4.6427]",
+    "title": "SNDK 실적발표 [EPS est. $14.4591]",
     "source": "finnhub",
     "auto": true
   },
@@ -32655,7 +32455,7 @@
     "date": "2026-04-30",
     "time": "",
     "category": "미국실적",
-    "title": "AAPL 실적발표 (장후) [EPS est. $1.9801]",
+    "title": "CAT 실적발표 (장전) [EPS est. $4.6427]",
     "source": "finnhub",
     "auto": true
   },
@@ -49215,6 +49015,14 @@
     "auto": true
   },
   {
+    "date": "2026-07-21",
+    "time": "",
+    "category": "미국실적",
+    "title": "SCHW 실적발표 (장전) [EPS est. $1.5808]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
     "date": "2026-07-22",
     "time": "",
     "category": "기업이벤트",
@@ -49260,6 +49068,38 @@
     "category": "기업이벤트",
     "title": "모아라이프플러스 액면병합",
     "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-22",
+    "time": "",
+    "category": "미국실적",
+    "title": "GOOGL 실적발표 (장후) [EPS est. $2.9753]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-07-22",
+    "time": "",
+    "category": "미국실적",
+    "title": "NOW 실적발표 (장후) [EPS est. $0.8625]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-07-22",
+    "time": "",
+    "category": "미국실적",
+    "title": "TSLA 실적발표 (장후) [EPS est. $0.5103]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-07-22",
+    "time": "",
+    "category": "미국실적",
+    "title": "TXN 실적발표 (장후) [EPS est. $1.9532]",
+    "source": "finnhub",
     "auto": true
   },
   {
@@ -49324,6 +49164,46 @@
     "category": "기업이벤트",
     "title": "디에이치엑스컴퍼니 액면병합",
     "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-23",
+    "time": "",
+    "category": "미국실적",
+    "title": "CMCSA 실적발표 (장전) [EPS est. $0.9966]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-07-23",
+    "time": "",
+    "category": "미국실적",
+    "title": "INTC 실적발표 (장후) [EPS est. $0.2168]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-07-23",
+    "time": "",
+    "category": "미국실적",
+    "title": "LMT 실적발표 (장전) [EPS est. $7.2037]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-07-23",
+    "time": "",
+    "category": "미국실적",
+    "title": "RTX 실적발표 (장전) [EPS est. $1.6781]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-07-23",
+    "time": "",
+    "category": "미국실적",
+    "title": "TMO 실적발표 (장전) [EPS est. $5.7689]",
+    "source": "finnhub",
     "auto": true
   },
   {
@@ -49427,6 +49307,14 @@
   {
     "date": "2026-07-24",
     "time": "",
+    "category": "미국실적",
+    "title": "XOM 실적발표 (장전) [EPS est. $3.6736]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-07-24",
+    "time": "",
     "category": "한국실적",
     "title": "현대로템 실적발표",
     "source": "fnguide",
@@ -49521,15 +49409,6 @@
     "auto": true
   },
   {
-    "date": "2026-07-27",
-    "time": "17:00",
-    "category": "통화정책",
-    "title": "🇺🇸 Atlanta Fed GDPNow  (Q2)",
-    "source": "investing",
-    "auto": true,
-    "country": "🇺🇸"
-  },
-  {
     "date": "2026-07-28",
     "time": "",
     "category": "기업이벤트",
@@ -49571,12 +49450,35 @@
   },
   {
     "date": "2026-07-28",
-    "time": "17:00",
-    "category": "통화정책",
-    "title": "🇺🇸 Atlanta Fed GDPNow  (Q2)",
-    "source": "investing",
-    "auto": true,
-    "country": "🇺🇸"
+    "time": "",
+    "category": "미국실적",
+    "title": "BA 실적발표 (장전) [EPS est. $-0.3172]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-07-28",
+    "time": "",
+    "category": "미국실적",
+    "title": "KLAC 실적발표 (장후) [EPS est. $1.0166]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-07-28",
+    "time": "",
+    "category": "미국실적",
+    "title": "KO 실적발표 (장전) [EPS est. $0.9614]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-07-28",
+    "time": "",
+    "category": "미국실적",
+    "title": "V 실적발표 (장후) [EPS est. $3.2901]",
+    "source": "finnhub",
+    "auto": true
   },
   {
     "date": "2026-07-29",
@@ -49637,6 +49539,54 @@
   {
     "date": "2026-07-29",
     "time": "",
+    "category": "미국실적",
+    "title": "LRCX 실적발표 (장후) [EPS est. $1.7108]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-07-29",
+    "time": "",
+    "category": "미국실적",
+    "title": "META 실적발표 (장후) [EPS est. $7.3817]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-07-29",
+    "time": "",
+    "category": "미국실적",
+    "title": "MSFT 실적발표 (장후) [EPS est. $4.3277]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-07-29",
+    "time": "",
+    "category": "미국실적",
+    "title": "PG 실적발표 (장후) [EPS est. $1.4531]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-07-29",
+    "time": "",
+    "category": "미국실적",
+    "title": "QCOM 실적발표 (장후) [EPS est. $2.2708]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-07-29",
+    "time": "",
+    "category": "미국실적",
+    "title": "SBUX 실적발표 (장후) [EPS est. $0.6713]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-07-29",
+    "time": "",
     "category": "한국실적",
     "title": "LG생활건강 실적발표",
     "source": "fnguide",
@@ -49649,24 +49599,6 @@
     "title": "삼성물산 실적발표",
     "source": "fnguide",
     "auto": true
-  },
-  {
-    "date": "2026-07-29",
-    "time": "04:00",
-    "category": "통화정책",
-    "title": "FOMC 금리 결정",
-    "source": "fixed",
-    "auto": false,
-    "country": "🇺🇸"
-  },
-  {
-    "date": "2026-07-29",
-    "time": "21:00",
-    "category": "통화정책",
-    "title": "🇺🇸 Fed Interest Rate Decision",
-    "source": "investing",
-    "auto": true,
-    "country": "🇺🇸"
   },
   {
     "date": "2026-07-30",
@@ -49695,11 +49627,26 @@
   {
     "date": "2026-07-30",
     "time": "",
-    "category": "통화정책",
-    "title": "BOJ 금리 결정",
-    "source": "fixed",
-    "auto": false,
-    "country": "🇯🇵"
+    "category": "미국실적",
+    "title": "AAPL 실적발표 (장후) [EPS est. $1.9299]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-07-30",
+    "time": "",
+    "category": "미국실적",
+    "title": "AMZN 실적발표 (장후) [EPS est. $1.8556]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-07-30",
+    "time": "",
+    "category": "미국실적",
+    "title": "MA 실적발표 (장전) [EPS est. $4.9029]",
+    "source": "finnhub",
+    "auto": true
   },
   {
     "date": "2026-07-30",
@@ -49727,11 +49674,19 @@
   },
   {
     "date": "2026-07-30",
-    "time": "17:00",
+    "time": "",
+    "category": "한국실적",
+    "title": "롯데정밀화학 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-30",
+    "time": "03:00",
     "category": "통화정책",
-    "title": "🇺🇸 Atlanta Fed GDPNow  (Q3)",
-    "source": "investing",
-    "auto": true,
+    "title": "FOMC 금리 결정",
+    "source": "fixed",
+    "auto": false,
     "country": "🇺🇸"
   },
   {
@@ -49813,6 +49768,31 @@
     "title": "케이앤에스아이앤씨 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "date": "2026-07-31",
+    "time": "",
+    "category": "미국실적",
+    "title": "ABBV 실적발표 (장전) [EPS est. $3.6684]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-07-31",
+    "time": "",
+    "category": "미국실적",
+    "title": "CVX 실적발표 (장전) [EPS est. $5.3774]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-07-31",
+    "time": "",
+    "category": "통화정책",
+    "title": "BOJ 금리 결정",
+    "source": "fixed",
+    "auto": false,
+    "country": "🇯🇵"
   },
   {
     "date": "2026-07-31",
@@ -49971,6 +49951,22 @@
   {
     "date": "2026-08-03",
     "time": "",
+    "category": "미국실적",
+    "title": "ON 실적발표 (장전) [EPS est. $0.7366]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-08-03",
+    "time": "",
+    "category": "미국실적",
+    "title": "PLTR 실적발표 [EPS est. $0.354]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-08-03",
+    "time": "",
     "category": "자동차/배터리",
     "title": "현대차/기아 7월 판매량 발표",
     "source": "fixed",
@@ -49999,6 +49995,46 @@
     "category": "기업이벤트",
     "title": "드림어스컴퍼니 액면병합",
     "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-04",
+    "time": "",
+    "category": "미국실적",
+    "title": "AMD 실적발표 (장후) [EPS est. $1.6273]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-08-04",
+    "time": "",
+    "category": "미국실적",
+    "title": "CAT 실적발표 (장전) [EPS est. $6.2595]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-08-04",
+    "time": "",
+    "category": "미국실적",
+    "title": "MCD 실적발표 (장전) [EPS est. $3.3578]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-08-04",
+    "time": "",
+    "category": "미국실적",
+    "title": "MRK 실적발표 [EPS est. $-0.2809]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-08-04",
+    "time": "",
+    "category": "미국실적",
+    "title": "PFE 실적발표 [EPS est. $0.6876]",
+    "source": "finnhub",
     "auto": true
   },
   {
@@ -50069,7 +50105,7 @@
     "date": "2026-08-05",
     "time": "",
     "category": "미국실적",
-    "title": "AAOI 실적발표 [EPS est. $0.0743]",
+    "title": "DIS 실적발표 (장후) [EPS est. $1.8811]",
     "source": "finnhub",
     "auto": true
   },
@@ -50077,7 +50113,15 @@
     "date": "2026-08-05",
     "time": "",
     "category": "미국실적",
-    "title": "LLY 실적발표 [EPS est. $8.1968]",
+    "title": "LLY 실적발표 [EPS est. $6.0959]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-08-05",
+    "time": "",
+    "category": "미국실적",
+    "title": "SNDK 실적발표 [EPS est. $34.7802]",
     "source": "finnhub",
     "auto": true
   },
@@ -50120,6 +50164,22 @@
     "category": "기업이벤트",
     "title": "파루 액면병합",
     "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-06",
+    "time": "",
+    "category": "미국실적",
+    "title": "AAOI 실적발표 [EPS est. $0.0153]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-08-06",
+    "time": "",
+    "category": "미국실적",
+    "title": "ABNB 실적발표 (장후) [EPS est. $1.2766]",
+    "source": "finnhub",
     "auto": true
   },
   {
@@ -50430,102 +50490,6 @@
   {
     "date": "2026-08-12",
     "time": "",
-    "category": "미국실적",
-    "title": "SNDK 실적발표 [EPS est. $18.7402]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-08-12",
-    "time": "",
-    "category": "미국실적",
-    "title": "AMAT 실적발표 (장후) [EPS est. $2.9015]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-08-12",
-    "time": "",
-    "category": "미국실적",
-    "title": "DE 실적발표 (장전) [EPS est. $5.2387]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-08-12",
-    "time": "",
-    "category": "미국실적",
-    "title": "SNDK 실적발표 [EPS est. $20.2337]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-08-12",
-    "time": "",
-    "category": "미국실적",
-    "title": "DE 실적발표 (장전) [EPS est. $5.2447]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-08-12",
-    "time": "",
-    "category": "미국실적",
-    "title": "SNDK 실적발표 [EPS est. $24.981]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-08-12",
-    "time": "",
-    "category": "미국실적",
-    "title": "DE 실적발표 (장전) [EPS est. $5.2474]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-08-12",
-    "time": "",
-    "category": "미국실적",
-    "title": "SNDK 실적발표 [EPS est. $32.619]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-08-12",
-    "time": "",
-    "category": "미국실적",
-    "title": "SNDK 실적발표 [EPS est. $32.9026]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-08-12",
-    "time": "",
-    "category": "미국실적",
-    "title": "SNDK 실적발표 [EPS est. $33.8951]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-08-12",
-    "time": "",
-    "category": "미국실적",
-    "title": "DE 실적발표 (장전) [EPS est. $4.8696]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-08-12",
-    "time": "",
-    "category": "미국실적",
-    "title": "SNDK 실적발표 [EPS est. $33.5616]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-08-12",
-    "time": "",
     "category": "한국실적",
     "title": "위메이드맥스 실적발표",
     "source": "fnguide",
@@ -50584,47 +50548,7 @@
     "date": "2026-08-13",
     "time": "",
     "category": "미국실적",
-    "title": "AMAT 실적발표 (장후) [EPS est. $2.9015]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-08-13",
-    "time": "",
-    "category": "미국실적",
-    "title": "AMAT 실적발표 (장후) [EPS est. $2.917]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-08-13",
-    "time": "",
-    "category": "미국실적",
-    "title": "AMAT 실적발표 (장후) [EPS est. $2.9297]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-08-13",
-    "time": "",
-    "category": "미국실적",
-    "title": "AMAT 실적발표 (장후) [EPS est. $3.3822]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-08-13",
-    "time": "",
-    "category": "미국실적",
-    "title": "AMAT 실적발표 (장후) [EPS est. $3.43]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-08-13",
-    "time": "",
-    "category": "미국실적",
-    "title": "AMAT 실적발표 (장후) [EPS est. $3.4571]",
+    "title": "AMAT 실적발표 (장후) [EPS est. $3.462]",
     "source": "finnhub",
     "auto": true
   },
@@ -50705,7 +50629,7 @@
     "date": "2026-08-17",
     "time": "",
     "category": "미국실적",
-    "title": "FN 실적발표 (장후) [EPS est. $3.9222]",
+    "title": "FN 실적발표 (장후) [EPS est. $3.928]",
     "source": "finnhub",
     "auto": true
   },
@@ -50713,39 +50637,24 @@
     "date": "2026-08-17",
     "time": "",
     "category": "미국실적",
-    "title": "PANW 실적발표 (장후) [EPS est. $0.9593]",
+    "title": "PANW 실적발표 (장후) [EPS est. $0.9934]",
     "source": "finnhub",
     "auto": true
   },
   {
     "date": "2026-08-17",
     "time": "",
-    "category": "미국실적",
-    "title": "FN 실적발표 (장후) [EPS est. $3.9233]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-08-17",
-    "time": "",
-    "category": "미국실적",
-    "title": "PANW 실적발표 (장후) [EPS est. $0.9954]",
-    "source": "finnhub",
+    "category": "휴장일",
+    "title": "광복절 대체 휴일 (증시 휴장)",
+    "country": "🇰🇷",
+    "source": "holidays",
     "auto": true
   },
   {
     "date": "2026-08-18",
     "time": "",
     "category": "미국실적",
-    "title": "HD 실적발표 [EPS est. $4.873]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-08-18",
-    "time": "",
-    "category": "미국실적",
-    "title": "HD 실적발표 [EPS est. $4.872]",
+    "title": "HD 실적발표 [EPS est. $4.8691]",
     "source": "finnhub",
     "auto": true
   },
@@ -50819,7 +50728,7 @@
     "date": "2026-08-20",
     "time": "",
     "category": "미국실적",
-    "title": "WMT 실적발표 [EPS est. $0.7517]",
+    "title": "DE 실적발표 (장전) [EPS est. $4.8359]",
     "source": "finnhub",
     "auto": true
   },
@@ -50827,7 +50736,7 @@
     "date": "2026-08-20",
     "time": "",
     "category": "미국실적",
-    "title": "DE 실적발표 (장전) [EPS est. $4.8696]",
+    "title": "MRVL 실적발표 [EPS est. $0.939]",
     "source": "finnhub",
     "auto": true
   },
@@ -50835,31 +50744,7 @@
     "date": "2026-08-20",
     "time": "",
     "category": "미국실적",
-    "title": "WMT 실적발표 [EPS est. $0.7499]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-08-20",
-    "time": "",
-    "category": "미국실적",
-    "title": "DE 실적발표 (장전) [EPS est. $4.8409]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-08-20",
-    "time": "",
-    "category": "미국실적",
-    "title": "WMT 실적발표 [EPS est. $0.7502]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-08-20",
-    "time": "",
-    "category": "미국실적",
-    "title": "DE 실적발표 (장전) [EPS est. $4.8445]",
+    "title": "WMT 실적발표 [EPS est. $0.7503]",
     "source": "finnhub",
     "auto": true
   },
@@ -50939,39 +50824,7 @@
     "date": "2026-08-25",
     "time": "",
     "category": "미국실적",
-    "title": "NVDA 실적발표 (장후) [EPS est. $2.1196]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-08-25",
-    "time": "",
-    "category": "미국실적",
-    "title": "SNOW 실적발표 (장후) [EPS est. $0.428]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-08-25",
-    "time": "",
-    "category": "미국실적",
-    "title": "NVDA 실적발표 (장후) [EPS est. $2.1227]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-08-25",
-    "time": "",
-    "category": "미국실적",
-    "title": "SNOW 실적발표 (장후) [EPS est. $0.4513]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-08-25",
-    "time": "",
-    "category": "미국실적",
-    "title": "SNOW 실적발표 (장후) [EPS est. $0.4515]",
+    "title": "SNOW 실적발표 (장후) [EPS est. $0.455]",
     "source": "finnhub",
     "auto": true
   },
@@ -50979,15 +50832,7 @@
     "date": "2026-08-26",
     "time": "",
     "category": "미국실적",
-    "title": "MRVL 실적발표 [EPS est. $0.9383]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-08-26",
-    "time": "",
-    "category": "미국실적",
-    "title": "MRVL 실적발표 [EPS est. $0.938]",
+    "title": "NVDA 실적발표 (장후) [EPS est. $2.1269]",
     "source": "finnhub",
     "auto": true
   },
@@ -51018,16 +50863,6 @@
     "country": "🇰🇷"
   },
   {
-    "date": "2026-08-28",
-    "time": "",
-    "category": "만기일",
-    "title": "MSCI 리밸런싱 (8월)",
-    "source": "fixed",
-    "auto": false,
-    "country": "",
-    "summary": "MSCI 분기 리밸런싱"
-  },
-  {
     "date": "2026-08-29",
     "time": "",
     "category": "기업이벤트",
@@ -51050,6 +50885,16 @@
     "title": "프리티 유상증자(3자배정)",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "date": "2026-08-31",
+    "time": "",
+    "category": "만기일",
+    "title": "MSCI 리밸런싱 (8월)",
+    "source": "fixed",
+    "auto": false,
+    "country": "",
+    "summary": "MSCI 분기 리밸런싱"
   },
   {
     "date": "2026-08-31",
@@ -51082,6 +50927,14 @@
     "category": "기업이벤트",
     "title": "유비온 액면병합",
     "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-09-01",
+    "time": "",
+    "category": "미국실적",
+    "title": "CRM 실적발표 (장후) [EPS est. $3.3057]",
+    "source": "finnhub",
     "auto": true
   },
   {
@@ -51121,6 +50974,14 @@
     "source": "fixed",
     "auto": false,
     "country": "🇰🇷"
+  },
+  {
+    "date": "2026-09-02",
+    "time": "",
+    "category": "미국실적",
+    "title": "AVGO 실적발표 (장후) [EPS est. $3.3012]",
+    "source": "finnhub",
+    "auto": true
   },
   {
     "date": "2026-09-03",
@@ -51168,6 +51029,14 @@
   {
     "date": "2026-09-07",
     "time": "",
+    "category": "미국실적",
+    "title": "ORCL 실적발표 [EPS est. $1.7739]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-09-07",
+    "time": "",
     "category": "전시/박람회",
     "title": "IFA 베를린 2026 (가전)",
     "source": "news",
@@ -51204,6 +51073,14 @@
     "category": "만기일",
     "title": "9월 선물옵션 동시만기 (쿼드러플위칭)",
     "source": "news",
+    "auto": true
+  },
+  {
+    "date": "2026-09-10",
+    "time": "",
+    "category": "미국실적",
+    "title": "ADBE 실적발표 (장후) [EPS est. $6.1868]",
+    "source": "finnhub",
     "auto": true
   },
   {
@@ -51273,40 +51150,13 @@
     "auto": true
   },
   {
-    "date": "2026-09-16",
-    "time": "04:00",
+    "date": "2026-09-17",
+    "time": "03:00",
     "category": "통화정책",
     "title": "FOMC 금리 결정",
     "source": "fixed",
     "auto": false,
     "country": "🇺🇸"
-  },
-  {
-    "date": "2026-09-16",
-    "time": "21:00",
-    "category": "통화정책",
-    "title": "🇺🇸 Interest Rate Projection - 3rd Yr  (Q1)",
-    "source": "investing",
-    "auto": true,
-    "country": "🇺🇸"
-  },
-  {
-    "date": "2026-09-16",
-    "time": "21:00",
-    "category": "통화정책",
-    "title": "🇺🇸 Fed Interest Rate Decision",
-    "source": "investing",
-    "auto": true,
-    "country": "🇺🇸"
-  },
-  {
-    "date": "2026-09-17",
-    "time": "",
-    "category": "통화정책",
-    "title": "BOJ 금리 결정",
-    "source": "fixed",
-    "auto": false,
-    "country": "🇯🇵"
   },
   {
     "date": "2026-09-18",
@@ -51327,6 +51177,15 @@
     "summary": "FTSE 분기 리밸런싱"
   },
   {
+    "date": "2026-09-18",
+    "time": "",
+    "category": "통화정책",
+    "title": "BOJ 금리 결정",
+    "source": "fixed",
+    "auto": false,
+    "country": "🇯🇵"
+  },
+  {
     "date": "2026-09-19",
     "time": "",
     "category": "기업이벤트",
@@ -51340,6 +51199,14 @@
     "category": "기업이벤트",
     "title": "HLB제약 유상증자(주주배정)",
     "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-09-21",
+    "time": "",
+    "category": "미국실적",
+    "title": "MU 실적발표 (장후) [EPS est. $32.2476]",
+    "source": "finnhub",
     "auto": true
   },
   {
@@ -51377,6 +51244,23 @@
     "country": ""
   },
   {
+    "date": "2026-09-24",
+    "time": "",
+    "category": "미국실적",
+    "title": "COST 실적발표 (장후) [EPS est. $6.692]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-09-24",
+    "time": "",
+    "category": "휴장일",
+    "title": "추석 전날 (증시 휴장)",
+    "country": "🇰🇷",
+    "source": "holidays",
+    "auto": true
+  },
+  {
     "date": "2026-09-25",
     "time": "",
     "category": "만기일",
@@ -51386,6 +51270,15 @@
     "country": ""
   },
   {
+    "date": "2026-09-25",
+    "time": "",
+    "category": "휴장일",
+    "title": "추석 (증시 휴장)",
+    "country": "🇰🇷",
+    "source": "holidays",
+    "auto": true
+  },
+  {
     "date": "2026-09-26",
     "time": "",
     "category": "만기일",
@@ -51393,6 +51286,14 @@
     "source": "fixed",
     "auto": false,
     "country": ""
+  },
+  {
+    "date": "2026-09-28",
+    "time": "",
+    "category": "미국실적",
+    "title": "NKE 실적발표 [EPS est. $0.4509]",
+    "source": "finnhub",
+    "auto": true
   },
   {
     "date": "2026-09-30",
@@ -51410,17 +51311,6 @@
     "source": "fixed",
     "auto": false,
     "country": "🇨🇳"
-  },
-  {
-    "category": "산업컨퍼런스",
-    "title": "TechCrunch Disrupt 2026",
-    "source": "ai_scan",
-    "auto": true,
-    "month": "2026-10",
-    "undated": true,
-    "date": "2026-10-01",
-    "endDate": "2026-10-31",
-    "summary": "10월 13-15일 샌프란시스코 모스콘 웨스트에서 개최되는 테크 컨퍼런스"
   },
   {
     "date": "2026-10-01",
@@ -51468,6 +51358,15 @@
     "country": ""
   },
   {
+    "date": "2026-10-05",
+    "time": "",
+    "category": "휴장일",
+    "title": "개천절 대체 휴일 (증시 휴장)",
+    "country": "🇰🇷",
+    "source": "holidays",
+    "auto": true
+  },
+  {
     "date": "2026-10-06",
     "time": "",
     "category": "전시/박람회",
@@ -51475,6 +51374,14 @@
     "source": "news",
     "auto": true,
     "endDate": "2026-10-10"
+  },
+  {
+    "date": "2026-10-07",
+    "time": "",
+    "category": "미국실적",
+    "title": "PEP 실적발표 (장전) [EPS est. $2.3233]",
+    "source": "finnhub",
+    "auto": true
   },
   {
     "date": "2026-10-08",
@@ -51494,10 +51401,19 @@
     "country": ""
   },
   {
-    "date": "2026-10-13",
+    "date": "2026-10-09",
+    "time": "",
+    "category": "휴장일",
+    "title": "한글날 (증시 휴장)",
+    "country": "🇰🇷",
+    "source": "holidays",
+    "auto": true
+  },
+  {
+    "date": "2026-10-12",
     "time": "",
     "category": "미국실적",
-    "title": "JPM 실적발표 [EPS est. $5.5099]",
+    "title": "BLK 실적발표 [EPS est. $14.3094]",
     "source": "finnhub",
     "auto": true
   },
@@ -51505,7 +51421,7 @@
     "date": "2026-10-13",
     "time": "",
     "category": "미국실적",
-    "title": "JPM 실적발표 [EPS est. $5.5301]",
+    "title": "ABT 실적발표 (장전) [EPS est. $1.4339]",
     "source": "finnhub",
     "auto": true
   },
@@ -51513,7 +51429,7 @@
     "date": "2026-10-13",
     "time": "",
     "category": "미국실적",
-    "title": "JPM 실적발표 [EPS est. $5.5343]",
+    "title": "C 실적발표 [EPS est. $2.7139]",
     "source": "finnhub",
     "auto": true
   },
@@ -51521,7 +51437,7 @@
     "date": "2026-10-13",
     "time": "",
     "category": "미국실적",
-    "title": "JPM 실적발표 [EPS est. $5.5276]",
+    "title": "GS 실적발표 (장전) [EPS est. $16.9394]",
     "source": "finnhub",
     "auto": true
   },
@@ -51529,7 +51445,23 @@
     "date": "2026-10-13",
     "time": "",
     "category": "미국실적",
-    "title": "JPM 실적발표 [EPS est. $5.5109]",
+    "title": "JNJ 실적발표 [EPS est. $3.0786]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-10-13",
+    "time": "",
+    "category": "미국실적",
+    "title": "JPM 실적발표 [EPS est. $5.855]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-10-13",
+    "time": "",
+    "category": "미국실적",
+    "title": "WFC 실적발표 (장전) [EPS est. $1.8441]",
     "source": "finnhub",
     "auto": true
   },
@@ -51546,7 +51478,7 @@
     "date": "2026-10-14",
     "time": "",
     "category": "미국실적",
-    "title": "WFC 실적발표 (장전) [EPS est. $1.8683]",
+    "title": "BAC 실적발표 (장전) [EPS est. $1.1945]",
     "source": "finnhub",
     "auto": true
   },
@@ -51554,7 +51486,7 @@
     "date": "2026-10-14",
     "time": "",
     "category": "미국실적",
-    "title": "BAC 실적발표 (장전) [EPS est. $1.1444]",
+    "title": "MS 실적발표 (장전) [EPS est. $3.216]",
     "source": "finnhub",
     "auto": true
   },
@@ -51562,80 +51494,7 @@
     "date": "2026-10-14",
     "time": "",
     "category": "미국실적",
-    "title": "BAC 실적발표 (장전) [EPS est. $1.1475]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-10-14",
-    "time": "",
-    "category": "미국실적",
-    "title": "WFC 실적발표 (장전) [EPS est. $1.8335]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-10-14",
-    "time": "",
-    "category": "미국실적",
-    "title": "BAC 실적발표 (장전) [EPS est. $1.1458]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-10-14",
-    "time": "",
-    "category": "미국실적",
-    "title": "WFC 실적발표 (장전) [EPS est. $1.8222]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-10-14",
-    "time": "",
-    "category": "미국실적",
-    "title": "BAC 실적발표 (장전) [EPS est. $1.1467]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-10-14",
-    "time": "",
-    "category": "미국실적",
-    "title": "WFC 실적발표 (장전) [EPS est. $1.8226]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-10-14",
-    "time": "",
-    "category": "미국실적",
-    "title": "BAC 실적발표 (장전) [EPS est. $1.1457]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-10-14",
-    "time": "",
-    "category": "미국실적",
-    "title": "WFC 실적발표 (장전) [EPS est. $1.8248]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-10-15",
-    "time": "10:00",
-    "category": "통화정책",
-    "title": "한국은행 금통위 금리 결정",
-    "source": "fixed",
-    "auto": false,
-    "country": "🇰🇷"
-  },
-  {
-    "date": "2026-10-19",
-    "time": "",
-    "category": "미국실적",
-    "title": "RTX 실적발표 (장전) [EPS est. $1.7873]",
+    "title": "SCHW 실적발표 (장전) [EPS est. $1.6066]",
     "source": "finnhub",
     "auto": true
   },
@@ -51643,7 +51502,7 @@
     "date": "2026-10-19",
     "time": "",
     "category": "미국실적",
-    "title": "RTX 실적발표 (장전) [EPS est. $1.7829]",
+    "title": "GE 실적발표 (장전) [EPS est. $2.0268]",
     "source": "finnhub",
     "auto": true
   },
@@ -51651,7 +51510,23 @@
     "date": "2026-10-19",
     "time": "",
     "category": "미국실적",
-    "title": "RTX 실적발표 (장전) [EPS est. $1.7418]",
+    "title": "KO 실적발표 (장전) [EPS est. $0.9046]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-10-19",
+    "time": "",
+    "category": "미국실적",
+    "title": "LMT 실적발표 (장전) [EPS est. $7.5534]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-10-19",
+    "time": "",
+    "category": "미국실적",
+    "title": "NFLX 실적발표 (장후) [EPS est. $0.8394]",
     "source": "finnhub",
     "auto": true
   },
@@ -51664,28 +51539,171 @@
     "auto": true
   },
   {
-    "date": "2026-10-28",
-    "time": "04:00",
+    "date": "2026-10-19",
+    "time": "",
+    "category": "미국실적",
+    "title": "TXN 실적발표 (장후) [EPS est. $2.1613]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-10-20",
+    "time": "",
+    "category": "미국실적",
+    "title": "LRCX 실적발표 [EPS est. $1.8266]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-10-20",
+    "time": "",
+    "category": "미국실적",
+    "title": "TMO 실적발표 (장전) [EPS est. $6.4296]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-10-20",
+    "time": "",
+    "category": "미국실적",
+    "title": "TSLA 실적발표 (장후) [EPS est. $0.5111]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-10-21",
+    "time": "",
+    "category": "미국실적",
+    "title": "INTC 실적발표 (장후) [EPS est. $0.2659]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-10-22",
+    "time": "",
+    "category": "미국실적",
+    "title": "PG 실적발표 (장전) [EPS est. $2.0422]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-10-22",
+    "time": "10:00",
     "category": "통화정책",
-    "title": "FOMC 금리 결정",
+    "title": "한국은행 금통위 금리 결정",
     "source": "fixed",
     "auto": false,
-    "country": "🇺🇸"
+    "country": "🇰🇷"
+  },
+  {
+    "date": "2026-10-26",
+    "time": "",
+    "category": "미국실적",
+    "title": "UNH 실적발표 (장전) [EPS est. $4.021]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-10-26",
+    "time": "",
+    "category": "미국실적",
+    "title": "V 실적발표 (장후) [EPS est. $3.5153]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-10-27",
+    "time": "",
+    "category": "미국실적",
+    "title": "BA 실적발표 (장전) [EPS est. $-0.0739]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-10-27",
+    "time": "",
+    "category": "미국실적",
+    "title": "CAT 실적발표 (장전) [EPS est. $6.4616]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-10-27",
+    "time": "",
+    "category": "미국실적",
+    "title": "GOOGL 실적발표 (장후) [EPS est. $3.0933]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-10-27",
+    "time": "",
+    "category": "미국실적",
+    "title": "KLAC 실적발표 [EPS est. $1.1541]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-10-27",
+    "time": "",
+    "category": "미국실적",
+    "title": "META 실적발표 (장후) [EPS est. $7.1724]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-10-27",
+    "time": "",
+    "category": "미국실적",
+    "title": "MSFT 실적발표 [EPS est. $4.7278]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-10-27",
+    "time": "",
+    "category": "미국실적",
+    "title": "NOW 실적발표 (장후) [EPS est. $1.1004]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-10-27",
+    "time": "",
+    "category": "미국실적",
+    "title": "SBUX 실적발표 (장후) [EPS est. $0.7013]",
+    "source": "finnhub",
+    "auto": true
   },
   {
     "date": "2026-10-28",
-    "time": "21:00",
-    "category": "통화정책",
-    "title": "🇺🇸 Fed Interest Rate Decision",
-    "source": "investing",
-    "auto": true,
-    "country": "🇺🇸"
-  },
-  {
-    "date": "2026-10-29",
     "time": "",
     "category": "미국실적",
-    "title": "MRK 실적발표 [EPS est. $2.4321]",
+    "title": "AAPL 실적발표 (장후) [EPS est. $2.0468]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-10-28",
+    "time": "",
+    "category": "미국실적",
+    "title": "AMZN 실적발표 (장후) [EPS est. $1.9445]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-10-28",
+    "time": "",
+    "category": "미국실적",
+    "title": "CMCSA 실적발표 (장전) [EPS est. $1.0669]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-10-28",
+    "time": "",
+    "category": "미국실적",
+    "title": "MA 실적발표 (장전) [EPS est. $5.2665]",
     "source": "finnhub",
     "auto": true
   },
@@ -51693,7 +51711,7 @@
     "date": "2026-10-29",
     "time": "",
     "category": "미국실적",
-    "title": "MRK 실적발표 [EPS est. $2.4472]",
+    "title": "ABBV 실적발표 [EPS est. $3.9286]",
     "source": "finnhub",
     "auto": true
   },
@@ -51701,7 +51719,7 @@
     "date": "2026-10-29",
     "time": "",
     "category": "미국실적",
-    "title": "MRK 실적발표 [EPS est. $2.3598]",
+    "title": "CVX 실적발표 (장전) [EPS est. $4.4417]",
     "source": "finnhub",
     "auto": true
   },
@@ -51709,7 +51727,7 @@
     "date": "2026-10-29",
     "time": "",
     "category": "미국실적",
-    "title": "MRK 실적발표 [EPS est. $2.319]",
+    "title": "LLY 실적발표 [EPS est. $9.5241]",
     "source": "finnhub",
     "auto": true
   },
@@ -51724,20 +51742,46 @@
   {
     "date": "2026-10-29",
     "time": "",
-    "category": "통화정책",
-    "title": "BOJ 금리 결정",
-    "source": "fixed",
-    "auto": false,
-    "country": "🇯🇵"
+    "category": "미국실적",
+    "title": "XOM 실적발표 (장전) [EPS est. $3.4462]",
+    "source": "finnhub",
+    "auto": true
   },
   {
     "date": "2026-10-29",
-    "time": "21:15",
+    "time": "03:00",
+    "category": "통화정책",
+    "title": "FOMC 금리 결정",
+    "source": "fixed",
+    "auto": false,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-10-29",
+    "time": "03:00",
+    "category": "통화정책",
+    "title": "🇺🇸 Fed Interest Rate Decision",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-10-29",
+    "time": "22:15",
     "category": "통화정책",
     "title": "ECB 금리 결정",
     "source": "fixed",
     "auto": false,
     "country": "🇪🇺"
+  },
+  {
+    "date": "2026-10-30",
+    "time": "",
+    "category": "통화정책",
+    "title": "BOJ 금리 결정",
+    "source": "fixed",
+    "auto": false,
+    "country": "🇯🇵"
   },
   {
     "category": "수동",
@@ -51782,6 +51826,46 @@
   {
     "date": "2026-11-02",
     "time": "",
+    "category": "미국실적",
+    "title": "AMD 실적발표 (장후) [EPS est. $1.8517]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-11-02",
+    "time": "",
+    "category": "미국실적",
+    "title": "FN 실적발표 [EPS est. $4.0917]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-11-02",
+    "time": "",
+    "category": "미국실적",
+    "title": "ON 실적발표 (장전) [EPS est. $0.8568]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-11-02",
+    "time": "",
+    "category": "미국실적",
+    "title": "PFE 실적발표 [EPS est. $0.8464]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-11-02",
+    "time": "",
+    "category": "미국실적",
+    "title": "PLTR 실적발표 [EPS est. $0.3782]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-11-02",
+    "time": "",
     "category": "자동차/배터리",
     "title": "현대차/기아 10월 판매량 발표",
     "source": "fixed",
@@ -51791,11 +51875,51 @@
   {
     "date": "2026-11-03",
     "time": "",
+    "category": "미국실적",
+    "title": "MCD 실적발표 (장전) [EPS est. $3.4896]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-11-03",
+    "time": "",
+    "category": "미국실적",
+    "title": "QCOM 실적발표 (장후) [EPS est. $2.38]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-11-03",
+    "time": "",
     "category": "산업컨퍼런스",
     "title": "OpenAI DevDay 2026",
     "source": "news",
     "auto": true,
     "endDate": "2026-11-04"
+  },
+  {
+    "date": "2026-11-04",
+    "time": "",
+    "category": "미국실적",
+    "title": "AAOI 실적발표 [EPS est. $0.2839]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-11-04",
+    "time": "",
+    "category": "미국실적",
+    "title": "ABNB 실적발표 (장후) [EPS est. $2.8079]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-11-04",
+    "time": "",
+    "category": "미국실적",
+    "title": "SNDK 실적발표 [EPS est. $41.473]",
+    "source": "finnhub",
+    "auto": true
   },
   {
     "date": "2026-11-05",
@@ -51861,6 +51985,14 @@
     "date": "2026-11-17",
     "time": "",
     "category": "미국실적",
+    "title": "HD 실적발표 [EPS est. $4.0784]",
+    "source": "finnhub",
+    "auto": true
+  },
+  {
+    "date": "2026-11-17",
+    "time": "",
+    "category": "미국실적",
     "title": "NVDA 실적발표 (장후) [EPS est. $2.3985]",
     "source": "finnhub",
     "auto": true
@@ -51870,14 +52002,6 @@
     "time": "",
     "category": "미국실적",
     "title": "PANW 실적발표 [EPS est. $0.9496]",
-    "source": "finnhub",
-    "auto": true
-  },
-  {
-    "date": "2026-11-17",
-    "time": "",
-    "category": "미국실적",
-    "title": "HD 실적발표 [EPS est. $4.0784]",
     "source": "finnhub",
     "auto": true
   },
@@ -51916,7 +52040,7 @@
     "country": "🇰🇷"
   },
   {
-    "date": "2026-11-27",
+    "date": "2026-11-30",
     "time": "",
     "category": "만기일",
     "title": "MSCI 리밸런싱 (11월)",
@@ -52058,13 +52182,12 @@
     "auto": true
   },
   {
-    "date": "2026-12-09",
-    "time": "22:00",
-    "category": "통화정책",
-    "title": "🇺🇸 Fed Interest Rate Decision",
-    "source": "investing",
-    "auto": true,
-    "country": "🇺🇸"
+    "date": "2026-12-10",
+    "time": "",
+    "category": "만기일",
+    "title": "12월 선물옵션 동시만기 (쿼드러플위칭)",
+    "source": "news",
+    "auto": true
   },
   {
     "date": "2026-12-10",
@@ -52078,11 +52201,21 @@
   },
   {
     "date": "2026-12-10",
-    "time": "",
-    "category": "만기일",
-    "title": "12월 선물옵션 동시만기 (쿼드러플위칭)",
-    "source": "news",
-    "auto": true
+    "time": "04:00",
+    "category": "통화정책",
+    "title": "FOMC 금리 결정",
+    "source": "fixed",
+    "auto": false,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-12-10",
+    "time": "04:00",
+    "category": "통화정책",
+    "title": "🇺🇸 Fed Interest Rate Decision",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
   },
   {
     "date": "2026-12-10",
@@ -52110,17 +52243,8 @@
     "auto": true
   },
   {
-    "date": "2026-12-16",
-    "time": "04:00",
-    "category": "통화정책",
-    "title": "FOMC 금리 결정",
-    "source": "fixed",
-    "auto": false,
-    "country": "🇺🇸"
-  },
-  {
     "date": "2026-12-17",
-    "time": "21:15",
+    "time": "22:15",
     "category": "통화정책",
     "title": "ECB 금리 결정",
     "source": "fixed",
@@ -52165,6 +52289,15 @@
     "country": ""
   },
   {
+    "date": "2026-12-25",
+    "time": "",
+    "category": "휴장일",
+    "title": "기독탄신일 (증시 휴장)",
+    "country": "🇰🇷",
+    "source": "holidays",
+    "auto": true
+  },
+  {
     "date": "2026-12-28",
     "time": "",
     "category": "기업이벤트",
@@ -52183,6 +52316,15 @@
     "auto": false,
     "country": "",
     "summary": "배당 기준일 다음 영업일. 배당금만큼 주가 하락 가능"
+  },
+  {
+    "date": "2026-12-31",
+    "time": "",
+    "category": "휴장일",
+    "title": "연말 폐장 (증시 휴장)",
+    "country": "🇰🇷",
+    "source": "holidays",
+    "auto": true
   },
   {
     "date": "2026-12-31",

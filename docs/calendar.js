@@ -77,7 +77,27 @@ let events = [];
 let currentView = "month"; // month | week | day
 let viewDate = new Date(); // current focused date
 let selectedDate = null;
-let enabledCats = new Set(Object.keys(CAT_COLORS));
+// 카테고리 필터 기본값: 기업이벤트(유증·액면병합 등)만 기본 해제 — 물량이 많아 다른 일정을 가리는 문제
+const DEFAULT_OFF_CATS = new Set(["기업이벤트"]);
+function defaultEnabledCats() {
+    return new Set(Object.keys(CAT_COLORS).filter(c => !DEFAULT_OFF_CATS.has(c)));
+}
+// localStorage("calendar_cats")에 해제 목록(off)을 저장 — 저장값이 있으면 그게 우선, 신규 카테고리는 자동 켜짐
+function loadEnabledCats() {
+    try {
+        const saved = JSON.parse(localStorage.getItem("calendar_cats") || "null");
+        if (saved && Array.isArray(saved.off)) {
+            const off = new Set(saved.off);
+            return new Set(Object.keys(CAT_COLORS).filter(c => !off.has(c)));
+        }
+    } catch {}
+    return defaultEnabledCats();
+}
+function saveEnabledCats() {
+    const off = Object.keys(CAT_COLORS).filter(c => !enabledCats.has(c));
+    localStorage.setItem("calendar_cats", JSON.stringify({ off }));
+}
+let enabledCats = loadEnabledCats();
 let isAdmin = false;
 let editingEvent = null;
 
@@ -203,6 +223,7 @@ function renderCatFilter() {
 function toggleCat(cat) {
     if (enabledCats.has(cat)) enabledCats.delete(cat);
     else enabledCats.add(cat);
+    saveEnabledCats();
     renderCatFilter();
     renderView();
     renderMiniCal();
@@ -212,6 +233,7 @@ function toggleAllCats() {
     const allOn = [...usedCats].every(c => enabledCats.has(c));
     if (allOn) enabledCats.clear();
     else for (const c of usedCats) enabledCats.add(c);
+    saveEnabledCats();
     renderCatFilter();
     renderView();
     renderMiniCal();
@@ -476,10 +498,14 @@ function showDetailPanel(dateStr) {
     const dayEvs = eventsOn(dateStr);
     const dt = toDate(dateStr);
 
-    document.getElementById("detail-title").textContent = `${dt.getMonth()+1}월 ${dt.getDate()}일 ${DAYS_KR[dt.getDay()]}`;
+    // 오늘 날짜면 "오늘 일정" 라벨, 다른 날짜는 기존 날짜 표기
+    const isTodayPanel = isToday(dt);
+    document.getElementById("detail-title").textContent = isTodayPanel
+        ? `오늘 일정 (${dt.getMonth()+1}월 ${dt.getDate()}일 ${DAYS_KR[dt.getDay()]})`
+        : `${dt.getMonth()+1}월 ${dt.getDate()}일 ${DAYS_KR[dt.getDay()]}`;
     let html = "";
     if (dayEvs.length === 0) {
-        html = `<div style="color:var(--dim);padding:20px 16px;text-align:center;font-size:0.85rem;">일정 없음</div>`;
+        html = `<div style="color:var(--dim);padding:20px 16px;text-align:center;font-size:0.85rem;">${isTodayPanel ? "오늘 일정 없음" : "일정 없음"}</div>`;
     } else {
         dayEvs.sort((a,b)=>(a.time||"99").localeCompare(b.time||"99"));
         for (const ev of dayEvs) {
@@ -1096,7 +1122,11 @@ function bindEvents() {
 // === START ===
 init().then(() => {
     loadManualEvents();
+    // 데스크톱(>768px)은 로드 시 오늘 일정 패널 자동 오픈 (모바일은 기존 오버레이 방식 유지)
+    const autoOpenToday = window.innerWidth > 768;
+    if (autoOpenToday) selectedDate = new Date();
     renderView();
     renderMiniCal();
     renderCatFilter();
+    if (autoOpenToday) showDetailPanel(fmt(new Date()));
 });

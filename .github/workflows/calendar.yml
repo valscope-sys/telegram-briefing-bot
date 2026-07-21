@@ -21,7 +21,7 @@ jobs:
           python-version: '3.12'
 
       - name: Install dependencies
-        run: pip install requests beautifulsoup4 lxml feedparser python-dotenv anthropic
+        run: pip install -r telegram_bot/requirements.txt
 
       - name: Update calendar data
         env:

@@ -259,6 +259,10 @@ footer { text-align: center; padding: 8px; border-top: 1px solid var(--border); 
 footer a { color: var(--accent); text-decoration: none; font-size: 0.78rem; }
 
 /* Responsive */
+/* 중간 폭 데스크톱: 상시 오픈되는 상세 패널이 캘린더 본문을 과하게 줄이지 않도록 폭 축소 */
+@media (min-width: 769px) and (max-width: 1100px) {
+    .detail-panel { width: 280px; }
+}
 @media (max-width: 768px) {
     #sidebar { display: none; }
     .detail-panel { position: fixed; right: 0; top: 48px; bottom: 0; z-index: 50; width: 100%; max-width: 360px; box-shadow: -4px 0 20px rgba(0,0,0,0.4); }

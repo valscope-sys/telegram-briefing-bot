@@ -6,6 +6,7 @@ Usage:
     python -m cal_data.update --full       # 연말까지 업데이트
     python -m cal_data.update --month 202604  # 특정 월 업데이트
 """
+import re
 import json
 import datetime
 import argparse
@@ -28,11 +29,17 @@ def load_existing() -> list[dict]:
     return []
 
 
+# Finnhub EPS 추정치 패턴 (예: " [EPS est. $1.23]", " [EPS est. $-0.05]")
+_EPS_EST_RE = re.compile(r"\s*\[EPS est\. \$-?[\d.,]+\]")
+
+
 def normalize_title(title: str) -> str:
     """제목 정규화 (중복 비교용)"""
     t = title.strip()
     for suffix in ["(잠정)", "(예정)", "(확정)"]:
         t = t.replace(suffix, "")
+    # EPS 추정치는 매일 변동 → dedupe 키에서 제거 (같은 실적 중복 축적 방지)
+    t = _EPS_EST_RE.sub("", t)
     return t.strip()
 
 

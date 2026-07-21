@@ -10,3 +10,4 @@ lxml>=5.0.0
 yfinance>=0.2.30
 holidays>=0.50
 pykrx>=1.0.45
+curl_cffi>=0.13

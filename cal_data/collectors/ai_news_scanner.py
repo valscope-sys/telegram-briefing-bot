@@ -12,6 +12,9 @@ if os.path.exists(_env_path):
 
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
 
+# 스캐너 모델 — 비용 최저 원칙(사용자 정책). 환경변수 CALENDAR_SCANNER_MODEL로 교체 가능
+CALENDAR_SCANNER_MODEL = os.getenv("CALENDAR_SCANNER_MODEL", "claude-haiku-4-5-20251001")
+
 # RSS 소스 (기존 텔레그램 봇 소스 + 추가)
 RSS_FEEDS = [
     # 국내 경제/산업
@@ -102,7 +105,10 @@ def fetch_headlines() -> list[str]:
 
 def extract_events_with_ai(headlines: list[str]) -> list[dict]:
     """Claude API로 헤드라인에서 일정 추출"""
-    if not ANTHROPIC_API_KEY or not headlines:
+    if not headlines:
+        return []
+    if not ANTHROPIC_API_KEY:
+        print("[AI Scanner] ERROR: ANTHROPIC_API_KEY 미설정 — AI 일정 추출 건너뜀")
         return []
 
     client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
@@ -112,7 +118,7 @@ def extract_events_with_ai(headlines: list[str]) -> list[dict]:
 
     try:
         response = client.messages.create(
-            model="claude-sonnet-4-20250514",
+            model=CALENDAR_SCANNER_MODEL,
             max_tokens=2000,
             system=SYSTEM_PROMPT,
             messages=[{
@@ -140,11 +146,12 @@ def extract_events_with_ai(headlines: list[str]) -> list[dict]:
 
         events = json.loads(text)
         if not isinstance(events, list):
+            print(f"[AI Scanner] ERROR: 응답이 JSON 배열이 아님 — {text[:100]}")
             return []
 
         return events
     except Exception as e:
-        print(f"[AI Scanner] Error: {e}")
+        print(f"[AI Scanner] ERROR: Claude API 호출/파싱 실패 (model={CALENDAR_SCANNER_MODEL}) — {e}")
         return []
 
 

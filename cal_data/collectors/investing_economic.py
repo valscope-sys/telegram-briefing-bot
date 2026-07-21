@@ -1,13 +1,20 @@
-"""Investing.com 경제지표 캘린더 스크래핑 (AJAX API)"""
+"""Investing.com 경제지표 캘린더 스크래핑 (AJAX API)
+
+Cloudflare가 python-requests의 TLS 지문을 차단하므로
+curl_cffi(impersonate='chrome')로 우회한다.
+"""
 import re
+import time
 import datetime
-import requests
+from urllib.parse import urlencode
+
+from curl_cffi import requests as cf_requests
 from bs4 import BeautifulSoup
 
 HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
     "X-Requested-With": "XMLHttpRequest",
     "Referer": "https://www.investing.com/economic-calendar/",
+    "Content-Type": "application/x-www-form-urlencoded",
 }
 
 AJAX_URL = "https://www.investing.com/economic-calendar/Service/getCalendarFilteredData"
@@ -18,6 +25,18 @@ COUNTRY_IDS = {
     "32": "EU", "6": "GB", "37": "DE",
 }
 COUNTRY_EMOJI = {"US": "🇺🇸", "CN": "🇨🇳", "JP": "🇯🇵", "KR": "🇰🇷", "EU": "🇪🇺", "GB": "🇬🇧", "DE": "🇩🇪"}
+
+# Investing.com 시간대 ID.
+# 88 = Asia/Seoul (KST, UTC+9) - 실측 검증: timeZone=88로 요청 시
+#   '신규 실업수당 청구건수'(매주 목 21:30 KST)가 21:30으로 수신됨.
+#   기존 값 18은 UTC+3(여름 기준)으로 6시간 빠른 시각이 저장되던 버그.
+TIME_ZONE_ID = 88
+
+# 응답당 최대 행 수 (서버측 캡) - 도달 시 절단 경고
+ROW_CAP = 200
+
+# 호출 간 대기 (rate limit 회피)
+CALL_INTERVAL_SEC = 1.0
 
 MONETARY_KEYWORDS = [
     "interest rate", "rate decision", "fomc", "fed ", "ecb", "boj", "boe",
@@ -37,11 +56,15 @@ def fetch_investing_economic(from_date: datetime.date = None, to_date: datetime.
     if to_date is None:
         to_date = from_date + datetime.timedelta(days=7)
 
-    # 최대 30일씩 나눠서 호출 (서버 부하 방지)
+    # 7일씩 나눠서 호출 (응답당 200행 캡 - 밀집 구간 절단 방지)
     all_results = []
     current = from_date
-    while current < to_date:
-        chunk_end = min(current + datetime.timedelta(days=30), to_date)
+    first_call = True
+    while current <= to_date:
+        chunk_end = min(current + datetime.timedelta(days=6), to_date)
+        if not first_call:
+            time.sleep(CALL_INTERVAL_SEC)  # 호출 간격 (429 방지)
+        first_call = False
         chunk = _fetch_chunk(current, chunk_end)
         all_results.extend(chunk)
         current = chunk_end + datetime.timedelta(days=1)
@@ -60,31 +83,65 @@ def fetch_investing_economic(from_date: datetime.date = None, to_date: datetime.
 
 
 def _fetch_chunk(from_date: datetime.date, to_date: datetime.date) -> list[dict]:
-    """한 번의 AJAX 호출로 데이터 가져오기"""
-    try:
-        data = {
-            "country[]": list(COUNTRY_IDS.keys()),
-            "dateFrom": from_date.isoformat(),
-            "dateTo": to_date.isoformat(),
-            "timeZone": 18,  # KST
-            "timeFilter": "timeRemain",
-            "currentTab": "custom",
-            "limit_from": 0,
-        }
-        res = requests.post(AJAX_URL, data=data, headers=HEADERS, timeout=20)
-        if res.status_code != 200:
-            print(f"[Investing] HTTP {res.status_code}")
+    """한 번의 AJAX 호출로 데이터 가져오기 (429 시 30초 대기 후 1회 재시도)"""
+    # curl_cffi에 dict를 그대로 넘기면 country[] 리스트 인코딩이 깨져 404
+    # → 사전 urlencode 필수
+    payload = urlencode(
+        [("country[]", c) for c in COUNTRY_IDS.keys()]
+        + [
+            ("dateFrom", from_date.isoformat()),
+            ("dateTo", to_date.isoformat()),
+            ("timeZone", TIME_ZONE_ID),
+            ("timeFilter", "timeRemain"),
+            ("currentTab", "custom"),
+            ("limit_from", 0),
+        ]
+    )
+
+    for attempt in range(2):
+        try:
+            res = cf_requests.post(
+                AJAX_URL, data=payload, headers=HEADERS,
+                timeout=20, impersonate="chrome",
+            )
+        except Exception as e:
+            print(f"[Investing] Error: {e}")
             return []
 
-        json_data = res.json()
+        if res.status_code == 429:
+            if attempt == 0:
+                print("[Investing] HTTP 429 (rate limit) - 30초 대기 후 재시도")
+                time.sleep(30)
+                continue
+            print("[Investing] HTTP 429 (rate limit) - 재시도에도 실패, 청크 스킵")
+            return []
+
+        if res.status_code == 403:
+            print(f"[Investing] BLOCKED - Cloudflare 차단 감지 (HTTP 403, {from_date}~{to_date})")
+            return []
+
+        if res.status_code != 200:
+            print(f"[Investing] HTTP {res.status_code} ({from_date}~{to_date})")
+            return []
+
+        try:
+            json_data = res.json()
+        except Exception as e:
+            print(f"[Investing] JSON 파싱 실패 (차단 페이지 가능성): {e}")
+            return []
+
         html = json_data.get("data", "")
         if not html:
             return []
 
+        # 응답당 200행 캡 - 도달 시 절단 경고
+        row_count = html.count("js-event-item")
+        if row_count >= ROW_CAP:
+            print(f"[Investing] 경고: 응답 {row_count}행 - {ROW_CAP}행 캡 도달, 데이터 절단 가능 ({from_date}~{to_date})")
+
         return _parse_html(html)
-    except Exception as e:
-        print(f"[Investing] Error: {e}")
-        return []
+
+    return []
 
 
 def _parse_html(html: str) -> list[dict]:

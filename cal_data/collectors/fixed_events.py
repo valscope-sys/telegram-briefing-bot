@@ -4,42 +4,55 @@ import datetime
 
 FIXED_EVENTS_2026 = [
     # ========== 통화정책 ==========
-    # FOMC
+    # FOMC — 공식 일정: https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm
+    # 2026 회의: 1/27-28, 3/17-18, 4/28-29, 6/16-17, 7/28-29, 9/15-16, 10/27-28, 12/8-9
+    # 표기 원칙(2026-07-21 교정): KST 발표일 기준 — 2일차 회의 미국 동부 14:00 발표
+    #   → KST 다음날 새벽. 미국 DST 기간(3~11월) 03:00, 그 외 04:00
+    #   ※ 7/21 이전 항목은 과거 기록 보존을 위해 기존 표기 유지
     {"date": "2026-01-28", "time": "04:00", "category": "통화정책", "title": "FOMC 금리 결정", "country": "🇺🇸"},
     {"date": "2026-03-18", "time": "04:00", "category": "통화정책", "title": "FOMC 금리 결정", "country": "🇺🇸"},
     {"date": "2026-05-06", "time": "04:00", "category": "통화정책", "title": "FOMC 금리 결정", "country": "🇺🇸"},
     {"date": "2026-06-17", "time": "04:00", "category": "통화정책", "title": "FOMC 금리 결정", "country": "🇺🇸"},
-    {"date": "2026-07-29", "time": "04:00", "category": "통화정책", "title": "FOMC 금리 결정", "country": "🇺🇸"},
-    {"date": "2026-09-16", "time": "04:00", "category": "통화정책", "title": "FOMC 금리 결정", "country": "🇺🇸"},
-    {"date": "2026-10-28", "time": "04:00", "category": "통화정책", "title": "FOMC 금리 결정", "country": "🇺🇸"},
-    {"date": "2026-12-16", "time": "04:00", "category": "통화정책", "title": "FOMC 금리 결정", "country": "🇺🇸"},
-    # 한국은행 금통위
+    {"date": "2026-07-30", "time": "03:00", "category": "통화정책", "title": "FOMC 금리 결정", "country": "🇺🇸"},  # 7/28-29 회의 (EDT)
+    {"date": "2026-09-17", "time": "03:00", "category": "통화정책", "title": "FOMC 금리 결정", "country": "🇺🇸"},  # 9/15-16 회의 (EDT)
+    {"date": "2026-10-29", "time": "03:00", "category": "통화정책", "title": "FOMC 금리 결정", "country": "🇺🇸"},  # 10/27-28 회의 (EDT, DST 종료 11/1 이전)
+    {"date": "2026-12-10", "time": "04:00", "category": "통화정책", "title": "FOMC 금리 결정", "country": "🇺🇸"},  # 12/8-9 회의 (EST)
+    # 한국은행 금통위 — 공식 일정(2026년 정기회의 개최 예정):
+    # https://www.bok.or.kr/portal/bbs/B0000502/view.do?menuNo=201265&nttId=10094300
+    # 통화정책방향 결정회의: 1/15, 2/26, 4/16, 5/28, 7/16, 8/27, 10/22, 11/26 (발표 당일 KST 오전)
+    # 2026-07-21 교정: 10월 회의 10/15 → 10/22. 7/21 이전 항목은 과거 기록 보존
     {"date": "2026-01-16", "time": "10:00", "category": "통화정책", "title": "한국은행 금통위 금리 결정", "country": "🇰🇷"},
     {"date": "2026-02-27", "time": "10:00", "category": "통화정책", "title": "한국은행 금통위 금리 결정", "country": "🇰🇷"},
     {"date": "2026-04-16", "time": "10:00", "category": "통화정책", "title": "한국은행 금통위 금리 결정", "country": "🇰🇷"},
     {"date": "2026-05-28", "time": "10:00", "category": "통화정책", "title": "한국은행 금통위 금리 결정", "country": "🇰🇷"},
     {"date": "2026-07-16", "time": "10:00", "category": "통화정책", "title": "한국은행 금통위 금리 결정", "country": "🇰🇷"},
     {"date": "2026-08-27", "time": "10:00", "category": "통화정책", "title": "한국은행 금통위 금리 결정", "country": "🇰🇷"},
-    {"date": "2026-10-15", "time": "10:00", "category": "통화정책", "title": "한국은행 금통위 금리 결정", "country": "🇰🇷"},
+    {"date": "2026-10-22", "time": "10:00", "category": "통화정책", "title": "한국은행 금통위 금리 결정", "country": "🇰🇷"},
     {"date": "2026-11-26", "time": "10:00", "category": "통화정책", "title": "한국은행 금통위 금리 결정", "country": "🇰🇷"},
-    # ECB
+    # ECB — 공식 일정: https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html
+    # 하반기 결정일: 9/10, 10/29, 12/17 (기존 날짜 정확 — 날짜 수정 없음)
+    # 2026-07-21 교정: 발표 14:15 중부유럽시간 → KST 여름(CEST) 21:15 / 겨울(CET) 22:15
+    #   EU DST 종료(10/25) 이후 회의는 22:15. 7/21 이전 항목은 과거 기록 보존
     {"date": "2026-01-22", "time": "21:15", "category": "통화정책", "title": "ECB 금리 결정", "country": "🇪🇺"},
     {"date": "2026-03-05", "time": "21:15", "category": "통화정책", "title": "ECB 금리 결정", "country": "🇪🇺"},
     {"date": "2026-04-16", "time": "21:15", "category": "통화정책", "title": "ECB 금리 결정", "country": "🇪🇺"},
     {"date": "2026-06-04", "time": "21:15", "category": "통화정책", "title": "ECB 금리 결정", "country": "🇪🇺"},
     {"date": "2026-07-16", "time": "21:15", "category": "통화정책", "title": "ECB 금리 결정", "country": "🇪🇺"},
-    {"date": "2026-09-10", "time": "21:15", "category": "통화정책", "title": "ECB 금리 결정", "country": "🇪🇺"},
-    {"date": "2026-10-29", "time": "21:15", "category": "통화정책", "title": "ECB 금리 결정", "country": "🇪🇺"},
-    {"date": "2026-12-17", "time": "21:15", "category": "통화정책", "title": "ECB 금리 결정", "country": "🇪🇺"},
-    # BOJ
+    {"date": "2026-09-10", "time": "21:15", "category": "통화정책", "title": "ECB 금리 결정", "country": "🇪🇺"},  # CEST
+    {"date": "2026-10-29", "time": "22:15", "category": "통화정책", "title": "ECB 금리 결정", "country": "🇪🇺"},  # CET (DST 종료 후)
+    {"date": "2026-12-17", "time": "22:15", "category": "통화정책", "title": "ECB 금리 결정", "country": "🇪🇺"},  # CET
+    # BOJ — 공식 일정: https://www.boj.or.jp/en/mopo/mpmsche_minu/index.htm
+    # 2026 하반기 회의: 7/30-31, 9/17-18, 10/29-30, 12/17-18
+    # 2026-07-21 교정: 결정 발표는 2일차 회의일 정오 무렵(JST=KST 동일) — 2일차 날짜로 통일
+    #   7/21 이전 항목은 과거 기록 보존
     {"date": "2026-01-24", "time": "", "category": "통화정책", "title": "BOJ 금리 결정", "country": "🇯🇵"},
     {"date": "2026-03-19", "time": "", "category": "통화정책", "title": "BOJ 금리 결정", "country": "🇯🇵"},
     {"date": "2026-05-01", "time": "", "category": "통화정책", "title": "BOJ 금리 결정", "country": "🇯🇵"},
     {"date": "2026-06-18", "time": "", "category": "통화정책", "title": "BOJ 금리 결정", "country": "🇯🇵"},
-    {"date": "2026-07-30", "time": "", "category": "통화정책", "title": "BOJ 금리 결정", "country": "🇯🇵"},
-    {"date": "2026-09-17", "time": "", "category": "통화정책", "title": "BOJ 금리 결정", "country": "🇯🇵"},
-    {"date": "2026-10-29", "time": "", "category": "통화정책", "title": "BOJ 금리 결정", "country": "🇯🇵"},
-    {"date": "2026-12-18", "time": "", "category": "통화정책", "title": "BOJ 금리 결정", "country": "🇯🇵"},
+    {"date": "2026-07-31", "time": "", "category": "통화정책", "title": "BOJ 금리 결정", "country": "🇯🇵"},  # 7/30-31 회의
+    {"date": "2026-09-18", "time": "", "category": "통화정책", "title": "BOJ 금리 결정", "country": "🇯🇵"},  # 9/17-18 회의
+    {"date": "2026-10-30", "time": "", "category": "통화정책", "title": "BOJ 금리 결정", "country": "🇯🇵"},  # 10/29-30 회의
+    {"date": "2026-12-18", "time": "", "category": "통화정책", "title": "BOJ 금리 결정", "country": "🇯🇵"},  # 12/17-18 회의
 
     # ========== 경제지표 ==========
     # 미국 CPI (매월 둘째주 화/수)
@@ -112,8 +125,9 @@ FIXED_EVENTS_2026 = [
     # MSCI 리밸런싱 (2/5/8/11월 마지막 거래일 종가 기준)
     {"date": "2026-02-27", "time": "", "category": "만기일", "title": "MSCI 리밸런싱 (2월)", "summary": "MSCI 분기 리밸런싱. 편입/제외 종목 대규모 외국인 수급 발생"},
     {"date": "2026-05-29", "time": "", "category": "만기일", "title": "MSCI 리밸런싱 (5월)", "summary": "MSCI 반기 리밸런싱. 대규모 편출입 가능"},
-    {"date": "2026-08-28", "time": "", "category": "만기일", "title": "MSCI 리밸런싱 (8월)", "summary": "MSCI 분기 리밸런싱"},
-    {"date": "2026-11-27", "time": "", "category": "만기일", "title": "MSCI 리밸런싱 (11월)", "summary": "MSCI 반기 리밸런싱. 대규모 편출입 가능"},
+    # 2026-07-21 교정: 8월 마지막 거래일 = 8/31(월), 11월 마지막 거래일 = 11/30(월)
+    {"date": "2026-08-31", "time": "", "category": "만기일", "title": "MSCI 리밸런싱 (8월)", "summary": "MSCI 분기 리밸런싱"},
+    {"date": "2026-11-30", "time": "", "category": "만기일", "title": "MSCI 리밸런싱 (11월)", "summary": "MSCI 반기 리밸런싱. 대규모 편출입 가능"},
     # KOSPI200 정기변경 (6/12월 둘째주 목요일)
     {"date": "2026-06-11", "time": "", "category": "만기일", "title": "KOSPI200 정기변경", "summary": "KOSPI200 종목 편입/제외 반영일. 패시브 자금 리밸런싱"},
     {"date": "2026-12-10", "time": "", "category": "만기일", "title": "KOSPI200 정기변경", "summary": "KOSPI200 종목 편입/제외 반영일"},
