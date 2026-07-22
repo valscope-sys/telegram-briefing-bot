@@ -49146,6 +49146,30 @@
   },
   {
     "date": "2026-07-22",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "지슨 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-22",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "OCI 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-22",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "코스모신소재 잠정실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-22",
     "time": "05:30",
     "category": "경제지표",
     "title": "🇺🇸 API Weekly Crude Oil Stock",
@@ -49259,6 +49283,31 @@
     "title": "삼성바이오로직스 실적발표",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "date": "2026-07-23",
+    "time": "",
+    "category": "한국실적",
+    "title": "IPARK현대산업개발 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-23",
+    "time": "",
+    "category": "한국실적",
+    "title": "LS ELECTRIC 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-23",
+    "time": "04:00",
+    "category": "경제지표",
+    "title": "🇺🇸 U.S. President Trump Speaks",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
   },
   {
     "date": "2026-07-23",
@@ -49450,6 +49499,15 @@
     "title": "두산퓨얼셀 실적발표",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "date": "2026-07-24",
+    "time": "05:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Fed's Balance Sheet",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
   },
   {
     "date": "2026-07-24",
@@ -49662,6 +49720,30 @@
   },
   {
     "date": "2026-07-27",
+    "time": "",
+    "category": "한국실적",
+    "title": "SKC 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-27",
+    "time": "",
+    "category": "한국실적",
+    "title": "두산에너빌리티 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-27",
+    "time": "",
+    "category": "한국실적",
+    "title": "기업은행 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-27",
     "time": "21:30",
     "category": "경제지표",
     "title": "🇺🇸 Core Durable Goods Orders (MoM)  (Jun)",
@@ -49758,6 +49840,23 @@
     "title": "V 실적발표 (장후) [EPS est. $3.2901]",
     "source": "finnhub",
     "auto": true
+  },
+  {
+    "date": "2026-07-28",
+    "time": "",
+    "category": "한국실적",
+    "title": "대우건설 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-28",
+    "time": "21:15",
+    "category": "경제지표",
+    "title": "🇺🇸 ADP Employment Change Weekly",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
   },
   {
     "date": "2026-07-28",
@@ -49934,6 +50033,23 @@
     "auto": true
   },
   {
+    "date": "2026-07-29",
+    "time": "",
+    "category": "한국실적",
+    "title": "현대오토에버 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-29",
+    "time": "05:30",
+    "category": "경제지표",
+    "title": "🇺🇸 API Weekly Crude Oil Stock",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
     "date": "2026-07-30",
     "time": "",
     "category": "IPO/공모",
@@ -50033,6 +50149,15 @@
   },
   {
     "date": "2026-07-30",
+    "time": "03:30",
+    "category": "통화정책",
+    "title": "🇺🇸 FOMC Press Conference",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-30",
     "time": "18:00",
     "category": "경제지표",
     "title": "🇪🇺 GDP (YoY)  (Q2)",
@@ -50126,6 +50251,24 @@
     "time": "21:30",
     "category": "경제지표",
     "title": "🇺🇸 Personal Spending (MoM)  (Jun)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-30",
+    "time": "21:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Continuing Jobless Claims",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-07-30",
+    "time": "21:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Initial Jobless Claims",
     "source": "investing",
     "auto": true,
     "country": "🇺🇸"
@@ -50286,6 +50429,14 @@
   },
   {
     "date": "2026-07-31",
+    "time": "",
+    "category": "한국실적",
+    "title": "한화엔진 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-07-31",
     "time": "10:30",
     "category": "경제지표",
     "title": "중국 제조업 PMI (7월)",
@@ -50325,6 +50476,24 @@
     "time": "18:00",
     "category": "경제지표",
     "title": "🇪🇺 CPI (YoY)  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-07-31",
+    "time": "18:00",
+    "category": "경제지표",
+    "title": "🇪🇺 Core CPI (YoY)  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇪🇺"
+  },
+  {
+    "date": "2026-07-31",
+    "time": "18:00",
+    "category": "경제지표",
+    "title": "🇪🇺 CPI (MoM)  (Jul)",
     "source": "investing",
     "auto": true,
     "country": "🇪🇺"
@@ -50457,6 +50626,24 @@
   },
   {
     "date": "2026-08-01",
+    "time": "02:00",
+    "category": "경제지표",
+    "title": "🇺🇸 U.S. Baker Hughes Oil Rig Count",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-08-01",
+    "time": "02:00",
+    "category": "경제지표",
+    "title": "🇺🇸 U.S. Baker Hughes Total Rig Count",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-08-01",
     "time": "09:00",
     "category": "경제지표",
     "title": "한국 수출입 통계 (7월)",
@@ -50471,6 +50658,15 @@
     "title": "알파AI 액면병합",
     "source": "fnguide",
     "auto": true
+  },
+  {
+    "date": "2026-08-02",
+    "time": "19:00",
+    "category": "경제지표",
+    "title": "🇺🇸 OPEC Meeting",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
   },
   {
     "date": "2026-08-03",
@@ -50661,6 +50857,22 @@
     "time": "",
     "category": "한국실적",
     "title": "카카오페이 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-04",
+    "time": "",
+    "category": "한국실적",
+    "title": "넥써쓰 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-04",
+    "time": "",
+    "category": "한국실적",
+    "title": "지누스 실적발표",
     "source": "fnguide",
     "auto": true
   },
@@ -51418,6 +51630,22 @@
   },
   {
     "date": "2026-08-12",
+    "time": "",
+    "category": "한국실적",
+    "title": "컴투스 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-12",
+    "time": "",
+    "category": "한국실적",
+    "title": "컴투스홀딩스 실적발표",
+    "source": "fnguide",
+    "auto": true
+  },
+  {
+    "date": "2026-08-12",
     "time": "21:30",
     "category": "경제지표",
     "title": "미국 CPI (7월)",
@@ -51426,10 +51654,54 @@
     "country": "🇺🇸"
   },
   {
+    "date": "2026-08-12",
+    "time": "21:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Core CPI (MoM)  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-08-12",
+    "time": "21:30",
+    "category": "경제지표",
+    "title": "🇺🇸 Core CPI (YoY)  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-08-12",
+    "time": "21:30",
+    "category": "경제지표",
+    "title": "🇺🇸 CPI (YoY)  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
+    "date": "2026-08-12",
+    "time": "21:30",
+    "category": "경제지표",
+    "title": "🇺🇸 CPI (MoM)  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
+  },
+  {
     "date": "2026-08-13",
     "time": "",
     "category": "IPO/공모",
     "title": "스카이랩스 공모청약 (08/13~08/14)",
+    "source": "38cr",
+    "auto": true
+  },
+  {
+    "date": "2026-08-13",
+    "time": "",
+    "category": "IPO/공모",
+    "title": "빅웨이브로보틱스 공모청약 (08/13~08/14)",
     "source": "38cr",
     "auto": true
   },
@@ -51464,6 +51736,15 @@
     "title": "AMAT 실적발표 (장후) [EPS est. $3.462]",
     "source": "finnhub",
     "auto": true
+  },
+  {
+    "date": "2026-08-13",
+    "time": "03:00",
+    "category": "경제지표",
+    "title": "🇺🇸 Federal Budget Balance  (Jul)",
+    "source": "investing",
+    "auto": true,
+    "country": "🇺🇸"
   },
   {
     "date": "2026-08-14",
