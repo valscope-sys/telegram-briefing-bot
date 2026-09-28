@@ -1,0 +1,174 @@
+"""38.co.kr 신규상장 + 공모청약 일정 수집"""
+import re
+import datetime
+import requests
+from bs4 import BeautifulSoup
+
+HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
+SKIP_KEYWORDS = ["스팩", "SPAC"]
+
+
+def fetch_new_listings() -> list[dict]:
+    """38.co.kr 신규상장 일정"""
+    try:
+        res = requests.get(
+            "http://www.38.co.kr/html/fund/?o=nw",
+            headers=HEADERS, timeout=15,
+        )
+        res.encoding = "euc-kr"
+    except Exception as e:
+        print(f"[38cr] ERROR: 신규상장 요청 실패: {e}")
+        return []
+    if res.status_code != 200:
+        print(f"[38cr] ERROR: 신규상장 HTTP {res.status_code}")
+        return []
+
+    soup = BeautifulSoup(res.text, "lxml")
+    results = []
+    seen = set()  # 중첩 table 구조라 같은 행이 여러 번 잡힘 → (date, name) 중복 제거
+    date_rows = 0
+
+    for table in soup.select("table"):
+        rows = table.select("tr")
+        for row in rows:
+            tds = row.select("td")
+            if len(tds) < 2:
+                continue
+            name = tds[0].get_text(strip=True)
+            date_text = tds[1].get_text(strip=True)
+
+            m = re.match(r"(20\d{2})/(\d{2})/(\d{2})", date_text)
+            if not m:
+                continue
+            date_rows += 1
+            if not name or len(name) < 2:
+                continue
+
+            # 스팩 필터
+            if any(kw in name for kw in SKIP_KEYWORDS):
+                continue
+
+            ev_date = f"{m.group(1)}-{m.group(2)}-{m.group(3)}"
+            today = datetime.date.today()
+            try:
+                d = datetime.date.fromisoformat(ev_date)
+                if d < today - datetime.timedelta(days=7):
+                    continue
+            except ValueError:
+                continue
+
+            if (ev_date, name) in seen:
+                continue
+            seen.add((ev_date, name))
+            results.append({
+                "date": ev_date,
+                "time": "",
+                "category": "IPO/공모",
+                "title": f"{name} 신규상장",
+                "source": "38cr",
+                "auto": True,
+            })
+
+    if date_rows == 0:
+        print("[38cr] ERROR: 신규상장 표에서 날짜 행(YYYY/MM/DD)을 하나도 못 찾음 — 페이지 구조 변경 의심")
+    return results
+
+
+def fetch_ipo_subscriptions() -> list[dict]:
+    """38.co.kr 공모청약 일정"""
+    try:
+        res = requests.get(
+            "http://www.38.co.kr/html/fund/index.htm?o=k",
+            headers=HEADERS, timeout=15,
+        )
+        res.encoding = "euc-kr"
+    except Exception as e:
+        print(f"[38cr] ERROR: 공모청약 요청 실패: {e}")
+        return []
+    if res.status_code != 200:
+        print(f"[38cr] ERROR: 공모청약 HTTP {res.status_code}")
+        return []
+
+    soup = BeautifulSoup(res.text, "lxml")
+
+    # 테이블에서 직접 파싱
+    results = []
+    today = datetime.date.today()
+    seen = set()
+    date_cells = 0
+
+    for table in soup.select("table"):
+        rows = table.select("tr")
+        for row in rows:
+            tds = row.select("td")
+            if len(tds) < 2:
+                continue
+            for j, td in enumerate(tds):
+                td_text = td.get_text(strip=True)
+                m = re.match(r"(20\d{2})\.(\d{2})\.(\d{2})~(\d{2})\.(\d{2})", td_text)
+                if not m:
+                    continue
+                date_cells += 1
+                # 이 td 앞의 td가 종목명
+                if j == 0:
+                    continue
+                name = tds[j - 1].get_text(strip=True)
+                if not name or len(name) < 2:
+                    continue
+
+                year = m.group(1)
+                month_start = m.group(2)
+                day_start = m.group(3)
+                month_end = m.group(4)
+                day_end = m.group(5)
+
+                if any(kw in name for kw in SKIP_KEYWORDS):
+                    continue
+
+                ev_date = f"{year}-{month_start}-{day_start}"
+                try:
+                    d = datetime.date.fromisoformat(ev_date)
+                    if d < today - datetime.timedelta(days=7):
+                        continue
+                except ValueError:
+                    continue
+
+                if name in seen:
+                    continue
+                seen.add(name)
+
+                date_range = f"{month_start}/{day_start}~{month_end}/{day_end}"
+                results.append({
+                    "date": ev_date,
+                    "time": "",
+                    "category": "IPO/공모",
+                    "title": f"{name} 공모청약 ({date_range})",
+                    "source": "38cr",
+                    "auto": True,
+                })
+
+    if date_cells == 0:
+        print("[38cr] ERROR: 공모청약 표에서 청약기간(YYYY.MM.DD~MM.DD)을 하나도 못 찾음 — 페이지 구조 변경 의심")
+    return results
+
+
+def fetch_all_ipo() -> list[dict]:
+    """신규상장 + 공모청약 전체 수집"""
+    all_events = []
+
+    listings = fetch_new_listings()
+    all_events.extend(listings)
+
+    subscriptions = fetch_ipo_subscriptions()
+    # 신규상장과 공모청약은 날짜가 다르므로 둘 다 유지
+    all_events.extend(subscriptions)
+
+    # 중복 제거 (같은 날짜 + 같은 제목)
+    seen = set()
+    unique = []
+    for e in all_events:
+        key = (e["date"], e["title"])
+        if key not in seen:
+            seen.add(key)
+            unique.append(e)
+    return unique

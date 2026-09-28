@@ -1,0 +1,56 @@
+name: Update Calendar
+
+on:
+  schedule:
+    - cron: '0 21 * * *'  # 매일 06:00 KST (21:00 UTC) — FnGuide 05:38 KST 배치 업데이트 직후
+  workflow_dispatch:  # 수동 실행
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      # 구독 토큰(claude setup-token)이 등록돼 있으면 Claude Code CLI로 AI 스캔 — API 크레딧 불필요
+      HAS_CLAUDE_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN != '' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r cal_data/requirements.txt
+
+      - name: Install Claude Code CLI (구독 토큰이 있을 때만)
+        if: env.HAS_CLAUDE_TOKEN == 'true'
+        run: |
+          curl -fsSL https://claude.ai/install.sh | bash
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Update calendar data
+        env:
+          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+        run: python -m cal_data.update --full
+
+      - name: Copy to docs
+        run: cp cal_data/calendar.json docs/calendar.json
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add cal_data/calendar.json docs/calendar.json
+          git diff --cached --quiet || git commit -m "auto: update calendar [$(date +%Y-%m-%d)]"
+          # 서버 자동 커밋과 겹쳐도 실패하지 않도록 rebase 후 재시도
+          for i in 1 2 3; do
+            git pull --rebase origin main && git push && break
+            sleep 10
+          done

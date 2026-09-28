@@ -1,0 +1,1067 @@
+// === CONFIG ===
+const CAT_COLORS = {
+    "한국실적":"var(--cat-kr)","한국실적(잠정)":"var(--cat-kr-prov)",
+    "미국실적":"var(--cat-us)","경제지표":"var(--cat-econ)",
+    "통화정책":"var(--cat-monetary)",
+    "IPO/공모":"var(--cat-ipo)","기업이벤트":"var(--cat-corp)","IR":"var(--cat-ir)",
+    "정치/외교":"var(--cat-politics)","산업컨퍼런스":"var(--cat-conf)",
+    "게임":"var(--cat-game)","반도체":"var(--cat-semi)",
+    "자동차/배터리":"var(--cat-auto)","제약/바이오":"var(--cat-pharma)",
+    "에너지":"var(--cat-energy)","방산":"var(--cat-defense)",
+    "전시/박람회":"var(--cat-expo)","K-콘텐츠":"var(--cat-kcontent)",
+    "부동산":"var(--cat-realestate)","만기일":"var(--cat-expiry)",
+    "수동":"var(--cat-manual)",
+};
+const CAT_LABELS = {
+    "한국실적":"실적(정식)","한국실적(잠정)":"실적(잠정)",
+    "미국실적":"미국 실적","경제지표":"경제지표","통화정책":"통화정책",
+    "IPO/공모":"IPO/공모","기업이벤트":"기업이벤트","IR":"IR",
+    "정치/외교":"정치/외교","산업컨퍼런스":"산업컨퍼런스",
+    "게임":"게임","반도체":"반도체","자동차/배터리":"자동차/배터리",
+    "제약/바이오":"제약/바이오","에너지":"에너지","방산":"방산",
+    "전시/박람회":"전시/박람회","K-콘텐츠":"K-콘텐츠",
+    "부동산":"부동산","만기일":"만기일","수동":"기타",
+};
+const DAYS_KR = ["일","월","화","수","목","금","토"];
+
+// 미국 티커 → 한글명 매핑 (구형식 "TSLA 실적발표" 제목용 — 신규 수집분은 제목에 한글명 포함)
+const US_TICKER_KR = {
+    "AAPL":"애플","MSFT":"마이크로소프트","GOOGL":"구글(A)","GOOG":"구글(C)",
+    "AMZN":"아마존","META":"메타","NVDA":"엔비디아","TSLA":"테슬라",
+    "AMD":"AMD","INTC":"인텔","AVGO":"브로드컴","TSM":"TSMC",
+    "QCOM":"퀄컴","TXN":"텍사스인스트루먼트","ADI":"아날로그디바이시스",
+    "MU":"마이크론","AMAT":"어플라이드머티어리얼즈","LRCX":"램리서치",
+    "KLAC":"KLA","ASML":"ASML","ARM":"ARM",
+    "ORCL":"오라클","CRM":"세일즈포스","NOW":"서비스나우","SNOW":"스노우플레이크",
+    "PLTR":"팔란티어","NFLX":"넷플릭스","ADBE":"어도비","UBER":"우버",
+    "SNDK":"샌디스크","WDC":"웨스턴디지털","STX":"시게이트",
+    "LCID":"루시드","RIVN":"리비안","F":"포드","GM":"GM",
+    "PFE":"화이자","MRK":"머크","JNJ":"존슨앤드존슨","LLY":"일라이릴리",
+    "NVO":"노보노디스크","MRNA":"모더나","REGN":"리제네론",
+    "JPM":"JP모건","BAC":"뱅크오브아메리카","GS":"골드만삭스","MS":"모건스탠리",
+    "C":"씨티그룹","WFC":"웰스파고","V":"비자","MA":"마스터카드",
+    "BA":"보잉","CAT":"캐터필러","GE":"GE","LMT":"록히드마틴","RTX":"RTX",
+    "DE":"디어","XOM":"엑슨모빌","CVX":"쉐브론","COP":"코노코필립스",
+    "KO":"코카콜라","PEP":"펩시","WMT":"월마트","COST":"코스트코",
+    "UNH":"유나이티드헬스","NKE":"나이키","PG":"P&G","SBUX":"스타벅스",
+    "ABBV":"애브비","TMO":"써모피셔",
+    "CMCSA":"컴캐스트","AAOI":"어플라이드옵토",
+    "BABA":"알리바바","JD":"징둥닷컴","PDD":"핀둬둬","BIDU":"바이두",
+};
+
+// SHA-256 hash of admin password (change this)
+const ADMIN_HASH = "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3"; // "123"
+
+// === THEME ===
+const THEMES = ["dark","light","blue","green"];
+const THEME_NAMES = {"dark":"다크","light":"라이트","blue":"블루","green":"그린"};
+function initTheme() {
+    const saved = localStorage.getItem("calendar_theme") || "dark";
+    setTheme(saved);
+}
+function setTheme(theme) {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("calendar_theme", theme);
+    const btn = document.getElementById("theme-btn");
+    if (btn) btn.textContent = THEME_NAMES[theme] || theme;
+}
+function cycleTheme() {
+    const current = document.documentElement.getAttribute("data-theme") || "dark";
+    const idx = THEMES.indexOf(current);
+    const next = THEMES[(idx + 1) % THEMES.length];
+    setTheme(next);
+}
+
+// === STATE ===
+let events = [];
+let currentView = "month"; // month | week | day
+let viewDate = new Date(); // current focused date
+let selectedDate = null;
+// 카테고리 필터 기본값: IR(경영현황)만 기본 해제 — 소형주 IR 물량이 많아 다른 일정을 가리는 문제
+// (유증·액면병합 등 기업이벤트는 수집 자체를 중단해 배당락 같은 핵심 일정만 남음)
+const DEFAULT_OFF_CATS = new Set(["IR"]);
+// 기본값을 바꾸면 버전을 올려 기존 방문자에게도 새 기본값이 1회 적용되게 함
+const CATS_STORAGE_KEY = "calendar_cats_v2";
+function defaultEnabledCats() {
+    return new Set(Object.keys(CAT_COLORS).filter(c => !DEFAULT_OFF_CATS.has(c)));
+}
+// localStorage("calendar_cats")에 해제 목록(off)을 저장 — 저장값이 있으면 그게 우선, 신규 카테고리는 자동 켜짐
+function loadEnabledCats() {
+    try {
+        const saved = JSON.parse(localStorage.getItem(CATS_STORAGE_KEY) || "null");
+        if (saved && Array.isArray(saved.off)) {
+            const off = new Set(saved.off);
+            return new Set(Object.keys(CAT_COLORS).filter(c => !off.has(c)));
+        }
+    } catch {}
+    return defaultEnabledCats();
+}
+function saveEnabledCats() {
+    const off = Object.keys(CAT_COLORS).filter(c => !enabledCats.has(c));
+    localStorage.setItem(CATS_STORAGE_KEY, JSON.stringify({ off }));
+}
+let enabledCats = loadEnabledCats();
+let isAdmin = false;
+let editingEvent = null;
+
+// === INIT ===
+async function init() {
+    initTheme();
+    try {
+        const res = await fetch("calendar.json?" + Date.now());
+        events = await res.json();
+    } catch { events = []; }
+    renderMiniCal();
+    renderCatFilter();
+    renderView();
+    bindEvents();
+}
+
+// === UTILS ===
+function fmt(d) { return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`; }
+function toDate(s) { const p=s.split("-"); return new Date(+p[0],+p[1]-1,+p[2]); }
+function sameDay(a,b) { return a.getFullYear()===b.getFullYear()&&a.getMonth()===b.getMonth()&&a.getDate()===b.getDate(); }
+function isToday(d) { return sameDay(d, new Date()); }
+function eventsOn(dateStr) {
+    return events.filter(e => {
+        if (!enabledCats.has(e.category)) return false;
+        if (e.undated) return false; // undated events shown in banner
+        if (e.endDate) {
+            return dateStr >= e.date && dateStr <= e.endDate;
+        }
+        return e.date === dateStr;
+    });
+}
+function catColor(cat) { return CAT_COLORS[cat] || "var(--dim)"; }
+
+// 미국실적 티커 → "한글(티커)" 표기 + EPS est. 노이즈 제거
+function localizeTitle(ev) {
+    let title = (ev && ev.title) || "";
+    // [EPS est. $X] / [EPS est. $-X] 제거
+    title = title.replace(/\s*\[EPS est\.\s*\$-?[\d.]+\]/g, "");
+    if (ev && ev.category === "미국실적") {
+        const m = title.match(/^([A-Z]{1,6})\b/);
+        if (m && US_TICKER_KR[m[1]]) {
+            title = `${US_TICKER_KR[m[1]]}(${m[1]})` + title.slice(m[1].length);
+        }
+    }
+    // 경제지표 소스(TradingView)가 '상' 중요도로 분류한 일정
+    if (ev && ev.importance === 1) title = "★ " + title;
+    return title;
+}
+
+// === MINI CALENDAR ===
+function renderMiniCal() {
+    const el = document.getElementById("mini-cal");
+    const y = viewDate.getFullYear(), m = viewDate.getMonth();
+    const first = new Date(y, m, 1), last = new Date(y, m+1, 0);
+    const startDow = first.getDay(), days = last.getDate();
+    const prevLast = new Date(y, m, 0).getDate();
+
+    let html = `<div class="mini-cal-header">
+        <button class="mini-cal-nav" onclick="miniNav(-1)">&lt;</button>
+        <span class="mini-cal-title">${y}년 ${m+1}월</span>
+        <button class="mini-cal-nav" onclick="miniNav(1)">&gt;</button>
+    </div><div class="mini-cal-grid">`;
+    for (const d of DAYS_KR) html += `<div class="mini-cal-hdr">${d}</div>`;
+
+    for (let i=startDow-1; i>=0; i--) {
+        html += `<div class="mini-cal-day">${prevLast-i}</div>`;
+    }
+    for (let d=1; d<=days; d++) {
+        const dt = new Date(y, m, d);
+        const ds = fmt(dt);
+        const cls = ["mini-cal-day","current-month"];
+        if (isToday(dt)) cls.push("today");
+        if (selectedDate && sameDay(dt, selectedDate)) cls.push("selected");
+        if (eventsOn(ds).length > 0) cls.push("has-event");
+        html += `<div class="${cls.join(" ")}" onclick="miniClick(${y},${m},${d})">${d}</div>`;
+    }
+    const total = startDow + days;
+    for (let i=1; i<=(42-total); i++) {
+        html += `<div class="mini-cal-day">${i}</div>`;
+    }
+    html += `</div>`;
+    el.innerHTML = html;
+}
+function miniNav(delta) {
+    viewDate.setMonth(viewDate.getMonth() + delta);
+    renderMiniCal();
+    if (currentView === "month") renderView();
+}
+function miniClick(y,m,d) {
+    selectedDate = new Date(y,m,d);
+    viewDate = new Date(y,m,d);
+    if (currentView === "month") {
+        renderMiniCal();
+        showDetailPanel(fmt(selectedDate));
+    } else {
+        currentView = "day";
+        updateViewTabs();
+        renderView();
+    }
+}
+
+// === CATEGORY FILTER ===
+function renderCatFilter() {
+    const el = document.getElementById("cat-filter");
+    const y = viewDate.getFullYear(), m = viewDate.getMonth();
+    const monthPrefix = `${y}-${String(m+1).padStart(2,"0")}`;
+    const usedCats = new Set(events.filter(e => {
+        if (e.date && e.date.startsWith(monthPrefix)) return true;
+        if (e.endDate && e.date <= monthPrefix + "-31" && e.endDate >= monthPrefix + "-01") return true;
+        return false;
+    }).map(e => e.category));
+    const allOn = [...usedCats].every(c => enabledCats.has(c));
+    let html = `<div class="cat-header"><h3>카테고리</h3>
+        <button class="cat-toggle-btn" onclick="toggleAllCats()">${allOn ? "전체 해제" : "전체 선택"}</button></div>`;
+    for (const [cat, label] of Object.entries(CAT_LABELS)) {
+        if (!usedCats.has(cat)) continue;
+        const on = enabledCats.has(cat);
+        html += `<div class="cat-item${on?"":" disabled"}" onclick="toggleCat('${cat}')">
+            <span class="cat-dot" style="background:${catColor(cat)}"></span>
+            <span class="cat-label">${label}</span>
+        </div>`;
+    }
+    el.innerHTML = html;
+}
+function toggleCat(cat) {
+    if (enabledCats.has(cat)) enabledCats.delete(cat);
+    else enabledCats.add(cat);
+    saveEnabledCats();
+    renderCatFilter();
+    renderView();
+    renderMiniCal();
+}
+function toggleAllCats() {
+    const usedCats = new Set(events.map(e => e.category));
+    const allOn = [...usedCats].every(c => enabledCats.has(c));
+    if (allOn) enabledCats.clear();
+    else for (const c of usedCats) enabledCats.add(c);
+    saveEnabledCats();
+    renderCatFilter();
+    renderView();
+    renderMiniCal();
+}
+
+// === VIEW RENDERING ===
+function renderView() {
+    document.getElementById("month-view").classList.toggle("hidden", currentView!=="month");
+    document.getElementById("week-view").classList.toggle("hidden", currentView!=="week");
+    document.getElementById("day-view").classList.toggle("hidden", currentView!=="day");
+
+    if (currentView === "month") renderMonth();
+    else if (currentView === "week") renderWeek();
+    else renderDay();
+    updateTitle();
+    renderCatFilter();
+}
+
+function updateTitle() {
+    const y = viewDate.getFullYear(), m = viewDate.getMonth(), d = viewDate.getDate();
+    const el = document.getElementById("title-text");
+    if (currentView === "month") el.textContent = `${y}년 ${m+1}월`;
+    else if (currentView === "week") {
+        const start = getWeekStart(viewDate);
+        const end = new Date(start); end.setDate(end.getDate()+6);
+        el.textContent = `${start.getMonth()+1}/${start.getDate()} ~ ${end.getMonth()+1}/${end.getDate()}`;
+    } else {
+        el.textContent = `${y}년 ${m+1}월 ${d}일 (${DAYS_KR[viewDate.getDay()]})`;
+    }
+}
+
+// === UNDATED BANNER ===
+function renderUndatedBanner() {
+    let banner = document.getElementById("undated-banner");
+    if (!banner) {
+        banner = document.createElement("div");
+        banner.id = "undated-banner";
+        banner.className = "undated-banner";
+        const monthView = document.getElementById("month-view");
+        monthView.insertBefore(banner, monthView.firstChild);
+    }
+    const y = viewDate.getFullYear(), m = viewDate.getMonth();
+    const monthStr = `${y}-${String(m+1).padStart(2,"0")}`;
+
+    // 월간 미확정
+    const monthUndated = events.filter(e => e.undated && e.month === monthStr && enabledCats.has(e.category));
+    // 주간 미확정 (해당 월에 속하는 것)
+    const weekUndated = events.filter(e => e.undated && e.week && e.week.startsWith(monthStr) && enabledCats.has(e.category));
+
+    if (monthUndated.length === 0 && weekUndated.length === 0) { banner.style.display = "none"; return; }
+    banner.style.display = "flex";
+    let html = "";
+
+    const adminAttr = isAdmin ? 'style="cursor:pointer"' : '';
+    if (monthUndated.length > 0) {
+        html += `<span class="undated-banner-label">${m+1}월 중</span>`;
+        for (const ev of monthUndated) {
+            const uc = ev.unconfirmed ? ' [미확인]' : '';
+            html += `<span class="undated-chip${ev.unconfirmed?' unconfirmed-chip':''}" ${adminAttr} style="border-color:${catColor(ev.category)};color:${catColor(ev.category)}" onclick="clickUndated(${JSON.stringify(ev).replace(/"/g,'&quot;')})">${localizeTitle(ev)}${uc}</span>`;
+        }
+    }
+    if (weekUndated.length > 0) {
+        for (const ev of weekUndated) {
+            const wn = ev.week.split("W")[1];
+            const uc = ev.unconfirmed ? ' [미확인]' : '';
+            html += `<span class="undated-banner-label">${m+1}월 ${wn}주차</span>`;
+            html += `<span class="undated-chip${ev.unconfirmed?' unconfirmed-chip':''}" ${adminAttr} style="border-color:${catColor(ev.category)};color:${catColor(ev.category)}" onclick="clickUndated(${JSON.stringify(ev).replace(/"/g,'&quot;')})">${localizeTitle(ev)}${uc}</span>`;
+        }
+    }
+    banner.innerHTML = html;
+}
+
+// === MONTH VIEW ===
+function renderMonth() {
+    renderUndatedBanner();
+    const grid = document.getElementById("month-grid");
+    const y = viewDate.getFullYear(), m = viewDate.getMonth();
+    const first = new Date(y, m, 1), last = new Date(y, m+1, 0);
+    const startDow = first.getDay(), daysInMonth = last.getDate();
+    const prevLast = new Date(y, m, 0).getDate();
+
+    // Calculate rows needed
+    const totalCells = startDow + daysInMonth;
+    const rows = Math.ceil(totalCells / 7);
+    grid.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
+
+    let html = "";
+    const MAX_EVENTS = rows <= 5 ? 3 : 2;
+
+    // Previous month
+    for (let i = startDow-1; i>=0; i--) {
+        html += `<div class="month-cell other"><div class="day-num">${prevLast-i}</div></div>`;
+    }
+    // Current month
+    for (let d=1; d<=daysInMonth; d++) {
+        const dt = new Date(y,m,d);
+        const ds = fmt(dt);
+        const cls = ["month-cell"];
+        if (isToday(dt)) cls.push("today");
+        const dayEvents = eventsOn(ds);
+
+        html += `<div class="${cls.join(" ")}" onclick="cellClick('${ds}')">`;
+        html += `<div class="day-num">${d}</div>`;
+
+        for (let i=0; i<Math.min(dayEvents.length, MAX_EVENTS); i++) {
+            const ev = dayEvents[i];
+            let barCls = "event-bar";
+            if (ev.unconfirmed) barCls += " unconfirmed";
+            if (ev.endDate && ev.date !== ev.endDate) {
+                if (ds === ev.date) barCls += " range-start";
+                else if (ds === ev.endDate) barCls += " range-end";
+                else barCls += " range-mid";
+            }
+            const evTitleLocal = localizeTitle(ev);
+            html += `<div class="${barCls}" style="background:${catColor(ev.category)}" title="${evTitleLocal}">${evTitleLocal}</div>`;
+        }
+        if (dayEvents.length > MAX_EVENTS) {
+            html += `<div class="more-events">+${dayEvents.length - MAX_EVENTS}건 더</div>`;
+        }
+        // 모바일용 카테고리 점 (CSS @media에서 .event-bar 숨겨질 때 표시)
+        if (dayEvents.length > 0) {
+            // 카테고리별 unique 점 (같은 카테고리는 한 번만), 최대 6개
+            const seenCats = new Set();
+            const dotCats = [];
+            for (const ev of dayEvents) {
+                if (!seenCats.has(ev.category)) {
+                    seenCats.add(ev.category);
+                    dotCats.push(ev.category);
+                    if (dotCats.length >= 6) break;
+                }
+            }
+            html += `<div class="event-dots-mobile">`;
+            for (const cat of dotCats) {
+                html += `<span class="event-dot-m" style="background:${catColor(cat)}" title="${CAT_LABELS[cat] || cat}"></span>`;
+            }
+            if (dayEvents.length > dotCats.length) {
+                html += `<span class="event-dot-m-count">+${dayEvents.length - dotCats.length}</span>`;
+            }
+            html += `</div>`;
+        }
+        html += `</div>`;
+    }
+    // Next month padding
+    const remaining = (7 - ((startDow + daysInMonth) % 7)) % 7;
+    for (let i=1; i<=remaining; i++) {
+        html += `<div class="month-cell other"><div class="day-num">${i}</div></div>`;
+    }
+    grid.innerHTML = html;
+}
+
+function cellClick(dateStr) {
+    selectedDate = toDate(dateStr);
+    renderMiniCal();
+    showDetailPanel(dateStr);
+}
+
+// === WEEK VIEW ===
+function getWeekStart(d) {
+    const dt = new Date(d);
+    dt.setDate(dt.getDate() - dt.getDay());
+    return dt;
+}
+function renderWeek() {
+    const start = getWeekStart(viewDate);
+    const el = document.getElementById("week-content");
+    let html = "";
+
+    // Collect all events for the week
+    const weekEvents = [];
+    for (let i=0; i<7; i++) {
+        const dt = new Date(start);
+        dt.setDate(dt.getDate()+i);
+        const ds = fmt(dt);
+        const dayEvs = eventsOn(ds);
+        for (const ev of dayEvs) {
+            weekEvents.push({...ev, _day: i, _date: ds, _dt: dt});
+        }
+    }
+
+    // Header
+    html += `<div class="week-header"><div class="week-header-cell"></div>`;
+    for (let i=0; i<7; i++) {
+        const dt = new Date(start); dt.setDate(dt.getDate()+i);
+        const todayCls = isToday(dt) ? " today" : "";
+        html += `<div class="week-header-cell${todayCls}">
+            <div class="wk-day">${DAYS_KR[dt.getDay()]}</div>
+            <div class="wk-num">${dt.getDate()}</div>
+        </div>`;
+    }
+    html += `</div>`;
+
+    // Events list by day
+    html += `<div class="week-events-list">`;
+    for (let i=0; i<7; i++) {
+        const dt = new Date(start); dt.setDate(dt.getDate()+i);
+        const ds = fmt(dt);
+        const dayEvs = eventsOn(ds);
+        if (dayEvs.length === 0) continue;
+
+        html += `<div style="font-size:0.75rem;font-weight:600;padding:8px 8px 4px;color:var(--dim);margin-top:8px;">${dt.getMonth()+1}/${dt.getDate()} ${DAYS_KR[dt.getDay()]}</div>`;
+        for (const ev of dayEvs) {
+            html += `<div class="week-event-row" onclick="dayClick('${ds}')">
+                <div class="week-event-time">${ev.time || "종일"}</div>
+                <div class="week-event-dot" style="background:${catColor(ev.category)}"></div>
+                <div class="week-event-info">
+                    <div class="week-event-title">${localizeTitle(ev)}</div>
+                    <div class="week-event-meta">${CAT_LABELS[ev.category]||ev.category}${ev.endDate ? " ("+ev.date+" ~ "+ev.endDate+")" : ""}</div>
+                </div>
+            </div>`;
+        }
+    }
+    if (weekEvents.length === 0) {
+        html += `<div style="text-align:center;color:var(--dim);padding:40px;">이 주에 일정이 없습니다</div>`;
+    }
+    html += `</div>`;
+    el.innerHTML = html;
+}
+
+// === DAY VIEW ===
+function renderDay() {
+    const el = document.getElementById("day-content");
+    const ds = fmt(viewDate);
+    const dayEvs = eventsOn(ds);
+
+    let html = `<div class="day-date-header">${viewDate.getMonth()+1}월 ${viewDate.getDate()}일</div>`;
+    html += `<div class="day-date-sub">${viewDate.getFullYear()}년 ${DAYS_KR[viewDate.getDay()]}요일</div>`;
+
+    if (dayEvs.length === 0) {
+        html += `<div class="day-no-events">일정이 없습니다</div>`;
+    } else {
+        dayEvs.sort((a,b) => (a.time||"99").localeCompare(b.time||"99"));
+        for (const ev of dayEvs) {
+            html += `<div class="day-event-card" style="border-left-color:${catColor(ev.category)}" onclick="showEventDetail(${JSON.stringify(ev).replace(/"/g,'&quot;')})">
+                <div class="day-event-card-body">
+                    <div class="day-event-card-title">${localizeTitle(ev)}</div>
+                    <div class="day-event-card-meta">${ev.time || "종일"} · ${CAT_LABELS[ev.category]||ev.category}${ev.endDate ? " · "+ev.date+" ~ "+ev.endDate : ""}</div>
+                    ${ev.summary ? `<div class="day-event-card-summary">${ev.summary}</div>` : ""}
+                    ${ev.link ? `<a class="day-event-card-link" href="${ev.link}" target="_blank" onclick="event.stopPropagation()">상세 보기 &rarr;</a>` : ""}
+                </div>
+            </div>`;
+        }
+    }
+
+    if (isAdmin) {
+        html += `<button class="btn-primary" style="margin-top:16px" onclick="openAddEvent('${ds}')">+ 일정 추가</button>`;
+    }
+    el.innerHTML = html;
+}
+
+function dayClick(ds) {
+    viewDate = toDate(ds);
+    selectedDate = toDate(ds);
+    currentView = "day";
+    updateViewTabs();
+    renderView();
+    renderMiniCal();
+}
+
+// === DETAIL PANEL ===
+function showDetailPanel(dateStr) {
+    const panel = document.getElementById("detail-panel");
+    const dayEvs = eventsOn(dateStr);
+    const dt = toDate(dateStr);
+
+    // 오늘 날짜면 "오늘 일정" 라벨, 다른 날짜는 기존 날짜 표기
+    const isTodayPanel = isToday(dt);
+    document.getElementById("detail-title").textContent = isTodayPanel
+        ? `오늘 일정 (${dt.getMonth()+1}월 ${dt.getDate()}일 ${DAYS_KR[dt.getDay()]})`
+        : `${dt.getMonth()+1}월 ${dt.getDate()}일 ${DAYS_KR[dt.getDay()]}`;
+    let html = "";
+    if (dayEvs.length === 0) {
+        html = `<div style="color:var(--dim);padding:20px 16px;text-align:center;font-size:0.85rem;">${isTodayPanel ? "오늘 일정 없음" : "일정 없음"}</div>`;
+    } else {
+        dayEvs.sort((a,b)=>(a.time||"99").localeCompare(b.time||"99"));
+        for (const ev of dayEvs) {
+            const evTitleLocal = localizeTitle(ev);
+            html += `<div class="detail-event" onclick="dayClick('${dateStr}')">
+                <div class="detail-event-title">
+                    <span class="detail-event-dot" style="background:${catColor(ev.category)}"></span>
+                    ${evTitleLocal}
+                </div>
+                <div class="detail-event-meta">${ev.time || "종일"} · ${CAT_LABELS[ev.category]||ev.category}</div>
+                ${ev.summary ? `<div class="detail-event-summary">${ev.summary}</div>` : ""}
+                ${ev.link ? `<a class="detail-event-link" href="${ev.link}" target="_blank" onclick="event.stopPropagation()">링크 &rarr;</a>` : ""}
+            </div>`;
+        }
+    }
+    if (isAdmin) {
+        html += `<div style="padding:12px 16px"><button class="btn-primary" style="width:100%" onclick="openAddEvent('${dateStr}')">+ 일정 추가</button></div>`;
+    }
+    document.getElementById("detail-body").innerHTML = html;
+    panel.classList.remove("hidden");
+}
+
+function closeDetail() { document.getElementById("detail-panel").classList.add("hidden"); }
+function clickUndated(ev) { if (isAdmin) openEditEvent(ev); }
+
+// === SEARCH ===
+let searchActiveIdx = -1;
+let searchHits = [];
+let searchDebounce = null;
+
+function escapeRegex(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }
+function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+function highlightTerm(text, term) {
+    if (!term) return escapeHtml(text);
+    const re = new RegExp(`(${escapeRegex(term)})`, "gi");
+    return escapeHtml(text).replace(re, "<mark>$1</mark>");
+}
+
+function performSearch(query) {
+    const q = (query || "").trim().toLowerCase();
+    if (!q) {
+        searchHits = [];
+        renderSearchResults("");
+        return;
+    }
+    // 다중 키워드 (공백 분리, 모두 포함하는 항목 매치)
+    const terms = q.split(/\s+/).filter(Boolean);
+    const today = fmt(new Date());
+
+    const scored = [];
+    for (const ev of events) {
+        const titleRaw = (ev.title || "").toLowerCase();
+        const titleLocal = localizeTitle(ev).toLowerCase();
+        const summary = (ev.summary || "").toLowerCase();
+        const cat = (CAT_LABELS[ev.category] || ev.category || "").toLowerCase();
+        const date = (ev.date || "").toLowerCase();
+        const haystack = `${titleRaw} ${titleLocal} ${summary} ${cat} ${date}`;
+
+        if (!terms.every(t => haystack.includes(t))) continue;
+
+        // 점수: 제목 매치 우선, 미래 일정 우선
+        let score = 0;
+        if (terms.every(t => titleRaw.includes(t) || titleLocal.includes(t))) score += 100;
+        if (terms.every(t => cat.includes(t))) score += 30;
+        if (ev.date && ev.date >= today) score += 50;
+        // 가까운 미래일수록 가산
+        if (ev.date >= today) {
+            const days = Math.max(0, (toDate(ev.date) - new Date()) / 86400000);
+            score += Math.max(0, 30 - days * 0.3);
+        }
+        scored.push({ ev, score });
+    }
+    scored.sort((a, b) => {
+        if (b.score !== a.score) return b.score - a.score;
+        return (a.ev.date || "").localeCompare(b.ev.date || "");
+    });
+    searchHits = scored.slice(0, 30).map(s => s.ev);
+    searchActiveIdx = -1;
+    renderSearchResults(q);
+}
+
+function renderSearchResults(query) {
+    const container = document.getElementById("search-results");
+    const clearBtn = document.getElementById("search-clear");
+    if (!query) {
+        container.classList.add("hidden");
+        clearBtn.classList.add("hidden");
+        return;
+    }
+    clearBtn.classList.remove("hidden");
+
+    if (searchHits.length === 0) {
+        container.innerHTML = `<div class="search-empty">"${escapeHtml(query)}"에 대한 일정이 없습니다</div>`;
+        container.classList.remove("hidden");
+        return;
+    }
+
+    // 미래/과거 그룹 분리
+    const today = fmt(new Date());
+    const future = searchHits.filter(e => (e.date || "") >= today);
+    const past = searchHits.filter(e => (e.date || "") < today);
+
+    let html = "";
+    const buildItem = (ev, idx) => {
+        const dt = ev.date ? toDate(ev.date) : null;
+        const dateLabel = dt
+            ? `${dt.getMonth()+1}/${dt.getDate()} ${DAYS_KR[dt.getDay()]}`
+            : (ev.month || "미정");
+        const catLabel = CAT_LABELS[ev.category] || ev.category || "";
+        const summary = ev.summary ? `<div class="search-summary">${highlightTerm(ev.summary.slice(0, 100), query)}</div>` : "";
+        return `<div class="search-item" data-idx="${idx}" data-date="${ev.date || ""}">
+            <span class="search-dot" style="background:${catColor(ev.category)}"></span>
+            <div class="search-info">
+                <div class="search-title">${highlightTerm(localizeTitle(ev), query)}</div>
+                <div class="search-meta">${catLabel}${ev.time ? ` · ${ev.time}` : ""}</div>
+                ${summary}
+            </div>
+            <div class="search-date">${dateLabel}</div>
+        </div>`;
+    };
+
+    let idx = 0;
+    if (future.length) {
+        html += `<div class="search-group"><div class="search-group-title">앞으로 (${future.length})</div>`;
+        for (const ev of future) html += buildItem(ev, idx++);
+        html += `</div>`;
+    }
+    if (past.length) {
+        html += `<div class="search-group"><div class="search-group-title">지난 (${past.length})</div>`;
+        for (const ev of past) html += buildItem(ev, idx++);
+        html += `</div>`;
+    }
+    if (searchHits.length === 30) {
+        html += `<div class="search-count">상위 30건만 표시 — 키워드를 더 입력해 좁혀보세요</div>`;
+    }
+    container.innerHTML = html;
+    container.classList.remove("hidden");
+
+    container.querySelectorAll(".search-item").forEach(el => {
+        el.onclick = () => selectSearchHit(parseInt(el.dataset.idx));
+    });
+}
+
+function selectSearchHit(idx) {
+    const ev = searchHits[idx];
+    if (!ev) return;
+    closeSearchDropdown();
+    document.getElementById("search-input").value = "";
+    document.getElementById("search-clear").classList.add("hidden");
+
+    if (ev.undated) {
+        // 미정 이벤트 - 그냥 알림
+        alert(`${ev.title}\n${ev.month || "날짜 미정"}\n${ev.summary || ""}`);
+        return;
+    }
+    if (!ev.date) return;
+    const dt = toDate(ev.date);
+    viewDate = dt;
+    selectedDate = dt;
+    renderMiniCal();
+    renderView();
+    showDetailPanel(ev.date);
+}
+
+function closeSearchDropdown() {
+    document.getElementById("search-results").classList.add("hidden");
+    searchActiveIdx = -1;
+}
+
+function moveSearchActive(delta) {
+    const items = document.querySelectorAll("#search-results .search-item");
+    if (!items.length) return;
+    items.forEach(el => el.classList.remove("active"));
+    searchActiveIdx = (searchActiveIdx + delta + items.length) % items.length;
+    items[searchActiveIdx].classList.add("active");
+    items[searchActiveIdx].scrollIntoView({ block: "nearest" });
+}
+
+function bindSearchEvents() {
+    const input = document.getElementById("search-input");
+    const clearBtn = document.getElementById("search-clear");
+    const results = document.getElementById("search-results");
+
+    input.oninput = () => {
+        clearTimeout(searchDebounce);
+        searchDebounce = setTimeout(() => performSearch(input.value), 120);
+    };
+    input.onfocus = () => {
+        if (input.value.trim()) performSearch(input.value);
+    };
+    input.onkeydown = (e) => {
+        if (e.key === "ArrowDown") { e.preventDefault(); moveSearchActive(1); }
+        else if (e.key === "ArrowUp") { e.preventDefault(); moveSearchActive(-1); }
+        else if (e.key === "Enter") {
+            e.preventDefault();
+            if (searchActiveIdx >= 0) selectSearchHit(searchActiveIdx);
+            else if (searchHits.length > 0) selectSearchHit(0);
+        }
+        else if (e.key === "Escape") {
+            input.value = "";
+            closeSearchDropdown();
+            clearBtn.classList.add("hidden");
+            input.blur();
+        }
+    };
+    clearBtn.onclick = () => {
+        input.value = "";
+        closeSearchDropdown();
+        clearBtn.classList.add("hidden");
+        input.focus();
+    };
+
+    // 외부 클릭 시 닫기
+    document.addEventListener("click", (e) => {
+        if (!e.target.closest(".search-wrap")) closeSearchDropdown();
+    });
+
+    // Ctrl+K / Cmd+K 단축키
+    document.addEventListener("keydown", (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+            e.preventDefault();
+            input.focus();
+            input.select();
+        }
+    });
+}
+
+// === NAVIGATION ===
+function navigate(delta) {
+    if (currentView === "month") viewDate.setMonth(viewDate.getMonth()+delta);
+    else if (currentView === "week") viewDate.setDate(viewDate.getDate()+delta*7);
+    else viewDate.setDate(viewDate.getDate()+delta);
+    renderMiniCal();
+    renderView();
+}
+function goToday() {
+    viewDate = new Date();
+    selectedDate = new Date();
+    renderMiniCal();
+    renderView();
+}
+function switchView(v) {
+    currentView = v;
+    updateViewTabs();
+    closeDetail();
+    renderView();
+}
+function updateViewTabs() {
+    document.querySelectorAll(".view-tab").forEach(t => {
+        t.classList.toggle("active", t.dataset.view === currentView);
+    });
+}
+
+// === ADMIN ===
+async function sha256(text) {
+    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+    return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,"0")).join("");
+}
+function openAdminModal() {
+    document.getElementById("admin-overlay").classList.remove("hidden");
+    if (isAdmin) {
+        document.getElementById("modal-title").textContent = "일정 추가";
+        document.getElementById("login-form").classList.add("hidden");
+        document.getElementById("event-form").classList.remove("hidden");
+        resetEventForm();
+    } else {
+        document.getElementById("modal-title").textContent = "관리자 로그인";
+        document.getElementById("login-form").classList.remove("hidden");
+        document.getElementById("event-form").classList.add("hidden");
+        document.getElementById("admin-pw").value = "";
+        setTimeout(() => document.getElementById("admin-pw").focus(), 100);
+    }
+}
+function closeModal() {
+    document.getElementById("admin-overlay").classList.add("hidden");
+    editingEvent = null;
+}
+async function doLogin() {
+    const pw = document.getElementById("admin-pw").value;
+    const hash = await sha256(pw);
+    if (hash === ADMIN_HASH) {
+        isAdmin = true;
+        document.getElementById("admin-btn").textContent = "+";
+        document.getElementById("admin-btn").title = "일정 추가";
+        document.getElementById("update-btn").classList.remove("hidden");
+        closeModal();
+        renderView();
+    } else {
+        document.getElementById("admin-pw").style.borderColor = "var(--cat-us)";
+        document.getElementById("admin-pw").value = "";
+        document.getElementById("admin-pw").placeholder = "비밀번호가 틀렸습니다";
+    }
+}
+function openAddEvent(dateStr) {
+    if (!isAdmin) { openAdminModal(); return; }
+    editingEvent = null;
+    document.getElementById("admin-overlay").classList.remove("hidden");
+    document.getElementById("modal-title").textContent = "일정 추가";
+    document.getElementById("login-form").classList.add("hidden");
+    document.getElementById("event-form").classList.remove("hidden");
+    document.getElementById("ev-delete").classList.add("hidden");
+    resetEventForm();
+    if (dateStr) document.getElementById("ev-date").value = dateStr;
+}
+function toggleDateType() {
+    const type = document.getElementById("ev-date-type").value;
+    document.getElementById("date-exact-fields").classList.toggle("hidden", type !== "exact");
+    document.getElementById("date-month-fields").classList.toggle("hidden", type !== "month");
+    document.getElementById("date-week-fields").classList.toggle("hidden", type !== "week");
+}
+function openEditEvent(ev) {
+    if (!isAdmin) return;
+    editingEvent = ev;
+    document.getElementById("admin-overlay").classList.remove("hidden");
+    document.getElementById("modal-title").textContent = "일정 수정";
+    document.getElementById("login-form").classList.add("hidden");
+    document.getElementById("event-form").classList.remove("hidden");
+    document.getElementById("ev-delete").classList.remove("hidden");
+    document.getElementById("ev-title").value = ev.title || "";
+    document.getElementById("ev-category").value = ev.category || "수동";
+    document.getElementById("ev-link").value = ev.link || "";
+    document.getElementById("ev-summary").value = ev.summary || "";
+    // 날짜 유형 판별
+    if (ev.undated && ev.week) {
+        document.getElementById("ev-date-type").value = "week";
+        const parts = ev.week.split("-W");
+        document.getElementById("ev-week-month").value = parts[0] || "";
+        document.getElementById("ev-week-num").value = parts[1] || "1";
+    } else if (ev.undated && ev.month) {
+        document.getElementById("ev-date-type").value = "month";
+        document.getElementById("ev-month").value = ev.month || "";
+    } else {
+        document.getElementById("ev-date-type").value = "exact";
+        document.getElementById("ev-date").value = ev.date || "";
+        document.getElementById("ev-end-date").value = ev.endDate || "";
+        document.getElementById("ev-time").value = ev.time || "";
+    }
+    toggleDateType();
+}
+function resetEventForm() {
+    ["ev-title","ev-date","ev-end-date","ev-time","ev-link","ev-summary","ev-month","ev-week-month"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = "";
+    });
+    document.getElementById("ev-category").value = "수동";
+    document.getElementById("ev-date-type").value = "exact";
+    toggleDateType();
+}
+function saveEvent() {
+    const title = document.getElementById("ev-title").value.trim();
+    if (!title) { alert("제목은 필수입니다"); return; }
+
+    const dateType = document.getElementById("ev-date-type").value;
+    const ev = {
+        category: document.getElementById("ev-category").value,
+        title,
+        source: "manual",
+        auto: false,
+    };
+
+    if (dateType === "month") {
+        const month = document.getElementById("ev-month").value;
+        if (!month) { alert("월을 선택하세요"); return; }
+        const [y, m] = month.split("-").map(Number);
+        const lastDay = new Date(y, m, 0).getDate();
+        ev.date = `${y}-${String(m).padStart(2,"0")}-01`;
+        ev.endDate = `${y}-${String(m).padStart(2,"0")}-${lastDay}`;
+        ev.month = month;
+        ev.undated = true;
+        ev.time = "";
+    } else if (dateType === "week") {
+        const weekMonth = document.getElementById("ev-week-month").value;
+        const weekNum = document.getElementById("ev-week-num").value;
+        if (!weekMonth) { alert("월을 선택하세요"); return; }
+        ev.week = `${weekMonth}-W${weekNum}`;
+        ev.undated = true;
+        ev.time = "";
+        // week의 시작일 계산
+        const [y, m] = weekMonth.split("-").map(Number);
+        const startDay = (parseInt(weekNum) - 1) * 7 + 1;
+        const endDay = Math.min(startDay + 6, new Date(y, m, 0).getDate());
+        ev.date = `${y}-${String(m).padStart(2,"0")}-${String(startDay).padStart(2,"0")}`;
+        ev.endDate = `${y}-${String(m).padStart(2,"0")}-${String(endDay).padStart(2,"0")}`;
+    } else {
+        const date = document.getElementById("ev-date").value;
+        if (!date) { alert("날짜를 선택하세요"); return; }
+        ev.date = date;
+        ev.time = document.getElementById("ev-time").value || "";
+        const endDate = document.getElementById("ev-end-date").value;
+        if (endDate) ev.endDate = endDate;
+    }
+
+    const link = document.getElementById("ev-link").value.trim();
+    if (link) ev.link = link;
+    const summary = document.getElementById("ev-summary").value.trim();
+    if (summary) ev.summary = summary;
+
+    if (editingEvent) {
+        const idx = events.findIndex(e => e.date===editingEvent.date && e.title===editingEvent.title && e.category===editingEvent.category);
+        if (idx >= 0) events[idx] = ev;
+    } else {
+        events.push(ev);
+    }
+
+    events.sort((a,b) => (a.date+a.time).localeCompare(b.date+b.time));
+    saveToStorage();
+    closeModal();
+    renderView();
+    renderMiniCal();
+    renderCatFilter();
+}
+function deleteEvent() {
+    if (!editingEvent || !confirm("이 일정을 삭제하시겠습니까?")) return;
+    events = events.filter(e => !(e.date===editingEvent.date && e.title===editingEvent.title && e.category===editingEvent.category));
+    saveToStorage();
+    closeModal();
+    renderView();
+    renderMiniCal();
+    renderCatFilter();
+}
+function saveToStorage() {
+    localStorage.setItem("calendar_events_manual", JSON.stringify(events.filter(e=>e.source==="manual")));
+}
+function loadManualEvents() {
+    try {
+        const manual = JSON.parse(localStorage.getItem("calendar_events_manual") || "[]");
+        for (const m of manual) {
+            if (!events.find(e => e.date===m.date && e.title===m.title)) {
+                events.push(m);
+            }
+        }
+        events.sort((a,b) => (a.date+(a.time||"")).localeCompare(b.date+(b.time||"")));
+    } catch {}
+}
+function showEventDetail(ev) {
+    if (isAdmin) openEditEvent(ev);
+}
+
+// === UPDATE (관리자) ===
+// 미국실적은 서버 수집기(cal_data/collectors/finnhub.py)가 매일 자동 수집 — 브라우저 수집 없음
+let scrapeResults = [];
+
+function openScrapeModal() {
+    document.getElementById("scrape-overlay").classList.remove("hidden");
+    document.getElementById("scrape-loading").classList.add("hidden");
+    document.getElementById("scrape-actions").classList.add("hidden");
+    scrapeResults = [];
+    renderScrapeResults();
+}
+
+function renderScrapeResults() {
+    document.getElementById("scrape-results").innerHTML = `<div>
+        <div style="font-size:0.85rem;font-weight:600;margin-bottom:6px;">전체 데이터 업데이트</div>
+        <div style="font-size:0.75rem;color:var(--dim);margin-bottom:10px;">실적(국내·해외)·경제지표·IPO 등은 매일 06:00 자동 수집됩니다.<br>즉시 갱신이 필요하면 아래 버튼으로 GitHub Actions를 실행하고, 5~10분 후 새로고침하세요.</div>
+        <button class="btn-secondary" onclick="triggerGHAction()" style="width:100%;">전체 데이터 업데이트 (GitHub Actions)</button>
+    </div>`;
+}
+
+function toggleScrapeAll() {
+    const checked = document.getElementById("scrape-select-all").checked;
+    document.querySelectorAll("#scrape-results input[type=checkbox]").forEach(cb => cb.checked = checked);
+}
+
+function applyScrape() {
+    const checkboxes = document.querySelectorAll("#scrape-results input[type=checkbox]");
+    let added = 0;
+    checkboxes.forEach(cb => {
+        if (cb.checked) {
+            const idx = parseInt(cb.dataset.idx);
+            const ev = scrapeResults[idx];
+            if (ev) {
+                delete ev._src;
+                events.push(ev);
+                added++;
+            }
+        }
+    });
+    events.sort((a,b) => (a.date+(a.time||"")).localeCompare(b.date+(b.time||"")));
+    saveToStorage();
+    closeScrape();
+    renderView();
+    renderMiniCal();
+    renderCatFilter();
+    alert(`${added}건 추가 완료`);
+}
+
+function closeScrape() {
+    document.getElementById("scrape-overlay").classList.add("hidden");
+}
+
+// Legacy: GitHub Actions trigger (backup)
+const GH_REPO = "valscope-sys/telegram-briefing-bot";
+const GH_WORKFLOW = "calendar.yml";
+async function triggerGHAction() {
+    const token = prompt("GitHub Token (전체 소스 업데이트용)");
+    if (!token) return;
+    try {
+        const res = await fetch(`https://api.github.com/repos/${GH_REPO}/actions/workflows/${GH_WORKFLOW}/dispatches`, {
+            method: "POST",
+            headers: {"Authorization": `token ${token}`, "Accept": "application/vnd.github.v3+json"},
+            body: JSON.stringify({ref: "main"}),
+        });
+        if (res.status === 204) alert("GitHub Actions 트리거 완료! 2~5분 후 새로고침하세요.");
+        else { const err = await res.json(); alert(`실패: ${err.message}`); }
+    } catch (e) {
+        alert(`에러: ${e.message}`);
+    }
+}
+
+// === BIND EVENTS ===
+function bindEvents() {
+    document.getElementById("prev-btn").onclick = () => navigate(-1);
+    document.getElementById("next-btn").onclick = () => navigate(1);
+    document.getElementById("today-btn").onclick = goToday;
+    document.getElementById("theme-btn").onclick = cycleTheme;
+    document.getElementById("update-btn").onclick = openScrapeModal;
+    document.querySelectorAll(".view-tab").forEach(t => {
+        t.onclick = () => switchView(t.dataset.view);
+    });
+    document.getElementById("detail-close").onclick = closeDetail;
+    document.getElementById("admin-btn").onclick = () => {
+        if (isAdmin) openAddEvent(selectedDate ? fmt(selectedDate) : fmt(new Date()));
+        else openAdminModal();
+    };
+    document.getElementById("modal-close").onclick = closeModal;
+    document.getElementById("admin-overlay").onclick = (e) => { if(e.target===e.currentTarget) closeModal(); };
+    document.getElementById("login-btn").onclick = doLogin;
+    document.getElementById("admin-pw").onkeydown = (e) => { if(e.key==="Enter") doLogin(); };
+    document.getElementById("ev-save").onclick = saveEvent;
+    document.getElementById("ev-delete").onclick = deleteEvent;
+    document.getElementById("ev-cancel").onclick = closeModal;
+    bindSearchEvents();
+
+    document.onkeydown = (e) => {
+        if (e.key==="Escape") { closeModal(); closeDetail(); }
+        if (e.target.tagName==="INPUT"||e.target.tagName==="TEXTAREA"||e.target.tagName==="SELECT") return;
+        if (e.key==="ArrowLeft") navigate(-1);
+        if (e.key==="ArrowRight") navigate(1);
+    };
+}
+
+// === START ===
+init().then(() => {
+    loadManualEvents();
+    // 데스크톱(>768px)은 로드 시 오늘 일정 패널 자동 오픈 (모바일은 기존 오버레이 방식 유지)
+    const autoOpenToday = window.innerWidth > 768;
+    if (autoOpenToday) selectedDate = new Date();
+    renderView();
+    renderMiniCal();
+    renderCatFilter();
+    if (autoOpenToday) showDetailPanel(fmt(new Date()));
+});
