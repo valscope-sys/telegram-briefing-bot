@@ -56047,15 +56047,6 @@
     "summary": "한국거래소 주관 'Korea Premium Weeks 2026' 참가 · 롯데호텔 서울, 한국거래소"
   },
   {
-    "date": "2026-09-29",
-    "time": "",
-    "category": "산업컨퍼런스",
-    "title": "OpenAI DevDay 2026",
-    "source": "known",
-    "auto": true,
-    "link": "https://devday.openai.com/"
-  },
-  {
     "category": "산업컨퍼런스",
     "title": "데이터센터 월드 아시아(DCWA) 2026",
     "source": "ai_scan",
@@ -56064,6 +56055,15 @@
     "time": "",
     "unconfirmed": true,
     "summary": "싱가포르 마리나 베이 샌즈에서 29~30일 개최. 신성이엔지가 AI 데이터센터 냉각 플랫폼 'AIO' 전시. 아시아 주요 데이터센터 기술 및 솔루션 전시회. 관련주: 신성이엔지, 데이터센터 냉각 인프라 업체"
+  },
+  {
+    "date": "2026-09-29",
+    "time": "",
+    "category": "산업컨퍼런스",
+    "title": "OpenAI DevDay 2026",
+    "source": "known",
+    "auto": true,
+    "link": "https://devday.openai.com/"
   },
   {
     "date": "2026-09-29",
