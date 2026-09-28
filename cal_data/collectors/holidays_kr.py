@@ -34,7 +34,7 @@ def get_market_holidays(from_date: datetime.date, to_date: datetime.date) -> lis
 
     - holidays.SouthKorea: 법정공휴일·대체공휴일·선거일·음력(설/추석) 자동 계산
     - 증시 특화 보강: 근로자의 날(5/1), 연말 폐장(12/31)
-    - 주말(토/일)에 걸린 휴장은 제외 (어차피 증시 미개장 → 시황에 표시 불필요)
+    - 주말(토/일)에 걸린 휴장은 제외 (어차피 증시 미개장 → 표시 불필요)
     """
     if not _HAS_HOLIDAYS:
         print("[Calendar] holidays 라이브러리 미설치 — 휴장일 수집 생략")

@@ -119,7 +119,7 @@ def extract_events_with_ai(headlines: list[str], existing: list[str] | None = No
     """Claude API로 헤드라인에서 일정 추출"""
     if not headlines:
         return []
-    from telegram_bot.llm_client import get_client, llm_available
+    from cal_data.llm_client import get_client, llm_available
     if not llm_available():
         print("[AI Scanner] ERROR: ANTHROPIC_API_KEY도 Claude Code CLI도 없음 — AI 일정 추출 건너뜀")
         return []

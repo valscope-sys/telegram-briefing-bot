@@ -24,7 +24,7 @@ const CAT_LABELS = {
 };
 const DAYS_KR = ["일","월","화","수","목","금","토"];
 
-// 미국 티커 → 한글명 매핑 (telegram_bot/formatters/schedule.py US_TICKER_KR과 동일)
+// 미국 티커 → 한글명 매핑 (구형식 "TSLA 실적발표" 제목용 — 신규 수집분은 제목에 한글명 포함)
 const US_TICKER_KR = {
     "AAPL":"애플","MSFT":"마이크로소프트","GOOGL":"구글(A)","GOOG":"구글(C)",
     "AMZN":"아마존","META":"메타","NVDA":"엔비디아","TSLA":"테슬라",
@@ -145,7 +145,7 @@ function localizeTitle(ev) {
             title = `${US_TICKER_KR[m[1]]}(${m[1]})` + title.slice(m[1].length);
         }
     }
-    // 경제지표 소스(TradingView)가 '상' 중요도로 분류한 일정 — 텔레그램 ★ 표시와 동일 기준
+    // 경제지표 소스(TradingView)가 '상' 중요도로 분류한 일정
     if (ev && ev.importance === 1) title = "★ " + title;
     return title;
 }

@@ -1,34 +1,4 @@
 .env
 __pycache__/
 *.pyc
-token_cache.yaml
-telegram_bot/history/latest_*.json
-
-# 이슈봇 런타임 state (재시작 시 재생성 / 서버별로 누적)
-telegram_bot/history/issue_bot/pending/
-telegram_bot/history/issue_bot/poller.lock
-telegram_bot/history/issue_bot/poller_offset.txt
-telegram_bot/history/issue_bot/KILL_SWITCH
-telegram_bot/history/issue_bot/cache_stats.jsonl
-telegram_bot/history/issue_bot/seen_ids.jsonl
-telegram_bot/history/issue_bot/last_rcept_no.txt
-telegram_bot/history/issue_bot/sent/
-telegram_bot/history/issue_bot/rejected/
-telegram_bot/history/issue_bot/url_cache.json
-telegram_bot/history/issue_bot/dart_corp_codes.json
-telegram_bot/history/issue_bot/dart_corp_codes.meta.json
-
-# 자동 누적 캐시 (서버에서 매일 갱신, 로컬과 충돌 방지)
-telegram_bot/history/wics_cache.json
-telegram_bot/history/snapshot_*.json
 .claude/settings.local.json
-telegram_bot/history/historical_max.json
-telegram_bot/history/self_new_high_cache.json
-
-# 외부 애널리스트 시각 누적 (서버에서 매일 fetch, 로컬과 충돌 방지)
-telegram_bot/history/analyst_raw.txt
-telegram_bot/history/analyst_raw_*.txt
-telegram_bot/history/market_context.txt
-
-# stocknow.ai 외부 API 다운로드 결과 (ToS 미확인 — 로컬 작업용)
-data/earnings_calls/

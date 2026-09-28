@@ -56056,6 +56056,16 @@
     "link": "https://devday.openai.com/"
   },
   {
+    "category": "산업컨퍼런스",
+    "title": "데이터센터 월드 아시아(DCWA) 2026",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2026-09-29",
+    "time": "",
+    "unconfirmed": true,
+    "summary": "싱가포르 마리나 베이 샌즈에서 29~30일 개최. 신성이엔지가 AI 데이터센터 냉각 플랫폼 'AIO' 전시. 아시아 주요 데이터센터 기술 및 솔루션 전시회. 관련주: 신성이엔지, 데이터센터 냉각 인프라 업체"
+  },
+  {
     "date": "2026-09-29",
     "time": "10:00",
     "category": "IR",
@@ -56386,6 +56396,15 @@
     "country": ""
   },
   {
+    "category": "자동차/배터리",
+    "title": "2026 인제 월드 투어링카 페스티벌",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2026-10-03",
+    "time": "",
+    "summary": "현대자동차 주관, 강원도 인제 스피디움 개최. FIA 국제자동차연맹 주최 'TCR 월드투어', 'TCR 아시아', '현대 N 페스티벌' 등 3개 경주 대회. 관련주: 현대자동차, 현대모비스, 관련 자동차 부품사"
+  },
+  {
     "date": "2026-10-04",
     "time": "10:00",
     "category": "IR",
@@ -56432,6 +56451,15 @@
     "title": "엘리스그룹 공모청약 (10/07~10/08)",
     "source": "38cr",
     "auto": true
+  },
+  {
+    "date": "2026-10-07",
+    "time": "09:00",
+    "category": "IR",
+    "title": "스피어 IR (기업설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "- 회사 주요 현황 설명을 통한 투자자 이해 증진 - 기업가치 제고 · 한국거래소(KRX) 컨퍼런스홀 및 홍보관(서울 여의도)"
   },
   {
     "date": "2026-10-07",
@@ -57558,6 +57586,18 @@
     "source": "fixed",
     "auto": false,
     "country": "🇨🇳"
+  },
+  {
+    "category": "제약/바이오",
+    "title": "오베시티위크(Obesity Week) 2026",
+    "source": "ai_scan",
+    "auto": true,
+    "month": "2026-11",
+    "undated": true,
+    "date": "2026-11-01",
+    "endDate": "2026-11-30",
+    "unconfirmed": true,
+    "summary": "미국 개최 예상. 온코닉테라퓨틱스가 차세대 비만·대사질환 신약 후보 구두발표. 비만치료 및 관련 신약 임상결과 발표 플랫폼. 관련주: 온코닉테라퓨틱스, 대사질환 치료제 개발 바이오 기업"
   },
   {
     "date": "2026-11-01",

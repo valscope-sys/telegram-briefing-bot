@@ -1,7 +1,7 @@
-"""Claude 호출 공통 모듈 — API 크레딧이 없으면 로컬 Claude Code(구독 로그인)로 자동 전환
+"""캘린더용 Claude 호출 모듈 — API 크레딧이 없으면 Claude Code(구독 로그인)로 자동 전환
 
 사용법 (기존 anthropic 코드와 호출 형태 동일):
-    from telegram_bot.llm_client import get_client
+    from cal_data.llm_client import get_client
     client = get_client()                      # anthropic.Anthropic(api_key=...) 대체
     resp = client.messages.create(model=..., max_tokens=..., system=..., messages=[...])
     resp.content[0].text, resp.usage.input_tokens  # 그대로 동작
@@ -106,7 +106,7 @@ def _messages_to_prompt(messages: list) -> str:
     return "\n\n".join(lines)
 
 
-# WebSearch 도구가 결과 끝에 붙이는 출처 목록 제거 (텔레그램 본문에 불필요)
+# WebSearch 도구가 결과 끝에 붙이는 출처 목록 제거 (캘린더 데이터에 불필요)
 _SOURCES_TAIL = re.compile(r"\n+\s*(Sources|출처)\s*:\s*\n(\s*[-*]\s*\[[^\]]*\]\([^)]*\)\s*\n?)+\s*$")
 
 

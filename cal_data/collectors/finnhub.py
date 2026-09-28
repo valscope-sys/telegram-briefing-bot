@@ -14,7 +14,7 @@ FINNHUB_API_KEY = os.getenv("FINNHUB_API_KEY", "")
 BASE_URL = "https://finnhub.io/api/v1"
 
 # 관심 종목 → 한글명 (시총 상위 + 한국 증시 연관 밸류체인)
-# 제목에 한글명을 넣어 웹 캘린더·텔레그램 양쪽에서 별도 매핑 없이 한글로 표시
+# 제목에 한글명을 넣어 웹 캘린더에서 별도 매핑 없이 한글로 표시
 WATCHLIST = {
     # 빅테크/AI
     "NVDA": "엔비디아", "AAPL": "애플", "TSLA": "테슬라", "MSFT": "마이크로소프트",

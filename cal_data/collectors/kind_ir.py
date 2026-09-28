@@ -37,9 +37,8 @@ SEASON_GAP_DAYS = 21
 # 조회 시작일 이전 구간도 조회해 위 판정 문맥으로만 사용 (결과는 요청 구간만 반환)
 LOOKBACK_DAYS = 21
 
-# 실적 IR 제목 형식 — 기존 소비처 호환을 위해 " 실적발표" 로 끝나야 함
-#   (telegram_bot/collectors/schedule_collector._extract_corp_name, update._dedupe_provisional_official_close 가
-#    " 실적발표" 접미사만 떼어 기업명을 추출)
+# 실적 IR 제목 형식 — " 실적발표" 로 끝나야 함
+#   (update._dedupe_provisional_official_close 가 " 실적발표" 접미사만 떼어 기업명을 추출)
 EARNINGS_TITLE_FMT = "{corp} 실적발표"
 
 # 코넥스 IR은 거래소 주관 합동 IR(하루 20건+) 위주라 기본 제외
@@ -48,7 +47,7 @@ SKIP_MARKETS_DEFAULT = {"코넥스"}
 # 직전 실행에서 조회 실패한 구간 [(from, to)] — 호출측 진단/보존 판단용
 LAST_FAILED_RANGES: list[tuple[str, str]] = []
 
-_KRX_LISTING = Path(__file__).resolve().parents[2] / "telegram_bot" / "history" / "krx_listing.json"
+_KRX_LISTING = Path(__file__).resolve().parents[1] / "krx_listing.json"  # 회사명 약칭 매핑 (캘린더 전용 사본)
 _NAME_BY_ISUR = None
 
 # ───────────────────────── 분류 ─────────────────────────

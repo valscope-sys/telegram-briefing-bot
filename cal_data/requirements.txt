@@ -1,0 +1,9 @@
+# 캘린더 수집 전용 의존성 (시황봇 telegram_bot/requirements.txt와 분리)
+requests
+beautifulsoup4
+lxml
+feedparser
+python-dotenv
+holidays>=0.50
+curl_cffi>=0.13
+anthropic

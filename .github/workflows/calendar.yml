@@ -25,7 +25,7 @@ jobs:
           python-version: '3.12'
 
       - name: Install dependencies
-        run: pip install -r telegram_bot/requirements.txt
+        run: pip install -r cal_data/requirements.txt
 
       - name: Install Claude Code CLI (구독 토큰이 있을 때만)
         if: env.HAS_CLAUDE_TOKEN == 'true'
