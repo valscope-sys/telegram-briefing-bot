@@ -13,28 +13,57 @@ if os.path.exists(_env_path):
 FINNHUB_API_KEY = os.getenv("FINNHUB_API_KEY", "")
 BASE_URL = "https://finnhub.io/api/v1"
 
-# 관심 종목 (시총 상위 + 한국 투자자 관심)
+# 관심 종목 → 한글명 (시총 상위 + 한국 증시 연관 밸류체인)
+# 제목에 한글명을 넣어 웹 캘린더·텔레그램 양쪽에서 별도 매핑 없이 한글로 표시
 WATCHLIST = {
     # 빅테크/AI
-    "NVDA", "AAPL", "TSLA", "MSFT", "GOOGL", "AMZN", "META", "NFLX",
-    # 반도체
-    "AVGO", "TSM", "AMD", "INTC", "QCOM", "MU", "ASML", "AMAT", "LRCX",
-    "MRVL", "SNDK", "ON", "KLAC", "TXN",
-    # SW/클라우드
-    "CRM", "ORCL", "ADBE", "NOW", "PLTR", "SNOW", "PANW",
-    # 금융 (실적시즌 핵심)
-    "JPM", "BAC", "WFC", "C", "MS", "GS", "BLK", "SCHW",
-    "V", "MA", "BRK.B",
-    # 헬스케어
-    "UNH", "JNJ", "PFE", "LLY", "ABT", "ABBV", "MRK", "TMO",
-    # 에너지/산업
-    "XOM", "CVX", "BA", "CAT", "DE", "RTX", "LMT", "GE",
-    # 소비재
-    "WMT", "COST", "HD", "MCD", "SBUX", "NKE", "PEP", "KO", "PG",
-    # 미디어/엔터
-    "DIS", "CMCSA", "ABNB",
-    # 기타 관심
-    "FN", "AAOI",
+    "NVDA": "엔비디아", "AAPL": "애플", "TSLA": "테슬라", "MSFT": "마이크로소프트",
+    "GOOGL": "알파벳", "AMZN": "아마존", "META": "메타", "NFLX": "넷플릭스",
+    # 반도체 (삼성전자·SK하이닉스·장비주 직결)
+    "AVGO": "브로드컴", "TSM": "TSMC", "AMD": "AMD", "INTC": "인텔", "QCOM": "퀄컴",
+    "MU": "마이크론", "ASML": "ASML", "AMAT": "어플라이드머티어리얼즈", "LRCX": "램리서치",
+    "KLAC": "KLA", "MRVL": "마벨", "SNDK": "샌디스크", "ON": "온세미", "TXN": "텍사스인스트루먼트",
+    "ADI": "아날로그디바이스", "NXPI": "NXP", "ARM": "ARM", "SNPS": "시놉시스", "CDNS": "케이던스",
+    "WDC": "웨스턴디지털", "STX": "시게이트", "SMCI": "슈퍼마이크로", "TER": "테라다인",
+    "AMKR": "앰코", "KLIC": "쿨리케앤소파", "ENTG": "엔테그리스", "MKSI": "MKS",
+    "GFS": "글로벌파운드리", "MPWR": "모놀리식파워",
+    # AI 인프라·네트워크·전력 (HBM·광통신·전력기기 연관)
+    "DELL": "델", "HPE": "HPE", "ANET": "아리스타", "CSCO": "시스코", "COHR": "코히런트",
+    "CRDO": "크레도", "ALAB": "아스테라랩스", "CLS": "셀레스티카", "FN": "패브리넷",
+    "AAOI": "어플라이드옵토", "VRT": "버티브", "ETN": "이튼", "GEV": "GE버노바",
+    "CEG": "컨스텔레이션에너지", "VST": "비스트라", "IBM": "IBM", "JBL": "자빌",
+    "PWR": "퀀타서비스", "ACN": "액센츄어",
+    # 원전·SMR·태양광 (두산에너빌리티·한화솔루션 연관)
+    "CCJ": "카메코", "BWXT": "BWXT", "SMR": "뉴스케일", "OKLO": "오클로", "FSLR": "퍼스트솔라",
+    # SW/클라우드/보안
+    "CRM": "세일즈포스", "ORCL": "오라클", "ADBE": "어도비", "NOW": "서비스나우",
+    "PLTR": "팔란티어", "SNOW": "스노우플레이크", "PANW": "팔로알토", "CRWD": "크라우드스트라이크",
+    "INTU": "인튜이트", "SHOP": "쇼피파이", "UBER": "우버", "ABNB": "에어비앤비",
+    # 금융 (실적시즌 개막)
+    "JPM": "JP모건", "BAC": "뱅크오브아메리카", "WFC": "웰스파고", "C": "씨티그룹",
+    "MS": "모건스탠리", "GS": "골드만삭스", "BLK": "블랙록", "SCHW": "찰스슈왑",
+    "V": "비자", "MA": "마스터카드", "AXP": "아메리칸익스프레스", "COIN": "코인베이스",
+    "BRK.A": "버크셔해서웨이",
+    # 헬스케어/바이오
+    "UNH": "유나이티드헬스", "JNJ": "존슨앤드존슨", "PFE": "화이자", "LLY": "일라이릴리",
+    "ABT": "애보트", "ABBV": "애브비", "MRK": "머크", "TMO": "써모피셔", "AMGN": "암젠",
+    "GILD": "길리어드", "REGN": "리제네론", "VRTX": "버텍스", "ISRG": "인튜이티브서지컬",
+    "NVO": "노보노디스크", "BMY": "BMS", "MRNA": "모더나",
+    # 에너지/산업/방산 (조선·방산·기계 연관)
+    "XOM": "엑슨모빌", "CVX": "셰브론", "COP": "코노코필립스", "BA": "보잉", "CAT": "캐터필러",
+    "DE": "디어", "RTX": "RTX", "LMT": "록히드마틴", "NOC": "노스롭그루먼",
+    "GD": "제너럴다이내믹스", "GE": "GE에어로스페이스", "HON": "하니웰", "FDX": "페덱스",
+    "HII": "헌팅턴잉걸스", "NUE": "뉴코어", "DOW": "다우",
+    # 자동차/EV/배터리 소재 (2차전지 연관)
+    "GM": "GM", "F": "포드", "RIVN": "리비안", "ALB": "앨버말",
+    # 소비재/리테일 (의류 OEM·화장품 ODM 연관)
+    "WMT": "월마트", "COST": "코스트코", "HD": "홈디포", "MCD": "맥도날드", "SBUX": "스타벅스",
+    "NKE": "나이키", "PEP": "펩시코", "KO": "코카콜라", "PG": "P&G", "TGT": "타깃",
+    "LULU": "룰루레몬", "CPNG": "쿠팡",
+    # 미디어/통신
+    "DIS": "디즈니", "CMCSA": "컴캐스트", "TMUS": "T모바일",
+    # 중국 ADR
+    "BABA": "알리바바", "PDD": "PDD", "JD": "징둥", "BIDU": "바이두",
 }
 
 EARNINGS_TIME_MAP = {
@@ -74,6 +103,8 @@ def _get(endpoint: str, params: dict) -> dict | list | None:
 _EARNINGS_ROW_CAP = 1500
 # 어닝시즌 피크(하루 수백 건)에도 캡을 안 넘도록 분할 단위는 7일
 _EARNINGS_CHUNK_DAYS = 7
+# 직전 실행에서 조회 실패한 구간 — update.py가 이 구간의 기존 일정은 교체하지 않고 보존
+LAST_FAILED_RANGES: list[tuple[str, str]] = []
 
 
 def _fetch_earnings_raw(from_date: datetime.date, to_date: datetime.date) -> list[dict]:
@@ -86,6 +117,7 @@ def _fetch_earnings_raw(from_date: datetime.date, to_date: datetime.date) -> lis
         "to": to_date.isoformat(),
     })
     if not data:
+        LAST_FAILED_RANGES.append((from_date.isoformat(), to_date.isoformat()))
         return []
 
     rows = data.get("earningsCalendar", [])
@@ -113,6 +145,7 @@ def fetch_us_earnings(from_date: datetime.date, to_date: datetime.date) -> list[
     Finnhub은 날짜 내림차순 + 1500행 하드캡이라 긴 범위 단일 호출 시
     앞쪽(가까운) 날짜가 통째로 절단됨 → 7일 청크로 분할 순회 후 합산.
     """
+    LAST_FAILED_RANGES.clear()
     earnings_list = []
     chunk_start = from_date
     while chunk_start <= to_date:
@@ -143,20 +176,31 @@ def fetch_us_earnings(from_date: datetime.date, to_date: datetime.date) -> list[
         hour = EARNINGS_TIME_MAP.get(item.get("hour", ""), "")
         eps_est = item.get("epsEstimate")
 
-        title = f"{symbol} 실적발표"
+        # EPS 추정치는 매일 변동 → 제목이 아닌 summary에 (병합 키 안정화)
+        title = f"{WATCHLIST[symbol]}({symbol}) 실적발표"
         if hour:
             title += f" ({hour})"
-        if eps_est is not None:
-            title += f" [EPS est. ${eps_est}]"
 
-        results.append({
+        summary_parts = []
+        if hour == "장전":
+            summary_parts.append("미국 장 시작 전 발표 (KST 당일 밤)")
+        elif hour == "장후":
+            summary_parts.append("미국 장 마감 후 발표 (KST 익일 새벽)")
+        if eps_est is not None:
+            summary_parts.append(f"EPS 예상 ${eps_est:.2f}")
+
+        ev = {
             "date": ev_date,
             "time": "",
             "category": "미국실적",
             "title": title,
             "source": "finnhub",
             "auto": True,
-        })
+            "country": "🇺🇸",
+        }
+        if summary_parts:
+            ev["summary"] = " · ".join(summary_parts)
+        results.append(ev)
 
     return results
 

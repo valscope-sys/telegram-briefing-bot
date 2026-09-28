@@ -87,12 +87,13 @@ def fetch_dart_earnings(target_date=None):
 
     try:
         url = "https://opendart.fss.or.kr/api/list.json"
+        # 잠정실적은 거래소공시(I) — 외부감사(F)로 조회하면 감사보고서만 잡힘
         params = {
             "crtfc_key": DART_API_KEY,
             "bgn_de": date_str,
             "end_de": date_str,
-            "pblntf_ty": "F",
-            "page_count": 30,
+            "pblntf_ty": "I",
+            "page_count": 100,
         }
         res = requests.get(url, params=params, timeout=10)
         if res.status_code != 200:
@@ -104,9 +105,13 @@ def fetch_dart_earnings(target_date=None):
 
         results = []
         for item in data.get("list", []):
+            report = item.get("report_nm", "")
+            # 코스피(Y)·코스닥(K) 상장사의 영업(잠정)실적 공시만
+            if item.get("corp_cls") not in ("Y", "K") or "잠정" not in report or "실적" not in report:
+                continue
             results.append({
                 "기업명": item.get("corp_name", ""),
-                "보고서명": item.get("report_nm", ""),
+                "보고서명": report,
                 "접수일": item.get("rcept_dt", ""),
             })
         return results
@@ -207,7 +212,7 @@ def _build_schedule(target_date):
 
         # 1. 실적 → earnings
         if cat in EARNINGS_CATS:
-            earnings.append({"기업명": corp, "보고서명": title})
+            earnings.append({"기업명": corp, "보고서명": title, "카테고리": cat})
             continue
 
         # 2. IR(경영현황) → 텔레그램 일정 메시지에는 표시 안 함 (캘린더 웹에만 노출)
@@ -228,14 +233,16 @@ def _build_schedule(target_date):
             # title에 이미 이모지가 포함되어 있으면 country 생략 (중복 방지)
             has_emoji = any(ord(c) > 0x1F000 for c in title)
             country = "" if has_emoji else (e.get("country", "") or CATEGORY_COUNTRY.get(cat, ""))
-            events.append({"시간": e.get("time", ""), "국가": country, "이벤트": title})
+            events.append({"시간": e.get("time", ""), "국가": country, "이벤트": title,
+                           "중요도": e.get("importance")})
             continue
 
         # 5. 이벤트 카테고리 → events
         if cat in EVENT_CATS:
             has_emoji = any(ord(c) > 0x1F000 for c in title)
             country = "" if has_emoji else (e.get("country", "") or CATEGORY_COUNTRY.get(cat, ""))
-            events.append({"시간": e.get("time", ""), "국가": country, "이벤트": title})
+            events.append({"시간": e.get("time", ""), "국가": country, "이벤트": title,
+                           "중요도": e.get("importance")})
             continue
 
         # 6. 그 외 제외 (EXCLUDE_CATS 등)

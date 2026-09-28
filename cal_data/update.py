@@ -3,7 +3,7 @@
 
 Usage:
     python -m cal_data.update              # 향후 60일 업데이트
-    python -m cal_data.update --full       # 연말까지 업데이트
+    python -m cal_data.update --full       # 향후 180일 업데이트
     python -m cal_data.update --month 202604  # 특정 월 업데이트
 """
 import re
@@ -49,7 +49,8 @@ def merge_events(existing: list[dict], new_events: list[dict]) -> list[dict]:
     수동(auto=False) 이벤트는 절대 덮어쓰지 않음.
     동일 (date, category, normalized_title) → 소스 우선순위로 결정.
     """
-    SOURCE_PRIORITY = {"holidays": 12, "fixed": 10, "fnguide": 8, "finnhub": 6, "38cr": 4, "manual": 100}
+    SOURCE_PRIORITY = {"holidays": 12, "fixed": 10, "known": 9, "fnguide": 8, "kind": 8, "tradingview": 7,
+                       "finnhub": 6, "investing": 5, "38cr": 4, "news": 3, "manual": 100}
 
     indexed = {}
     for ev in existing:
@@ -89,7 +90,11 @@ def merge_events(existing: list[dict], new_events: list[dict]) -> list[dict]:
             corp = title.split(" 실적발표")[0].split(" 잠정실적발표")[0].strip()
             if corp:
                 confirmed_corps.add(corp)
-                # 티커에서 한글명도 추가
+                # "마이크론(MU)" 형식이면 한글명도 추가 (티커 단독은 V·C 같은 단문자 오매칭 위험으로 제외)
+                m = re.match(r"^(.+?)\(([A-Z.]{1,6})\)$", corp)
+                if m:
+                    confirmed_corps.add(m.group(1))
+                # 구형식 "TSLA" 티커 제목 호환
                 ticker = corp.split("(")[0].strip()
                 if ticker in TICKER_KR:
                     confirmed_corps.add(TICKER_KR[ticker])
@@ -105,6 +110,11 @@ def merge_events(existing: list[dict], new_events: list[dict]) -> list[dict]:
     result = [ev for ev in result if not (
         ev.get("source") == "ai_scan"
         and ev.get("category", "") in AI_BLACKLIST_CATEGORIES
+    )]
+
+    # FnGuide 유상/무상증자·합병·액면분할/병합 — 수집 중단 후 기존 잔존분도 제거
+    result = [ev for ev in result if not (
+        ev.get("source") == "fnguide" and ev.get("category", "") == "기업이벤트"
     )]
 
     # 같은 기업 잠정→정식 dedupe: 잠정 발표 후 0~2일 이내 정식 발표 일정은 노이즈
@@ -135,15 +145,78 @@ def _dedupe_provisional_official_close(events: list[dict]) -> list[dict]:
         off = [e for e in evs if e.get("category") == "한국실적"]
         if not prov or not off:
             continue
-        off_dates = {o.get("date", "") for o in off}
+        off_by_date = {o.get("date", ""): o for o in off}
         for p in prov:
-            # 정식과 같은 날짜에 잠정이 있으면 잠정 제거
-            if p.get("date", "") in off_dates:
-                drop_ids.add(id(p))
+            # 정식과 같은 날짜에 잠정이 있으면 잠정 제거 — 잠정의 실적·컨센 요약은 정식 일정으로 이관
+            o = off_by_date.get(p.get("date", ""))
+            if o is None:
+                continue
+            drop_ids.add(id(p))
+            p_sum = p.get("summary")
+            if p_sum and p_sum not in (o.get("summary") or ""):
+                o["summary"] = f"{p_sum} · {o['summary']}" if o.get("summary") else p_sum
 
     if drop_ids:
         return [ev for ev in events if id(ev) not in drop_ids]
     return events
+
+
+# 매 실행 해당 구간 전체를 다시 주는 소스 — 정상 수집된 구간의 기존 항목은 신규분으로 교체
+# (연기·취소·날짜 교정된 일정이 옛 날짜에 유령으로 남는 문제 방지)
+SNAPSHOT_SOURCES = {"fixed", "holidays", "finnhub", "tradingview", "known", "kind"}
+
+
+def _failed_ranges() -> dict[str, list[tuple[str, str]]]:
+    """수집기별 직전 실행 실패 구간 (이 구간의 기존 일정은 교체하지 않고 보존)"""
+    failed = {}
+    try:
+        from cal_data.collectors import finnhub
+        failed["finnhub"] = list(finnhub.LAST_FAILED_RANGES)
+    except Exception:
+        pass
+    try:
+        from cal_data.collectors import kind_ir
+        failed["kind"] = list(kind_ir.LAST_FAILED_RANGES)
+    except Exception:
+        pass
+    try:
+        from cal_data.collectors import tradingview_economic
+        failed["tradingview"] = list(tradingview_economic.LAST_FAILED_RANGES)
+        failed["investing"] = failed["tradingview"]
+    except Exception:
+        pass
+    return failed
+
+
+def prune_for_refresh(existing: list[dict], new_events: list[dict],
+                      from_date: datetime.date, to_date: datetime.date) -> list[dict]:
+    """정상 수집된 스냅샷 소스의 수집 구간 내 기존 항목 제거 (수동 일정은 source=manual이라 무관)"""
+    fr, to = from_date.isoformat(), to_date.isoformat()
+    ok_sources = {ev.get("source") for ev in new_events} & SNAPSHOT_SOURCES
+    if "tradingview" in ok_sources:
+        ok_sources.add("investing")  # TradingView 정상이면 구 Investing 항목은 대체
+    failed = _failed_ranges()
+
+    def _in_failed(src, d):
+        return any(a <= d <= b for a, b in failed.get(src, []))
+
+    return [ev for ev in existing if not (
+        ev.get("source") in ok_sources
+        and fr <= ev.get("date", "") <= to
+        and not _in_failed(ev.get("source"), ev.get("date", ""))
+    )]
+
+
+def drop_econ_placeholders(events: list[dict], new_events: list[dict], from_date: datetime.date) -> list[dict]:
+    """TradingView 실데이터가 있는 구간의 fixed 경제지표(추정 날짜 placeholder) 제거"""
+    tv_dates = [ev["date"] for ev in new_events if ev.get("source") == "tradingview"]
+    if not tv_dates:
+        return events
+    fr, horizon = from_date.isoformat(), max(tv_dates)
+    return [ev for ev in events if not (
+        ev.get("source") == "fixed" and ev.get("category") == "경제지표"
+        and fr <= ev.get("date", "") <= horizon
+    )]
 
 
 def collect_all(from_date: datetime.date, to_date: datetime.date, skip_ai: bool = False) -> list[dict]:
@@ -171,11 +244,22 @@ def collect_all(from_date: datetime.date, to_date: datetime.date, skip_ai: bool 
     # 2. FnGuide
     try:
         from cal_data.collectors.fnguide import fetch_fnguide_range
-        fnguide = fetch_fnguide_range(from_date, to_date)
+        # 신버전 FnGuide는 잠정실적을 '발표 후'에만 게시 → 06:00 실행 이후 발표분을 다음날 잡도록 14일 소급
+        fnguide = fetch_fnguide_range(from_date - datetime.timedelta(days=14), to_date)
         print(f"[Calendar] FnGuide: {len(fnguide)}건")
         all_events.extend(fnguide)
     except Exception as e:
         print(f"[Calendar] FnGuide 실패: {e}")
+
+    # 2.5. KRX KIND IR 일정 — 국내 향후 실적발표(컨퍼런스콜) 일정의 주 소스
+    #      (신버전 FnGuide는 IR 일정을 제공하지 않고 잠정실적은 발표 후에만 게시)
+    try:
+        from cal_data.collectors.kind_ir import fetch_kind_ir
+        kind = fetch_kind_ir(from_date, to_date)
+        print(f"[Calendar] KIND IR: {len(kind)}건")
+        all_events.extend(kind)
+    except Exception as e:
+        print(f"[Calendar] KIND IR 실패: {e}")
 
     # 3. Finnhub (미국 실적)
     try:
@@ -188,16 +272,28 @@ def collect_all(from_date: datetime.date, to_date: datetime.date, skip_ai: bool 
     except Exception as e:
         print(f"[Calendar] Finnhub 실패: {e}")
 
-    # 3.5. Investing.com (경제지표)
+    # 3.5. 경제지표 — TradingView 주 소스, 전면 실패 시에만 Investing.com fallback
+    #      (Investing은 데이터센터 IP에서 429 차단이 잦아 주 소스에서 제외)
+    tv = None
     try:
-        from cal_data.collectors.investing_economic import fetch_investing_economic
-        inv = fetch_investing_economic(from_date, to_date)
-        print(f"[Calendar] 경제지표(Investing): {len(inv)}건")
-        all_events.extend(inv)
-    except ImportError:
-        pass
+        from cal_data.collectors.tradingview_economic import fetch_tradingview_economic
+        tv = fetch_tradingview_economic(from_date, to_date)
     except Exception as e:
-        print(f"[Calendar] Investing 실패: {e}")
+        print(f"[Calendar] TradingView 실패: {e}")
+    if tv:
+        print(f"[Calendar] 경제지표(TradingView): {len(tv)}건")
+        all_events.extend(tv)
+    else:
+        print("[Calendar] 경제지표(TradingView): 0건 - Investing fallback 시도")
+        try:
+            from cal_data.collectors.investing_economic import fetch_investing_economic
+            # Investing 게시 범위가 2~3주라 그 이상 요청은 429 재시도 시간만 늘림
+            inv_to = min(to_date, from_date + datetime.timedelta(days=21))
+            inv = fetch_investing_economic(from_date, inv_to)
+            print(f"[Calendar] 경제지표(Investing fallback): {len(inv)}건")
+            all_events.extend(inv)
+        except Exception as e:
+            print(f"[Calendar] Investing 실패: {e}")
 
     # 4. 38.co.kr
     try:
@@ -256,7 +352,7 @@ def save_calendar(events: list[dict]):
 
 def main():
     parser = argparse.ArgumentParser(description="캘린더 일정 업데이트")
-    parser.add_argument("--full", action="store_true", help="연말까지 전체 업데이트")
+    parser.add_argument("--full", action="store_true", help="향후 180일 전체 업데이트")
     parser.add_argument("--month", type=str, help="특정 월 업데이트 (YYYYMM)")
     parser.add_argument("--skip-ai", action="store_true", help="AI 뉴스 스캐너 생략 (Claude API 비용 절감)")
     args = parser.parse_args()
@@ -272,8 +368,9 @@ def main():
         else:
             to_date = datetime.date(year, month + 1, 1) - datetime.timedelta(days=1)
     elif args.full:
+        # 연말 고정 대신 180일 — 11~12월에 다음 해 일정이 비는 절벽 방지
         from_date = today
-        to_date = datetime.date(today.year, 12, 31)
+        to_date = today + datetime.timedelta(days=180)
     else:
         from_date = today
         to_date = today + datetime.timedelta(days=60)
@@ -282,6 +379,9 @@ def main():
 
     existing = load_existing()
     new_events = collect_all(from_date, to_date, skip_ai=args.skip_ai)
+    existing = prune_for_refresh(existing, new_events, from_date, to_date)
+    existing = drop_econ_placeholders(existing, new_events, from_date)
+    new_events = drop_econ_placeholders(new_events, new_events, from_date)
     merged = merge_events(existing, new_events)
     save_calendar(merged)
 

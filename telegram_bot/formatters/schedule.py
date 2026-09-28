@@ -178,7 +178,7 @@ def _format_us_ticker(ticker):
 
 def _parse_us_earning(entry):
     """US 실적 entry에서 ticker/session 추출. 예: 'GE 실적발표 (장전) [EPS est. $1.6]' → ('GE', '장전')"""
-    raw = _clean_event_name(entry.get("기업명", "") or entry.get("보고서명", ""))
+    raw = _clean_event_name(entry.get("보고서명", "") or entry.get("기업명", ""))
     m = re.match(r'^(.+?)\s*실적발표\s*\(([^)]+)\)\s*$', raw)
     if m:
         return m.group(1).strip(), m.group(2).strip()
@@ -186,7 +186,9 @@ def _parse_us_earning(entry):
 
 
 def _is_us_earning(entry):
-    """미국 실적 여부 판별 (Finnhub은 보고서명에 '(장전)'/'(장후)' 포함)"""
+    """미국 실적 여부 판별 (카테고리 우선, 구형식은 보고서명의 '(장전)'/'(장후)'로 판별)"""
+    if entry.get("카테고리") == "미국실적":
+        return True
     report = entry.get("보고서명", "") or ""
     return "(장전)" in report or "(장후)" in report
 
@@ -209,12 +211,25 @@ def _is_low_priority(name):
     return any(kw in name for kw in LOW_PRIORITY_KEYWORDS)
 
 
+def _event_priority(ev):
+    """1=중요(★), 0=일반, -1=제외. 소스 중요도 우선, 없으면 키워드 판정"""
+    importance = ev.get("중요도")
+    if importance is not None:
+        return 1 if importance >= 1 else (0 if importance == 0 else -1)
+    name = ev.get("이벤트", "")
+    if _is_high_priority(name):
+        return 1
+    if _is_low_priority(name):
+        return -1
+    return 0
+
+
 def _format_schedule(title, schedule_data):
     date_str = schedule_data.get("date", "")
     events = schedule_data.get("events", [])
     earnings = schedule_data.get("earnings", [])
 
-    # 저중요 필터링
+    # 저중요 필터링 — 소스가 중요도를 주면(TradingView) 그걸 쓰고, 없으면 키워드 판정
     filtered = []
     for ev in events:
         if not isinstance(ev, dict) or "error" in ev:
@@ -222,16 +237,17 @@ def _format_schedule(title, schedule_data):
         event_name = ev.get("이벤트", "").strip()
         if not event_name or event_name.replace(".", "").replace("-", "").isdigit():
             continue
-        if _is_low_priority(event_name):
+        if _event_priority(ev) < 0:
             continue
         filtered.append(ev)
 
-    # 전체 시간순 정렬 (중요 이벤트는 ★ 표시로 구분)
+    # 중요도 높은 것부터 10건 선정 → 표시는 시간순 (저녁 핵심지표가 오전 잡지표에 밀려 잘리지 않게)
     _time_key = lambda ev: ev.get("시간", "") or "99:99"
-    filtered.sort(key=_time_key)
+    filtered.sort(key=lambda ev: (-_event_priority(ev), _time_key(ev)))
+    selected = sorted(filtered[:10], key=_time_key)
     lines = []
 
-    for ev in filtered[:10]:
+    for ev in selected:
         time_str = ev.get("시간", "").strip()
         event_name = ev.get("이벤트", "").strip()
         country = ev.get("국가", "").strip()
@@ -241,7 +257,7 @@ def _format_schedule(title, schedule_data):
             country = COUNTRY_EMOJI.get(country, country)
 
         # 중요 이벤트 ★ 표시
-        marker = "★ " if _is_high_priority(event_name) else ""
+        marker = "★ " if _event_priority(ev) > 0 else ""
         if time_str:
             lines.append(f"{time_str}(KST)  {marker}{country} {event_name}")
         else:
@@ -302,7 +318,7 @@ def _format_schedule(title, schedule_data):
 
         # TSLA 실적일 자동 주목 라인 추가 (국내 2차전지·AI 밸류체인 민감)
         all_us = [t for session_list in us_by_session.values() for t in session_list]
-        if "TSLA" in [t.upper() for t in all_us]:
+        if any("TSLA" in t.upper() for t in all_us):
             earnings_lines.append("※ 주목  TSLA 실적 — 국내 2차전지·AI 밸류체인 민감도 높음")
 
         if earnings_lines:

@@ -11,6 +11,7 @@ permissions:
 jobs:
   update:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
         with:
@@ -38,4 +39,8 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add cal_data/calendar.json docs/calendar.json
           git diff --cached --quiet || git commit -m "auto: update calendar [$(date +%Y-%m-%d)]"
-          git push
+          # 서버 자동 커밋과 겹쳐도 실패하지 않도록 rebase 후 재시도
+          for i in 1 2 3; do
+            git pull --rebase origin main && git push && break
+            sleep 10
+          done

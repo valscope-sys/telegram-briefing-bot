@@ -56,6 +56,9 @@ FIXED_EVENTS_2026 = [
 
     # ========== 경제지표 ==========
     # 미국 CPI (매월 둘째주 화/수)
+    # 2026-09-28 교정: BLS 공식 일정 https://www.bls.gov/schedule/news_release/cpi.htm
+    #   9월분 10/13 → 10/14, 10월분 11/12 → 11/10 (08:30 ET = KST 21:30 EDT / 22:30 EST)
+    #   9/28 이전 항목은 과거 기록 보존
     {"date": "2026-01-14", "time": "22:30", "category": "경제지표", "title": "미국 CPI (12월)", "country": "🇺🇸"},
     {"date": "2026-02-11", "time": "22:30", "category": "경제지표", "title": "미국 CPI (1월)", "country": "🇺🇸"},
     {"date": "2026-03-11", "time": "21:30", "category": "경제지표", "title": "미국 CPI (2월)", "country": "🇺🇸"},
@@ -65,10 +68,12 @@ FIXED_EVENTS_2026 = [
     {"date": "2026-07-15", "time": "21:30", "category": "경제지표", "title": "미국 CPI (6월)", "country": "🇺🇸"},
     {"date": "2026-08-12", "time": "21:30", "category": "경제지표", "title": "미국 CPI (7월)", "country": "🇺🇸"},
     {"date": "2026-09-15", "time": "21:30", "category": "경제지표", "title": "미국 CPI (8월)", "country": "🇺🇸"},
-    {"date": "2026-10-13", "time": "21:30", "category": "경제지표", "title": "미국 CPI (9월)", "country": "🇺🇸"},
-    {"date": "2026-11-12", "time": "22:30", "category": "경제지표", "title": "미국 CPI (10월)", "country": "🇺🇸"},
-    {"date": "2026-12-10", "time": "22:30", "category": "경제지표", "title": "미국 CPI (11월)", "country": "🇺🇸"},
+    {"date": "2026-10-14", "time": "21:30", "category": "경제지표", "title": "미국 CPI (9월)", "country": "🇺🇸"},  # BLS 10/14(수)
+    {"date": "2026-11-10", "time": "22:30", "category": "경제지표", "title": "미국 CPI (10월)", "country": "🇺🇸"},  # BLS 11/10(화), EST
+    {"date": "2026-12-10", "time": "22:30", "category": "경제지표", "title": "미국 CPI (11월)", "country": "🇺🇸"},  # BLS 12/10(목), EST
     # 미국 고용 (매월 첫째 금요일)
+    # BLS 공식 일정 확인(2026-09-28): 10/2, 11/6, 12/4 — 기존 날짜 정확
+    #   https://www.bls.gov/schedule/news_release/empsit.htm
     {"date": "2026-01-09", "time": "22:30", "category": "경제지표", "title": "미국 비농업 고용 (12월)", "country": "🇺🇸"},
     {"date": "2026-02-06", "time": "22:30", "category": "경제지표", "title": "미국 비농업 고용 (1월)", "country": "🇺🇸"},
     {"date": "2026-03-06", "time": "22:30", "category": "경제지표", "title": "미국 비농업 고용 (2월)", "country": "🇺🇸"},
@@ -121,21 +126,45 @@ FIXED_EVENTS_2026 = [
     {"date": "2026-11-02", "time": "", "category": "자동차/배터리", "title": "현대차/기아 10월 판매량 발표", "country": "🇰🇷"},
     {"date": "2026-12-01", "time": "", "category": "자동차/배터리", "title": "현대차/기아 11월 판매량 발표", "country": "🇰🇷"},
 
+    # ========== KOSPI200 옵션/선물 만기일 ==========
+    # 2026-09-28: news_events.py(EXPIRY_DATES_2026)에서 이관 — 날짜·제목 그대로 (중복 방지)
+    # 규칙: 매월 둘째주 목요일, KRX 휴장일이면 직전 거래일. 3/6/9/12월 = 선물옵션 동시만기
+    {"date": "2026-01-08", "time": "", "category": "만기일", "title": "1월 옵션만기일"},
+    {"date": "2026-02-12", "time": "", "category": "만기일", "title": "2월 옵션만기일"},
+    {"date": "2026-03-12", "time": "", "category": "만기일", "title": "3월 선물옵션 동시만기 (쿼드러플위칭)"},
+    {"date": "2026-04-09", "time": "", "category": "만기일", "title": "4월 옵션만기일"},
+    {"date": "2026-05-14", "time": "", "category": "만기일", "title": "5월 옵션만기일"},
+    {"date": "2026-06-11", "time": "", "category": "만기일", "title": "6월 선물옵션 동시만기 (쿼드러플위칭)"},
+    {"date": "2026-07-09", "time": "", "category": "만기일", "title": "7월 옵션만기일"},
+    {"date": "2026-08-13", "time": "", "category": "만기일", "title": "8월 옵션만기일"},
+    {"date": "2026-09-10", "time": "", "category": "만기일", "title": "9월 선물옵션 동시만기 (쿼드러플위칭)"},
+    {"date": "2026-10-08", "time": "", "category": "만기일", "title": "10월 옵션만기일"},
+    {"date": "2026-11-12", "time": "", "category": "만기일", "title": "11월 옵션만기일"},
+    {"date": "2026-12-10", "time": "", "category": "만기일", "title": "12월 선물옵션 동시만기 (쿼드러플위칭)"},
+
     # ========== 지수 리밸런싱 ==========
     # MSCI 리밸런싱 (2/5/8/11월 마지막 거래일 종가 기준)
     {"date": "2026-02-27", "time": "", "category": "만기일", "title": "MSCI 리밸런싱 (2월)", "summary": "MSCI 분기 리밸런싱. 편입/제외 종목 대규모 외국인 수급 발생"},
     {"date": "2026-05-29", "time": "", "category": "만기일", "title": "MSCI 리밸런싱 (5월)", "summary": "MSCI 반기 리밸런싱. 대규모 편출입 가능"},
     # 2026-07-21 교정: 8월 마지막 거래일 = 8/31(월), 11월 마지막 거래일 = 11/30(월)
     {"date": "2026-08-31", "time": "", "category": "만기일", "title": "MSCI 리밸런싱 (8월)", "summary": "MSCI 분기 리밸런싱"},
+    # MSCI 공식 확인(2026-09-28): 11월 리뷰 발표 11/11, 효력 12/1 → 11/30 종가 반영 (기존 날짜 정확)
+    #   https://www.msci.com/eqb/pressreleases/archive/ir_dates.pdf
     {"date": "2026-11-30", "time": "", "category": "만기일", "title": "MSCI 리밸런싱 (11월)", "summary": "MSCI 반기 리밸런싱. 대규모 편출입 가능"},
-    # KOSPI200 정기변경 (6/12월 둘째주 목요일)
+    # KOSPI200 정기변경 — 6/12월 선물·옵션 동시만기일(둘째주 목) 다음 거래일 반영
+    #   근거: 2026년 6월 정기변경 "6/12 반영" (6/11 동시만기 다음날) — 한국거래소 보도자료(뉴스1 2026-05-22)
+    #   https://www.news1.kr/press/press-release/6175689
+    # 2026-09-28 교정: 12월 12/10 → 12/11 (12/10 동시만기 다음 거래일). 9/28 이전 항목은 과거 기록 보존
     {"date": "2026-06-11", "time": "", "category": "만기일", "title": "KOSPI200 정기변경", "summary": "KOSPI200 종목 편입/제외 반영일. 패시브 자금 리밸런싱"},
-    {"date": "2026-12-10", "time": "", "category": "만기일", "title": "KOSPI200 정기변경", "summary": "KOSPI200 종목 편입/제외 반영일"},
-    # FTSE 리밸런싱 (3/6/9/12월 셋째주 금요일)
+    {"date": "2026-12-11", "time": "", "category": "만기일", "title": "KOSPI200 정기변경", "summary": "KOSPI200 종목 편입/제외 반영일 (패시브 리밸런싱 매매는 전일 12/10 동시만기 종가)"},
+    # FTSE 리밸런싱 (3/6/9/12월 셋째주 금요일 장 마감 후 반영, 다음 월요일 효력)
+    #   FTSE GEIS: 3/9월 = 반기(semi-annual) 리뷰, 6/12월 = 분기 리뷰
+    #   https://research.ftserussell.com/products/index-notices/home/getnotice/?id=2619800 (6/19 금 마감 후 반영 확인)
+    # 2026-09-28 교정: 12월 설명 "반기" → "분기" (날짜 12/18 정확). 9/28 이전 항목은 과거 기록 보존
     {"date": "2026-03-20", "time": "", "category": "만기일", "title": "FTSE 리밸런싱 (3월)", "summary": "FTSE 분기 리밸런싱. 외국인 수급 변동"},
     {"date": "2026-06-19", "time": "", "category": "만기일", "title": "FTSE 리밸런싱 (6월)", "summary": "FTSE 반기 리밸런싱"},
     {"date": "2026-09-18", "time": "", "category": "만기일", "title": "FTSE 리밸런싱 (9월)", "summary": "FTSE 분기 리밸런싱"},
-    {"date": "2026-12-18", "time": "", "category": "만기일", "title": "FTSE 리밸런싱 (12월)", "summary": "FTSE 반기 리밸런싱"},
+    {"date": "2026-12-18", "time": "", "category": "만기일", "title": "FTSE 리밸런싱 (12월)", "summary": "FTSE 분기 리밸런싱"},
 
     # ========== 한국 휴장일 ==========
     {"date": "2026-01-01", "time": "", "category": "만기일", "title": "🇰🇷 한국 휴장 (신정)"},
@@ -167,6 +196,8 @@ FIXED_EVENTS_2026 = [
 
     # ========== 반도체 가격 발표 (TrendForce/DRAMeXchange) ==========
     # 매월 초 DRAMeXchange 계약가 발표 (대략 1~5일)
+    # 2026-09-28: 실제 발표는 월말 전후로 확인되어 날짜 신뢰 불가 → 9/28 이후 항목(10/5·11/5·12/4) 삭제.
+    #   9/28 이전 항목은 과거 기록 보존. 2027년 이후 추가 금지
     {"date": "2026-01-05", "time": "", "category": "반도체", "title": "DRAMeXchange 1월 메모리 계약가 발표", "summary": "DRAM/NAND 월간 계약가격. SK하이닉스/삼성전자 직접 영향"},
     {"date": "2026-02-05", "time": "", "category": "반도체", "title": "DRAMeXchange 2월 메모리 계약가 발표"},
     {"date": "2026-03-05", "time": "", "category": "반도체", "title": "DRAMeXchange 3월 메모리 계약가 발표"},
@@ -176,24 +207,146 @@ FIXED_EVENTS_2026 = [
     {"date": "2026-07-03", "time": "", "category": "반도체", "title": "DRAMeXchange 7월 메모리 계약가 발표"},
     {"date": "2026-08-05", "time": "", "category": "반도체", "title": "DRAMeXchange 8월 메모리 계약가 발표"},
     {"date": "2026-09-04", "time": "", "category": "반도체", "title": "DRAMeXchange 9월 메모리 계약가 발표"},
-    {"date": "2026-10-05", "time": "", "category": "반도체", "title": "DRAMeXchange 10월 메모리 계약가 발표"},
-    {"date": "2026-11-05", "time": "", "category": "반도체", "title": "DRAMeXchange 11월 메모리 계약가 발표"},
-    {"date": "2026-12-04", "time": "", "category": "반도체", "title": "DRAMeXchange 12월 메모리 계약가 발표"},
+
+    # ========== 해외 반도체 실적 (Finnhub 미제공 — 회사 IR 공식 일정) ==========
+    # TSMC 3Q26 법인설명회: 2026-10-15(목) 14:00 대만시간(=15:00 KST)
+    #   https://investor.tsmc.com/english/quarterly-results/teleconference
+    #   https://investor.tsmc.com/english/financial-calendar  (4Q26 일정 미공표)
+    {"date": "2026-10-15", "time": "", "category": "미국실적", "title": "TSMC(TSM) 실적발표", "country": "🇹🇼",
+     "summary": "3분기 실적 컨퍼런스콜 — 삼성전자·SK하이닉스·장비주 영향"},
+    # ASML 3Q26 실적: 2026-10-14(수) — ASML Statutory Interim Report 2026 'Financial calendar'
+    #   https://ourbrand.asml.com/asset/468514ab-2a25-42be-a284-1560ebebcb6a/Statutory-Interim-Report-2026.pdf
+    #   https://www.asml.com/en/investors/financial-calendar
+    {"date": "2026-10-14", "time": "", "category": "미국실적", "title": "ASML(ASML) 실적발표", "country": "🇳🇱",
+     "summary": "3분기 실적 발표 — 삼성전자·SK하이닉스·장비주 영향"},
 
     # ========== 배당 기준일 (대형주) ==========
     # 연말 배당 기준일 (12월 말)
-    {"date": "2026-12-28", "time": "", "category": "기업이벤트", "title": "연말 배당 기준일 (대형주)", "summary": "삼성전자/SK하이닉스/POSCO 등 12월 결산 배당주 기준일. 배당락 전 매수세 유입"},
-    {"date": "2026-12-29", "time": "", "category": "기업이벤트", "title": "연말 배당락일", "summary": "배당 기준일 다음 영업일. 배당금만큼 주가 하락 가능"},
+    # 12/31(목) 연말 폐장 → 결제 가능 최종일 12/30 → T+2 기준 마지막 매수일 12/28(월)
+    {"date": "2026-12-28", "time": "", "category": "기업이벤트", "title": "연말 배당 권리 마지막 매수일 (대형주)", "summary": "12/31 기준 배당주(12월 결산) 권리 확보 마지막 거래일 (T+2 결제). 배당락 전 매수세 유입"},
+    {"date": "2026-12-29", "time": "", "category": "기업이벤트", "title": "연말 배당락일", "summary": "배당 권리 마지막 매수일 다음 영업일. 배당금만큼 주가 하락 가능"},
     # 중간배당 (6월 말)
     {"date": "2026-06-29", "time": "", "category": "기업이벤트", "title": "중간배당 기준일 (대형주)", "summary": "삼성전자 등 중간배당 기준일"},
     {"date": "2026-06-30", "time": "", "category": "기업이벤트", "title": "중간배당락일"},
 ]
 
 
+# 2027년 고정 일정 (2026-09-28 작성)
+# 원칙: 공식 발표된 일정 + 규칙으로 계산 가능한 일정만 수록.
+#   - 월간 CPI/고용/수출입/중국PMI/DRAMeXchange 추정치는 넣지 않음 (경제지표 수집기가 담당)
+#   - 한국 휴장일은 holidays_kr.py 가 생성하므로 여기서 추가하지 않음
+#   - 한국은행 금통위 2027 일정: 미공표(예년 10월 말 발표) — 공표 후 추가할 것
+FIXED_EVENTS_2027 = [
+    # ========== 통화정책 ==========
+    # FOMC — https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm
+    # 2027 회의(잠정): 1/26-27, 3/16-17*, 4/27-28, 6/8-9*, 7/27-28, 9/14-15*, 10/26-27, 12/7-8* (*SEP)
+    # KST 발표일 = 2일차 다음날. 미국 DST(2027-03-14 ~ 11-07) 03:00, 그 외 04:00
+    {"date": "2027-01-28", "time": "04:00", "category": "통화정책", "title": "FOMC 금리 결정", "country": "🇺🇸"},  # 1/26-27 (EST)
+    {"date": "2027-03-18", "time": "03:00", "category": "통화정책", "title": "FOMC 금리 결정", "country": "🇺🇸"},  # 3/16-17 (EDT)
+    {"date": "2027-04-29", "time": "03:00", "category": "통화정책", "title": "FOMC 금리 결정", "country": "🇺🇸"},  # 4/27-28
+    {"date": "2027-06-10", "time": "03:00", "category": "통화정책", "title": "FOMC 금리 결정", "country": "🇺🇸"},  # 6/8-9
+    {"date": "2027-07-29", "time": "03:00", "category": "통화정책", "title": "FOMC 금리 결정", "country": "🇺🇸"},  # 7/27-28
+    {"date": "2027-09-16", "time": "03:00", "category": "통화정책", "title": "FOMC 금리 결정", "country": "🇺🇸"},  # 9/14-15
+    {"date": "2027-10-28", "time": "03:00", "category": "통화정책", "title": "FOMC 금리 결정", "country": "🇺🇸"},  # 10/26-27 (DST 종료 11/7 이전)
+    {"date": "2027-12-09", "time": "04:00", "category": "통화정책", "title": "FOMC 금리 결정", "country": "🇺🇸"},  # 12/7-8 (EST)
+    # ECB — https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html
+    # 2027 통화정책회의 2일차(결정일): 2/4, 3/18, 4/29, 6/10, 7/22, 9/9, 10/28, 12/16
+    # 발표 14:15 중부유럽시간 → KST 겨울(CET) 22:15 / 여름(CEST, 2027-03-28 ~ 10-31) 21:15
+    {"date": "2027-02-04", "time": "22:15", "category": "통화정책", "title": "ECB 금리 결정", "country": "🇪🇺"},  # CET
+    {"date": "2027-03-18", "time": "22:15", "category": "통화정책", "title": "ECB 금리 결정", "country": "🇪🇺"},  # CET (DST 3/28 시작 전)
+    {"date": "2027-04-29", "time": "21:15", "category": "통화정책", "title": "ECB 금리 결정", "country": "🇪🇺"},  # CEST
+    {"date": "2027-06-10", "time": "21:15", "category": "통화정책", "title": "ECB 금리 결정", "country": "🇪🇺"},  # CEST
+    {"date": "2027-07-22", "time": "21:15", "category": "통화정책", "title": "ECB 금리 결정", "country": "🇪🇺"},  # CEST
+    {"date": "2027-09-09", "time": "21:15", "category": "통화정책", "title": "ECB 금리 결정", "country": "🇪🇺"},  # CEST
+    {"date": "2027-10-28", "time": "21:15", "category": "통화정책", "title": "ECB 금리 결정", "country": "🇪🇺"},  # CEST (DST 종료 10/31 이전)
+    {"date": "2027-12-16", "time": "22:15", "category": "통화정책", "title": "ECB 금리 결정", "country": "🇪🇺"},  # CET
+    # BOJ — https://www.boj.or.jp/en/mopo/mpmsche_minu/index.htm
+    # 2027 회의: 1/21-22, 3/17-18, 4/27-28, 6/10-11, 7/21-22, 9/21-22, 10/28-29, 12/16-17 → 2일차 날짜
+    {"date": "2027-01-22", "time": "", "category": "통화정책", "title": "BOJ 금리 결정", "country": "🇯🇵"},
+    {"date": "2027-03-18", "time": "", "category": "통화정책", "title": "BOJ 금리 결정", "country": "🇯🇵"},
+    {"date": "2027-04-28", "time": "", "category": "통화정책", "title": "BOJ 금리 결정", "country": "🇯🇵"},
+    {"date": "2027-06-11", "time": "", "category": "통화정책", "title": "BOJ 금리 결정", "country": "🇯🇵"},
+    {"date": "2027-07-22", "time": "", "category": "통화정책", "title": "BOJ 금리 결정", "country": "🇯🇵"},
+    {"date": "2027-09-22", "time": "", "category": "통화정책", "title": "BOJ 금리 결정", "country": "🇯🇵"},
+    {"date": "2027-10-29", "time": "", "category": "통화정책", "title": "BOJ 금리 결정", "country": "🇯🇵"},
+    {"date": "2027-12-17", "time": "", "category": "통화정책", "title": "BOJ 금리 결정", "country": "🇯🇵"},
+
+    # ========== 해외 반도체 실적 (Finnhub 미제공 — 회사 IR 공식 일정) ==========
+    # ASML — Statutory Interim Report 2026 'Financial calendar': 4Q·연간 1/27, 1Q27 4/28
+    #   https://ourbrand.asml.com/asset/468514ab-2a25-42be-a284-1560ebebcb6a/Statutory-Interim-Report-2026.pdf
+    # TSMC 4Q26·2027 실적 일정: 미공표
+    {"date": "2027-01-27", "time": "", "category": "미국실적", "title": "ASML(ASML) 실적발표", "country": "🇳🇱",
+     "summary": "4분기·연간 실적 및 가이던스 — 삼성전자·SK하이닉스·장비주 영향"},
+    {"date": "2027-04-28", "time": "", "category": "미국실적", "title": "ASML(ASML) 실적발표", "country": "🇳🇱",
+     "summary": "1분기 실적 발표 — 삼성전자·SK하이닉스·장비주 영향"},
+
+    # ========== KOSPI200 옵션/선물 만기일 (규칙 계산) ==========
+    # 매월 둘째주 목요일, KRX 휴장일이면 직전 거래일 (holidays.KR(2027) 기준 — 2026 12건과 동일 규칙 검증)
+    #   5/13(목) 부처님오신날 휴장 → 5/12(수)로 앞당김
+    {"date": "2027-01-14", "time": "", "category": "만기일", "title": "1월 옵션만기일"},
+    {"date": "2027-02-11", "time": "", "category": "만기일", "title": "2월 옵션만기일"},
+    {"date": "2027-03-11", "time": "", "category": "만기일", "title": "3월 선물옵션 동시만기 (쿼드러플위칭)"},
+    {"date": "2027-04-08", "time": "", "category": "만기일", "title": "4월 옵션만기일"},
+    {"date": "2027-05-12", "time": "", "category": "만기일", "title": "5월 옵션만기일", "summary": "5/13(목) 부처님오신날 휴장으로 하루 앞당김"},
+    {"date": "2027-06-10", "time": "", "category": "만기일", "title": "6월 선물옵션 동시만기 (쿼드러플위칭)"},
+    {"date": "2027-07-08", "time": "", "category": "만기일", "title": "7월 옵션만기일"},
+    {"date": "2027-08-12", "time": "", "category": "만기일", "title": "8월 옵션만기일"},
+    {"date": "2027-09-09", "time": "", "category": "만기일", "title": "9월 선물옵션 동시만기 (쿼드러플위칭)"},
+    {"date": "2027-10-14", "time": "", "category": "만기일", "title": "10월 옵션만기일"},
+    {"date": "2027-11-11", "time": "", "category": "만기일", "title": "11월 옵션만기일"},
+    {"date": "2027-12-09", "time": "", "category": "만기일", "title": "12월 선물옵션 동시만기 (쿼드러플위칭)"},
+
+    # ========== 지수 리밸런싱 ==========
+    # MSCI — 공식 리뷰 일정(2026-08-12 발표): https://www.msci.com/eqb/pressreleases/archive/ir_dates.pdf
+    #   2월: 발표 2/9, 효력 3/1  → 2/26(금) 종가 반영
+    #   5월: 발표 5/10, 효력 5/28 → 5/27(목) 종가 반영 (월말 아님 주의)
+    #   8월: 발표 8/12, 효력 9/1  → 8/31(화) 종가 반영
+    #   11월: 발표 11/11, 효력 12/1 → 11/30(화) 종가 반영
+    #   (발표는 현지시간 장 마감 후 → KST 다음날 새벽)
+    {"date": "2027-02-26", "time": "", "category": "만기일", "title": "MSCI 리밸런싱 (2월)", "summary": "MSCI 분기 리밸런싱(발표 2/9). 편입/제외 종목 외국인 수급 변동"},
+    {"date": "2027-05-27", "time": "", "category": "만기일", "title": "MSCI 리밸런싱 (5월)", "summary": "MSCI 반기 리밸런싱(발표 5/10). 대규모 편출입 가능"},
+    {"date": "2027-08-31", "time": "", "category": "만기일", "title": "MSCI 리밸런싱 (8월)", "summary": "MSCI 분기 리밸런싱(발표 8/12)"},
+    {"date": "2027-11-30", "time": "", "category": "만기일", "title": "MSCI 리밸런싱 (11월)", "summary": "MSCI 반기 리밸런싱(발표 11/11). 대규모 편출입 가능"},
+    # KOSPI200 정기변경 — 6/12월 동시만기일 다음 거래일 반영 (2026 교정 규칙과 동일)
+    #   6월 동시만기 6/10(목) → 6/11(금), 12월 동시만기 12/9(목) → 12/10(금)
+    {"date": "2027-06-11", "time": "", "category": "만기일", "title": "KOSPI200 정기변경", "summary": "KOSPI200 종목 편입/제외 반영일 (패시브 리밸런싱 매매는 전일 6/10 동시만기 종가)"},
+    {"date": "2027-12-10", "time": "", "category": "만기일", "title": "KOSPI200 정기변경", "summary": "KOSPI200 종목 편입/제외 반영일 (패시브 리밸런싱 매매는 전일 12/9 동시만기 종가)"},
+    # FTSE — GEIS 규칙: 3/6/9/12월 셋째주 금요일 장 마감 후 반영 (3/9월 반기, 6/12월 분기)
+    #   6/18은 미국 휴장(Juneteenth 대체)이나 2026년 6/19(미국 휴장)에도 금요일 마감 후 반영한 선례 있음
+    #   https://research.ftserussell.com/products/index-notices/home/getnotice/?id=2619800
+    {"date": "2027-03-19", "time": "", "category": "만기일", "title": "FTSE 리밸런싱 (3월)", "summary": "FTSE 반기 리밸런싱. 외국인 수급 변동"},
+    {"date": "2027-06-18", "time": "", "category": "만기일", "title": "FTSE 리밸런싱 (6월)", "summary": "FTSE 분기 리밸런싱"},
+    {"date": "2027-09-17", "time": "", "category": "만기일", "title": "FTSE 리밸런싱 (9월)", "summary": "FTSE 반기 리밸런싱"},
+    {"date": "2027-12-17", "time": "", "category": "만기일", "title": "FTSE 리밸런싱 (12월)", "summary": "FTSE 분기 리밸런싱"},
+
+    # ========== 미국 휴장일 ==========
+    # NYSE 공식: https://www.nyse.com/markets/hours-calendars (holidays.financial_holidays('NYSE', 2027) 교차 확인)
+    {"date": "2027-01-01", "time": "", "category": "만기일", "title": "🇺🇸 미국 휴장 (New Year)"},
+    {"date": "2027-01-18", "time": "", "category": "만기일", "title": "🇺🇸 미국 휴장 (MLK Day)"},
+    {"date": "2027-02-15", "time": "", "category": "만기일", "title": "🇺🇸 미국 휴장 (Presidents Day)"},
+    {"date": "2027-03-26", "time": "", "category": "만기일", "title": "🇺🇸 미국 휴장 (Good Friday)"},
+    {"date": "2027-05-31", "time": "", "category": "만기일", "title": "🇺🇸 미국 휴장 (Memorial Day)"},
+    {"date": "2027-06-18", "time": "", "category": "만기일", "title": "🇺🇸 미국 휴장 (Juneteenth)"},  # 6/19(토) 대체
+    {"date": "2027-07-05", "time": "", "category": "만기일", "title": "🇺🇸 미국 휴장 (Independence Day)"},  # 7/4(일) 대체
+    {"date": "2027-09-06", "time": "", "category": "만기일", "title": "🇺🇸 미국 휴장 (Labor Day)"},
+    {"date": "2027-11-25", "time": "", "category": "만기일", "title": "🇺🇸 미국 휴장 (Thanksgiving)"},
+    {"date": "2027-12-24", "time": "", "category": "만기일", "title": "🇺🇸 미국 휴장 (Christmas)"},  # 12/25(토) 대체
+
+    # ========== 배당 (규칙 계산) ==========
+    # 기준일(6/30, 12/31) 주주 확정을 위한 T+2 결제 역산. KRX 휴장: 12/27(성탄 대체), 12/31(연말 폐장)
+    #   연말: 결제 가능 최종일 12/30(목) → 마지막 매수일 12/28(화), 배당락 12/29(수)
+    #   중간: 기준일 6/30(수) → 마지막 매수일 6/28(월), 배당락 6/29(화)
+    {"date": "2027-06-28", "time": "", "category": "기업이벤트", "title": "중간배당 권리 마지막 매수일 (대형주)", "summary": "6/30 기준 중간·분기배당(삼성전자 등) 권리 확보 마지막 거래일 (T+2 결제)"},
+    {"date": "2027-06-29", "time": "", "category": "기업이벤트", "title": "중간배당락일"},
+    {"date": "2027-12-28", "time": "", "category": "기업이벤트", "title": "연말 배당 권리 마지막 매수일 (대형주)", "summary": "12/31 기준 배당주 권리 확보 마지막 거래일 (T+2 결제). 배당락 전 매수세 유입"},
+    {"date": "2027-12-29", "time": "", "category": "기업이벤트", "title": "연말 배당락일", "summary": "배당 권리 마지막 매수일 다음 영업일. 배당금만큼 주가 하락 가능"},
+]
+
+
 def get_fixed_events(from_date: datetime.date, to_date: datetime.date) -> list[dict]:
-    """고정 일정에서 날짜 범위 내 이벤트 반환"""
+    """고정 일정에서 날짜 범위 내 이벤트 반환 (2026 + 2027)"""
     results = []
-    for ev in FIXED_EVENTS_2026:
+    for ev in FIXED_EVENTS_2026 + FIXED_EVENTS_2027:
         ev_date = datetime.date.fromisoformat(ev["date"])
         if from_date <= ev_date <= to_date:
             entry = {

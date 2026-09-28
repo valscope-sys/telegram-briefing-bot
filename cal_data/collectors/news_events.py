@@ -29,29 +29,114 @@ KNOWN_INDUSTRY_EVENTS_2026 = [
     {"date": "2026-05-19", "endDate": "2026-05-21", "title": "Google I/O 2026", "category": "산업컨퍼런스"},
     {"date": "2026-06-09", "endDate": "2026-06-13", "title": "WWDC 2026 (Apple)", "category": "산업컨퍼런스"},
     {"date": "2026-06-09", "endDate": "2026-06-11", "title": "컴퓨텍스 타이베이 2026", "category": "산업컨퍼런스"},
-    {"date": "2026-11-03", "endDate": "2026-11-04", "title": "OpenAI DevDay 2026", "category": "산업컨퍼런스"},
+    # 2026-09-28 교정: OpenAI DevDay 11/3-4 → 9/29 (샌프란시스코 Fort Mason, 키노트 10am PT = KST 9/30 02:00)
+    #   https://openai.com/index/devday-2026/  https://devday.openai.com/
+    {"date": "2026-09-29", "title": "OpenAI DevDay 2026", "category": "산업컨퍼런스", "link": "https://devday.openai.com/"},
     # 반도체
     {"date": "2026-09-09", "title": "Apple 아이폰 발표 (예상)", "category": "반도체"},
     # 게임
     {"date": "2026-03-16", "endDate": "2026-03-20", "title": "GDC 2026", "category": "게임"},
     {"date": "2026-08-20", "endDate": "2026-08-23", "title": "게임스컴 2026", "category": "게임"},
     {"date": "2026-09-24", "endDate": "2026-09-26", "title": "도쿄게임쇼 2026", "category": "게임"},
-    {"date": "2026-11-17", "endDate": "2026-11-19", "title": "G-STAR 2026", "category": "게임"},
+    # 2026-09-28 교정: G-STAR 11/17-19 → 11/19-22 (BTC·BTB 전시, 11/18 게임대상 전야)
+    #   https://gstar.or.kr/gstar/gstar_info.do
+    {"date": "2026-11-19", "endDate": "2026-11-22", "title": "G-STAR 2026", "category": "게임", "link": "https://gstar.or.kr/"},
     # 자동차/배터리
     {"date": "2026-04-08", "endDate": "2026-04-11", "title": "서울모터쇼 2026", "category": "자동차/배터리"},
     # 방산
     {"date": "2026-06-15", "endDate": "2026-06-19", "title": "파리 에어쇼 2026", "category": "방산"},
     # 전시/박람회
     {"date": "2026-09-07", "endDate": "2026-09-10", "title": "IFA 베를린 2026 (가전)", "category": "전시/박람회"},
-    {"date": "2026-10-06", "endDate": "2026-10-10", "title": "한국전자전 KES 2026", "category": "전시/박람회"},
+    # 2026-09-28 교정: KES 10/6-10 → 10/13-16 (코엑스 A·B홀)
+    #   https://www.kes.org/eng/intro/info.asp
+    {"date": "2026-10-13", "endDate": "2026-10-16", "title": "한국전자전 KES 2026", "category": "전시/박람회", "link": "https://www.kes.org/"},
     # 제약/바이오
     {"date": "2026-01-12", "endDate": "2026-01-15", "title": "JP모건 헬스케어 컨퍼런스", "category": "제약/바이오"},
     {"date": "2026-06-05", "endDate": "2026-06-09", "title": "ASCO 2026 (미국종양학회)", "category": "제약/바이오"},
     # 에너지
     {"date": "2026-05-28", "title": "OPEC+ 회의", "category": "에너지"},
-    {"date": "2026-12-03", "title": "OPEC+ 회의", "category": "에너지"},
+    # 2026-09-28 교정: 12/3 → 11/29. 41차 ONOMM(6/7) 성명 "Hold the 42nd ONOMM on 29 November 2026"
+    #   https://en.shana.ir/news/2120157/OPEC-reaffirms-cooperation-eyes-2027-targets (opec.org 성명 인용)
+    {"date": "2026-11-29", "title": "OPEC+ 장관회의 (ONOMM)", "category": "에너지"},
     # 통화정책 (잭슨홀 등 — 고정이벤트 FOMC와 별도)
     {"date": "2026-08-27", "endDate": "2026-08-29", "title": "잭슨홀 심포지엄", "category": "통화정책"},
+
+    # ===== 2026-09-28 추가: 10~12월 굵직한 이벤트 (공식 발표 일정만) =====
+    # 산업컨퍼런스 / 반도체
+    # OCP Global Summit — https://www.opencompute.org/summit/global-summit
+    {"date": "2026-10-12", "endDate": "2026-10-15", "title": "OCP 글로벌 서밋 2026 (데이터센터)", "category": "산업컨퍼런스", "link": "https://www.opencompute.org/summit/global-summit"},
+    # SEMICON West 2026 (샌프란시스코 Moscone) — https://www.semi.org/en/semi-press-release/semicon-west-2026-to-spotlight-1-trillion-dollars-semiconductor-milestone-and-technologies-powering-the-industrys-next-era
+    {"date": "2026-10-13", "endDate": "2026-10-15", "title": "SEMICON West 2026", "category": "반도체", "link": "https://www.semiconwest.org/"},
+    # NVIDIA GTC 베를린 (젠슨 황 키노트 10/21) — https://www.nvidia.com/en-eu/gtc/
+    {"date": "2026-10-20", "endDate": "2026-10-22", "title": "GTC 베를린 2026 (NVIDIA)", "category": "산업컨퍼런스", "link": "https://www.nvidia.com/en-eu/gtc/"},
+    # AWS re:Invent — https://aws.amazon.com/events/reinvent/faqs/
+    {"date": "2026-11-30", "endDate": "2026-12-04", "title": "AWS re:Invent 2026", "category": "산업컨퍼런스", "link": "https://aws.amazon.com/events/reinvent/"},
+    # NVIDIA GTC 워싱턴 D.C. (젠슨 황 키노트 12/1 14:00 ET) — https://www.nvidia.com/gtc/dc/
+    {"date": "2026-11-30", "endDate": "2026-12-03", "title": "GTC 워싱턴DC 2026 (NVIDIA)", "category": "산업컨퍼런스", "link": "https://www.nvidia.com/gtc/dc/"},
+    # SEMICON Japan (도쿄 빅사이트) — https://www.semiconjapan.org/en/about
+    {"date": "2026-12-09", "endDate": "2026-12-11", "title": "SEMICON Japan 2026", "category": "반도체", "link": "https://www.semiconjapan.org/en"},
+    # 제약/바이오
+    # ESMO 2026 (마드리드) — https://www.esmo.org/meeting-calendar/esmo-congress-2026
+    {"date": "2026-10-23", "endDate": "2026-10-27", "title": "ESMO 2026 (유럽종양학회)", "category": "제약/바이오", "link": "https://www.esmo.org/meeting-calendar/esmo-congress-2026"},
+    # SITC 2026 (피닉스) — https://www.sitcancer.org/2026/home
+    {"date": "2026-11-04", "endDate": "2026-11-08", "title": "SITC 2026 (면역항암학회)", "category": "제약/바이오", "link": "https://www.sitcancer.org/2026/home"},
+    # EORTC-NCI-AACR (ENA 2026, 바르셀로나) — https://event.eortc.org/ena2026/
+    {"date": "2026-11-18", "endDate": "2026-11-20", "title": "EORTC-NCI-AACR 2026 (분자표적 항암 심포지엄)", "category": "제약/바이오", "link": "https://event.eortc.org/ena2026/"},
+    # ASH 2026 (뉴올리언스) — https://www.hematology.org/meetings/annual-meeting
+    {"date": "2026-12-12", "endDate": "2026-12-15", "title": "ASH 2026 (미국혈액학회)", "category": "제약/바이오", "link": "https://www.hematology.org/meetings/annual-meeting"},
+    # 정치/외교
+    # 미국 중간선거 — 연방법(11월 첫 월요일 다음 화요일) https://www.fec.gov/
+    {"date": "2026-11-03", "title": "미국 중간선거", "category": "정치/외교"},
+    # APEC 정상회의 (중국 선전) — https://www.sz.gov.cn/en_szgov/news/infocus/APEC2026/News/content/post_12979720.html
+    {"date": "2026-11-18", "endDate": "2026-11-19", "title": "APEC 정상회의 2026 (중국 선전)", "category": "정치/외교"},
+    # G20 정상회의 (미국 마이애미 도랄) — https://www.cbsnews.com/news/trump-g20-summit-2026-doral-resort-florida/
+    {"date": "2026-12-14", "endDate": "2026-12-15", "title": "G20 정상회의 2026 (미국 마이애미)", "category": "정치/외교"},
+]
+
+# 증시 관련 이벤트 (2027년) — 2026-09-28 작성, 공식 발표 일정만 수록
+# 미공표(추가 금지, 공표 시 반영): Google I/O·MS Build·WWDC·Hot Chips·TSMC 테크 심포지엄·
+#   삼성 파운드리 포럼/SAFE·갤럭시 언팩·Meta Connect·ASH 2027·SEMICON Japan 2027·re:Invent 2027·
+#   잭슨홀 2027·APEC 2027(베트남 푸꾸옥, 11월 예정)·G20 2027·OPEC+ 2027 장관회의
+KNOWN_INDUSTRY_EVENTS_2027 = [
+    # 산업컨퍼런스 / 반도체
+    # CES — https://www.ces.tech/plan-your-visit/dates-and-hours/ (미디어데이 1/4-5)
+    {"date": "2027-01-06", "endDate": "2027-01-09", "title": "CES 2027", "category": "산업컨퍼런스", "link": "https://www.ces.tech/"},
+    # SEMICON Korea (코엑스) — https://www.semiconkorea.org/en
+    {"date": "2027-02-17", "endDate": "2027-02-19", "title": "SEMICON Korea 2027", "category": "반도체", "link": "https://www.semiconkorea.org/"},
+    # MWC — https://www.mwcbarcelona.com/about/
+    {"date": "2027-03-01", "endDate": "2027-03-04", "title": "MWC 바르셀로나 2027", "category": "산업컨퍼런스", "link": "https://www.mwcbarcelona.com/"},
+    # NVIDIA GTC (새너제이) — https://www.nvidia.com/gtc/
+    {"date": "2027-03-15", "endDate": "2027-03-18", "title": "GTC 2027 (NVIDIA)", "category": "산업컨퍼런스", "link": "https://www.nvidia.com/gtc/"},
+    # SEMICON West — 2027년부터 봄 개최(피닉스)
+    #   https://www.semi.org/en/semi-press-release/semi-announces-new-spring-schedule-for-semicon-west-beginning-march-30-april-1-2027
+    {"date": "2027-03-30", "endDate": "2027-04-01", "title": "SEMICON West 2027 (피닉스)", "category": "반도체", "link": "https://www.semiconwest.org/"},
+    # COMPUTEX (타이베이 난강) — https://www.computextaipei.com.tw/en/index.html
+    {"date": "2027-06-01", "endDate": "2027-06-04", "title": "컴퓨텍스 타이베이 2027", "category": "산업컨퍼런스", "link": "https://www.computextaipei.com.tw/"},
+    # SEMICON Taiwan — 2027년 8월로 앞당김 https://focustaiwan.tw/sci-tech/202609080007
+    {"date": "2027-08-18", "endDate": "2027-08-20", "title": "SEMICON Taiwan 2027", "category": "반도체", "link": "https://www.semicontaiwan.org/en"},
+    # OCP Global Summit (샌프란시스코 Moscone) — https://www.opencompute.org/blog/ocp-global-summit-is-moving-to-a-new-location
+    {"date": "2027-10-04", "endDate": "2027-10-07", "title": "OCP 글로벌 서밋 2027 (데이터센터)", "category": "산업컨퍼런스", "link": "https://www.opencompute.org/summit/global-summit"},
+    # 제약/바이오
+    # J.P. Morgan Healthcare — https://www.jpmorgan.com/about-us/events-conferences/health-care-conference
+    {"date": "2027-01-11", "endDate": "2027-01-14", "title": "JP모건 헬스케어 컨퍼런스 2027", "category": "제약/바이오"},
+    # AACR Annual Meeting (올랜도) — https://www.aacr.org/professionals/meetings/future-annual-meetings/
+    {"date": "2027-04-02", "endDate": "2027-04-07", "title": "AACR 2027 (미국암연구학회)", "category": "제약/바이오", "link": "https://www.aacr.org/meeting/aacr-annual-meeting-2027/"},
+    # ASCO (시카고) — https://www.asco.org/annual-meeting
+    {"date": "2027-06-04", "endDate": "2027-06-08", "title": "ASCO 2027 (미국종양학회)", "category": "제약/바이오", "link": "https://www.asco.org/annual-meeting"},
+    # BIO International Convention (필라델피아) — https://convention.bio.org/future-dates
+    {"date": "2027-06-07", "endDate": "2027-06-10", "title": "BIO 인터내셔널 컨벤션 2027", "category": "제약/바이오", "link": "https://convention.bio.org/"},
+    # EHA (바르셀로나) — https://ehaweb.org/connect-network/future-congresses
+    {"date": "2027-06-10", "endDate": "2027-06-13", "title": "EHA 2027 (유럽혈액학회)", "category": "제약/바이오", "link": "https://ehaweb.org/connect-network/eha2027-congress"},
+    # ADA Scientific Sessions (워싱턴DC) — https://professional.diabetes.org/scientific-sessions
+    {"date": "2027-06-18", "endDate": "2027-06-21", "title": "ADA 2027 (미국당뇨병학회)", "category": "제약/바이오", "link": "https://professional.diabetes.org/scientific-sessions"},
+    # IASLC WCLC (덴버) — https://www.iaslc.org/meetings-webinars/2027-world-conference-lung-cancer
+    {"date": "2027-09-11", "endDate": "2027-09-14", "title": "WCLC 2027 (세계폐암학회)", "category": "제약/바이오", "link": "https://www.iaslc.org/meetings-webinars/2027-world-conference-lung-cancer"},
+    # ESMO 2027 (바르셀로나) — https://www.esmo.org/meeting-calendar/esmo-congress-2027
+    {"date": "2027-09-17", "endDate": "2027-09-21", "title": "ESMO 2027 (유럽종양학회)", "category": "제약/바이오", "link": "https://www.esmo.org/meeting-calendar/esmo-congress-2027"},
+    # AACR-NCI-EORTC (시카고) — https://www.aacr.org/meeting/aacr-nci-eortc-international-conference-molecular-targets-and-cancer-therapeutics/
+    {"date": "2027-10-26", "endDate": "2027-10-30", "title": "AACR-NCI-EORTC 2027 (분자표적 항암 학회)", "category": "제약/바이오"},
+    # SITC 2027 (내셔널하버) — https://www.sitcancer.org/edu/41st-annual-meeting/archive
+    {"date": "2027-11-03", "endDate": "2027-11-07", "title": "SITC 2027 (면역항암학회)", "category": "제약/바이오"},
 ]
 
 # 주요 게임 출시 (게임주 영향)
@@ -59,22 +144,8 @@ KNOWN_GAME_RELEASES_2026 = [
     {"date": "2026-04-25", "title": "몬스터헌터 와일즈 PC (캡콤)", "category": "게임"},
 ]
 
-# 옵션/선물 만기일 (2026년)
-EXPIRY_DATES_2026 = [
-    # 옵션만기일 (매월 둘째주 목요일)
-    {"date": "2026-01-08", "title": "1월 옵션만기일", "category": "만기일"},
-    {"date": "2026-02-12", "title": "2월 옵션만기일", "category": "만기일"},
-    {"date": "2026-03-12", "title": "3월 선물옵션 동시만기 (쿼드러플위칭)", "category": "만기일"},
-    {"date": "2026-04-09", "title": "4월 옵션만기일", "category": "만기일"},
-    {"date": "2026-05-14", "title": "5월 옵션만기일", "category": "만기일"},
-    {"date": "2026-06-11", "title": "6월 선물옵션 동시만기 (쿼드러플위칭)", "category": "만기일"},
-    {"date": "2026-07-09", "title": "7월 옵션만기일", "category": "만기일"},
-    {"date": "2026-08-13", "title": "8월 옵션만기일", "category": "만기일"},
-    {"date": "2026-09-10", "title": "9월 선물옵션 동시만기 (쿼드러플위칭)", "category": "만기일"},
-    {"date": "2026-10-08", "title": "10월 옵션만기일", "category": "만기일"},
-    {"date": "2026-11-12", "title": "11월 옵션만기일", "category": "만기일"},
-    {"date": "2026-12-10", "title": "12월 선물옵션 동시만기 (쿼드러플위칭)", "category": "만기일"},
-]
+# 옵션/선물 만기일 (KOSPI200 옵션만기·동시만기)
+# 2026-09-28: 중복 방지를 위해 fixed_events.py(FIXED_EVENTS_2026/2027)로 이관 — 여기서는 생성하지 않음
 
 # 날짜 미확정 일정 (월간/주간) — FnGuide에 확정 날짜 없는 것만
 UNDATED_EVENTS_2026 = [
@@ -129,7 +200,8 @@ def _parse_date_from_text(text: str) -> str | None:
 def fetch_known_events(from_date: datetime.date, to_date: datetime.date) -> list[dict]:
     """알려진 컨퍼런스/전시회/게임 출시 반환"""
     results = []
-    all_known = KNOWN_INDUSTRY_EVENTS_2026 + KNOWN_GAME_RELEASES_2026 + EXPIRY_DATES_2026
+    # 옵션만기/동시만기는 fixed_events.py 에서 생성 (중복 방지)
+    all_known = KNOWN_INDUSTRY_EVENTS_2026 + KNOWN_GAME_RELEASES_2026 + KNOWN_INDUSTRY_EVENTS_2027
 
     for ev in all_known:
         try:
@@ -146,7 +218,7 @@ def fetch_known_events(from_date: datetime.date, to_date: datetime.date) -> list
                 "time": "",
                 "category": ev["category"],
                 "title": ev["title"],
-                "source": "news",
+                "source": "known",  # 하드코딩 스냅샷 소스 (RSS 유래만 "news")
                 "auto": True,
             }
             if ev.get("endDate"):
@@ -177,7 +249,7 @@ def fetch_known_events(from_date: datetime.date, to_date: datetime.date) -> list
                 "time": "",
                 "category": ev["category"],
                 "title": ev["title"],
-                "source": "news",
+                "source": "known",
                 "auto": True,
                 "undated": True,
                 "month": month_str,
@@ -210,7 +282,7 @@ def fetch_known_events(from_date: datetime.date, to_date: datetime.date) -> list
                 "time": "",
                 "category": ev["category"],
                 "title": ev["title"],
-                "source": "news",
+                "source": "known",
                 "auto": True,
                 "undated": True,
                 "week": week_str,
@@ -277,5 +349,5 @@ def fetch_rss_events(from_date: datetime.date, to_date: datetime.date) -> list[d
 
 
 def fetch_news_events(from_date: datetime.date, to_date: datetime.date) -> list[dict]:
-    """고정 산업이벤트 + 만기일 반환 (RSS 수집은 ai_news_scanner.py에서 담당)"""
+    """고정 산업이벤트 반환 (옵션만기는 fixed_events.py, RSS 수집은 ai_news_scanner.py에서 담당)"""
     return fetch_known_events(from_date, to_date)

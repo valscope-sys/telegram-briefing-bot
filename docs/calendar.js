@@ -77,15 +77,18 @@ let events = [];
 let currentView = "month"; // month | week | day
 let viewDate = new Date(); // current focused date
 let selectedDate = null;
-// 카테고리 필터 기본값: 기업이벤트(유증·액면병합 등)만 기본 해제 — 물량이 많아 다른 일정을 가리는 문제
-const DEFAULT_OFF_CATS = new Set(["기업이벤트"]);
+// 카테고리 필터 기본값: IR(경영현황)만 기본 해제 — 소형주 IR 물량이 많아 다른 일정을 가리는 문제
+// (유증·액면병합 등 기업이벤트는 수집 자체를 중단해 배당락 같은 핵심 일정만 남음)
+const DEFAULT_OFF_CATS = new Set(["IR"]);
+// 기본값을 바꾸면 버전을 올려 기존 방문자에게도 새 기본값이 1회 적용되게 함
+const CATS_STORAGE_KEY = "calendar_cats_v2";
 function defaultEnabledCats() {
     return new Set(Object.keys(CAT_COLORS).filter(c => !DEFAULT_OFF_CATS.has(c)));
 }
 // localStorage("calendar_cats")에 해제 목록(off)을 저장 — 저장값이 있으면 그게 우선, 신규 카테고리는 자동 켜짐
 function loadEnabledCats() {
     try {
-        const saved = JSON.parse(localStorage.getItem("calendar_cats") || "null");
+        const saved = JSON.parse(localStorage.getItem(CATS_STORAGE_KEY) || "null");
         if (saved && Array.isArray(saved.off)) {
             const off = new Set(saved.off);
             return new Set(Object.keys(CAT_COLORS).filter(c => !off.has(c)));
@@ -95,7 +98,7 @@ function loadEnabledCats() {
 }
 function saveEnabledCats() {
     const off = Object.keys(CAT_COLORS).filter(c => !enabledCats.has(c));
-    localStorage.setItem("calendar_cats", JSON.stringify({ off }));
+    localStorage.setItem(CATS_STORAGE_KEY, JSON.stringify({ off }));
 }
 let enabledCats = loadEnabledCats();
 let isAdmin = false;
@@ -142,6 +145,8 @@ function localizeTitle(ev) {
             title = `${US_TICKER_KR[m[1]]}(${m[1]})` + title.slice(m[1].length);
         }
     }
+    // 경제지표 소스(TradingView)가 '상' 중요도로 분류한 일정 — 텔레그램 ★ 표시와 동일 기준
+    if (ev && ev.importance === 1) title = "★ " + title;
     return title;
 }
 
@@ -946,91 +951,24 @@ function showEventDetail(ev) {
     if (isAdmin) openEditEvent(ev);
 }
 
-// === SCRAPE / UPDATE ===
+// === UPDATE (관리자) ===
+// 미국실적은 서버 수집기(cal_data/collectors/finnhub.py)가 매일 자동 수집 — 브라우저 수집 없음
 let scrapeResults = [];
-const FINNHUB_KEY = "d7e8nshr01qkuebjbtg0d7e8nshr01qkuebjbtgg";
 
-async function openScrapeModal() {
+function openScrapeModal() {
     document.getElementById("scrape-overlay").classList.remove("hidden");
-    document.getElementById("scrape-loading").classList.remove("hidden");
-    document.getElementById("scrape-results").innerHTML = "";
+    document.getElementById("scrape-loading").classList.add("hidden");
     document.getElementById("scrape-actions").classList.add("hidden");
     scrapeResults = [];
-
-    // Finnhub (미국실적) — 브라우저에서 직접 호출 가능
-    const today = fmt(new Date());
-    const future = fmt(new Date(Date.now() + 90*86400000));
-    const tasks = [scrapeFromFinnhub(today, future)];
-
-    const results = await Promise.allSettled(tasks);
-    for (const r of results) {
-        if (r.status === "fulfilled" && r.value) scrapeResults.push(...r.value);
-    }
-
-    // Filter out events already in calendar
-    const existingKeys = new Set(events.map(e => e.date + "|" + e.title));
-    scrapeResults = scrapeResults.filter(e => !existingKeys.has(e.date + "|" + e.title));
-
-    document.getElementById("scrape-loading").classList.add("hidden");
     renderScrapeResults();
 }
 
-async function scrapeFromFinnhub(from, to) {
-    try {
-        const res = await fetch(`https://finnhub.io/api/v1/calendar/earnings?from=${from}&to=${to}&token=${FINNHUB_KEY}`);
-        if (!res.ok) return [];
-        const data = await res.json();
-        const watchlist = new Set(["NVDA","AAPL","TSLA","MSFT","GOOGL","AMZN","META","NFLX","AVGO","TSM","AMD","INTC","QCOM","MU","ASML","AMAT","LRCX","CRM","ORCL","ADBE"]);
-        const timeMap = {bmo:"장전",amc:"장후"};
-        return (data.earningsCalendar||[]).filter(e => watchlist.has(e.symbol)).map(e => {
-            let t = `${e.symbol} 실적발표`;
-            if (timeMap[e.hour]) t += ` (${timeMap[e.hour]})`;
-            if (e.epsEstimate != null) t += ` [EPS est. $${e.epsEstimate}]`;
-            return {date:e.date, time:"", category:"미국실적", title:t, source:"finnhub", auto:true, _src:"Finnhub"};
-        });
-    } catch(e) { console.log("Finnhub error:", e); return []; }
-}
-
-
 function renderScrapeResults() {
-    const container = document.getElementById("scrape-results");
-    let html = "";
-
-    if (scrapeResults.length > 0) {
-        document.getElementById("scrape-actions").classList.remove("hidden");
-        const bySource = {};
-        for (const e of scrapeResults) {
-            const src = e._src || e.source;
-            if (!bySource[src]) bySource[src] = [];
-            bySource[src].push(e);
-        }
-        html += `<div style="font-size:0.8rem;color:var(--dim);margin-bottom:12px;">${scrapeResults.length}건 발견 (기존 일정과 중복 제외)</div>`;
-        for (const [src, evs] of Object.entries(bySource)) {
-            html += `<div style="font-size:0.8rem;font-weight:600;color:var(--accent);margin:12px 0 6px;">${src} (${evs.length}건)</div>`;
-            for (const ev of evs) {
-                const globalIdx = scrapeResults.indexOf(ev);
-                html += `<label class="scrape-item">
-                    <input type="checkbox" checked data-idx="${globalIdx}">
-                    <span class="scrape-dot" style="background:${catColor(ev.category)}"></span>
-                    <span class="scrape-info">
-                        <span class="scrape-title">${ev.title}</span>
-                        <span class="scrape-meta">${ev.date} · ${CAT_LABELS[ev.category]||ev.category}</span>
-                    </span>
-                </label>`;
-            }
-        }
-    } else {
-        html += `<div style="text-align:center;color:var(--dim);padding:20px;">Finnhub에서 새로 추가할 미국 실적이 없습니다</div>`;
-    }
-
-    // GitHub Actions section (한국실적/IR/기업이벤트/IPO)
-    html += `<div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);">
-        <div style="font-size:0.85rem;font-weight:600;margin-bottom:6px;">한국 데이터 전체 업데이트</div>
-        <div style="font-size:0.75rem;color:var(--dim);margin-bottom:10px;">FnGuide(실적/IR/기업이벤트), 38.co.kr(IPO) 등 한국 소스는 서버에서 수집해야 합니다.<br>아래 버튼을 누르면 GitHub Actions가 실행되고, 2~5분 후 새로고침하면 반영됩니다.</div>
-        <button class="btn-secondary" onclick="triggerGHAction()" style="width:100%;">한국 데이터 전체 업데이트 (GitHub Actions)</button>
+    document.getElementById("scrape-results").innerHTML = `<div>
+        <div style="font-size:0.85rem;font-weight:600;margin-bottom:6px;">전체 데이터 업데이트</div>
+        <div style="font-size:0.75rem;color:var(--dim);margin-bottom:10px;">실적(국내·해외)·경제지표·IPO 등은 매일 06:00 자동 수집됩니다.<br>즉시 갱신이 필요하면 아래 버튼으로 GitHub Actions를 실행하고, 5~10분 후 새로고침하세요.</div>
+        <button class="btn-secondary" onclick="triggerGHAction()" style="width:100%;">전체 데이터 업데이트 (GitHub Actions)</button>
     </div>`;
-
-    container.innerHTML = html;
 }
 
 function toggleScrapeAll() {
@@ -1081,10 +1019,7 @@ async function triggerGHAction() {
         else { const err = await res.json(); alert(`실패: ${err.message}`); }
     } catch (e) {
         alert(`에러: ${e.message}`);
-        btn.textContent = "업데이트";
     }
-    btn.classList.remove("loading");
-    setTimeout(() => { btn.textContent = "업데이트"; }, 3000);
 }
 
 // === BIND EVENTS ===
