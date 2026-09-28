@@ -11,7 +11,7 @@
 import os
 import json
 import datetime
-import anthropic
+from telegram_bot.llm_client import get_client, llm_available
 
 from telegram_bot.config import (
     ANTHROPIC_API_KEY,
@@ -48,7 +48,7 @@ def _load_style_canon():
 def _get_client():
     global _client
     if _client is None:
-        _client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+        _client = get_client(ANTHROPIC_API_KEY)
     return _client
 
 
@@ -286,7 +286,7 @@ def generate_message(event: dict, classification: dict, retry_violations: list =
         # 파서 예외 발생해도 Sonnet 경로로 떨어지도록
         print(f"[GENERATOR] earnings_parser 예외 (Sonnet으로 fallback): {e}")
 
-    if not ANTHROPIC_API_KEY:
+    if not llm_available():
         return {
             "generated_content": _build_fallback_content(event, classification),
             "violations": [{"rule": "GENERAL", "detail": "ANTHROPIC_API_KEY 없음 — 폴백 본문"}],

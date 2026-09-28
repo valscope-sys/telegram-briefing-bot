@@ -27,6 +27,8 @@ def get_kiwoom_token():
     )
     data = res.json()
     if data.get("return_code") != 0:
+        # 예: [8050] IP가 등록되지 않았습니다 → 키움 REST API 홈페이지 > API 사용신청에서 실행 서버 IP 등록 필요
+        print(f"[KIWOOM] ERROR: 토큰 발급 실패: [{data.get('return_code')}] {data.get('return_msg')}")
         raise Exception(f"키움 토큰 발급 실패: {data}")
 
     _token_cache["token"] = data["token"]
@@ -117,6 +119,13 @@ def kiwoom_paginated(api_id, body, url_path="/api/dostk/stkinfo",
             api_id, body, url_path,
             cont_yn=cont_yn, next_key=next_key,
         )
+        # 오류 응답(return_code != 0)을 "0건"으로 삼키지 않도록 예외로 올림
+        # (예: 토큰 만료·파라미터 오류 → 이전에는 신고가 0종목 + 60초 재대기로만 나타남)
+        if data.get("return_code") not in (0, None):
+            raise Exception(
+                f"키움 {api_id} 오류 응답 (page {page + 1}): "
+                f"[{data.get('return_code')}] {data.get('return_msg')}"
+            )
         items = data.get(result_field, []) or []
         all_items.extend(items)
 

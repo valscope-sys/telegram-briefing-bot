@@ -8,7 +8,8 @@ from bs4 import BeautifulSoup
 # 카테고리별 RSS/웹 소스
 SOURCES = {
     "게임": [
-        {"url": "https://store.steampowered.com/feeds/newreleases.xml", "name": "Steam"},
+        # Steam: feeds/newreleases.xml 은 2026-07-11 이후 갱신 중단 → Steam 공식 뉴스 허브(앱 593110) 피드
+        {"url": "https://store.steampowered.com/feeds/news/app/593110/", "name": "Steam"},
         {"url": "https://www.gamesindustry.biz/feed", "name": "GamesIndustry"},
     ],
     "IT/컨퍼런스": [
@@ -33,7 +34,7 @@ KNOWN_INDUSTRY_EVENTS_2026 = [
     #   https://openai.com/index/devday-2026/  https://devday.openai.com/
     {"date": "2026-09-29", "title": "OpenAI DevDay 2026", "category": "산업컨퍼런스", "link": "https://devday.openai.com/"},
     # 반도체
-    {"date": "2026-09-09", "title": "Apple 아이폰 발표 (예상)", "category": "반도체"},
+    {"date": "2026-09-09", "title": "Apple 신제품 발표 이벤트 (아이폰 18)", "category": "산업컨퍼런스"},  # apple.com 공식 초대장
     # 게임
     {"date": "2026-03-16", "endDate": "2026-03-20", "title": "GDC 2026", "category": "게임"},
     {"date": "2026-08-20", "endDate": "2026-08-23", "title": "게임스컴 2026", "category": "게임"},
@@ -44,7 +45,6 @@ KNOWN_INDUSTRY_EVENTS_2026 = [
     # 자동차/배터리
     {"date": "2026-04-08", "endDate": "2026-04-11", "title": "서울모터쇼 2026", "category": "자동차/배터리"},
     # 방산
-    {"date": "2026-06-15", "endDate": "2026-06-19", "title": "파리 에어쇼 2026", "category": "방산"},
     # 전시/박람회
     {"date": "2026-09-07", "endDate": "2026-09-10", "title": "IFA 베를린 2026 (가전)", "category": "전시/박람회"},
     # 2026-09-28 교정: KES 10/6-10 → 10/13-16 (코엑스 A·B홀)
@@ -153,7 +153,6 @@ UNDATED_EVENTS_2026 = [
     {"month": "2026-07", "title": "테슬라 2Q 실적발표 (예상)", "category": "미국실적"},
     {"month": "2026-10", "title": "테슬라 3Q 실적발표 (예상)", "category": "미국실적"},
     {"month": "2026-06", "title": "닌텐도 스위치2 출시 (예상)", "category": "게임"},
-    {"month": "2026-09", "title": "Apple 아이폰 18 출시 (예상)", "category": "반도체"},
     # 삼성전자/SK하이닉스는 FnGuide에서 확정 날짜가 자동 수집되므로 제거
 ]
 
@@ -296,11 +295,28 @@ def fetch_known_events(from_date: datetime.date, to_date: datetime.date) -> list
 def fetch_rss_events(from_date: datetime.date, to_date: datetime.date) -> list[dict]:
     """RSS에서 일정 관련 기사 추출"""
     results = []
+    stats = {"feeds": 0, "failed": 0, "entries": 0}
 
     for category, feeds in SOURCES.items():
         for feed_info in feeds:
+            stats["feeds"] += 1
             try:
                 feed = feedparser.parse(feed_info["url"])
+                # feedparser는 HTTP 오류·연결 실패에도 예외 없이 entries=[] → 직접 확인
+                status = getattr(feed, "status", None)
+                if (status and status >= 400) or not feed.entries:
+                    stats["failed"] += 1
+                    reason = (f"HTTP {status}" if status else
+                              f"연결 실패: {str(feed.get('bozo_exception', '') or '')[:80]}")
+                    print(f"[NewsEvents] ERROR: {feed_info['name']} RSS 0건 ({reason}) {feed_info['url']}")
+                    continue
+                stats["entries"] += len(feed.entries[:20])
+                dates = [e.get("published_parsed") or e.get("updated_parsed") for e in feed.entries]
+                dates = [datetime.datetime(*d[:6]) for d in dates if d]
+                now_utc = datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None)
+                if dates and (now_utc - max(dates)).days > 14:
+                    print(f"[NewsEvents] WARN: {feed_info['name']} RSS 최신 글이 {max(dates):%Y-%m-%d} — "
+                          f"피드 갱신 중단 의심 {feed_info['url']}")
                 for entry in feed.entries[:20]:
                     title = entry.get("title", "")
                     summary = entry.get("summary", "")
@@ -342,9 +358,12 @@ def fetch_rss_events(from_date: datetime.date, to_date: datetime.date) -> list[d
                         "summary": summary[:200].strip() if summary else "",
                     })
             except Exception as e:
-                print(f"[NewsEvents] {feed_info['name']} 실패: {e}")
+                stats["failed"] += 1
+                print(f"[NewsEvents] ERROR: {feed_info['name']} 실패: {type(e).__name__}: {e}")
                 continue
 
+    print(f"[NewsEvents] RSS {stats['feeds']}개 피드 (실패 {stats['failed']}) · 기사 {stats['entries']}건 스캔 "
+          f"→ 일정 {len(results)}건")
     return results
 
 

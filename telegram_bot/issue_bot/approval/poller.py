@@ -1127,6 +1127,7 @@ def _fetch_dart_disclosure(url: str) -> dict:
             headers={"User-Agent": "Mozilla/5.0 NODEResearchBot/1.0"},
         )
         if res.status_code != 200:
+            print(f"[DART_FETCH] ERROR: main.do HTTP {res.status_code} ({url})")
             return {"error": f"DART HTTP {res.status_code}"}
 
         soup = BeautifulSoup(res.text, "lxml")
@@ -1165,11 +1166,16 @@ def _fetch_dart_disclosure(url: str) -> dict:
                         tag.decompose()
                     body = kind_soup.get_text(separator=" ", strip=True)
                     body = _re_mod.sub(r"\s+", " ", body)[:6000]
+                else:
+                    print(f"[DART_FETCH] ERROR: viewer.do HTTP {kind_res.status_code} ({kind_url})")
             except Exception as e:
-                print(f"[DART_FETCH] KIND iframe fetch 실패: {e}")
+                print(f"[DART_FETCH] ERROR: viewer.do(iframe 본문) fetch 실패: {e}")
+        else:
+            print(f"[DART_FETCH] ERROR: main.do 에서 viewDoc(...) 패턴 못 찾음 — 페이지 구조 변경 의심 ({url})")
 
         # body가 여전히 비어있으면 main.do 페이지 자체에서라도 추출 시도
         if not body:
+            print(f"[DART_FETCH] ERROR: 공시 본문 비어 있음 → main.do 메타 텍스트로 대체 (카드 품질 저하) ({url})")
             for tag in soup(["script", "style", "nav", "header", "footer"]):
                 tag.decompose()
             body = soup.get_text(separator=" ", strip=True)
@@ -1182,7 +1188,86 @@ def _fetch_dart_disclosure(url: str) -> dict:
             "final_url": url,
         }
     except Exception as e:
+        print(f"[DART_FETCH] ERROR: {type(e).__name__}: {e} ({url})")
         return {"error": f"DART fetch error: {e}"}
+
+
+def _fetch_kind_disclosure(url: str) -> dict:
+    """KIND 공시 뷰어 URL → 실제 본문 HTML fetch.
+
+    KIND URL 패턴: https://kind.krx.co.kr/common/disclsviewer.do?method=search&acptno=NNN
+    뷰어 페이지는 껍데기(목차·버튼 텍스트)뿐이고 본문은 3단계로 로드됨:
+      1) 뷰어 HTML의 <select id="mainDoc"> option value="{docNo}|Y"
+      2) disclsviewer.do?method=searchContents&docNo={docNo} → setPath('toc', '{본문 htm URL}', ...)
+      3) kind.krx.co.kr/external/.../{docNo}/NNNNN.htm → 본문
+    """
+    import requests
+    from bs4 import BeautifulSoup
+
+    # br 인코딩은 brotli 미설치 환경에서 깨질 수 있어 제외
+    headers = {k: v for k, v in _BROWSER_HEADERS.items() if k != "Accept-Encoding"}
+    try:
+        res = requests.get(url, timeout=15, headers=headers)
+        if res.status_code != 200:
+            print(f"[KIND_FETCH] ERROR: 뷰어 HTTP {res.status_code} ({url})")
+            return {"error": f"KIND HTTP {res.status_code}"}
+        soup = BeautifulSoup(res.text, "lxml")
+
+        title = ""
+        temp_title = soup.find("input", id="tempTitle")
+        if temp_title and temp_title.get("value"):
+            title = _re_mod.sub(r"^\[[^\]]*\]\s*", "", temp_title["value"].replace("\xa0", " ")).strip()
+        if not title and soup.title and soup.title.string:
+            title = soup.title.string.strip()
+
+        doc_no = ""
+        main_doc = soup.find("select", id="mainDoc")
+        if main_doc:
+            opt = main_doc.find("option", selected=True) or next(
+                (o for o in main_doc.find_all("option") if (o.get("value") or "").strip()), None)
+            if opt and opt.get("value"):
+                doc_no = opt["value"].split("|")[0].strip()
+        if not doc_no:
+            print(f"[KIND_FETCH] ERROR: 뷰어에서 docNo(mainDoc) 못 찾음 — 구조 변경 의심 ({url})")
+            return {"error": "KIND docNo 추출 실패"}
+
+        c_res = requests.get(
+            "https://kind.krx.co.kr/common/disclsviewer.do",
+            params={"method": "searchContents", "docNo": doc_no},
+            timeout=15, headers=headers,
+        )
+        m = _re_mod.search(
+            r"setPath\(\s*['\"][^'\"]*['\"]\s*,\s*['\"]([^'\"]+)['\"]", c_res.text or "")
+        if c_res.status_code != 200 or not m:
+            print(f"[KIND_FETCH] ERROR: searchContents HTTP {c_res.status_code}, setPath 본문 경로 "
+                  f"{'없음' if not m else '있음'} (docNo={doc_no})")
+            return {"error": "KIND 본문 경로 추출 실패"}
+        doc_url = m.group(1).replace("http://", "https://")
+        if doc_url.startswith("/"):
+            doc_url = "https://kind.krx.co.kr" + doc_url
+
+        d_res = requests.get(doc_url, timeout=15, headers=headers)
+        if d_res.status_code != 200:
+            print(f"[KIND_FETCH] ERROR: 본문 HTTP {d_res.status_code} ({doc_url})")
+            return {"error": f"KIND 본문 HTTP {d_res.status_code}"}
+        if not d_res.encoding or d_res.encoding.lower() == "iso-8859-1":
+            d_res.encoding = d_res.apparent_encoding or "utf-8"
+        d_soup = BeautifulSoup(d_res.text, "lxml")
+        for tag in d_soup(["script", "style"]):
+            tag.decompose()
+        body = _re_mod.sub(r"\s+", " ", d_soup.get_text(separator=" ", strip=True))[:6000]
+        if not body:
+            print(f"[KIND_FETCH] ERROR: 본문 텍스트 비어 있음 ({doc_url})")
+            return {"error": "KIND 본문 비어 있음"}
+        return {
+            "title": title,
+            "body": body,
+            "image_url": None,
+            "final_url": url,
+        }
+    except Exception as e:
+        print(f"[KIND_FETCH] ERROR: {type(e).__name__}: {e} ({url})")
+        return {"error": f"KIND fetch error: {e}"}
 
 
 # 진짜 Chrome User-Agent — 네이버·일부 매체에서 봇 시그니처 차단 회피
@@ -1276,6 +1361,9 @@ def _fetch_article_metadata(url: str) -> dict:
     # DART 공시 URL 특수 처리
     if "dart.fss.or.kr/dsaf001" in url:
         return _fetch_dart_disclosure(url)
+    # KIND 공시 뷰어 — 껍데기 HTML만 오므로 본문 3단계 로드
+    if "kind.krx.co.kr" in url and "disclsviewer.do" in url and "acptno=" in url.lower():
+        return _fetch_kind_disclosure(url)
 
     from bs4 import BeautifulSoup
 
@@ -1295,6 +1383,7 @@ def _fetch_article_metadata(url: str) -> dict:
             break
 
     if not text:
+        print(f"[FETCH] ERROR: 본문 fetch 실패 HTTP {last_status} — 후보 {len(url_candidates)}개 모두 실패 ({url[:120]})")
         return {"error": f"HTTP {last_status}"}
 
     try:
@@ -1325,6 +1414,9 @@ def _fetch_article_metadata(url: str) -> dict:
         og_img = soup.find("meta", property="og:image")
         image_url = og_img["content"].strip() if og_img and og_img.get("content") else None
 
+        if len(body) < 200:
+            print(f"[FETCH] WARN: 추출 본문 {len(body)}자로 짧음 — 페이월/JS 렌더링/사진기사 가능 ({final_url[:120]})")
+
         return {
             "title": title,
             "body": body,
@@ -1332,6 +1424,7 @@ def _fetch_article_metadata(url: str) -> dict:
             "final_url": final_url,
         }
     except Exception as e:
+        print(f"[FETCH] ERROR: 본문 파싱 실패 {type(e).__name__}: {e} ({url[:120]})")
         return {"error": str(e)}
 
 

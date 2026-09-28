@@ -25,11 +25,11 @@
     {"name": "방산",         "source": "ETF",       "code": "449450"},
     {"name": "2차전지",      "source": "ETF",       "code": "305720"},
     {"name": "조선",         "source": "ETF",       "code": "466920"},
-    {"name": "원전",         "source": "ETF",       "code": "442320"},
+    {"name": "원전",         "source": "ETF",       "code": "434730"},
     {"name": "바이오",       "source": "ETF",       "code": "244580"},
-    {"name": "우주항공",     "source": "ETF",       "code": "479850"},
+    {"name": "우주항공",     "source": "ETF",       "code": "421320"},
     {"name": "AI반도체",     "source": "ETF",       "code": "469150"},
     {"name": "게임",         "source": "ETF",       "code": "300610"},
-    {"name": "K뷰티",        "source": "ETF",       "code": "244670"}
+    {"name": "K뷰티",        "source": "ETF",       "code": "479850"}
   ]
 }

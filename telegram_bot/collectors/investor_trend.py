@@ -12,7 +12,17 @@ def _safe_int(val, default=0):
 
 
 def _prev_business_days(count=20, base_date=None):
-    """최근 N 영업일 리스트"""
+    """최근 N 영업일 리스트 (오늘 제외, 최신순).
+
+    2026-09-28 fix: 평일만 거르던 로직이 KRX 공휴일을 영업일로 취급 → KIS 가 휴장일 조회에
+    직전 거래일 데이터를 돌려줘 같은 날 수급이 여러 번 집계됨 (추석 9/24·25 → 9/23 값 3중 집계,
+    '외국인 3거래일 연속 순매도 누적 -1.5조' 로 부풀려짐). market_calendar(공휴일·임시휴장 반영) 사용.
+    """
+    try:
+        from telegram_bot.market_calendar import recent_business_days
+        return recent_business_days(count, base_date)
+    except Exception as e:
+        print(f"[TREND] ERROR: market_calendar 사용 불가 — 평일 기준으로 대체: {e}")
     if base_date is None:
         base_date = datetime.date.today()
     days = []
@@ -28,42 +38,57 @@ def fetch_investor_trend_ndays(market_code="0001", n_days=10):
     """
     시장별 투자자매매동향 N일 추이 조회
     → 외국인/기관 연속 매수/매도일수 + 누적금액 계산
+
+    KIS FHPTJ04040000 은 요청일(FID_INPUT_DATE_1) 이전 일별 이력을 최신순으로 여러 행
+    (행마다 stck_bsop_date) 돌려주므로 1회 호출 후 행의 실제 날짜로 선별 (중복·휴장일 방지).
     """
     market_sym = "KSP" if market_code == "0001" else "KSQ"
     biz_days = _prev_business_days(n_days)
+    wanted = [d.strftime("%Y%m%d") for d in biz_days[:n_days]]
+    if not wanted:
+        print("[TREND] ERROR: 조회할 영업일 목록이 비어 있음")
+        return {}
 
     daily_data = []
-    for biz_day in biz_days[:n_days]:
-        date_str = biz_day.strftime("%Y%m%d")
-        try:
-            data = kis_get(
-                "/uapi/domestic-stock/v1/quotations/inquire-investor-daily-by-market",
-                "FHPTJ04040000",
-                {
-                    "FID_COND_MRKT_DIV_CODE": "U",
-                    "FID_INPUT_ISCD": market_code,
-                    "FID_INPUT_DATE_1": date_str,
-                    "FID_INPUT_ISCD_1": market_sym,
-                    "FID_INPUT_DATE_2": date_str,
-                    "FID_INPUT_ISCD_2": market_code,
-                },
-            )
-            items = data.get("output", [])
-            if items and isinstance(items, list) and len(items) > 0:
-                latest = items[0]
-                frgn = _safe_int(latest.get("frgn_ntby_tr_pbmn", 0))
-                inst = _safe_int(latest.get("orgn_ntby_tr_pbmn", 0))
-                if frgn != 0 or inst != 0:
-                    daily_data.append({
-                        "날짜": date_str,
-                        "외국인": frgn,  # 백만원 단위
-                        "기관": inst,
-                    })
-        except Exception:
-            pass
-        time.sleep(0.15)
+    try:
+        data = kis_get(
+            "/uapi/domestic-stock/v1/quotations/inquire-investor-daily-by-market",
+            "FHPTJ04040000",
+            {
+                "FID_COND_MRKT_DIV_CODE": "U",
+                "FID_INPUT_ISCD": market_code,
+                "FID_INPUT_DATE_1": wanted[0],
+                "FID_INPUT_ISCD_1": market_sym,
+                "FID_INPUT_DATE_2": wanted[0],
+                "FID_INPUT_ISCD_2": market_code,
+            },
+        )
+        items = data.get("output", [])
+        if not isinstance(items, list):
+            items = [items] if items else []
+        seen = set()
+        for row in items:
+            date_str = row.get("stck_bsop_date", "")
+            if date_str not in wanted or date_str in seen:
+                continue
+            seen.add(date_str)
+            frgn = _safe_int(row.get("frgn_ntby_tr_pbmn", 0))
+            inst = _safe_int(row.get("orgn_ntby_tr_pbmn", 0))
+            if frgn != 0 or inst != 0:
+                daily_data.append({
+                    "날짜": date_str,
+                    "외국인": frgn,  # 백만원 단위
+                    "기관": inst,
+                })
+        daily_data.sort(key=lambda d: d["날짜"], reverse=True)
+        if items and not seen:
+            print(f"[TREND] ERROR: 수급 응답 {len(items)}행에 요청 영업일 매칭 0건 "
+                  f"(stck_bsop_date 필드 변경 의심, 첫 행 keys={list(items[0])[:8]})")
+    except Exception as e:
+        print(f"[TREND] ERROR: 투자자 매매동향 N일 조회 실패 ({market_sym}): {e}")
 
     if not daily_data:
+        print(f"[TREND] ERROR: 최근 {n_days}영업일 수급 데이터 없음 ({market_sym})")
         return {}
 
     # 연속 매수/매도일수 계산

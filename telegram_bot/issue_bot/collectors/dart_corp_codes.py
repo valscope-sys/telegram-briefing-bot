@@ -50,10 +50,14 @@ _download_in_progress = False
 
 
 def _normalize_name(name: str) -> str:
-    """회사명 정규화 — 공백·괄호·특수문자 제거 + 소문자."""
+    """회사명 정규화 — '주식회사'·'(주)'·'㈜' 토큰 + 공백·괄호 제거 + 소문자.
+
+    주의: 예전 구현은 문자 클래스 [..주식회사..] 라서 '주'/'식'/'회'/'사' 글자를
+    이름 어디서든 지웠음 (예: '삼성사' → '삼성' 으로 '삼성' 질의에 정확 매칭되는 오류).
+    """
     if not name:
         return ""
-    n = re.sub(r"[\s\(\)\[\]주식회사㈜()]", "", name)
+    n = re.sub(r"주식회사|\(주\)|（주）|㈜|[\s\(\)\[\]()（）]", "", name)
     return n.lower()
 
 
@@ -67,14 +71,15 @@ def _is_cache_fresh() -> bool:
         downloaded_at = datetime.datetime.fromisoformat(meta.get("downloaded_at", ""))
         age = datetime.datetime.now() - downloaded_at
         return age.days < CACHE_TTL_DAYS
-    except Exception:
+    except Exception as e:
+        print(f"[DART_CORP_CODES] ERROR: 캐시 메타 읽기 실패 → 재다운로드 대상: {e}")
         return False
 
 
 def _download_and_cache():
     """DART corpCode.xml 다운로드 + JSON 캐시."""
     if not DART_API_KEY:
-        print("[DART_CORP_CODES] DART_API_KEY 없음")
+        print("[DART_CORP_CODES] ERROR: DART_API_KEY 없음 — corpCode.xml 다운로드 불가")
         return False
 
     try:
@@ -85,10 +90,14 @@ def _download_and_cache():
             timeout=30,
         )
         if res.status_code != 200:
-            print(f"[DART_CORP_CODES] HTTP {res.status_code}")
+            print(f"[DART_CORP_CODES] ERROR: corpCode.xml HTTP {res.status_code} body={res.text[:150]!r}")
             return False
 
-        # 응답이 zip 파일
+        # 응답이 zip 파일 — 키 오류·한도 초과 시 DART는 zip 대신 XML/JSON 에러 본문을 줌
+        if res.content[:2] != b"PK":
+            print(f"[DART_CORP_CODES] ERROR: corpCode.xml 응답이 zip 아님 (API 키/한도 확인) "
+                  f"body={res.content[:200].decode('utf-8', 'replace')!r}")
+            return False
         with zipfile.ZipFile(io.BytesIO(res.content)) as zf:
             xml_data = zf.read("CORPCODE.xml")
 
@@ -108,6 +117,10 @@ def _download_and_cache():
                 "modify_date": modify_date,
             }
 
+        if not corp_map:
+            print("[DART_CORP_CODES] ERROR: CORPCODE.xml 파싱 결과 0건 — 캐시 저장 안 함")
+            return False
+
         # 캐시 저장
         os.makedirs(HISTORY_DIR, exist_ok=True)
         with open(CACHE_PATH, "w", encoding="utf-8") as f:
@@ -121,7 +134,7 @@ def _download_and_cache():
         print(f"[DART_CORP_CODES] 캐시 저장 완료 ({len(corp_map):,}개 회사)")
         return True
     except Exception as e:
-        print(f"[DART_CORP_CODES] 다운로드 실패: {e}")
+        print(f"[DART_CORP_CODES] ERROR: corpCode.xml 다운로드/파싱 실패: {type(e).__name__}: {e}")
         return False
 
 
@@ -134,11 +147,18 @@ def _do_load_cache_file():
         _name_index = {}
         for code, info in _corp_map_cache.items():
             normalized = _normalize_name(info.get("name", ""))
-            if normalized and normalized not in _name_index:
+            if not normalized:
+                continue
+            prev = _name_index.get(normalized)
+            # 동명 회사가 여럿이면 상장사(stock_code 있음) 우선
+            # (예: '카카오' — 비상장 동명 법인이 먼저 들어가 상장사 카카오를 가리던 문제)
+            if prev is None or (
+                info.get("stock_code") and not _corp_map_cache[prev].get("stock_code")
+            ):
                 _name_index[normalized] = code
         print(f"[DART_CORP_CODES] 메모리 인덱싱 완료 ({len(_corp_map_cache):,}개)")
     except Exception as e:
-        print(f"[DART_CORP_CODES] 캐시 로드 실패: {e}")
+        print(f"[DART_CORP_CODES] ERROR: 캐시 로드 실패 → 회사명 매칭 불가: {e}")
         _corp_map_cache = {}
         _name_index = {}
 
@@ -193,6 +213,11 @@ def _load_cache():
                 return
         # 진행 중 아니면 동기 다운로드 (이전 버전 호환)
         if not _download_and_cache():
+            if os.path.exists(CACHE_PATH):
+                # 다운로드 실패해도 만료된 캐시가 있으면 그걸로 동작 (빈 결과보다 나음)
+                print("[DART_CORP_CODES] ERROR: corpCode.xml 재다운로드 실패 → 만료된 기존 캐시로 동작")
+                _do_load_cache_file()
+                return
             _corp_map_cache = {}
             _name_index = {}
             return
@@ -215,6 +240,10 @@ def find_corp_code(query: str, limit: int = 5) -> dict:
     """
     _load_cache()
     if not _corp_map_cache:
+        if _download_in_progress:
+            print(f"[DART_CORP_CODES] corp_code 캐시 백그라운드 다운로드 중 — '{query}' 매칭 보류")
+        else:
+            print(f"[DART_CORP_CODES] ERROR: corp_code 캐시 비어 있음 — '{query}' 매칭 불가")
         return {"exact": None, "candidates": []}
 
     query_norm = _normalize_name(query)

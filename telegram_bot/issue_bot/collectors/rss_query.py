@@ -3,7 +3,7 @@
 사용자가 봇 DM에 `/news [날짜|키워드]` 입력 시 호출.
 - 인자 없음 또는 "오늘": 핵심 매체 최근 24h 헤드라인
 - "어제": 24h~48h
-- 그 외: Google News RSS 키워드 검색
+- 그 외: Google News RSS 키워드 검색 (503 차단·0건 시 Bing News RSS fallback)
 
 영문 기사는 Haiku로 한국어 번역 + 1줄 요약 (translate_summarize_batch).
 """
@@ -12,7 +12,7 @@ import re
 import time
 from itertools import zip_longest
 
-import anthropic
+from telegram_bot.llm_client import get_client
 import feedparser
 
 from telegram_bot.config import ANTHROPIC_API_KEY
@@ -24,29 +24,149 @@ NEWS_FEEDS = [
     {"name": "한국경제", "url": "https://www.hankyung.com/feed/all-news", "lang": "ko"},
     {"name": "매일경제", "url": "https://www.mk.co.kr/rss/30000001/", "lang": "ko"},
     {"name": "연합뉴스", "url": "https://www.yna.co.kr/rss/economy.xml", "lang": "ko"},
-    {"name": "이데일리", "url": "https://rss.edaily.co.kr/stock_news.xml", "lang": "ko"},
+    # 이데일리: https 호스트는 연결 리셋(2026-09) → http 만 응답
+    {"name": "이데일리", "url": "http://rss.edaily.co.kr/stock_news.xml", "lang": "ko"},
     {"name": "머니투데이", "url": "https://rss.mt.co.kr/mt_news.xml", "lang": "ko"},
-    {"name": "조선비즈", "url": "https://news.google.com/rss/search?q=site:biz.chosun.com&hl=ko&gl=KR&ceid=KR:ko", "lang": "ko"},
-    {"name": "인포맥스", "url": "https://news.google.com/rss/search?q=site:einfomax.co.kr&hl=ko&gl=KR&ceid=KR:ko", "lang": "ko"},
+    # 조선비즈·인포맥스: Google News site: 검색(503 차단 잦음) → 매체 공식 RSS
+    {"name": "조선비즈", "url": "https://biz.chosun.com/arc/outboundfeeds/rss/category/stock/?outputType=xml", "lang": "ko"},
+    # 인포맥스 pubDate 는 타임존 없는 KST ('2026-09-28 10:46:27') → naive_kst 보정
+    {"name": "인포맥스", "url": "https://news.einfomax.co.kr/rss/allArticle.xml", "lang": "ko", "naive_kst": True},
     # ── 한국 테크 1차 ──
     {"name": "전자신문", "url": "https://rss.etnews.com/Section902.xml", "lang": "ko"},
     # ── 외신 광역 (4개) ──
+    # Reuters는 공식 RSS 없음 → Google News 유지, 실패 시 Bing News RSS 자동 fallback
     {"name": "Reuters", "url": "https://news.google.com/rss/search?q=site:reuters.com+business&hl=en-US&gl=US&ceid=US:en", "lang": "en"},
-    {"name": "Bloomberg Tech", "url": "https://news.google.com/rss/search?q=site:bloomberg.com+technology&hl=en-US&gl=US&ceid=US:en", "lang": "en"},
+    {"name": "Bloomberg Tech", "url": "https://feeds.bloomberg.com/technology/news.rss", "lang": "en"},
     {"name": "CNBC", "url": "https://www.cnbc.com/id/100003114/device/rss/rss.html", "lang": "en"},
-    {"name": "WSJ Markets", "url": "https://news.google.com/rss/search?q=site:wsj.com+markets&hl=en-US&gl=US&ceid=US:en", "lang": "en"},
-    {"name": "Financial Times", "url": "https://news.google.com/rss/search?q=site:ft.com+markets&hl=en-US&gl=US&ceid=US:en", "lang": "en"},
+    # WSJ: 구 feeds.a.dj.com 은 2025-01 이후 갱신 중단 → Dow Jones 신규 피드 도메인
+    {"name": "WSJ Markets", "url": "https://feeds.content.dowjones.io/public/rss/RSSMarketsMain", "lang": "en"},
+    {"name": "Financial Times", "url": "https://www.ft.com/markets?format=rss", "lang": "en"},
     # ── 아시아 ──
+    # Nikkei Asia RSS 1.0 은 발행일 필드 없음 → 기간 필터 없이 통과 (최신순 피드)
     {"name": "Nikkei Asia", "url": "https://asia.nikkei.com/rss/feed/nar", "lang": "en"},
-    # ── 반도체·테크 전문 (5개) ──
-    {"name": "TrendForce", "url": "https://www.trendforce.com/news/feed/", "lang": "en"},
-    {"name": "Digitimes", "url": "https://news.google.com/rss/search?q=site:digitimes.com+chips+OR+semiconductor&hl=en-US&gl=US&ceid=US:en", "lang": "en"},
-    {"name": "SemiAnalysis", "url": "https://semianalysis.com/feed/", "lang": "en"},
+    # ── 반도체·테크 전문 (4개) ──
+    # TrendForce: /news/feed/ → /news/feed_v2/ 로 301, 쿼리 없는 URL은 7/1자 캐시가 고정 반환됨
+    #   → cache_bust 로 매 호출 쿼리스트링 부착해야 최신 기사 수신
+    {"name": "TrendForce", "url": "https://www.trendforce.com/news/feed_v2/", "lang": "en", "cache_bust": True},
+    {"name": "Digitimes", "url": "https://www.digitimes.com/rss/daily.xml", "lang": "en"},
+    # SemiAnalysis: semianalysis.com/feed 는 2025-09 이후 갱신 중단 → Substack 뉴스레터 피드
+    {"name": "SemiAnalysis", "url": "https://newsletter.semianalysis.com/feed", "lang": "en"},
     {"name": "Tom's Hardware", "url": "https://www.tomshardware.com/feeds/all", "lang": "en"},
-    {"name": "AnandTech", "url": "https://www.anandtech.com/rss/", "lang": "en"},
+    # AnandTech: 2024-08 폐간(아카이브만 유지, RSS 0건) → 제거
 ]
 
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) NODEResearchBot/1.0"
+
+
+def _feed_url(feed_info: dict) -> str:
+    """피드 URL (cache_bust 피드는 시간 단위 쿼리 부착 — CDN 고정 캐시 회피)."""
+    url = feed_info["url"]
+    if feed_info.get("cache_bust"):
+        sep = "&" if "?" in url else "?"
+        url = f"{url}{sep}_={datetime.datetime.now().strftime('%Y%m%d%H')}"
+    return url
+
+
+def _google_to_bing_url(google_url: str, since: datetime.datetime = None) -> str:
+    """Google News RSS 검색 URL → 같은 검색어의 Bing News RSS URL (Google 503 차단 대비 fallback).
+
+    Bing 기본 정렬은 관련도라 몇 주 전 기사가 섞임 → since 가 있으면 기간 필터(qft interval) 부착
+    (interval "7"=24시간, "8"=7일, "9"=30일).
+    """
+    from urllib.parse import urlparse, parse_qs, quote_plus
+    qs = parse_qs(urlparse(google_url).query)
+    q = (qs.get("q") or [""])[0]
+    hl = (qs.get("hl") or ["ko"])[0]
+    if hl.lower().startswith("ko"):
+        url = f"https://www.bing.com/news/search?q={quote_plus(q)}&format=rss&setlang=ko-KR&cc=KR"
+    else:
+        url = f"https://www.bing.com/news/search?q={quote_plus(q)}&format=rss&setlang=en-US&cc=US"
+    if since is not None:
+        age = datetime.datetime.now() - since
+        if age <= datetime.timedelta(hours=24):
+            interval = "7"
+        elif age <= datetime.timedelta(days=7):
+            interval = "8"
+        else:
+            interval = "9"
+        url += f"&qft=interval%3d%22{interval}%22"
+    return url
+
+
+def _struct_utc_to_local(pub, naive_kst: bool = False) -> datetime.datetime:
+    """feedparser *_parsed(항상 UTC struct_time) → 서버 로컬 naive datetime.
+
+    호출부의 from_dt/to_dt 는 datetime.now() (로컬 naive) 기준인데, 예전엔 UTC 값을 그대로
+    naive 로 만들어 비교 → KST 서버에서 '최근 24h' 가 실제로는 15h 창 + 표시 시각 9h 어긋남.
+    """
+    import calendar
+    ts = calendar.timegm(pub)
+    if naive_kst:
+        # 타임존 표기 없는 KST 시각(예: 인포맥스 '2026-09-28 10:46:27') — feedparser가 UTC로 간주하므로 보정
+        ts -= 9 * 3600
+    elif ts > time.time() + 600 and ts - 9 * 3600 <= time.time() + 600:
+        # 미래 시각이면 KST를 UTC로 잘못 표기한 피드로 보고 보정
+        ts -= 9 * 3600
+    return datetime.datetime.fromtimestamp(ts)
+
+
+def _unwrap_bing_link(link: str) -> str:
+    """Bing News RSS 링크(apiclick.aspx?...&url=원문) → 원문 URL."""
+    if "bing.com/news/apiclick" not in (link or ""):
+        return link
+    from urllib.parse import urlparse, parse_qs
+    target = (parse_qs(urlparse(link).query).get("url") or [""])[0]
+    return target or link
+
+
+# Google News가 "automated queries" 503 을 주면 일정 시간 Google 호출 생략
+_GOOGLE_BLOCK_COOLDOWN_S = 30 * 60
+_google_blocked_until = 0.0
+
+
+def _parse_feed_loud(url: str, label: str, since: datetime.datetime = None):
+    """feedparser.parse + 실패 시 ERROR 출력. Google News 실패 시 Bing News로 1회 fallback.
+
+    feedparser는 HTTP 4xx/5xx·연결 실패에도 예외 없이 entries=[] 를 반환하므로
+    상태를 직접 확인해 조용한 실패를 막는다.
+    Returns: (feed, used_url)
+    """
+    global _google_blocked_until
+    is_google = "news.google.com/rss/search" in url
+    if is_google and time.time() < _google_blocked_until:
+        # 직전 503 차단 후 쿨다운 중 — Google 재시도(건당 ~8초 낭비) 없이 바로 Bing
+        feed = feedparser.FeedParserDict(entries=[], bozo=0)
+        print(f"[NEWS_QUERY] {label}: Google News 차단 쿨다운 중 → Bing 직행")
+    else:
+        feed = feedparser.parse(url, agent=UA)
+        status = getattr(feed, "status", None)
+        if feed.entries and not (status and status >= 400):
+            return feed, url
+        if is_google and status in (429, 503):
+            _google_blocked_until = time.time() + _GOOGLE_BLOCK_COOLDOWN_S
+        if status and status >= 400:
+            reason = f"HTTP {status}"
+        elif not status:
+            reason = f"연결 실패: {str(feed.get('bozo_exception', '') or '')[:100]}"
+        elif feed.get("bozo"):
+            reason = f"HTTP {status}, 파싱 실패: {str(feed.get('bozo_exception', '') or '')[:100]}"
+        else:
+            reason = f"HTTP {status}, 항목 없음"
+        print(f"[NEWS_QUERY] ERROR: {label} 피드 0건 ({reason}) url={url[:120]}")
+    if is_google:
+        bing_url = _google_to_bing_url(url, since=since)
+        # Bing News RSS 는 가끔(5회 중 1회꼴) HTTP 200 + 0건을 줌 → 최대 3회 시도
+        for attempt in range(3):
+            fb = feedparser.parse(bing_url, agent=UA)
+            fb_status = getattr(fb, "status", None)
+            if fb.entries or (fb_status and fb_status >= 400):
+                break
+            time.sleep(0.7)
+        if fb.entries and not (fb_status and fb_status >= 400):
+            print(f"[NEWS_QUERY] {label}: Bing News RSS fallback 사용 ({len(fb.entries)}건)")
+            return fb, bing_url
+        print(f"[NEWS_QUERY] ERROR: {label} Bing fallback 도 실패 (HTTP {fb_status}, {len(fb.entries)}건)")
+    return feed, url
 
 
 def _attach_lang(article: dict, feed_info: dict) -> dict:
@@ -76,13 +196,16 @@ def fetch_news_headlines(max_age_hours: int = 24, max_per_feed: int = 5,
         to_dt = datetime.datetime.now()
 
     feed_results = []
+    failed_feeds = []
     for feed_info in NEWS_FEEDS:
         articles = []
         try:
-            feed = feedparser.parse(feed_info["url"], agent=UA)
+            feed, _used_url = _parse_feed_loud(_feed_url(feed_info), feed_info["name"], since=from_dt)
+            if not feed.entries:
+                failed_feeds.append(feed_info["name"])
             for entry in feed.entries[:max_per_feed]:
                 title = (entry.get("title") or "").strip()
-                link = (entry.get("link") or "").strip()
+                link = _unwrap_bing_link((entry.get("link") or "").strip())
                 if not title or not link:
                     continue
 
@@ -91,7 +214,7 @@ def fetch_news_headlines(max_age_hours: int = 24, max_per_feed: int = 5,
                 pub_dt = None
                 if pub:
                     try:
-                        pub_dt = datetime.datetime(*pub[:6])
+                        pub_dt = _struct_utc_to_local(pub, naive_kst=feed_info.get("naive_kst", False))
                         if pub_dt < from_dt or pub_dt > to_dt:
                             continue
                     except Exception:
@@ -107,9 +230,13 @@ def fetch_news_headlines(max_age_hours: int = 24, max_per_feed: int = 5,
                     "published_dt": pub_dt,
                 })
         except Exception as e:
-            print(f"[NEWS_QUERY] {feed_info['name']} 실패: {e}")
+            print(f"[NEWS_QUERY] ERROR: {feed_info['name']} 실패: {type(e).__name__}: {e}")
+            failed_feeds.append(feed_info["name"])
         feed_results.append(articles)
         time.sleep(0.1)
+
+    if failed_feeds:
+        print(f"[NEWS_QUERY] ERROR: {len(failed_feeds)}/{len(NEWS_FEEDS)}개 피드 수집 실패: {', '.join(failed_feeds)}")
 
     # 인터리빙
     interleaved = [
@@ -135,17 +262,21 @@ def search_keyword_news(keyword: str, max_results: int = 30, lang: str = "ko",
         lang: "ko"(한국) / "en"(영문)
         from_dt, to_dt: 시간 범위 (포함). None이면 무시.
     """
+    from urllib.parse import quote_plus
+    # 공백·특수문자 인코딩 필수 — 예전엔 "SK하이닉스 HBM" 처럼 공백 포함 시
+    # "URL can't contain control characters" 예외로 0건 반환
+    q = quote_plus(keyword or "")
     if lang == "en":
-        url = f"https://news.google.com/rss/search?q={keyword}&hl=en-US&gl=US&ceid=US:en"
+        url = f"https://news.google.com/rss/search?q={q}&hl=en-US&gl=US&ceid=US:en"
     else:
-        url = f"https://news.google.com/rss/search?q={keyword}&hl=ko&gl=KR&ceid=KR:ko"
+        url = f"https://news.google.com/rss/search?q={q}&hl=ko&gl=KR&ceid=KR:ko"
 
     results = []
     try:
-        feed = feedparser.parse(url, agent=UA)
+        feed, _used_url = _parse_feed_loud(url, f"keyword '{keyword}'", since=from_dt)
         for entry in feed.entries[:max_results]:
             title = (entry.get("title") or "").strip()
-            link = (entry.get("link") or "").strip()
+            link = _unwrap_bing_link((entry.get("link") or "").strip())
             if not title or not link:
                 continue
 
@@ -154,7 +285,7 @@ def search_keyword_news(keyword: str, max_results: int = 30, lang: str = "ko",
             pub_dt = None
             if pub:
                 try:
-                    pub_dt = datetime.datetime(*pub[:6])
+                    pub_dt = _struct_utc_to_local(pub)
                     if from_dt and pub_dt < from_dt:
                         continue
                     if to_dt and pub_dt > to_dt:
@@ -169,6 +300,8 @@ def search_keyword_news(keyword: str, max_results: int = 30, lang: str = "ko",
                 source = getattr(source_obj, "title", "") or (
                     source_obj.get("title", "") if isinstance(source_obj, dict) else ""
                 )
+            if not source and entry.get("news_source"):  # Bing News RSS
+                source = str(entry.get("news_source")).strip()
             if not source and " - " in title:
                 source = title.rsplit(" - ", 1)[1]
                 title = title.rsplit(" - ", 1)[0]
@@ -182,7 +315,7 @@ def search_keyword_news(keyword: str, max_results: int = 30, lang: str = "ko",
                 "published_dt": pub_dt,
             })
     except Exception as e:
-        print(f"[NEWS_QUERY] keyword search '{keyword}' 실패: {e}")
+        print(f"[NEWS_QUERY] ERROR: keyword search '{keyword}' 실패: {type(e).__name__}: {e}")
 
     # 시간 정렬 (최신 우선)
     results.sort(
@@ -317,7 +450,7 @@ def translate_summarize_batch(items: list, max_items: int = 10) -> list:
     )
 
     try:
-        client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+        client = get_client(ANTHROPIC_API_KEY)
         response = client.messages.create(
             model="claude-haiku-4-5-20251001",
             max_tokens=1500,

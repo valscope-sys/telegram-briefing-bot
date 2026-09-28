@@ -360,6 +360,7 @@ def extract_og_image(url: str) -> str:
         from bs4 import BeautifulSoup
         res = requests.get(url, timeout=10, headers={"User-Agent": "Mozilla/5.0"})
         if res.status_code != 200:
+            print(f"[TELEGRAM] ERROR: og:image 페이지 HTTP {res.status_code} ({url[:120]})")
             return ""
         soup = BeautifulSoup(res.text, "lxml")
         for selector in [
@@ -381,7 +382,7 @@ def extract_og_image(url: str) -> str:
                         content = f"{parsed.scheme}://{parsed.netloc}{content}"
                     return content
     except Exception as e:
-        print(f"[TELEGRAM] og:image 추출 실패 ({url}): {e}")
+        print(f"[TELEGRAM] ERROR: og:image 추출 실패 ({url}): {e}")
     return ""
 
 

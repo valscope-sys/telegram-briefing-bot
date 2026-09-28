@@ -1,7 +1,12 @@
 """네이버 증권 분기 컨센서스 fetcher — 이슈봇 전용
 
-네이버 종목 메인 페이지(`finance.naver.com/item/main.naver?code=NNNNNN`)의
-'기업실적분석' 섹션에서 분기별 매출액/영업이익/당기순이익 + (E) 컨센서스 추출.
+1순위: 네이버 모바일 증권 JSON API
+    `m.stock.naver.com/api/stock/NNNNNN/finance/quarter`
+    → 최근 5개 분기 실적 + 다음 분기 컨센서스(isConsensus=Y) — 매출액/영업이익/당기순이익.
+2순위(레거시): 종목 메인 페이지(`finance.naver.com/item/main.naver?code=NNNNNN`)의
+    '기업실적분석' 섹션 HTML 파싱.
+    ※ 2026-09 기준 finance.naver.com/item/* 는 stock.naver.com(Next.js, JS 렌더링)으로
+      리다이렉트되어 이 경로는 사실상 동작하지 않음 → 모바일 API 실패 시에만 시도.
 
 기존 시황봇 `telegram_bot/collectors/consensus_collector.py`(FnGuide 기반,
 매출·영업이익만)는 JS 렌더링 의존도 높고 순이익 누락 → 이슈봇 잠정실적 카드
@@ -67,9 +72,81 @@ def _parse_int(s: str) -> Optional[int]:
         return None
 
 
+_MOBILE_API_URL = "https://m.stock.naver.com/api/stock/{code}/finance/quarter"
+
+_ROW_LABEL_TO_KEY = {
+    "매출액": "revenue",
+    "영업이익": "op_income",
+    "당기순이익": "net_income",
+}
+
+
+def _fetch_mobile_api(stock_code: str) -> Optional[dict]:
+    """네이버 모바일 증권 JSON API → {'quarters': {...}} (fetch_naver_consensus와 동일 형태).
+
+    응답 구조 (2026-09 확인):
+        financeInfo.trTitleList = [{"key": "202609", "title": "2026.09.", "isConsensus": "Y"}, ...]
+        financeInfo.rowList     = [{"title": "매출액", "columns": {"202609": {"value": "2,045,704"}}}, ...]
+    단위: 억원.
+    """
+    url = _MOBILE_API_URL.format(code=stock_code)
+    try:
+        r = _get_session().get(url, timeout=10)
+    except Exception as e:
+        print(f"[CONSENSUS] ERROR: 네이버 모바일 API 요청 실패 ({stock_code}): {e}")
+        return None
+    if r.status_code != 200:
+        print(f"[CONSENSUS] ERROR: 네이버 모바일 API HTTP {r.status_code} ({stock_code}) {url}")
+        return None
+    try:
+        payload = r.json() or {}
+    except ValueError as e:
+        print(f"[CONSENSUS] ERROR: 네이버 모바일 API JSON 파싱 실패 ({stock_code}): {e} body={r.text[:120]!r}")
+        return None
+
+    info = payload.get("financeInfo") or {}
+    titles = info.get("trTitleList") or []
+    rows = info.get("rowList") or []
+    if not titles or not rows:
+        print(f"[CONSENSUS] ERROR: 네이버 모바일 API 응답 구조 변경/데이터 없음 ({stock_code}) "
+              f"keys={list(payload.keys())[:6]} financeInfo.keys={list(info.keys())[:6]}")
+        return None
+
+    # key("202609") → 라벨("2026.09")
+    col_meta = []  # [(api_key, label, is_estimate)]
+    for t in titles:
+        key = str(t.get("key") or "")
+        m = re.fullmatch(r"(\d{4})(\d{2})", key)
+        if not m:
+            continue
+        is_est = (t.get("isConsensus") == "Y") or ("(E)" in str(t.get("title") or ""))
+        col_meta.append((key, f"{m.group(1)}.{m.group(2)}", is_est))
+    if not col_meta:
+        print(f"[CONSENSUS] ERROR: 네이버 모바일 API 분기 라벨 파싱 실패 ({stock_code}) titles={titles[:2]}")
+        return None
+
+    result = {label: {"is_estimate": is_est} for _, label, is_est in col_meta}
+    found_rows = set()
+    for row in rows:
+        k = _ROW_LABEL_TO_KEY.get((row.get("title") or "").strip())
+        if not k:
+            continue
+        found_rows.add(k)
+        cols = row.get("columns") or {}
+        for api_key, label, _ in col_meta:
+            cell = cols.get(api_key) or {}
+            result[label][k] = _parse_int(str(cell.get("value") or ""))
+
+    if not found_rows:
+        print(f"[CONSENSUS] ERROR: 네이버 모바일 API 에 매출액/영업이익/당기순이익 행 없음 ({stock_code}) "
+              f"rows={[r.get('title') for r in rows[:5]]}")
+        return None
+    return {"quarters": result}
+
+
 def fetch_naver_consensus(stock_code: str) -> Optional[dict]:
     """
-    네이버 증권 종목 페이지에서 분기 컨센서스 + 실적 추출.
+    네이버 증권에서 분기 컨센서스 + 실적 추출 (모바일 JSON API → 레거시 HTML 순).
 
     Args:
         stock_code: 6자리 종목코드 (예: '267270')
@@ -86,30 +163,50 @@ def fetch_naver_consensus(stock_code: str) -> Optional[dict]:
         단위: 억원.
     """
     if not stock_code or not re.fullmatch(r"\d{6}", stock_code):
+        print(f"[CONSENSUS] ERROR: 잘못된 종목코드 {stock_code!r} (6자리 숫자 필요)")
         return None
 
+    data = _fetch_mobile_api(stock_code)
+    if data:
+        return data
+    print(f"[CONSENSUS] 모바일 API 실패 → 레거시 HTML 파싱 시도 ({stock_code})")
+    data = _fetch_legacy_html(stock_code)
+    if not data:
+        print(f"[CONSENSUS] ERROR: 모든 소스 실패 — 분기 컨센서스 없음 ({stock_code})")
+    return data
+
+
+def _fetch_legacy_html(stock_code: str) -> Optional[dict]:
+    """(레거시) finance.naver.com 종목 메인 HTML '기업실적분석' 표 파싱."""
     url = f"https://finance.naver.com/item/main.naver?code={stock_code}"
     try:
         r = _get_session().get(url, timeout=10)
         if r.status_code != 200:
+            print(f"[CONSENSUS] ERROR: 레거시 HTML HTTP {r.status_code} ({stock_code})")
+            return None
+        if "finance.naver.com/item/main" not in r.url:
+            print(f"[CONSENSUS] ERROR: 레거시 HTML 페이지가 {r.url} 로 리다이렉트됨 (구 페이지 폐지) ({stock_code})")
             return None
         # 네이버는 EUC-KR 인코딩
         r.encoding = r.apparent_encoding or "euc-kr"
         soup = BeautifulSoup(r.text, "lxml")
     except Exception as e:
-        print(f"[CONSENSUS] fetch 실패 ({stock_code}): {e}")
+        print(f"[CONSENSUS] ERROR: 레거시 HTML fetch 실패 ({stock_code}): {e}")
         return None
 
     section = soup.select_one("div.section.cop_analysis")
     if not section:
+        print(f"[CONSENSUS] ERROR: 레거시 HTML 에 div.section.cop_analysis 없음 — 구조 변경 ({stock_code})")
         return None
     table = section.select_one("table")
     if not table:
+        print(f"[CONSENSUS] ERROR: 레거시 HTML cop_analysis 안에 table 없음 ({stock_code})")
         return None
 
     thead = table.find("thead")
     tbody = table.find("tbody")
     if not (thead and tbody):
+        print(f"[CONSENSUS] ERROR: 레거시 HTML thead/tbody 없음 ({stock_code})")
         return None
 
     # ─── 헤더에서 분기 라벨 추출 ───
@@ -123,6 +220,7 @@ def fetch_naver_consensus(stock_code: str) -> Optional[dict]:
     # 분기 추이가 연간 수치로 잘못 표시됨 (예: 4Q26 = 연간 9조).
     header_rows = thead.find_all("tr")
     if len(header_rows) < 2:
+        print(f"[CONSENSUS] ERROR: 레거시 HTML 헤더 행 부족 ({len(header_rows)}행) ({stock_code})")
         return None
 
     # tr1: 그룹 헤더의 colspan으로 컬럼 종류 매핑
@@ -177,6 +275,7 @@ def fetch_naver_consensus(stock_code: str) -> Optional[dict]:
         quarter_meta.append((clean_label, is_est, cells_idx))
 
     if not quarter_meta:
+        print(f"[CONSENSUS] ERROR: 레거시 HTML 분기 컬럼 라벨 파싱 실패 ({stock_code}) labels={labels[:8]}")
         return None
 
     # ─── tbody에서 매출/영업이익/당기순이익 행 추출 ───
@@ -206,6 +305,7 @@ def fetch_naver_consensus(stock_code: str) -> Optional[dict]:
             result_by_label[q_label][key] = val
 
     if not result_by_label:
+        print(f"[CONSENSUS] ERROR: 레거시 HTML 매출액/영업이익/당기순이익 행 없음 ({stock_code})")
         return None
 
     return {"quarters": result_by_label}
@@ -225,12 +325,15 @@ def get_consensus_for_period(stock_code: str, period: str) -> Optional[dict]:
     """
     naver_q = period_to_naver_quarter(period)
     if not naver_q:
+        print(f"[CONSENSUS] ERROR: 분기 형식 인식 불가 period={period!r} (예: '1Q26')")
         return None
     data = fetch_naver_consensus(stock_code)
     if not data:
-        return None
+        return None  # fetch_naver_consensus 가 이미 ERROR 출력
     q = data["quarters"].get(naver_q)
     if not q:
+        print(f"[CONSENSUS] {stock_code} {period}({naver_q}) 분기 없음 — "
+              f"제공 분기: {sorted(data['quarters'].keys())}")
         return None
     # (E) 표시된 분기만 컨센서스로 의미 있음.
     # (P)/실제값으로 바뀐 후엔 컨센 정보 손실.

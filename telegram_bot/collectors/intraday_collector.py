@@ -51,7 +51,8 @@ def fetch_index_intraday(index_code="0001"):
             "고점대비시가": round(high_from_open, 2),
             "저점대비시가": round(low_from_open, 2),
         }
-    except Exception:
+    except Exception as e:
+        print(f"[INTRADAY] ERROR: 지수 {index_code} 장중 흐름 조회 실패: {e}")
         return {}
 
 
@@ -79,7 +80,8 @@ def fetch_stock_intraday(stock_code):
             "종가": close,
             "기준가": prev,
         }
-    except Exception:
+    except Exception as e:
+        print(f"[INTRADAY] ERROR: {stock_code} 장중 흐름 조회 실패: {e}")
         return {}
 
 
@@ -93,7 +95,8 @@ def fetch_foreign_ownership(stock_code):
         )
         o = data["output"]
         return _safe_float(o.get("hts_frgn_ehrt", 0))
-    except Exception:
+    except Exception as e:
+        print(f"[INTRADAY] ERROR: {stock_code} 외국인 지분율 조회 실패: {e}")
         return 0
 
 

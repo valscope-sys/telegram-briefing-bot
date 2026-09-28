@@ -87,31 +87,47 @@ def parse_date_arg(arg: str):
     return None
 
 
+# 클라이언트 측 필터(보고서 키워드 / 회사명 부분 매칭)가 필요할 때 최대 조회 페이지 수.
+# 평일 전체 공시는 하루 600~900건(7~9페이지), 분기보고서 마감일은 4천 건 이상.
+_MAX_PAGES_FILTERED = 20
+
+
 def fetch_dart_list(date: datetime.date, corp_name: str = None,
                     corp_code: str = None, page_count: int = 100,
-                    report_patterns: list = None) -> list:
+                    report_patterns: list = None,
+                    end_date: datetime.date = None,
+                    pblntf_ty: str = None,
+                    max_pages: int = None) -> list:
     """DART list.json 조회.
 
     Args:
-        date: 조회 날짜
+        date: 조회 날짜 (end_date 지정 시 시작일)
         corp_name: 회사명 — corp_code 매핑 시도 후 정확한 corp_code로 호출.
             매칭 실패 시 클라이언트 측 부분 매칭 fallback.
         corp_code: 직접 corp_code 지정 (8자리). corp_name보다 우선.
-        page_count: 최대 결과 수 (기본 100)
+        page_count: 페이지당 결과 수 (최대 100)
+        end_date: 기간 조회 종료일 (선택). corp_code 없으면 DART 제한상 최대 3개월.
+        pblntf_ty: 공시유형 (선택) — "A"=정기공시, "B"=주요사항보고, "I"=거래소공시 등.
+        max_pages: 최대 조회 페이지 수. None이면 클라이언트 측 필터가 필요할 때만
+            _MAX_PAGES_FILTERED 까지 넘겨 보고, 아니면 1페이지.
 
     Returns:
         [{"rcept_no", "corp_name", "report_nm", "rcept_dt", "url"}, ...]
     """
     if not DART_API_KEY:
+        print("[DART_QUERY] ERROR: DART_API_KEY 없음 — 공시 조회 불가")
         return []
 
     date_str = date.strftime("%Y%m%d")
+    end_str = (end_date or date).strftime("%Y%m%d")
     params = {
         "crtfc_key": DART_API_KEY,
         "bgn_de": date_str,
-        "end_de": date_str,
+        "end_de": end_str,
         "page_count": min(page_count, 100),
     }
+    if pblntf_ty:
+        params["pblntf_ty"] = pblntf_ty
 
     # corp_code 매핑 시도 (corp_name → corp_code)
     resolved_corp_code = corp_code
@@ -130,22 +146,50 @@ def fetch_dart_list(date: datetime.date, corp_name: str = None,
 
     if resolved_corp_code:
         params["corp_code"] = resolved_corp_code
+    elif corp_name:
+        print(f"[DART_QUERY] '{corp_name}' corp_code 매칭 실패 → 전체 공시에서 회사명 부분 매칭")
+
+    # 클라이언트 측 필터가 있으면 1페이지(최신 100건)만 보고 거르면 누락 → 여러 페이지 조회
+    needs_client_filter = bool(report_patterns) or (bool(corp_name) and not resolved_corp_code)
+    if max_pages is None:
+        max_pages = _MAX_PAGES_FILTERED if needs_client_filter else 1
 
     try:
-        res = requests.get(DART_LIST_URL, params=params, timeout=15)
-        if res.status_code != 200:
-            print(f"[DART_QUERY] HTTP {res.status_code}")
-            return []
-        data = res.json()
-        status = data.get("status")
-        if status not in ("000", "013"):
-            print(f"[DART_QUERY] status={status} message={data.get('message','')}")
-            return []
-        if status == "013":
-            return []
+        raw_items = []
+        page_no = 1
+        total_page = 1
+        total_count = 0
+        while True:
+            params["page_no"] = page_no
+            res = requests.get(DART_LIST_URL, params=params, timeout=15)
+            if res.status_code != 200:
+                print(f"[DART_QUERY] ERROR: list.json HTTP {res.status_code} (page {page_no}) body={res.text[:120]!r}")
+                if not raw_items:
+                    return []
+                break
+            data = res.json()
+            status = data.get("status")
+            if status == "013":  # 조회된 데이터 없음 (정상)
+                break
+            if status != "000":
+                print(f"[DART_QUERY] ERROR: list.json status={status} message={data.get('message','')} "
+                      f"(page {page_no}, {params.get('bgn_de')}~{params.get('end_de')})")
+                if not raw_items:
+                    return []
+                break
+            raw_items.extend(data.get("list", []))
+            total_page = int(data.get("total_page") or 1)
+            total_count = int(data.get("total_count") or 0)
+            if page_no >= total_page or page_no >= max_pages:
+                break
+            page_no += 1
+
+        if total_page > page_no and needs_client_filter:
+            print(f"[DART_QUERY] WARN: 전체 {total_count}건 중 {len(raw_items)}건({page_no}/{total_page}페이지)만 "
+                  f"조회 후 필터 — 일부 누락 가능")
 
         results = []
-        for item in data.get("list", []):
+        for item in raw_items:
             rcept_no = item.get("rcept_no", "")
             results.append({
                 "rcept_no": rcept_no,
@@ -176,7 +220,7 @@ def fetch_dart_list(date: datetime.date, corp_name: str = None,
 
         return results
     except Exception as e:
-        print(f"[DART_QUERY] 조회 실패: {e}")
+        print(f"[DART_QUERY] ERROR: list.json 조회 실패: {type(e).__name__}: {e}")
         return []
 
 

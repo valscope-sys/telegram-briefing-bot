@@ -53,17 +53,23 @@ def _fetch_telegram_channel(url):
         headers = {"User-Agent": "Mozilla/5.0"}
         res = requests.get(url, headers=headers, timeout=10)
         if res.status_code != 200:
+            print(f"[CONTEXT] ERROR: telegram 채널 HTTP {res.status_code} ({url})")
             return ""
         soup = BeautifulSoup(res.text, "lxml")
         messages = soup.select(".tgme_widget_message_text")
+        if not messages:
+            print(f"[CONTEXT] ERROR: telegram 채널 메시지 0건 — t.me/s 페이지 구조 변경 의심 ({url})")
+            return ""
         latest_text = ""
         for msg in messages:
             text = msg.get_text(strip=True)
             if len(text) > 200:
                 latest_text = text  # 마지막이 최신
+        if not latest_text:
+            print(f"[CONTEXT] telegram 채널 최근 {len(messages)}건 중 200자 이상 메시지 없음 ({url})")
         return latest_text[:2000] if latest_text else ""
     except Exception as e:
-        print(f"[CONTEXT] telegram fetch 실패 ({url}): {str(e)[:80]}")
+        print(f"[CONTEXT] ERROR: telegram fetch 실패 ({url}): {str(e)[:80]}")
         return ""
 
 
@@ -75,12 +81,15 @@ def _fetch_naver_blog_rss(url):
     try:
         feed = feedparser.parse(url)
         if not feed.entries:
+            print(f"[CONTEXT] ERROR: naver blog RSS 0건 (HTTP {getattr(feed, 'status', None)}, "
+                  f"{str(feed.get('bozo_exception', '') or '')[:80]}) ({url})")
             return ""
         entry = feed.entries[0]  # 최신
         title = entry.get("title", "")
         # description은 HTML — BeautifulSoup으로 평문 추출
         raw = entry.get("description", "") or entry.get("summary", "")
         if not raw:
+            print(f"[CONTEXT] ERROR: naver blog RSS 최신 글 본문(description) 없음 ({url})")
             return ""
         soup = BeautifulSoup(raw, "lxml")
         # 이미지·iframe 제거
@@ -92,7 +101,7 @@ def _fetch_naver_blog_rss(url):
         combined = f"[{title}]\n\n{body}"
         return combined[:2500]
     except Exception as e:
-        print(f"[CONTEXT] naver rss fetch 실패 ({url}): {str(e)[:80]}")
+        print(f"[CONTEXT] ERROR: naver rss fetch 실패 ({url}): {str(e)[:80]}")
         return ""
 
 
@@ -101,6 +110,8 @@ def _fetch_rss(url):
     try:
         feed = feedparser.parse(url)
         if not feed.entries:
+            print(f"[CONTEXT] ERROR: RSS 0건 (HTTP {getattr(feed, 'status', None)}, "
+                  f"{str(feed.get('bozo_exception', '') or '')[:80]}) ({url})")
             return ""
         entry = feed.entries[0]
         title = entry.get("title", "")
@@ -111,7 +122,7 @@ def _fetch_rss(url):
         combined = f"[{title}]\n\n{body}"
         return combined[:2500]
     except Exception as e:
-        print(f"[CONTEXT] rss fetch 실패 ({url}): {str(e)[:80]}")
+        print(f"[CONTEXT] ERROR: rss fetch 실패 ({url}): {str(e)[:80]}")
         return ""
 
 
@@ -141,14 +152,15 @@ def _save_source_raw(source_name, text):
             return
         with open(path, "a", encoding="utf-8") as f:
             f.write(f"\n---\n\n{text}\n")
-    except Exception:
-        pass
+    except Exception as e:
+        print(f"[CONTEXT] ERROR: 애널리스트 원본 저장 실패 ({path}): {e}")
 
 
 def _fetch_source(source):
     """소스 타입 디스패치 + 원본 저장."""
     fetcher = _FETCHERS.get(source.get("type"))
     if not fetcher:
+        print(f"[CONTEXT] ERROR: 알 수 없는 소스 type={source.get('type')!r} ({source.get('name')})")
         return ""
     text = fetcher(source["url"])
     if text:
@@ -186,8 +198,8 @@ def get_market_context_for_prompt():
                     f"=== 시장 컨텍스트 (배경 참고용, 오늘 데이터가 아님) ==="
                     f"{staleness_warning}\n{context[:2000]}"
                 )
-        except Exception:
-            pass
+        except Exception as e:
+            print(f"[CONTEXT] ERROR: 시장 컨텍스트 파일 읽기 실패 ({CONTEXT_FILE}): {e}")
 
     # 2. 다중 외부 애널리스트 시각 (각 소스별 최신 1건)
     analyst_blocks = []
@@ -222,8 +234,9 @@ def update_market_context(new_commentary, market_data=None):
         return
 
     from telegram_bot.config import ANTHROPIC_API_KEY
-    if not ANTHROPIC_API_KEY:
-        print("[CONTEXT] ANTHROPIC_API_KEY 없음 — 업데이트 스킵")
+    from telegram_bot.llm_client import get_client, llm_available
+    if not llm_available():
+        print("[CONTEXT] ANTHROPIC_API_KEY도 Claude Code CLI도 없음 — 업데이트 스킵")
         return
 
     existing = ""
@@ -234,8 +247,7 @@ def update_market_context(new_commentary, market_data=None):
         except Exception:
             pass
 
-    import anthropic
-    client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+    client = get_client(ANTHROPIC_API_KEY)
 
     today = datetime.date.today().strftime("%Y-%m-%d")
 

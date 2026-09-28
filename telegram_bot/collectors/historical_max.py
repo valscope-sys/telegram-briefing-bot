@@ -35,7 +35,8 @@ def _load_cache() -> dict:
             try:
                 with open(_CACHE_PATH, "r", encoding="utf-8") as f:
                     _cache_mem = json.load(f)
-            except Exception:
+            except Exception as e:
+                print(f"[HIST_MAX] ERROR: 캐시 로드 실패 ({_CACHE_PATH}) — 빈 캐시로 진행: {e}")
                 _cache_mem = {}
         else:
             _cache_mem = {}
@@ -102,6 +103,8 @@ def fetch_historical_max(stock_code: str, base_dt: str = None,
                 cont_yn=cont_yn, next_key=next_key,
             )
             if data.get("return_code") != 0:
+                print(f"[HIST_MAX] ERROR: {stock_code} ka10081 page {page+1} 오류 응답: "
+                      f"[{data.get('return_code')}] {data.get('return_msg')}")
                 break
             items = data.get("stk_dt_pole_chart_qry", []) or []
             all_items.extend(items)
@@ -111,10 +114,11 @@ def fetch_historical_max(stock_code: str, base_dt: str = None,
                 break
             time.sleep(0.25)  # 키움 rate limit
         except Exception as e:
-            print(f"[HIST_MAX] {stock_code} ka10081 page {page+1} 실패: {e}")
+            print(f"[HIST_MAX] ERROR: {stock_code} ka10081 page {page+1} 실패: {e}")
             break
 
     if not all_items:
+        print(f"[HIST_MAX] ERROR: {stock_code} 일봉 0건 — historical max 계산 불가")
         return None
 
     # max(cur_prc) 추출 — 종가 기준 (현재가도 종가라 일관됨).

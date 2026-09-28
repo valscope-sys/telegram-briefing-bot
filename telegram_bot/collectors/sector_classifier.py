@@ -31,6 +31,29 @@ def _load_today_universe() -> Optional[dict]:
     return load_universe()
 
 
+def _warn_if_universe_unhealthy(universe: dict, max_age_days: int = 7) -> None:
+    """universe 가 비었거나 오래됐으면 ERROR 로그.
+
+    2026-05 ~ 09 동안 KRX 로그인 필수화로 전 섹터 0건 universe 가 쓰이며 모든 신고가가
+    '기타'로만 분류됐는데 아무 로그도 없어 넉 달간 발견되지 않았음 → 조용한 실패 방지.
+    """
+    sectors = universe.get("sectors", {}) or {}
+    filled = sum(1 for v in sectors.values() if v)
+    trd_dd = str(universe.get("trd_dd", ""))
+    if sectors and filled == 0:
+        print(f"[CLASSIFIER] ERROR: sector_universe(trd_dd={trd_dd}) 전 {len(sectors)}개 섹터 0건 "
+              f"— 모든 종목 '기타' 처리됨 (sector_universe_fetcher 확인)")
+    elif sectors and filled < len(sectors) * 0.5:
+        print(f"[CLASSIFIER] ERROR: sector_universe(trd_dd={trd_dd}) {filled}/{len(sectors)}개 섹터만 데이터 있음")
+    try:
+        import datetime
+        age = (datetime.date.today() - datetime.datetime.strptime(trd_dd, "%Y%m%d").date()).days
+        if age > max_age_days:
+            print(f"[CLASSIFIER] ERROR: sector_universe 가 {age}일 전(trd_dd={trd_dd}) 데이터 — 06:00 갱신 잡 확인")
+    except ValueError:
+        print(f"[CLASSIFIER] ERROR: sector_universe trd_dd 형식 이상: {trd_dd!r}")
+
+
 def classify_stocks_batch(stocks: list) -> dict:
     """신고가 종목들을 섹터별로 그룹핑.
 
@@ -48,10 +71,11 @@ def classify_stocks_batch(stocks: list) -> dict:
     """
     universe = _load_today_universe()
     if not universe or not universe.get("sectors"):
-        print("[CLASSIFIER] sector_universe 로드 실패 — 모두 '기타'로 처리")
+        print("[CLASSIFIER] ERROR: sector_universe 로드 실패 — 모두 '기타'로 처리")
         return {"기타": list(stocks)}
 
     sectors = universe.get("sectors", {})
+    _warn_if_universe_unhealthy(universe)
     result = defaultdict(list)
 
     for stock in stocks:
@@ -77,6 +101,7 @@ def get_sector_priority() -> list:
     """sector_config.json 등록 순서로 섹터 우선순위 반환. '기타'는 마지막."""
     config_path = os.path.join(_HISTORY_DIR, "sector_config.json")
     if not os.path.exists(config_path):
+        print(f"[CLASSIFIER] ERROR: sector_config.json 없음 ({config_path}) — 섹터 순서 없이 진행")
         return ["기타"]
     try:
         with open(config_path, "r", encoding="utf-8") as f:
@@ -84,7 +109,8 @@ def get_sector_priority() -> list:
         order = [s["name"] for s in data.get("sectors", []) if s.get("name")]
         order.append("기타")
         return order
-    except Exception:
+    except Exception as e:
+        print(f"[CLASSIFIER] ERROR: sector_config.json 로드 실패: {e}")
         return ["기타"]
 
 
@@ -97,8 +123,10 @@ def _classify_stocks_legacy(filtered_stocks: list) -> dict:
     """
     universe = _load_today_universe()
     if not universe:
+        print("[CLASSIFIER] ERROR: sector_universe 로드 실패 — 모두 '기타'로 처리")
         return {s.get("종목코드", ""): "기타" for s in filtered_stocks}
     sectors = universe.get("sectors", {})
+    _warn_if_universe_unhealthy(universe)
 
     out = {}
     for s in filtered_stocks:

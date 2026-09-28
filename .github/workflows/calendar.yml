@@ -12,6 +12,9 @@ jobs:
   update:
     runs-on: ubuntu-latest
     timeout-minutes: 25
+    env:
+      # 구독 토큰(claude setup-token)이 등록돼 있으면 Claude Code CLI로 AI 스캔 — API 크레딧 불필요
+      HAS_CLAUDE_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN != '' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -24,10 +27,17 @@ jobs:
       - name: Install dependencies
         run: pip install -r telegram_bot/requirements.txt
 
+      - name: Install Claude Code CLI (구독 토큰이 있을 때만)
+        if: env.HAS_CLAUDE_TOKEN == 'true'
+        run: |
+          curl -fsSL https://claude.ai/install.sh | bash
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
       - name: Update calendar data
         env:
           FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
         run: python -m cal_data.update --full
 
       - name: Copy to docs

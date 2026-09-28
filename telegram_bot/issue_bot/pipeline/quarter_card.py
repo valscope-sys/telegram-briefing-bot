@@ -165,24 +165,37 @@ def fetch_quarter_disclosure_url(corp_code: str, period: str) -> Optional[str]:
     fin_date = datetime.date(fin_year, fin_month, 1) - datetime.timedelta(days=1) \
         if fin_month != 1 else datetime.date(fin_year - 1, 12, 31)
 
-    # 매일 조회는 비용 큼 — 핵심 발표 기간 가운데 1주만 샘플
-    candidates_keywords = [
-        "(잠정)실적", "잠정실적",
-        "분기보고서", "반기보고서", "사업보고서",
-    ]
+    # 예전 구현은 7일 간격 하루치만 샘플 조회해서 발표일을 자주 놓쳤음
+    # (예: 삼성전자 2Q26 잠정 7/7·반기보고서 8/14 → 7/1·7/8·…·8/12·8/19 샘플 → 전부 누락).
+    # corp_code 지정 시 DART 기간 제한이 없으므로 발표 가능 기간 전체를 공시유형별 1~2회 호출로 조회.
+    def _earliest(items, keywords, require_label=None):
+        hits = [
+            it for it in items
+            if any(kw in it.get("report_nm", "") for kw in keywords)
+            and "기재정정" not in it.get("report_nm", "")
+            and (require_label is None or require_label in it.get("report_nm", ""))
+        ]
+        hits.sort(key=lambda it: (it.get("rcept_dt", ""), it.get("rcept_no", "")))
+        return hits[0].get("url", "") if hits else None
 
-    found_urls = []
-    cur = start_date
-    while cur <= fin_date and len(found_urls) < 1:
-        items = fetch_dart_list(cur, corp_code=corp_code, page_count=20)
-        for it in items:
-            rep = it.get("report_nm", "")
-            if any(kw in rep for kw in candidates_keywords):
-                found_urls.append(it.get("url", ""))
-                break
-        cur += datetime.timedelta(days=7)
+    # 1) 잠정실적 (거래소 공정공시, pblntf_ty=I)
+    items_i = fetch_dart_list(start_date, corp_code=corp_code, end_date=fin_date,
+                              pblntf_ty="I", max_pages=3)
+    url = _earliest(items_i, ["(잠정)실적", "잠정실적"])
+    if url:
+        return url
 
-    return found_urls[0] if found_urls else None
+    # 2) 정기보고서 (분기/반기/사업보고서, pblntf_ty=A) — "(2026.06)" 처럼 해당 분기 라벨 일치만
+    items_a = fetch_dart_list(start_date, corp_code=corp_code, end_date=fin_date,
+                              pblntf_ty="A", max_pages=2)
+    url = _earliest(items_a, ["분기보고서", "반기보고서", "사업보고서"],
+                    require_label=f"({year}.{month_end})")
+    if url:
+        return url
+
+    print(f"[QUARTER_CARD] {corp_code} {period} 잠정실적/정기보고서 공시 없음 "
+          f"({start_date}~{fin_date}, I {len(items_i)}건 / A {len(items_a)}건 조회)")
+    return None
 
 
 def _format_quarter_block(period: str, info: dict, url: str = "") -> str:

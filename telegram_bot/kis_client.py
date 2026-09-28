@@ -26,15 +26,28 @@ def get_access_token():
     if _token_cache["token"] and _token_cache["expires"] and _token_cache["expires"] > now:
         return _token_cache["token"]
 
-    _rate_limit_wait()
     url = f"{KIS_BASE_URL}/oauth2/tokenP"
     body = {
         "grant_type": "client_credentials",
         "appkey": KIS_APP_KEY,
         "appsecret": KIS_APP_SECRET,
     }
-    res = requests.post(url, json=body, headers={"Content-Type": "application/json"})
-    res.raise_for_status()
+    for attempt in range(2):
+        _rate_limit_wait()
+        res = requests.post(url, json=body, headers={"Content-Type": "application/json"}, timeout=10)
+        if res.status_code == 200:
+            break
+        # KIS 오류 본문 (예: EGW00133 "접근토큰 발급 잠시 후 다시 시도하세요(1분당 1회)") 을 로그에 남김.
+        # 토큰 캐시가 프로세스 메모리뿐이라 두 프로세스가 1분 안에 연달아 뜨면 두 번째가 403.
+        err_body = res.text[:200]
+        if attempt == 0 and res.status_code == 403 and "EGW00133" in err_body:
+            print("[KIS] 토큰 발급 1분당 1회 제한(EGW00133) — 61초 대기 후 재시도")
+            time.sleep(61)
+            continue
+        print(f"[KIS] ERROR: 접근토큰 발급 실패 HTTP {res.status_code}: {err_body}")
+        raise requests.HTTPError(
+            f"KIS 토큰 발급 실패 HTTP {res.status_code}: {err_body}", response=res
+        )
     data = res.json()
     _token_cache["token"] = data["access_token"]
     _token_cache["expires"] = datetime.datetime.strptime(

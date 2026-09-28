@@ -17,11 +17,16 @@ def fetch_new_listings() -> list[dict]:
         )
         res.encoding = "euc-kr"
     except Exception as e:
-        print(f"[38cr] 신규상장 요청 실패: {e}")
+        print(f"[38cr] ERROR: 신규상장 요청 실패: {e}")
+        return []
+    if res.status_code != 200:
+        print(f"[38cr] ERROR: 신규상장 HTTP {res.status_code}")
         return []
 
     soup = BeautifulSoup(res.text, "lxml")
     results = []
+    seen = set()  # 중첩 table 구조라 같은 행이 여러 번 잡힘 → (date, name) 중복 제거
+    date_rows = 0
 
     for table in soup.select("table"):
         rows = table.select("tr")
@@ -35,6 +40,7 @@ def fetch_new_listings() -> list[dict]:
             m = re.match(r"(20\d{2})/(\d{2})/(\d{2})", date_text)
             if not m:
                 continue
+            date_rows += 1
             if not name or len(name) < 2:
                 continue
 
@@ -51,6 +57,9 @@ def fetch_new_listings() -> list[dict]:
             except ValueError:
                 continue
 
+            if (ev_date, name) in seen:
+                continue
+            seen.add((ev_date, name))
             results.append({
                 "date": ev_date,
                 "time": "",
@@ -60,6 +69,8 @@ def fetch_new_listings() -> list[dict]:
                 "auto": True,
             })
 
+    if date_rows == 0:
+        print("[38cr] ERROR: 신규상장 표에서 날짜 행(YYYY/MM/DD)을 하나도 못 찾음 — 페이지 구조 변경 의심")
     return results
 
 
@@ -72,7 +83,10 @@ def fetch_ipo_subscriptions() -> list[dict]:
         )
         res.encoding = "euc-kr"
     except Exception as e:
-        print(f"[38cr] 공모청약 요청 실패: {e}")
+        print(f"[38cr] ERROR: 공모청약 요청 실패: {e}")
+        return []
+    if res.status_code != 200:
+        print(f"[38cr] ERROR: 공모청약 HTTP {res.status_code}")
         return []
 
     soup = BeautifulSoup(res.text, "lxml")
@@ -81,6 +95,7 @@ def fetch_ipo_subscriptions() -> list[dict]:
     results = []
     today = datetime.date.today()
     seen = set()
+    date_cells = 0
 
     for table in soup.select("table"):
         rows = table.select("tr")
@@ -93,6 +108,7 @@ def fetch_ipo_subscriptions() -> list[dict]:
                 m = re.match(r"(20\d{2})\.(\d{2})\.(\d{2})~(\d{2})\.(\d{2})", td_text)
                 if not m:
                     continue
+                date_cells += 1
                 # 이 td 앞의 td가 종목명
                 if j == 0:
                     continue
@@ -131,6 +147,8 @@ def fetch_ipo_subscriptions() -> list[dict]:
                     "auto": True,
                 })
 
+    if date_cells == 0:
+        print("[38cr] ERROR: 공모청약 표에서 청약기간(YYYY.MM.DD~MM.DD)을 하나도 못 찾음 — 페이지 구조 변경 의심")
     return results
 
 

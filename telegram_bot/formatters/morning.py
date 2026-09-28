@@ -120,9 +120,10 @@ def format_morning_briefing(global_data, domestic_data, morning_commentary=""):
 
     # 😱 심리지표 (Fear & Greed만)
     fg = sentiment.get("Fear & Greed", {})
-    if fg and fg.get("value") is not None:
-        fg_val = fg["value"]
-        fg_label = fg.get("label", "")
+    # 수집기는 '점수'/'등급' 키로 줌 (구버전 value/label도 호환)
+    fg_val = fg.get("점수", fg.get("value")) if fg else None
+    if fg_val is not None:
+        fg_label = fg.get("등급", fg.get("label", ""))
         label_str = f" ({fg_label})" if fg_label else ""
         lines.append(f"😱 *심리지표*")
         lines.append(f"Fear & Greed  {fg_val}{label_str}")

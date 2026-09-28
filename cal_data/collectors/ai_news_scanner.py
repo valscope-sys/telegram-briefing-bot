@@ -3,7 +3,6 @@ import os
 import json
 import datetime
 import feedparser
-import anthropic
 from dotenv import load_dotenv
 
 _env_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), ".env")
@@ -15,50 +14,58 @@ ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
 # 스캐너 모델 — 비용 최저 원칙(사용자 정책). 환경변수 CALENDAR_SCANNER_MODEL로 교체 가능
 CALENDAR_SCANNER_MODEL = os.getenv("CALENDAR_SCANNER_MODEL", "claude-haiku-4-5-20251001")
 
-# RSS 소스 (기존 텔레그램 봇 소스 + 추가)
+# RSS 소스 — 경제·산업 + 신제품/학회/전시 발표가 잘 잡히는 IT·반도체 매체
+# (구 Reuters 피드는 폐쇄, 한경은 기본 UA 차단 → 브라우저 UA로 요청)
 RSS_FEEDS = [
     # 국내 경제/산업
-    "https://www.hankyung.com/feed/market",
-    "https://www.hankyung.com/feed/economy",
+    "https://www.hankyung.com/feed/finance",
+    "https://www.hankyung.com/feed/it",
     "https://rss.donga.com/economy.xml",
     "https://www.mk.co.kr/rss/30100041/",
-    # 해외
-    "https://feeds.reuters.com/reuters/businessNews",
+    "https://rss.etnews.com/Section901.xml",
+    "https://feeds.feedburner.com/zdkorea",
+    # 해외 시장·테크
     "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=100003114",
-    # 게임
-    "https://www.gamesindustry.biz/feed",
-    # 테크
     "https://techcrunch.com/feed/",
+    "https://www.theverge.com/rss/index.xml",
+    "https://www.tomshardware.com/feeds/all",
 ]
+_UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/126 Safari/537.36"}
 
-SYSTEM_PROMPT = """당신은 증시 캘린더 AI 어시스턴트입니다.
-뉴스 헤드라인 목록을 받아서, 증시에 영향을 줄 수 있는 **미래 일정/이벤트**만 추출합니다.
+SYSTEM_PROMPT = """당신은 한국 증시 캘린더 AI 어시스턴트입니다.
+뉴스 헤드라인 목록을 받아서, 한국 상장사 주가에 영향을 줄 **미래 일정/이벤트**만 추출합니다.
 
 추출 기준:
-- 구체적인 날짜(또는 "~월 중", "~월 초/중순/말")가 언급된 미래 이벤트만
-- 이미 일어난 과거 사건은 제외
-- 한국/미국 증시에 직접 영향을 주는 이벤트만 (상장기업 관련)
-- 제외: 스포츠(골프/야구/축구), 일반 패션/뷰티, 소규모 팝업, 지역 축제
-- 포함: 대형 기업 제품 출시, 글로벌 컨퍼런스, 정상회담, 대형 영화/게임 출시(관련주 명확한 것만)
+- 구체적인 날짜(또는 "~월 중", "~월 초/중순/말")가 언급된 미래 이벤트만. 이미 일어난 일은 제외
+- 한국 공급망·관련주가 반응하는 것만 (관련주를 summary에 명시할 수 있어야 함)
+- 적극 포함:
+  · 빅테크 신제품 공개·키노트 (예: 메타 커넥트 AI 글라스, 애플 신제품 이벤트, 삼성 갤럭시 언팩,
+    엔비디아·AMD 키노트, 테슬라 로보택시/옵티머스 행사)
+  · 산업 학회·전시 (예: 광통신 OFC·ECOC, 디스플레이 SID, 배터리 인터배터리, 반도체 SEMICON,
+    바이오 ASCO·ESMO·ASH, 방산 ADEX·AUSA, 조선 SMM, 원전 WNE)
+  · FDA 허가 결정일(PDUFA)·임상 결과 발표 예정일, 대형 수주·계약 발표 예정
+  · 정책·외교 일정 (정상회담, 관세 발효, 규제 시행일)
+- 제외: 스포츠, 패션/뷰티 팝업, 지역 축제, 분양·청약, 게임쇼, 콘서트, 개인 금융상품 출시
+- 제외: 기업 실적발표 일정 (별도 수집기가 담당)
 
-카테고리:
-- 산업컨퍼런스: CES, GTC, WWDC, MWC 등
-- 게임: 대형 게임 출시, 게임쇼
-- 반도체: 반도체 관련 발표, 파운드리 가동
-- 자동차/배터리: 신차 출시, 배터리 수주, 모터쇼
-- 제약/바이오: FDA 승인, 임상 결과, 헬스케어 컨퍼런스
-- 에너지: OPEC, 유가 관련
-- 방산: 무기 계약, 방산 전시회
-- 전시/박람회: IFA, 한국전자전 등
-- K-콘텐츠: 대형 앨범, 콘서트 (관련주 영향 있는 것만)
-- 정치/외교: 정상회담, G7/G20, 무역협상, 관세
-- 부동산: 부동산 정책, 대규모 분양
-- 수동: 위 카테고리에 안 맞지만 증시 영향 있는 것
+카테고리 (이 중 하나만):
+- 산업컨퍼런스: 빅테크 키노트·신제품 공개, IT/광통신/디스플레이 학회·전시
+- 반도체: 반도체 학회·발표·팹 가동
+- 자동차/배터리: 신차·배터리 행사, 모터쇼
+- 제약/바이오: FDA 결정일, 임상 발표, 바이오 학회
+- 에너지: OPEC, 원전·전력 행사
+- 방산: 방산 전시회, 무기 계약
+- 정치/외교: 정상회담, G7/G20, 무역협상, 관세·규제 시행
+- 수동: 위에 안 맞지만 증시 영향이 분명한 것
 
+"이미 등록된 일정" 목록에 있는 행사는 이름이 조금 달라도 같은 행사면 추출하지 마세요.
 응답은 반드시 JSON 배열만 출력하세요. 추출할 일정이 없으면 빈 배열 [].
 """
 
 USER_PROMPT_TEMPLATE = """오늘 날짜: {today}
+
+이미 등록된 일정 (중복 추출 금지):
+{existing}
 
 아래 뉴스 헤드라인에서 증시 관련 미래 일정을 추출하세요.
 
@@ -71,7 +78,7 @@ JSON 형식 (배열만 출력):
     "month": "2026-04",    // 날짜 미확정 시 월만 (YYYY-MM) 또는 null
     "title": "삼성전자 갤럭시 언팩",
     "category": "산업컨퍼런스",
-    "summary": "삼성전자 신제품 발표회. 관련주: 삼성전자, 삼성전기",
+    "summary": "삼성전자 신제품 발표회. 관련주: 삼성전자, 삼성전기, LG이노텍",
     "confidence": "high"   // high / medium / low
   }}
 ]"""
@@ -79,11 +86,16 @@ JSON 형식 (배열만 출력):
 
 def fetch_headlines() -> list[str]:
     """RSS에서 최근 기사 수집 (헤드라인 + 본문 요약)"""
+    import requests
     headlines = []
 
     for url in RSS_FEEDS:
         try:
-            feed = feedparser.parse(url)
+            res = requests.get(url, headers=_UA, timeout=15)
+            feed = feedparser.parse(res.content)
+            if res.status_code != 200 or not feed.entries:
+                print(f"[AI Scanner] ERROR: RSS 수집 실패 (HTTP {res.status_code}, {len(feed.entries)}건) {url}")
+                continue
             for entry in feed.entries[:15]:
                 title = entry.get("title", "").strip()
                 summary = entry.get("summary", "").strip()
@@ -97,21 +109,22 @@ def fetch_headlines() -> list[str]:
                     if summary and summary != title:
                         text += f"\n[내용] {summary}"
                     headlines.append(text)
-        except Exception:
-            continue
+        except Exception as e:
+            print(f"[AI Scanner] ERROR: RSS 수집 예외 {url} — {e}")
 
-    return headlines[:100]
+    return headlines[:150]
 
 
-def extract_events_with_ai(headlines: list[str]) -> list[dict]:
+def extract_events_with_ai(headlines: list[str], existing: list[str] | None = None) -> list[dict]:
     """Claude API로 헤드라인에서 일정 추출"""
     if not headlines:
         return []
-    if not ANTHROPIC_API_KEY:
-        print("[AI Scanner] ERROR: ANTHROPIC_API_KEY 미설정 — AI 일정 추출 건너뜀")
+    from telegram_bot.llm_client import get_client, llm_available
+    if not llm_available():
+        print("[AI Scanner] ERROR: ANTHROPIC_API_KEY도 Claude Code CLI도 없음 — AI 일정 추출 건너뜀")
         return []
 
-    client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+    client = get_client(ANTHROPIC_API_KEY)
     today = datetime.date.today().isoformat()
 
     headlines_text = "\n".join(f"- {h}" for h in headlines)
@@ -123,7 +136,9 @@ def extract_events_with_ai(headlines: list[str]) -> list[dict]:
             system=SYSTEM_PROMPT,
             messages=[{
                 "role": "user",
-                "content": USER_PROMPT_TEMPLATE.format(today=today, headlines=headlines_text),
+                "content": USER_PROMPT_TEMPLATE.format(
+                    today=today, headlines=headlines_text,
+                    existing="\n".join(existing or []) or "(없음)"),
             }],
         )
 
@@ -155,8 +170,11 @@ def extract_events_with_ai(headlines: list[str]) -> list[dict]:
         return []
 
 
-def scan_news_for_events() -> list[dict]:
-    """뉴스 스캔 → AI 분석 → calendar.json 형식 변환"""
+def scan_news_for_events(existing_events: list[dict] | None = None) -> list[dict]:
+    """뉴스 스캔 → AI 분석 → calendar.json 형식 변환
+
+    existing_events: 이번 실행에서 다른 수집기가 가져온 일정 — 같은 행사 중복 추출 방지용
+    """
     print("[AI Scanner] 헤드라인 수집 중...")
     headlines = fetch_headlines()
     print(f"[AI Scanner] {len(headlines)}개 헤드라인 수집")
@@ -164,14 +182,22 @@ def scan_news_for_events() -> list[dict]:
     if not headlines:
         return []
 
-    print("[AI Scanner] Claude API 분석 중...")
-    raw_events = extract_events_with_ai(headlines)
+    today = datetime.date.today().isoformat()
+    horizon = (datetime.date.today() + datetime.timedelta(days=120)).isoformat()
+    existing = sorted({
+        f"{e['date']} {e['title']}" for e in (existing_events or [])
+        if e.get("source") in ("known", "fixed") and today <= e.get("date", "") <= horizon
+        and e.get("category") not in ("만기일", "휴장일", "경제지표")
+    })[:150]
+
+    print("[AI Scanner] Claude 분석 중...")
+    raw_events = extract_events_with_ai(headlines, existing)
     print(f"[AI Scanner] {len(raw_events)}개 일정 추출")
 
     results = []
     for ev in raw_events:
         title = ev.get("title", "")
-        if not title:
+        if not title or "실적" in title:  # 실적 일정은 전용 수집기(Nasdaq/KIND/FnGuide) 담당
             continue
 
         entry = {

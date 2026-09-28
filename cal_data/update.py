@@ -50,7 +50,8 @@ def merge_events(existing: list[dict], new_events: list[dict]) -> list[dict]:
     동일 (date, category, normalized_title) → 소스 우선순위로 결정.
     """
     SOURCE_PRIORITY = {"holidays": 12, "fixed": 10, "known": 9, "fnguide": 8, "kind": 8, "tradingview": 7,
-                       "finnhub": 6, "investing": 5, "38cr": 4, "news": 3, "manual": 100}
+                       "nasdaq": 7, "finnhub": 6, "tv_earnings": 6, "investing": 5, "38cr": 4, "news": 3,
+                       "manual": 100}
 
     indexed = {}
     for ev in existing:
@@ -121,9 +122,34 @@ def merge_events(existing: list[dict], new_events: list[dict]) -> list[dict]:
     # (FnGuide가 예정으로 잡은 정식 일정인데 회사가 잠정으로 선공시한 경우)
     # 정상 발표 패턴: 잠정 후 3일+ 후 정식 분기보고서 — 보존
     result = _dedupe_provisional_official_close(result)
+    result = _dedupe_us_earnings(result)
 
     result.sort(key=lambda e: (e.get("date", ""), e.get("time", ""), e.get("category", "")))
     return result
+
+
+def _dedupe_us_earnings(events: list[dict]) -> list[dict]:
+    """미국실적 같은 날·같은 티커 중복 제거 — 장전/장후 정보가 있는 쪽 우선, 요약은 합침"""
+    groups = {}
+    for ev in events:
+        if ev.get("category") != "미국실적":
+            continue
+        title = ev.get("title", "")
+        m = re.search(r"\(([A-Z.]{1,6})\) 실적발표", title) or re.match(r"^([A-Z.]{1,6}) 실적발표", title)
+        if m:
+            groups.setdefault((ev.get("date"), m.group(1)), []).append(ev)
+    drop = set()
+    for evs in groups.values():
+        if len(evs) < 2:
+            continue
+        keep = max(evs, key=lambda e: ("(장" in e.get("title", ""), e.get("source") != "fixed"))
+        for e in evs:
+            if e is keep:
+                continue
+            drop.add(id(e))
+            if e.get("summary") and e["summary"] not in (keep.get("summary") or ""):
+                keep["summary"] = f"{keep['summary']} · {e['summary']}" if keep.get("summary") else e["summary"]
+    return [ev for ev in events if id(ev) not in drop]
 
 
 def _dedupe_provisional_official_close(events: list[dict]) -> list[dict]:
@@ -163,7 +189,7 @@ def _dedupe_provisional_official_close(events: list[dict]) -> list[dict]:
 
 # 매 실행 해당 구간 전체를 다시 주는 소스 — 정상 수집된 구간의 기존 항목은 신규분으로 교체
 # (연기·취소·날짜 교정된 일정이 옛 날짜에 유령으로 남는 문제 방지)
-SNAPSHOT_SOURCES = {"fixed", "holidays", "finnhub", "tradingview", "known", "kind"}
+SNAPSHOT_SOURCES = {"fixed", "holidays", "finnhub", "tradingview", "known", "kind", "nasdaq", "tv_earnings"}
 
 
 def _failed_ranges() -> dict[str, list[tuple[str, str]]]:
@@ -172,6 +198,11 @@ def _failed_ranges() -> dict[str, list[tuple[str, str]]]:
     try:
         from cal_data.collectors import finnhub
         failed["finnhub"] = list(finnhub.LAST_FAILED_RANGES)
+    except Exception:
+        pass
+    try:
+        from cal_data.collectors import us_earnings
+        failed["nasdaq"] = failed["tv_earnings"] = list(us_earnings.LAST_FAILED_RANGES)
     except Exception:
         pass
     try:
@@ -195,6 +226,8 @@ def prune_for_refresh(existing: list[dict], new_events: list[dict],
     ok_sources = {ev.get("source") for ev in new_events} & SNAPSHOT_SOURCES
     if "tradingview" in ok_sources:
         ok_sources.add("investing")  # TradingView 정상이면 구 Investing 항목은 대체
+    if "nasdaq" in ok_sources:
+        ok_sources.add("finnhub")  # Nasdaq 정상이면 구 Finnhub 항목은 대체
     failed = _failed_ranges()
 
     def _in_failed(src, d):
@@ -261,16 +294,14 @@ def collect_all(from_date: datetime.date, to_date: datetime.date, skip_ai: bool 
     except Exception as e:
         print(f"[Calendar] KIND IR 실패: {e}")
 
-    # 3. Finnhub (미국 실적)
+    # 3. 해외 실적 — Nasdaq(키 불필요) 우선, 먼 구간은 TradingView, 둘 다 실패 시 Finnhub
     try:
-        from cal_data.collectors.finnhub import fetch_finnhub_all
-        finnhub = fetch_finnhub_all(from_date, to_date)
-        print(f"[Calendar] Finnhub: {len(finnhub)}건")
-        all_events.extend(finnhub)
-    except ImportError:
-        pass
+        from cal_data.collectors.us_earnings import fetch_us_earnings_all
+        us = fetch_us_earnings_all(from_date, to_date)
+        print(f"[Calendar] 해외실적 합계: {len(us)}건")
+        all_events.extend(us)
     except Exception as e:
-        print(f"[Calendar] Finnhub 실패: {e}")
+        print(f"[Calendar] 해외실적 실패: {e}")
 
     # 3.5. 경제지표 — TradingView 주 소스, 전면 실패 시에만 Investing.com fallback
     #      (Investing은 데이터센터 IP에서 429 차단이 잦아 주 소스에서 제외)
@@ -306,6 +337,15 @@ def collect_all(from_date: datetime.date, to_date: datetime.date, skip_ai: bool 
     except Exception as e:
         print(f"[Calendar] IPO 실패: {e}")
 
+    # 4.5. 산업 이벤트 — 광통신·XR·배터리·디스플레이·반도체 학회·조선·방산·원전 전시 (공식 일정)
+    try:
+        from cal_data.collectors.industry_events import fetch_industry_events
+        ind = fetch_industry_events(from_date, to_date)
+        print(f"[Calendar] 산업이벤트: {len(ind)}건")
+        all_events.extend(ind)
+    except Exception as e:
+        print(f"[Calendar] 산업이벤트 실패: {e}")
+
     # 5. 뉴스/컨퍼런스/게임/엔터
     try:
         from cal_data.collectors.news_events import fetch_news_events
@@ -323,7 +363,7 @@ def collect_all(from_date: datetime.date, to_date: datetime.date, skip_ai: bool 
     else:
         try:
             from cal_data.collectors.ai_news_scanner import scan_news_for_events
-            ai_events = scan_news_for_events()
+            ai_events = scan_news_for_events(all_events)
             print(f"[Calendar] AI스캔: {len(ai_events)}건")
             all_events.extend(ai_events)
         except ImportError:

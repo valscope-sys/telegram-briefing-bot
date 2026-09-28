@@ -78,6 +78,8 @@ def fetch_stock_high_info(stock_code: str) -> Optional[dict]:
     try:
         d = kiwoom_post("ka10001", {"stk_cd": stock_code})
         if d.get("return_code") != 0:
+            print(f"[SELF_HIGH] ERROR: {stock_code} ka10001 오류 응답: "
+                  f"[{d.get('return_code')}] {d.get('return_msg')}")
             return None
 
         cur = _safe_int(d.get("cur_prc"))
@@ -98,7 +100,7 @@ def fetch_stock_high_info(stock_code: str) -> Optional[dict]:
             "oyr_hgst": _safe_int(d.get("oyr_hgst")),
         }
     except Exception as e:
-        print(f"[SELF_HIGH] {stock_code} ka10001 실패: {str(e)[:80]}")
+        print(f"[SELF_HIGH] ERROR: {stock_code} ka10001 실패: {str(e)[:80]}")
         return None
 
 
@@ -213,6 +215,7 @@ def load_krx_listing() -> list:
     """
     path = os.path.join(_HISTORY_DIR, "krx_listing.json")
     if not os.path.exists(path):
+        print(f"[SELF_HIGH] ERROR: krx_listing.json 없음 ({path})")
         return []
     try:
         with open(path, "r", encoding="utf-8") as f:
@@ -241,7 +244,7 @@ def load_krx_listing() -> list:
                 for it in data if isinstance(it, dict) and it.get("code")
             ]
     except Exception as e:
-        print(f"[SELF_HIGH] krx_listing 로드 실패: {e}")
+        print(f"[SELF_HIGH] ERROR: krx_listing 로드 실패: {e}")
     return []
 
 

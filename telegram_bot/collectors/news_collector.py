@@ -42,32 +42,103 @@ _PROMPT_VERSION = os.environ.get("COMMENTARY_PROMPT_VERSION", "v2").lower()
 #   · UA 헤더 없으면 WSJ 등 일부 피드가 0건 반환 → fetch_rss_news에서 agent 지정
 #   · Reuters 공식 RSS 서비스 종료 → Google News 프록시 대체
 #   · 공식 RSS가 사라진 피드는 제거 (이데일리/금융위/한은/산자부/디지털타임스)
+# 2026-09-28 재점검 (10/19 피드 0건 또는 정체 → 교체):
+#   · Google News RSS 가 "Sorry… unusual traffic" 503 을 반환하는 IP 차단 발생 → 공식 피드가 있는
+#     매체는 공식 피드로 교체 (Bloomberg/FT/Digitimes). 공식 피드 없는 Reuters 는 Google 유지 +
+#     실패 시 같은 검색어의 Bing News RSS 로 자동 fallback (fetch_rss_news).
+#   · WSJ: 구 feeds.a.dj.com 은 2025-01 이후 갱신 중단 → Dow Jones 신규 피드 도메인
+#   · 이데일리: https 호스트는 연결 리셋(WinError 10054) → http 만 응답
+#   · TrendForce: /news/feed/ → /news/feed_v2/ 301, 쿼리 없는 URL은 7/1자 캐시 고정 → cache_bust
+#   · SemiAnalysis: semianalysis.com/feed 는 2025-09 이후 갱신 중단 → Substack 뉴스레터 피드
+#   · FiercePharma: /rss/xml 이 Cloudflare 봇 챌린지(403) → Bing News site:fiercepharma.com 검색 RSS
 RSS_FEEDS = [
     # ── 국내 종합·산업 ──
     {"name": "한국경제", "url": "https://www.hankyung.com/feed/all-news", "group": "국내"},
     {"name": "매일경제", "url": "https://www.mk.co.kr/rss/30000001/", "group": "국내"},
     {"name": "연합뉴스 경제", "url": "https://www.yna.co.kr/rss/economy.xml", "group": "국내"},
-    {"name": "이데일리 증시", "url": "https://rss.edaily.co.kr/stock_news.xml", "group": "국내"},
+    {"name": "이데일리 증시", "url": "http://rss.edaily.co.kr/stock_news.xml", "group": "국내"},
     {"name": "전자신문", "url": "https://rss.etnews.com/Section902.xml", "group": "국내"},
     # ── 해외 종합 ──
     {"name": "CNBC", "url": "https://www.cnbc.com/id/100003114/device/rss/rss.html", "group": "해외"},
-    {"name": "WSJ", "url": "https://news.google.com/rss/search?q=site:wsj.com+markets&hl=en-US&gl=US&ceid=US:en", "group": "해외"},
+    {"name": "WSJ", "url": "https://feeds.content.dowjones.io/public/rss/RSSMarketsMain", "group": "해외"},
     {"name": "Reuters", "url": "https://news.google.com/rss/search?q=site:reuters.com+business&hl=en-US&gl=US&ceid=US:en", "group": "해외"},
-    {"name": "Bloomberg Tech", "url": "https://news.google.com/rss/search?q=site:bloomberg.com+technology&hl=en-US&gl=US&ceid=US:en", "group": "해외"},
+    {"name": "Bloomberg Tech", "url": "https://feeds.bloomberg.com/technology/news.rss", "group": "해외"},
     {"name": "Nikkei Asia", "url": "https://asia.nikkei.com/rss/feed/nar", "group": "해외"},
-    {"name": "Financial Times", "url": "https://news.google.com/rss/search?q=site:ft.com+markets&hl=en-US&gl=US&ceid=US:en", "group": "해외"},
+    {"name": "Financial Times", "url": "https://www.ft.com/markets?format=rss", "group": "해외"},
     # ── 산업·리서치 (반도체·전기전자) ──
     # 시황 정확도 ↑ — 미래/SK 등 증권사가 인용하는 1차 소스 추가
-    {"name": "TrendForce", "url": "https://www.trendforce.com/news/feed/", "group": "해외"},
-    {"name": "Digitimes", "url": "https://news.google.com/rss/search?q=site:digitimes.com+chips+OR+semiconductor&hl=en-US&gl=US&ceid=US:en", "group": "해외"},
-    {"name": "SemiAnalysis", "url": "https://semianalysis.com/feed/", "group": "해외"},
+    {"name": "TrendForce", "url": "https://www.trendforce.com/news/feed_v2/", "group": "해외", "cache_bust": True},
+    {"name": "Digitimes", "url": "https://www.digitimes.com/rss/daily.xml", "group": "해외"},
+    {"name": "SemiAnalysis", "url": "https://newsletter.semianalysis.com/feed", "group": "해외"},
     # ── 섹터 전문 ──
     {"name": "Electrek", "url": "https://electrek.co/feed/", "group": "해외"},
     {"name": "InsideEVs", "url": "https://insideevs.com/feed/", "group": "해외"},
-    {"name": "FiercePharma", "url": "https://www.fiercepharma.com/rss/xml", "group": "해외"},
+    {"name": "FiercePharma", "url": "https://www.bing.com/news/search?q=site%3Afiercepharma.com&format=rss&setlang=en-US&cc=US", "group": "해외"},
     {"name": "Defense News", "url": "https://www.defensenews.com/arc/outboundfeeds/rss/?outputType=xml", "group": "해외"},
     {"name": "World Nuclear News", "url": "https://www.world-nuclear-news.org/rss", "group": "해외"},
 ]
+
+# 피드 최신 기사가 이 일수보다 오래되면 "갱신 중단" 으로 보고 ERROR 로그 (주말·연휴 공백은 허용)
+_FEED_STALE_DAYS = 7
+
+
+def _feed_url(feed_info):
+    """피드 URL (cache_bust 피드는 시간 단위 쿼리 부착 — CDN 고정 캐시 회피)."""
+    url = feed_info["url"]
+    if feed_info.get("cache_bust"):
+        sep = "&" if "?" in url else "?"
+        url = f"{url}{sep}_={datetime.datetime.now().strftime('%Y%m%d%H')}"
+    return url
+
+
+def _google_to_bing_url(google_url):
+    """Google News RSS 검색 URL → 같은 검색어의 Bing News RSS URL (Google 503 차단 대비)."""
+    from urllib.parse import urlparse, parse_qs, quote_plus
+    qs = parse_qs(urlparse(google_url).query)
+    q = (qs.get("q") or [""])[0]
+    if (qs.get("hl") or ["en"])[0].lower().startswith("ko"):
+        return f"https://www.bing.com/news/search?q={quote_plus(q)}&format=rss&setlang=ko-KR&cc=KR"
+    return f"https://www.bing.com/news/search?q={quote_plus(q)}&format=rss&setlang=en-US&cc=US"
+
+
+def _unwrap_bing_link(link):
+    """Bing News RSS 링크(apiclick.aspx?...&url=원문) → 원문 URL (본문 스크래핑용)."""
+    if "bing.com/news/apiclick" not in (link or ""):
+        return link
+    from urllib.parse import urlparse, parse_qs
+    return (parse_qs(urlparse(link).query).get("url") or [""])[0] or link
+
+
+def _parse_feed_loud(feed_info, agent):
+    """feedparser.parse + 실패 시 ERROR 로그. Google News 실패 시 Bing News 로 1회 fallback.
+
+    feedparser 는 HTTP 4xx/5xx·연결 실패에도 예외 없이 entries=[] 를 돌려주므로
+    상태를 직접 확인해 조용한 실패(예: 2026-09 Google 503, 이데일리 연결 리셋)를 드러낸다.
+    """
+    name = feed_info["name"]
+    url = _feed_url(feed_info)
+    feed = feedparser.parse(url, agent=agent)
+    status = getattr(feed, "status", None)
+    if feed.entries and not (status and status >= 400):
+        return feed
+    if status and status >= 400:
+        reason = f"HTTP {status}"
+    elif not status:
+        reason = f"연결 실패: {str(feed.get('bozo_exception', '') or '')[:100]}"
+    elif feed.get("bozo"):
+        reason = f"HTTP {status}, 파싱 실패: {str(feed.get('bozo_exception', '') or '')[:100]}"
+    else:
+        reason = f"HTTP {status}, 항목 없음"
+    print(f"[NEWS] ERROR: {name} 피드 0건 ({reason}) url={url[:120]}")
+    if "news.google.com/rss/search" in url:
+        bing_url = _google_to_bing_url(url)
+        fb = feedparser.parse(bing_url, agent=agent)
+        fb_status = getattr(fb, "status", None)
+        if fb.entries and not (fb_status and fb_status >= 400):
+            print(f"[NEWS] {name}: Bing News RSS fallback 사용 ({len(fb.entries)}건)")
+            return fb
+        print(f"[NEWS] ERROR: {name} Bing fallback 도 실패 (HTTP {fb_status}, {len(fb.entries)}건)")
+    return feed
 
 
 def _fetch_article_body(url, max_chars=500):
@@ -104,7 +175,10 @@ def _fetch_article_body(url, max_chars=500):
 
         text = body.get_text(separator=" ", strip=True)
         return text[:max_chars] if text else ""
-    except Exception:
+    except Exception as e:
+        # 유료벽(403)·타임아웃은 흔한 일이라 ERROR 대신 한 줄 기록 (enrich_news_bodies 가 집계 출력)
+        from urllib.parse import urlparse
+        print(f"[NEWS] 본문 스크래핑 실패 ({urlparse(url).netloc}): {type(e).__name__}: {str(e)[:80]}")
         return ""
 
 
@@ -124,6 +198,12 @@ def enrich_news_bodies(news_list, max_items=10):
         futures = {executor.submit(_enrich_one, n): n for n in news_list[:max_items]}
         concurrent.futures.wait(futures, timeout=15)
 
+    targets = [n for n in news_list[:max_items] if not (n.get("detail") and len(n["detail"]) > 100)]
+    if targets:
+        got = sum(1 for n in targets if n.get("body_text"))
+        print(f"[NEWS] 본문 보강 {got}/{len(targets)}건 성공")
+        if got == 0:
+            print("[NEWS] ERROR: 본문 보강 전부 실패 — 네트워크/차단 확인 필요")
     return news_list
 
 
@@ -137,9 +217,12 @@ def fetch_rss_news(max_per_feed=50, max_age_hours=48):
     UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
 
     all_news = []
+    ok_feeds = 0
     for feed_info in RSS_FEEDS:
         try:
-            feed = feedparser.parse(feed_info["url"], agent=UA)
+            feed = _parse_feed_loud(feed_info, UA)
+            kept = 0
+            newest = None
             for entry in feed.entries[:max_per_feed]:
                 title = entry.get("title", "").strip()
                 if not title:
@@ -149,6 +232,8 @@ def fetch_rss_news(max_per_feed=50, max_age_hours=48):
                 if pub_str:
                     try:
                         pub_dt = parsedate_to_datetime(pub_str)
+                        if pub_dt.tzinfo is not None:
+                            newest = pub_dt if newest is None else max(newest, pub_dt)
                         if pub_dt < cutoff:
                             continue
                     except Exception:
@@ -157,22 +242,30 @@ def fetch_rss_news(max_per_feed=50, max_age_hours=48):
                     "source": feed_info["name"],
                     "group": feed_info["group"],
                     "title": title,
-                    "link": entry.get("link", ""),
+                    "link": _unwrap_bing_link(entry.get("link", "")),
                     "published": pub_str,
                     "summary": entry.get("summary", "")[:200],
                 })
-        except Exception:
+                kept += 1
+            if kept:
+                ok_feeds += 1
+            elif feed.entries and newest is not None and (now - newest).days >= _FEED_STALE_DAYS:
+                print(f"[NEWS] ERROR: {feed_info['name']} 피드 갱신 중단 의심 — "
+                      f"최신 기사 {newest:%Y-%m-%d} ({(now - newest).days}일 전)")
+        except Exception as e:
+            print(f"[NEWS] ERROR: {feed_info['name']} 피드 처리 실패: {type(e).__name__}: {e}")
             continue
+    print(f"[NEWS] RSS 수집 {len(all_news)}건 — 기사 있는 피드 {ok_feeds}/{len(RSS_FEEDS)}")
     return all_news
 
 
 def filter_news_with_claude(news_list, count=5, context=""):
     """Claude API로 뉴스 분석 + 필터링 + 요약"""
-    if not ANTHROPIC_API_KEY:
+    from telegram_bot.llm_client import get_client, llm_available
+    if not llm_available():
         return news_list[:count]
 
-    import anthropic
-    client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+    client = get_client(ANTHROPIC_API_KEY)
 
     # 뉴스 목록 구성 (최대 150건)
     article_list = "\n".join(
@@ -263,7 +356,8 @@ def _build_upcoming_schedule_section():
     try:
         from telegram_bot.collectors.schedule_collector import fetch_upcoming_week_schedule
         upcoming = fetch_upcoming_week_schedule()
-    except Exception:
+    except Exception as e:
+        print(f"[NEWS] ERROR: 차주 일정 조회 실패 (시황 D-day 컨텍스트 생략): {e}")
         return ""
 
     if not upcoming:
@@ -317,11 +411,11 @@ def _build_period_returns_section(period_returns):
 
 def generate_market_commentary(market_data, news_list, intraday_text="", trend_text="", consensus_text="", global_data=None):
     """Claude API로 시황 해석 생성 (이브닝 브리핑용)"""
-    if not ANTHROPIC_API_KEY:
-        return "시황 해석을 생성하려면 Anthropic API 키가 필요합니다."
+    from telegram_bot.llm_client import get_client, llm_available
+    if not llm_available():
+        return "시황 해석을 생성하려면 Anthropic API 키 또는 Claude Code CLI가 필요합니다."
 
-    import anthropic
-    client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+    client = get_client(ANTHROPIC_API_KEY)
 
     indices = market_data.get("indices", {})
     investors = market_data.get("investors", {})
@@ -528,11 +622,11 @@ def generate_morning_commentary(global_data, news_list, trend_text="", domestic_
 
     domestic_data: fetch_all_domestic() 결과 — 데이터 카드와 동일 소스 주입 (정합성)
     """
-    if not ANTHROPIC_API_KEY:
+    from telegram_bot.llm_client import get_client, llm_available
+    if not llm_available():
         return ""
 
-    import anthropic
-    client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+    client = get_client(ANTHROPIC_API_KEY)
 
     indices = global_data.get("indices", {})
     us_sectors = global_data.get("us_sectors", {})

@@ -7,7 +7,7 @@
 사용자 자유 텍스트 → "/news 어제 09:00-12:00 반도체" 같은 명령어 문자열.
 """
 import re
-import anthropic
+from telegram_bot.llm_client import get_client, llm_available
 
 from telegram_bot.config import ANTHROPIC_API_KEY
 
@@ -493,11 +493,11 @@ _NLU_SYSTEM_PROMPT = """당신은 텔레그램 봇 명령어 변환기입니다.
 
 def _haiku_nlu(text: str) -> str:
     """Haiku로 자유 텍스트 → 명령어 변환. 실패 시 None."""
-    if not ANTHROPIC_API_KEY:
+    if not llm_available():
         return None
 
     try:
-        client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+        client = get_client(ANTHROPIC_API_KEY)
         response = client.messages.create(
             model="claude-haiku-4-5-20251001",
             max_tokens=80,

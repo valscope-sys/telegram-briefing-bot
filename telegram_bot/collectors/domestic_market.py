@@ -56,8 +56,9 @@ def _fetch_trade_volume_avg(code, days=20):
         volumes = [_safe_int(d.get("acml_tr_pbmn", 0)) for d in daily_list[:days] if _safe_int(d.get("acml_tr_pbmn", 0)) > 0]
         if volumes:
             return sum(volumes) // len(volumes)
-    except Exception:
-        pass
+        print(f"[DOMESTIC] ERROR: 지수 {code} 20일 평균 거래대금 — 일봉 데이터 없음")
+    except Exception as e:
+        print(f"[DOMESTIC] ERROR: 지수 {code} 20일 평균 거래대금 조회 실패: {e}")
     return 0
 
 
@@ -132,6 +133,7 @@ def fetch_kospi_kosdaq():
                 "보합": _safe_int(o.get("stnr_issu_cnt", 0)),
             }
         except Exception as e:
+            print(f"[DOMESTIC] ERROR: {name} 지수 조회 실패: {e}")
             results[name] = {"error": str(e)}
         time.sleep(0.15)
     return results
@@ -168,6 +170,7 @@ def fetch_index_period_returns():
             rows = daily.get("output2", [])
             closes = [c for c in (_safe_float(r.get("bstp_nmix_prpr")) for r in rows) if c > 0]
             if len(closes) < 21:
+                print(f"[DOMESTIC] ERROR: {name}({code}) 기간수익률 — 일봉 {len(closes)}개 (<21) 로 계산 불가")
                 continue
             cur = closes[0]  # 가장 최근
 
@@ -177,8 +180,8 @@ def fetch_index_period_returns():
                 return None
 
             results[name] = {"5일": _ret(5), "20일": _ret(20), "60일": _ret(60)}
-        except Exception:
-            pass
+        except Exception as e:
+            print(f"[DOMESTIC] ERROR: {name}({code}) 기간수익률 조회 실패: {e}")
         time.sleep(0.2)
     return results
 
@@ -210,6 +213,12 @@ def fetch_investor_trends(market_code="0001"):
             items = data.get("output", [])
             if items and isinstance(items, list) and len(items) > 0:
                 latest = items[0]
+                # 휴장일을 조회하면 KIS 가 직전 거래일 행을 돌려줌 → 행의 실제 날짜가 다르면 건너뜀
+                # (그대로 쓰면 전 거래일 수급에 오늘 날짜 라벨이 붙음)
+                row_date = latest.get("stck_bsop_date")
+                if row_date and row_date != date_str:
+                    time.sleep(0.15)
+                    continue
                 # 실제 데이터가 있는지 확인
                 frgn = _safe_int(latest.get("frgn_ntby_tr_pbmn", 0))
                 if frgn != 0 or _safe_int(latest.get("orgn_ntby_tr_pbmn", 0)) != 0:
@@ -222,14 +231,20 @@ def fetch_investor_trends(market_code="0001"):
                         "개인금액": _safe_int(latest.get("prsn_ntby_tr_pbmn", 0)),
                         "날짜": date_str,
                     }
-        except Exception:
-            pass
+        except Exception as e:
+            print(f"[DOMESTIC] ERROR: 투자자 매매동향({market_sym} {date_str}) 조회 실패: {e}")
         time.sleep(0.15)
+    print(f"[DOMESTIC] ERROR: 투자자 매매동향({market_sym}) 최근 5영업일 데이터 없음")
     return {"error": "최근 5영업일 데이터 없음"}
 
 
 def fetch_program_trade():
-    """프로그램매매 종합현황"""
+    """프로그램매매 종합현황 (KOSPI, 당일 최신 시각 누적 순매수 금액 — 단위: 백만원)
+
+    2026-09-28 fix: KIS 응답 필드는 arbt/nabt/whol_smtn_ntby_tr_pbmn (순매수 거래대금, 백만원)인데
+    존재하지 않는 arbt_ntby_qty / nrbt_ntby_qty / sum_ntby_qty 를 읽어 항상 0 → 이브닝 카드
+    '프로그램' 줄이 한 번도 표시되지 않았음. (formatters/evening.py 는 합계순매수/100 = 억원으로 표시)
+    """
     try:
         data = kis_get(
             "/uapi/domestic-stock/v1/quotations/comp-program-trade-today",
@@ -245,14 +260,29 @@ def fetch_program_trade():
         )
         items = data.get("output", [])
         if not items:
+            print("[DOMESTIC] 프로그램매매: 응답 0건 (장 시작 전 또는 휴장)")
             return {}
-        latest = items[0] if isinstance(items, list) else items
+        latest = items[0] if isinstance(items, list) else items  # 최신 시각이 첫 행
+
+        def _pick(*keys):
+            for k in keys:
+                if latest.get(k) not in (None, ""):
+                    return _safe_int(latest.get(k))
+            return None
+
+        arbt = _pick("arbt_smtn_ntby_tr_pbmn", "arbt_ntby_qty")
+        nabt = _pick("nabt_smtn_ntby_tr_pbmn", "nrbt_ntby_qty")
+        whol = _pick("whol_smtn_ntby_tr_pbmn", "sum_ntby_qty")
+        if whol is None:
+            print(f"[DOMESTIC] ERROR: 프로그램매매 응답 필드 변경 의심 — keys={list(latest)[:12]}")
+            return {"error": "프로그램매매 응답 필드 없음"}
         return {
-            "차익순매수": _safe_int(latest.get("arbt_ntby_qty", 0)),
-            "비차익순매수": _safe_int(latest.get("nrbt_ntby_qty", 0)),
-            "합계순매수": _safe_int(latest.get("sum_ntby_qty", 0)),
+            "차익순매수": arbt or 0,
+            "비차익순매수": nabt or 0,
+            "합계순매수": whol,
         }
     except Exception as e:
+        print(f"[DOMESTIC] ERROR: 프로그램매매 조회 실패: {e}")
         return {"error": str(e)}
 
 
@@ -267,12 +297,16 @@ def fetch_sector_performance():
                 {"FID_COND_MRKT_DIV_CODE": "J", "FID_INPUT_ISCD": etf_code},
             )
             o = data["output"]
+            if not _safe_int(o.get("stck_prpr", 0)):
+                # 상장폐지·오기 코드는 KIS가 에러 없이 0을 돌려줌 → 0%로 섞이지 않게 error 처리
+                raise RuntimeError(f"현재가 0 — 종목코드 {etf_code} 상장폐지/오기 의심 (config.SECTOR_ETFS 확인)")
             results[sector_name] = {
                 "현재가": _safe_int(o.get("stck_prpr", 0)),
                 "등락률": _safe_float(o.get("prdy_ctrt", 0)),
                 "부호": _sign_symbol(o.get("prdy_vrss_sign", "3")),
             }
         except Exception as e:
+            print(f"[DOMESTIC] ERROR: 섹터 ETF {sector_name}({etf_code}) 조회 실패: {e}")
             results[sector_name] = {"등락률": 0, "부호": "─", "error": str(e)}
         time.sleep(0.05)
     return results
@@ -332,12 +366,12 @@ def _load_sector_mapping():
 def _classify_themes_with_claude(stock_names):
     """Claude API로 종목명 → 투자 테마 분류 (수동 매핑 미커버 종목 폴백용)"""
     from telegram_bot.config import ANTHROPIC_API_KEY
-    if not ANTHROPIC_API_KEY or not stock_names:
+    from telegram_bot.llm_client import get_client, llm_available
+    if not llm_available() or not stock_names:
         return {name: "기타" for name in stock_names}
 
-    import anthropic
     import json
-    client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+    client = get_client(ANTHROPIC_API_KEY)
 
     names_str = ", ".join(stock_names)
     prompt = f"""다음 한국 주식 종목들을 투자 테마별로 분류해주세요.
@@ -555,7 +589,7 @@ def fetch_new_highlow():
                 results["신고가"].append(s)
 
     except Exception as e:
-        print(f"[KIWOOM] 52주 신고가 조회 실패: {e}")
+        print(f"[KIWOOM] ERROR: 52주 신고가 조회 실패: {e}")
         import traceback
         traceback.print_exc()
         # 사용자 정책 (2026-05-04): 신고가 단일 소스 = 키움.
@@ -585,8 +619,8 @@ def fetch_sector_stocks():
                     "현재가": _safe_int(o.get("stck_prpr", 0)),
                     "등락률": _safe_float(o.get("prdy_ctrt", 0)),
                 })
-            except Exception:
-                pass
+            except Exception as e:
+                print(f"[DOMESTIC] ERROR: 섹터 대표종목 {stock_name}({code}) 조회 실패: {e}")
             time.sleep(0.05)
         results[sector_name] = sector_results
     return results
@@ -622,8 +656,11 @@ def fetch_trade_value_rank():
                 "거래량": _safe_int(item.get("acml_vol", 0)),
                 "거래대금": _safe_int(item.get("acml_tr_pbmn", 0)),
             })
+        if not results:
+            print("[DOMESTIC] ERROR: 거래대금 상위 응답 0건")
         return results
     except Exception as e:
+        print(f"[DOMESTIC] ERROR: 거래대금 상위 조회 실패: {e}")
         return []
 
 
@@ -659,8 +696,11 @@ def fetch_fluctuation_rank(sort_order="1"):
                 "등락률": _safe_float(item.get("prdy_ctrt", 0)),
                 "거래대금": _safe_int(item.get("acml_tr_pbmn", 0)),
             })
+        if not results:
+            print(f"[DOMESTIC] ERROR: 등락률 순위(sort={sort_order}) 응답 0건")
         return results
-    except Exception:
+    except Exception as e:
+        print(f"[DOMESTIC] ERROR: 등락률 순위(sort={sort_order}) 조회 실패: {e}")
         return []
 
 
@@ -680,7 +720,13 @@ def fetch_sector_investor_flow():
             "stex_tp": "1",       # KRX
         }, url_path="/api/dostk/sect")
 
+        if data.get("return_code") not in (0, None):
+            print(f"[KIWOOM] ERROR: 업종별 수급(ka10051) 오류 응답: "
+                  f"[{data.get('return_code')}] {data.get('return_msg')}")
+            return []
         items = data.get("inds_netprps", [])
+        if not items:
+            print(f"[KIWOOM] ERROR: 업종별 수급(ka10051) 0건 (base_dt={today})")
         results = []
         # KOSPI 업종 집계 레벨은 제외 — 하위 업종과 중복 집계 방지
         # 종합/대형/중형/소형 = 시총 집계, 제조업/서비스업 = 산업 집계
@@ -706,7 +752,7 @@ def fetch_sector_investor_flow():
         results.sort(key=lambda x: x["외국인"], reverse=True)
         return results
     except Exception as e:
-        print(f"[KIWOOM] 업종별 수급 조회 실패: {e}")
+        print(f"[KIWOOM] ERROR: 업종별 수급 조회 실패: {e}")
         return []
 
 
