@@ -56588,6 +56588,15 @@
     "summary": "Jefferies Luxury and Beauty Trip 참석 · 한국콜마 종합기술원"
   },
   {
+    "date": "2026-10-06",
+    "time": "15:00",
+    "category": "IR",
+    "title": "쏘닉스 IR (기업설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "당사 경영현황에 대한 투자자 이해증진 · 여의도"
+  },
+  {
     "date": "2026-10-07",
     "time": "",
     "category": "IPO/공모",
@@ -56669,6 +56678,15 @@
   },
   {
     "date": "2026-10-07",
+    "time": "09:10",
+    "category": "IR",
+    "title": "한미사이언스 IR (NDR)",
+    "source": "kind",
+    "auto": true,
+    "summary": "iM증권 NDR(Non-Deal Roadshow) 참가 · 서울"
+  },
+  {
+    "date": "2026-10-07",
     "time": "09:30",
     "category": "IR",
     "title": "니어스랩 IR (기업설명회)",
@@ -56680,10 +56698,28 @@
     "date": "2026-10-07",
     "time": "09:30",
     "category": "IR",
+    "title": "마키나락스 IR (기업설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "회사 소개 및 사업현황에 대한 투자자 이해증진 · 한국거래소 2층 홍보관"
+  },
+  {
+    "date": "2026-10-07",
+    "time": "09:30",
+    "category": "IR",
     "title": "휴젤 IR (기업설명회)",
     "source": "kind",
     "auto": true,
     "summary": "회사 소개 및 주요 사업현황에 대한 투자자 이해 증진 · 서울"
+  },
+  {
+    "date": "2026-10-07",
+    "time": "13:00",
+    "category": "IR",
+    "title": "펄어비스 IR (컨퍼런스 참가)",
+    "source": "kind",
+    "auto": true,
+    "summary": "Korea Premium Weeks 2026 코스닥 IR데이 참석 - 일시 : 10/7(수), 13:00~17:00 · 한국거래소 서울사무소"
   },
   {
     "date": "2026-10-07",
@@ -56711,6 +56747,15 @@
     "source": "kind",
     "auto": true,
     "summary": "회사소개 및 주요 사업현황에 대한 투자자 이해 제고 · 한국거래소 2층 홍보관 (서울 여의도)"
+  },
+  {
+    "date": "2026-10-07",
+    "time": "14:00",
+    "category": "IR",
+    "title": "BNK금융지주 IR (전략 발표)",
+    "source": "kind",
+    "auto": true,
+    "summary": "BNK금융그룹 경영전략 및 주요 관심사항에 대한 시장의 이해도 제고 · 금융투자교육원 701호 (서울 여의도)"
   },
   {
     "date": "2026-10-08",
@@ -56906,6 +56951,24 @@
     "auto": true,
     "endDate": "2026-10-16",
     "link": "https://www.kes.org/"
+  },
+  {
+    "date": "2026-10-13",
+    "time": "10:00",
+    "category": "IR",
+    "title": "현대백화점 IR (컨퍼런스 참가)",
+    "source": "kind",
+    "auto": true,
+    "summary": "2026 대신증권 Corporate Day 참석 · 영등포구 여의나루로 67-8"
+  },
+  {
+    "date": "2026-10-13",
+    "time": "10:00",
+    "category": "IR",
+    "title": "현대지에프홀딩스 IR (컨퍼런스 참가)",
+    "source": "kind",
+    "auto": true,
+    "summary": "2026 대신증권 Corporate Day 참석 · 서울시 영등포구 여의나루로 67-8"
   },
   {
     "date": "2026-10-14",
@@ -58090,7 +58153,7 @@
     "auto": true,
     "country": "🇺🇸",
     "importance": 1,
-    "summary": "ISM Manufacturing PMI"
+    "summary": "이전 54.5 · ISM Manufacturing PMI"
   },
   {
     "date": "2026-11-03",
@@ -58248,17 +58311,7 @@
     "auto": true,
     "country": "🇰🇷",
     "importance": 0,
-    "summary": "포함: Inflation Rate MoM, Inflation Rate YoY"
-  },
-  {
-    "date": "2026-11-03",
-    "time": "09:00",
-    "category": "정치/외교",
-    "title": "🇺🇸 Midterm Elections",
-    "source": "tradingview",
-    "auto": true,
-    "country": "🇺🇸",
-    "importance": 1
+    "summary": "이전 2.9 · 포함: Inflation Rate MoM, Inflation Rate YoY"
   },
   {
     "date": "2026-11-04",
@@ -58471,6 +58524,15 @@
     "country": "🇺🇸",
     "importance": 1,
     "summary": "이전 7.079 · JOLTs Job Openings"
+  },
+  {
+    "date": "2026-11-04",
+    "time": "10:00",
+    "category": "한국실적",
+    "title": "카카오뱅크 실적발표",
+    "source": "kind",
+    "auto": true,
+    "summary": "2026년 3분기 경영실적 발표"
   },
   {
     "date": "2026-11-04",
