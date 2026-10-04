@@ -57174,7 +57174,7 @@
     "auto": true,
     "country": "🇨🇳",
     "importance": 1,
-    "summary": "이전 4.3 · 포함: GDP Growth Rate QoQ, GDP Growth Rate YoY"
+    "summary": "이전 0.9 · 포함: GDP Growth Rate QoQ, GDP Growth Rate YoY"
   },
   {
     "date": "2026-10-19",
@@ -57673,7 +57673,7 @@
     "auto": true,
     "country": "🇰🇷",
     "importance": 0,
-    "summary": "이전 3.7% · 포함: GDP Growth Rate QoQ Adv, GDP Growth Rate YoY Adv"
+    "summary": "이전 0.6% · 포함: GDP Growth Rate QoQ Adv, GDP Growth Rate YoY Adv"
   },
   {
     "date": "2026-10-27",
@@ -58312,6 +58312,16 @@
     "country": "🇰🇷",
     "importance": 0,
     "summary": "이전 2.9 · 포함: Inflation Rate MoM, Inflation Rate YoY"
+  },
+  {
+    "date": "2026-11-03",
+    "time": "09:00",
+    "category": "정치/외교",
+    "title": "🇺🇸 Midterm Elections",
+    "source": "tradingview",
+    "auto": true,
+    "country": "🇺🇸",
+    "importance": 1
   },
   {
     "date": "2026-11-04",
@@ -60900,5 +60910,15 @@
     "auto": true,
     "endDate": "2027-04-01",
     "link": "https://www.semiconwest.org/"
+  },
+  {
+    "date": "2027-04-02",
+    "time": "",
+    "category": "제약/바이오",
+    "title": "AACR 2027 (미국암연구학회)",
+    "source": "known",
+    "auto": true,
+    "endDate": "2027-04-07",
+    "link": "https://www.aacr.org/meeting/aacr-annual-meeting-2027/"
   }
 ]
