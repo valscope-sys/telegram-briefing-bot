@@ -45227,21 +45227,21 @@
   {
     "date": "2026-07-30",
     "time": "09:00",
+    "category": "IR",
+    "title": "HK이노엔 IR (기업설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "투자자들의 회사에 대한 이해증진 및 기업가치 제고 · 서울특별시"
+  },
+  {
+    "date": "2026-07-30",
+    "time": "09:00",
     "category": "경제지표",
     "title": "🇨🇳 Politburo Meeting",
     "source": "tradingview",
     "auto": true,
     "country": "🇨🇳",
     "importance": 1
-  },
-  {
-    "date": "2026-07-30",
-    "time": "09:00",
-    "category": "IR",
-    "title": "HK이노엔 IR (기업설명회)",
-    "source": "kind",
-    "auto": true,
-    "summary": "투자자들의 회사에 대한 이해증진 및 기업가치 제고 · 서울특별시"
   },
   {
     "date": "2026-07-30",
@@ -53004,17 +53004,6 @@
   {
     "date": "2026-09-01",
     "time": "09:00",
-    "category": "경제지표",
-    "title": "🇰🇷 수출입 동향 (8월)",
-    "source": "tradingview",
-    "auto": true,
-    "country": "🇰🇷",
-    "importance": 0,
-    "summary": "예상 62.6% · 이전 63% · 포함: Balance of Trade, Exports YoY, Imports YoY"
-  },
-  {
-    "date": "2026-09-01",
-    "time": "09:00",
     "category": "IR",
     "title": "슈프리마 IR (기업설명회)",
     "source": "kind",
@@ -53029,6 +53018,17 @@
     "source": "kind",
     "auto": true,
     "summary": "투자자의 이해증진 및 기업가치 제고를 위한 기관투자자와 증권사 관계자 대상 NDR(Non-Deal Roadshow) 실시 · 서울특별시"
+  },
+  {
+    "date": "2026-09-01",
+    "time": "09:00",
+    "category": "경제지표",
+    "title": "🇰🇷 수출입 동향 (8월)",
+    "source": "tradingview",
+    "auto": true,
+    "country": "🇰🇷",
+    "importance": 0,
+    "summary": "예상 62.6% · 이전 63% · 포함: Balance of Trade, Exports YoY, Imports YoY"
   },
   {
     "date": "2026-09-01",
@@ -56556,7 +56556,16 @@
     "title": "마벨(MRVL) 인베스터데이",
     "source": "corp_events",
     "auto": true,
-    "summary": "AI 칩 로드맵, Google 거래($120B), fiscal 2029 수익 목표 발표. 관련: 커스텀 AI 칩, 네트워킹, 메모리 인터커넥트 · 근거 기사: Marvell Technology stock heads into Investor Day on AI growth"
+    "summary": "근거 기사: Dear Marvell stock fans, mark your calendars for Oct. 6"
+  },
+  {
+    "date": "2026-10-06",
+    "time": "",
+    "category": "기업행사",
+    "title": "알파벳(GOOGL) 인베스터데이",
+    "source": "corp_events",
+    "auto": true,
+    "summary": "근거 기사: Rezolve Ai to Showcase Its Infrastructure for the Agentic Economy at Nasdaq Investor Day on October 6"
   },
   {
     "date": "2026-10-06",
@@ -56666,33 +56675,6 @@
     "date": "2026-10-07",
     "time": "09:00",
     "category": "IR",
-    "title": "강스템바이오텍 IR (NDR)",
-    "source": "kind",
-    "auto": true,
-    "summary": "NDR(Non-Deal Roadshow)을 통한 국내 기관투자자들의 당사 이해도 제고 · 서울 여의도"
-  },
-  {
-    "date": "2026-10-07",
-    "time": "09:00",
-    "category": "IR",
-    "title": "비나텍 IR (기업설명회)",
-    "source": "kind",
-    "auto": true,
-    "summary": "- 코스닥 대표 상장기업과 기관투자자 간 소통 기회를 확대 - 2026년 2분기 사업 현황 및 향후 사업계획 설명을 통한 투자자의 이해 증진 · 한국거래소 2층 홍보관"
-  },
-  {
-    "date": "2026-10-07",
-    "time": "09:00",
-    "category": "IR",
-    "title": "올릭스 IR (기업설명회)",
-    "source": "kind",
-    "auto": true,
-    "summary": "회사 소개 및 주요 사업현황에 대한 투자자 이해 증진 · 한국거래소 (서울 여의도)"
-  },
-  {
-    "date": "2026-10-07",
-    "time": "09:00",
-    "category": "IR",
     "title": "HD건설기계 IR (컨퍼런스 참가)",
     "source": "kind",
     "auto": true,
@@ -56729,6 +56711,15 @@
     "date": "2026-10-07",
     "time": "09:00",
     "category": "IR",
+    "title": "강스템바이오텍 IR (NDR)",
+    "source": "kind",
+    "auto": true,
+    "summary": "NDR(Non-Deal Roadshow)을 통한 국내 기관투자자들의 당사 이해도 제고 · 서울 여의도"
+  },
+  {
+    "date": "2026-10-07",
+    "time": "09:00",
+    "category": "IR",
     "title": "그래피 IR (기업설명회)",
     "source": "kind",
     "auto": true,
@@ -56738,10 +56729,28 @@
     "date": "2026-10-07",
     "time": "09:00",
     "category": "IR",
+    "title": "비나텍 IR (기업설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "- 코스닥 대표 상장기업과 기관투자자 간 소통 기회를 확대 - 2026년 2분기 사업 현황 및 향후 사업계획 설명을 통한 투자자의 이해 증진 · 한국거래소 2층 홍보관"
+  },
+  {
+    "date": "2026-10-07",
+    "time": "09:00",
+    "category": "IR",
     "title": "스피어 IR (기업설명회)",
     "source": "kind",
     "auto": true,
     "summary": "- 회사 주요 현황 설명을 통한 투자자 이해 증진 - 기업가치 제고 · 한국거래소(KRX) 컨퍼런스홀 및 홍보관(서울 여의도)"
+  },
+  {
+    "date": "2026-10-07",
+    "time": "09:00",
+    "category": "IR",
+    "title": "올릭스 IR (기업설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "회사 소개 및 주요 사업현황에 대한 투자자 이해 증진 · 한국거래소 (서울 여의도)"
   },
   {
     "date": "2026-10-07",
@@ -56792,19 +56801,19 @@
     "date": "2026-10-07",
     "time": "13:00",
     "category": "IR",
-    "title": "펄어비스 IR (컨퍼런스 참가)",
+    "title": "성호전자 IR (기업설명회)",
     "source": "kind",
     "auto": true,
-    "summary": "Korea Premium Weeks 2026 코스닥 IR데이 참석 - 일시 : 10/7(수), 13:00~17:00 · 한국거래소 서울사무소"
+    "summary": "1. 회사 주요 현황 설명을 통한 투자자 이해 증진 2. 기업가치 제고 · 한국거래소(KRX)컨퍼러스홀 및 홍보관(서울 여의도)"
   },
   {
     "date": "2026-10-07",
     "time": "13:00",
     "category": "IR",
-    "title": "성호전자 IR (기업설명회)",
+    "title": "펄어비스 IR (컨퍼런스 참가)",
     "source": "kind",
     "auto": true,
-    "summary": "1. 회사 주요 현황 설명을 통한 투자자 이해 증진 2. 기업가치 제고 · 한국거래소(KRX)컨퍼러스홀 및 홍보관(서울 여의도)"
+    "summary": "Korea Premium Weeks 2026 코스닥 IR데이 참석 - 일시 : 10/7(수), 13:00~17:00 · 한국거래소 서울사무소"
   },
   {
     "date": "2026-10-07",
@@ -56846,19 +56855,19 @@
     "date": "2026-10-07",
     "time": "14:00",
     "category": "IR",
-    "title": "코스텍시스 IR (기업설명회)",
+    "title": "BNK금융지주 IR (전략 발표)",
     "source": "kind",
     "auto": true,
-    "summary": "회사현황 소개 및 질의응답을 통한 투자자 이해 증진 · 온라인 컨퍼런스콜"
+    "summary": "BNK금융그룹 경영전략 및 주요 관심사항에 대한 시장의 이해도 제고 · 금융투자교육원 701호 (서울 여의도)"
   },
   {
     "date": "2026-10-07",
     "time": "14:00",
     "category": "IR",
-    "title": "BNK금융지주 IR (전략 발표)",
+    "title": "코스텍시스 IR (기업설명회)",
     "source": "kind",
     "auto": true,
-    "summary": "BNK금융그룹 경영전략 및 주요 관심사항에 대한 시장의 이해도 제고 · 금융투자교육원 701호 (서울 여의도)"
+    "summary": "회사현황 소개 및 질의응답을 통한 투자자 이해 증진 · 온라인 컨퍼런스콜"
   },
   {
     "date": "2026-10-08",
@@ -57849,6 +57858,15 @@
     "source": "corp_events",
     "auto": true,
     "summary": "기업 성장 전망, AI 인프라 사업 관련 투자자 설명회 · 근거 기사: Celestica to Host 2026 Investor and Analyst Day on October 27, 2026"
+  },
+  {
+    "date": "2026-10-27",
+    "time": "",
+    "category": "기업행사",
+    "title": "셀레스티카(CLS) 애널리스트데이",
+    "source": "corp_events",
+    "auto": true,
+    "summary": "근거 기사: Celestica to Host 2026 Investor and Analyst Day on October 27, 2026"
   },
   {
     "date": "2026-10-27",
