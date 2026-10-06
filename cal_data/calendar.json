@@ -42410,19 +42410,19 @@
     "date": "2026-07-06",
     "time": "",
     "category": "IR",
-    "title": "티엠씨 IR (기업설명회)",
+    "title": "하나금융지주 IR (컨퍼런스 참가)",
     "source": "kind",
     "auto": true,
-    "summary": "투자자 당사 이해도 증진, 기업가치 제고 · 여의도 소재 기관투자자 사무실"
+    "summary": "Goldman Sachs 증권 주관 \"Goldman Sachs Korea Corporate Day 2026\" 참가 · 싱가포르"
   },
   {
     "date": "2026-07-06",
     "time": "",
     "category": "IR",
-    "title": "하나금융지주 IR (컨퍼런스 참가)",
+    "title": "티엠씨 IR (기업설명회)",
     "source": "kind",
     "auto": true,
-    "summary": "Goldman Sachs 증권 주관 \"Goldman Sachs Korea Corporate Day 2026\" 참가 · 싱가포르"
+    "summary": "투자자 당사 이해도 증진, 기업가치 제고 · 여의도 소재 기관투자자 사무실"
   },
   {
     "category": "수동",
@@ -42455,19 +42455,19 @@
     "date": "2026-07-06",
     "time": "09:00",
     "category": "IR",
-    "title": "HK이노엔 IR (기업설명회)",
+    "title": "지노믹트리 IR (기업설명회)",
     "source": "kind",
     "auto": true,
-    "summary": "투자자들의 회사에 대한 이해증진 및 기업가치 제고 · 홍콩, 싱가포르"
+    "summary": "투자자들의 회사 이해 증진 · 서울 여의도 등 각 기관 투자자 미팅룸"
   },
   {
     "date": "2026-07-06",
     "time": "09:00",
     "category": "IR",
-    "title": "지노믹트리 IR (기업설명회)",
+    "title": "HK이노엔 IR (기업설명회)",
     "source": "kind",
     "auto": true,
-    "summary": "투자자들의 회사 이해 증진 · 서울 여의도 등 각 기관 투자자 미팅룸"
+    "summary": "투자자들의 회사에 대한 이해증진 및 기업가치 제고 · 홍콩, 싱가포르"
   },
   {
     "date": "2026-07-06",
@@ -42634,6 +42634,15 @@
     "date": "2026-07-08",
     "time": "10:00",
     "category": "IR",
+    "title": "유바이오로직스 IR (기업설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "회사 소개 및 사업 진행사항에 대한 이해 증진 · 서울 여의도"
+  },
+  {
+    "date": "2026-07-08",
+    "time": "10:00",
+    "category": "IR",
     "title": "삼현 IR (전략 발표)",
     "source": "kind",
     "auto": true,
@@ -42647,15 +42656,6 @@
     "source": "kind",
     "auto": true,
     "summary": "투자자 이해증진 및 기업가치 제고 · IR큐더스(서울 여의도)"
-  },
-  {
-    "date": "2026-07-08",
-    "time": "10:00",
-    "category": "IR",
-    "title": "유바이오로직스 IR (기업설명회)",
-    "source": "kind",
-    "auto": true,
-    "summary": "회사 소개 및 사업 진행사항에 대한 이해 증진 · 서울 여의도"
   },
   {
     "date": "2026-07-08",
@@ -43249,19 +43249,19 @@
     "date": "2026-07-16",
     "time": "10:00",
     "category": "IR",
-    "title": "이노시뮬레이션 IR (기업설명회)",
+    "title": "휴맥스홀딩스 IR (기업설명회)",
     "source": "kind",
     "auto": true,
-    "summary": "투자자 이해증진 및 기업가치 제고 · 서울 여의도"
+    "summary": "(주)휴맥스와 (주)휴맥스홀딩스 간 합병에 대한 주주 이해도 제고 · 경기도 성남시 분당구 황새울로 216, 지하1층 (수내동, 휴맥스빌리지 아트홀)"
   },
   {
     "date": "2026-07-16",
     "time": "10:00",
     "category": "IR",
-    "title": "휴맥스홀딩스 IR (기업설명회)",
+    "title": "이노시뮬레이션 IR (기업설명회)",
     "source": "kind",
     "auto": true,
-    "summary": "(주)휴맥스와 (주)휴맥스홀딩스 간 합병에 대한 주주 이해도 제고 · 경기도 성남시 분당구 황새울로 216, 지하1층 (수내동, 휴맥스빌리지 아트홀)"
+    "summary": "투자자 이해증진 및 기업가치 제고 · 서울 여의도"
   },
   {
     "date": "2026-07-16",
@@ -43499,15 +43499,6 @@
     "date": "2026-07-22",
     "time": "09:00",
     "category": "IR",
-    "title": "DMS IR (기업설명회)",
-    "source": "kind",
-    "auto": true,
-    "summary": "회사에 대한 투자자 이해 증진 및 기업가치 제고 · 서울 여의도 일대"
-  },
-  {
-    "date": "2026-07-22",
-    "time": "09:00",
-    "category": "IR",
     "title": "서부T&D IR (기업설명회)",
     "source": "kind",
     "auto": true,
@@ -43530,6 +43521,15 @@
     "source": "kind",
     "auto": true,
     "summary": "국내 기관투자자 대상 NDR (Non-Deal Roadshow)실시 회사 소개,회사 실적 및 사업현황 설명 · 서울 여의도 일대"
+  },
+  {
+    "date": "2026-07-22",
+    "time": "09:00",
+    "category": "IR",
+    "title": "DMS IR (기업설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "회사에 대한 투자자 이해 증진 및 기업가치 제고 · 서울 여의도 일대"
   },
   {
     "date": "2026-07-22",
@@ -43920,15 +43920,6 @@
     "date": "2026-07-24",
     "time": "09:00",
     "category": "IR",
-    "title": "피엔케이피부임상연구센타 IR (기업설명회)",
-    "source": "kind",
-    "auto": true,
-    "summary": "회사에 대한 투자자 이해 증진 및 기업가치 제고 · 서울 서초구 사임당로23길 27 삼성금융캠퍼스"
-  },
-  {
-    "date": "2026-07-24",
-    "time": "09:00",
-    "category": "IR",
     "title": "JB금융지주 IR (실적 설명회)",
     "source": "kind",
     "auto": true,
@@ -43942,6 +43933,15 @@
     "source": "kind",
     "auto": true,
     "summary": "2026년 2분기 경영실적 발표 · 여의도"
+  },
+  {
+    "date": "2026-07-24",
+    "time": "09:00",
+    "category": "IR",
+    "title": "피엔케이피부임상연구센타 IR (기업설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "회사에 대한 투자자 이해 증진 및 기업가치 제고 · 서울 서초구 사임당로23길 27 삼성금융캠퍼스"
   },
   {
     "date": "2026-07-24",
@@ -44180,15 +44180,6 @@
     "date": "2026-07-27",
     "time": "09:00",
     "category": "IR",
-    "title": "스피어 IR (기업설명회)",
-    "source": "kind",
-    "auto": true,
-    "summary": "- 회사에 대한 투자자 이해 증진 - 기업가치 제고 · 서울 여의도 등에 소재한 각 기관 투자자 접견실"
-  },
-  {
-    "date": "2026-07-27",
-    "time": "09:00",
-    "category": "IR",
     "title": "제일기획 IR (NDR)",
     "source": "kind",
     "auto": true,
@@ -44202,6 +44193,15 @@
     "source": "kind",
     "auto": true,
     "summary": "국내기관 IR(Non-Deal Roadshow) 실시"
+  },
+  {
+    "date": "2026-07-27",
+    "time": "09:00",
+    "category": "IR",
+    "title": "스피어 IR (기업설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "- 회사에 대한 투자자 이해 증진 - 기업가치 제고 · 서울 여의도 등에 소재한 각 기관 투자자 접견실"
   },
   {
     "date": "2026-07-27",
@@ -44410,15 +44410,6 @@
     "date": "2026-07-28",
     "time": "09:00",
     "category": "IR",
-    "title": "유니테크노 IR (기업설명회)",
-    "source": "kind",
-    "auto": true,
-    "summary": "투자자 이해증진 및 기업가치 제고 · 1. 여의도일대 및 안양시 2. 온라인(화상회의 등)"
-  },
-  {
-    "date": "2026-07-28",
-    "time": "09:00",
-    "category": "IR",
     "title": "ISC IR (실적 설명회)",
     "source": "kind",
     "auto": true,
@@ -44441,6 +44432,15 @@
     "source": "kind",
     "auto": true,
     "summary": "26년 2분기 경영실적 및 주요 경영현황 설명"
+  },
+  {
+    "date": "2026-07-28",
+    "time": "09:00",
+    "category": "IR",
+    "title": "유니테크노 IR (기업설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "투자자 이해증진 및 기업가치 제고 · 1. 여의도일대 및 안양시 2. 온라인(화상회의 등)"
   },
   {
     "date": "2026-07-28",
@@ -44782,24 +44782,6 @@
     "date": "2026-07-29",
     "time": "09:00",
     "category": "IR",
-    "title": "동아에스티 IR (기업설명회)",
-    "source": "kind",
-    "auto": true,
-    "summary": "회사 이해 증진 및 기업가치 제고 · 여의도 외"
-  },
-  {
-    "date": "2026-07-29",
-    "time": "09:00",
-    "category": "IR",
-    "title": "레이저쎌 IR (기업설명회)",
-    "source": "kind",
-    "auto": true,
-    "summary": "투자자들의 회사에 대한 이해증진 및 기업가치 제고 · 서울소재 기관투자자 방문"
-  },
-  {
-    "date": "2026-07-29",
-    "time": "09:00",
-    "category": "IR",
     "title": "에스티팜 IR (NDR)",
     "source": "kind",
     "auto": true,
@@ -44813,6 +44795,24 @@
     "source": "kind",
     "auto": true,
     "summary": "2026년 2분기 경영실적 및 경영현황에 대한 투자자 이해 증진"
+  },
+  {
+    "date": "2026-07-29",
+    "time": "09:00",
+    "category": "IR",
+    "title": "동아에스티 IR (기업설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "회사 이해 증진 및 기업가치 제고 · 여의도 외"
+  },
+  {
+    "date": "2026-07-29",
+    "time": "09:00",
+    "category": "IR",
+    "title": "레이저쎌 IR (기업설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "투자자들의 회사에 대한 이해증진 및 기업가치 제고 · 서울소재 기관투자자 방문"
   },
   {
     "date": "2026-07-29",
@@ -45219,15 +45219,6 @@
     "date": "2026-07-30",
     "time": "09:00",
     "category": "IR",
-    "title": "HK이노엔 IR (기업설명회)",
-    "source": "kind",
-    "auto": true,
-    "summary": "투자자들의 회사에 대한 이해증진 및 기업가치 제고 · 서울특별시"
-  },
-  {
-    "date": "2026-07-30",
-    "time": "09:00",
-    "category": "IR",
     "title": "NH투자증권 IR (NDR)",
     "source": "kind",
     "auto": true,
@@ -45242,6 +45233,15 @@
     "auto": true,
     "country": "🇨🇳",
     "importance": 1
+  },
+  {
+    "date": "2026-07-30",
+    "time": "09:00",
+    "category": "IR",
+    "title": "HK이노엔 IR (기업설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "투자자들의 회사에 대한 이해증진 및 기업가치 제고 · 서울특별시"
   },
   {
     "date": "2026-07-30",
@@ -47557,19 +47557,19 @@
     "date": "2026-08-07",
     "time": "16:00",
     "category": "IR",
-    "title": "데브시스터즈 IR (기업설명회)",
+    "title": "롯데웰푸드 IR (기업설명회)",
     "source": "kind",
     "auto": true,
-    "summary": "회사 경영현황에 대한 투자자들의 이해 증진 및 기업가치 제고 · 데브시스터즈 본사(서울특별시 강남구 도산대로 327)"
+    "summary": "당사 경영 현황에 대한 이해증진 · 롯데웰푸드(주) 본사"
   },
   {
     "date": "2026-08-07",
     "time": "16:00",
     "category": "IR",
-    "title": "롯데웰푸드 IR (기업설명회)",
+    "title": "데브시스터즈 IR (기업설명회)",
     "source": "kind",
     "auto": true,
-    "summary": "당사 경영 현황에 대한 이해증진 · 롯데웰푸드(주) 본사"
+    "summary": "회사 경영현황에 대한 투자자들의 이해 증진 및 기업가치 제고 · 데브시스터즈 본사(서울특별시 강남구 도산대로 327)"
   },
   {
     "date": "2026-08-07",
@@ -50848,15 +50848,6 @@
     "date": "2026-08-19",
     "time": "09:00",
     "category": "IR",
-    "title": "엠앤씨솔루션 IR (전략 발표)",
-    "source": "kind",
-    "auto": true,
-    "summary": "주요 경영현황 및 사업전략 설명을 통한 당사 이해도 증진 · 서울 여의도 등"
-  },
-  {
-    "date": "2026-08-19",
-    "time": "09:00",
-    "category": "IR",
     "title": "유한양행 IR (NDR)",
     "source": "kind",
     "auto": true,
@@ -50910,6 +50901,15 @@
   {
     "date": "2026-08-19",
     "time": "09:00",
+    "category": "IR",
+    "title": "엠앤씨솔루션 IR (전략 발표)",
+    "source": "kind",
+    "auto": true,
+    "summary": "주요 경영현황 및 사업전략 설명을 통한 당사 이해도 증진 · 서울 여의도 등"
+  },
+  {
+    "date": "2026-08-19",
+    "time": "09:00",
     "category": "한국실적",
     "title": "레이언스 실적발표",
     "source": "kind",
@@ -50947,19 +50947,19 @@
     "date": "2026-08-19",
     "time": "09:10",
     "category": "IR",
-    "title": "성광벤드 IR (기업설명회)",
+    "title": "씨에스윈드 IR (NDR)",
     "source": "kind",
     "auto": true,
-    "summary": "투자자들의 회사에 대한 이해증진 및 기업가치 제고 · 서울소재 기관투자자 사무실"
+    "summary": "NDR(Non-Deal Roadshow) · 서울"
   },
   {
     "date": "2026-08-19",
     "time": "09:10",
     "category": "IR",
-    "title": "씨에스윈드 IR (NDR)",
+    "title": "성광벤드 IR (기업설명회)",
     "source": "kind",
     "auto": true,
-    "summary": "NDR(Non-Deal Roadshow) · 서울"
+    "summary": "투자자들의 회사에 대한 이해증진 및 기업가치 제고 · 서울소재 기관투자자 사무실"
   },
   {
     "date": "2026-08-19",
@@ -51144,19 +51144,19 @@
     "date": "2026-08-20",
     "time": "09:10",
     "category": "IR",
-    "title": "신성이엔지 IR (전략 발표)",
+    "title": "한국금융지주 IR (NDR)",
     "source": "kind",
     "auto": true,
-    "summary": "회사 경영실적 및 전략에 대한 투자자 이해 증진 · 국내"
+    "summary": "NH투자증권 NDR 진행"
   },
   {
     "date": "2026-08-20",
     "time": "09:10",
     "category": "IR",
-    "title": "한국금융지주 IR (NDR)",
+    "title": "신성이엔지 IR (전략 발표)",
     "source": "kind",
     "auto": true,
-    "summary": "NH투자증권 NDR 진행"
+    "summary": "회사 경영실적 및 전략에 대한 투자자 이해 증진 · 국내"
   },
   {
     "date": "2026-08-20",
@@ -51319,19 +51319,19 @@
     "date": "2026-08-21",
     "time": "11:30",
     "category": "IR",
-    "title": "네오이뮨텍 IR (전략 발표)",
+    "title": "카카오 IR (기업설명회)",
     "source": "kind",
     "auto": true,
-    "summary": "기술이전 및 경영전략 이해 증진 · 서울 여의도"
+    "summary": "지배구조 개편을 통한 성장 가속화 및 주주가치 제고 설명회 · 온라인"
   },
   {
     "date": "2026-08-21",
     "time": "11:30",
     "category": "IR",
-    "title": "카카오 IR (기업설명회)",
+    "title": "네오이뮨텍 IR (전략 발표)",
     "source": "kind",
     "auto": true,
-    "summary": "지배구조 개편을 통한 성장 가속화 및 주주가치 제고 설명회 · 온라인"
+    "summary": "기술이전 및 경영전략 이해 증진 · 서울 여의도"
   },
   {
     "date": "2026-08-21",
@@ -51857,15 +51857,6 @@
     "date": "2026-08-25",
     "time": "09:00",
     "category": "IR",
-    "title": "에이유브랜즈 IR (기업설명회)",
-    "source": "kind",
-    "auto": true,
-    "summary": "회사에 대한 투자자 이해 증진 및 기업가치 제고 · 서울일대"
-  },
-  {
-    "date": "2026-08-25",
-    "time": "09:00",
-    "category": "IR",
     "title": "엠케이전자 IR (기업설명회)",
     "source": "kind",
     "auto": true,
@@ -51888,6 +51879,15 @@
     "source": "kind",
     "auto": true,
     "summary": "2026 UBS 코리아 컨퍼런스 참여 · 콘래드 서울"
+  },
+  {
+    "date": "2026-08-25",
+    "time": "09:00",
+    "category": "IR",
+    "title": "에이유브랜즈 IR (기업설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "회사에 대한 투자자 이해 증진 및 기업가치 제고 · 서울일대"
   },
   {
     "date": "2026-08-25",
@@ -51965,19 +51965,19 @@
     "date": "2026-08-25",
     "time": "16:00",
     "category": "IR",
-    "title": "이랜텍 IR (기업설명회)",
+    "title": "한미반도체 IR (기업설명회)",
     "source": "kind",
     "auto": true,
-    "summary": "투자자들의 회사에 대한 이해 증진 및 기업가치 제고 · 당사"
+    "summary": "주요 기관 투자가 대상 사업현황 설명 · 서울"
   },
   {
     "date": "2026-08-25",
     "time": "16:00",
     "category": "IR",
-    "title": "한미반도체 IR (기업설명회)",
+    "title": "이랜텍 IR (기업설명회)",
     "source": "kind",
     "auto": true,
-    "summary": "주요 기관 투자가 대상 사업현황 설명 · 서울"
+    "summary": "투자자들의 회사에 대한 이해 증진 및 기업가치 제고 · 당사"
   },
   {
     "date": "2026-08-26",
@@ -52027,24 +52027,6 @@
     "date": "2026-08-26",
     "time": "09:00",
     "category": "IR",
-    "title": "스피어 IR (기업설명회)",
-    "source": "kind",
-    "auto": true,
-    "summary": "- 회사에 대한 투자자 이해 증진 - 기업가치 제고 · 서울 여의도 페어몬트 앰배서더 호텔"
-  },
-  {
-    "date": "2026-08-26",
-    "time": "09:00",
-    "category": "IR",
-    "title": "에스앤에스텍 IR (기업설명회)",
-    "source": "kind",
-    "auto": true,
-    "summary": "투자자 이해증진 및 기업가치 제고 · 서울 여의도 페어몬트 앰배서더 호텔"
-  },
-  {
-    "date": "2026-08-26",
-    "time": "09:00",
-    "category": "IR",
     "title": "코스맥스 IR (컨퍼런스 참가)",
     "source": "kind",
     "auto": true,
@@ -52067,6 +52049,24 @@
     "source": "kind",
     "auto": true,
     "summary": "KIS Korea Emerging Leaders Conference 2026 참가 · 여의도"
+  },
+  {
+    "date": "2026-08-26",
+    "time": "09:00",
+    "category": "IR",
+    "title": "스피어 IR (기업설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "- 회사에 대한 투자자 이해 증진 - 기업가치 제고 · 서울 여의도 페어몬트 앰배서더 호텔"
+  },
+  {
+    "date": "2026-08-26",
+    "time": "09:00",
+    "category": "IR",
+    "title": "에스앤에스텍 IR (기업설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "투자자 이해증진 및 기업가치 제고 · 서울 여의도 페어몬트 앰배서더 호텔"
   },
   {
     "date": "2026-08-26",
@@ -52126,19 +52126,19 @@
     "date": "2026-08-26",
     "time": "10:00",
     "category": "IR",
-    "title": "예선테크 IR (기업설명회)",
+    "title": "케이엔제이 IR (기업설명회)",
     "source": "kind",
     "auto": true,
-    "summary": "-투자자·시장 관계자 소통 및 기업가치 제고 -회사 주요사업 및 경영현황에 대한 이해 증진 · 서울시 영등포구 의사당대로1길 34, 802호(인영빌딩, 여의도동) 서울IR 대회의실"
+    "summary": "투자자 미팅을 통한 당사에 대한 이해 증진 · 서울 여의도 및 강남 일대"
   },
   {
     "date": "2026-08-26",
     "time": "10:00",
     "category": "IR",
-    "title": "케이엔제이 IR (기업설명회)",
+    "title": "예선테크 IR (기업설명회)",
     "source": "kind",
     "auto": true,
-    "summary": "투자자 미팅을 통한 당사에 대한 이해 증진 · 서울 여의도 및 강남 일대"
+    "summary": "-투자자·시장 관계자 소통 및 기업가치 제고 -회사 주요사업 및 경영현황에 대한 이해 증진 · 서울시 영등포구 의사당대로1길 34, 802호(인영빌딩, 여의도동) 서울IR 대회의실"
   },
   {
     "date": "2026-08-26",
@@ -52153,19 +52153,19 @@
     "date": "2026-08-26",
     "time": "13:30",
     "category": "IR",
-    "title": "HLB이노베이션 IR (기업설명회)",
+    "title": "SK아이이테크놀로지 IR (기업설명회)",
     "source": "kind",
     "auto": true,
-    "summary": "회사에 대한 이해증진 및 기업가치 제고를 위한 국내 기관투자자 기업설명회 진행 · 서울 소재 기관투자자 방문 및 컨퍼런스콜"
+    "summary": "합병설명회"
   },
   {
     "date": "2026-08-26",
     "time": "13:30",
     "category": "IR",
-    "title": "SK아이이테크놀로지 IR (기업설명회)",
+    "title": "HLB이노베이션 IR (기업설명회)",
     "source": "kind",
     "auto": true,
-    "summary": "합병설명회"
+    "summary": "회사에 대한 이해증진 및 기업가치 제고를 위한 국내 기관투자자 기업설명회 진행 · 서울 소재 기관투자자 방문 및 컨퍼런스콜"
   },
   {
     "date": "2026-08-26",
@@ -52188,7 +52188,7 @@
   {
     "date": "2026-08-26",
     "time": "14:00",
-    "category": "IR",
+    "category": "기업행사",
     "title": "현대차 IR (전략 발표)",
     "source": "kind",
     "auto": true,
@@ -52312,33 +52312,6 @@
     "date": "2026-08-27",
     "time": "09:00",
     "category": "IR",
-    "title": "선익시스템 IR (기업설명회)",
-    "source": "kind",
-    "auto": true,
-    "summary": "회사현황에 대한 투자자들의 이해증진 및 기업가치 제고 · 서울 여의도 등 기관투자자 회의실"
-  },
-  {
-    "date": "2026-08-27",
-    "time": "09:00",
-    "category": "IR",
-    "title": "스피어 IR (기업설명회)",
-    "source": "kind",
-    "auto": true,
-    "summary": "- 회사에 대한 투자자 이해 증진 - 기업가치 제고 · 그랜드 하얏트 서울"
-  },
-  {
-    "date": "2026-08-27",
-    "time": "09:00",
-    "category": "IR",
-    "title": "아이티센글로벌 IR (기업설명회)",
-    "source": "kind",
-    "auto": true,
-    "summary": "회사에 대한 투자자 이해 증진 및 기업가치 제고 · (NDR)서울 여의도, 강남, 종로 일대"
-  },
-  {
-    "date": "2026-08-27",
-    "time": "09:00",
-    "category": "IR",
     "title": "주성엔지니어링 IR (NDR)",
     "source": "kind",
     "auto": true,
@@ -52415,6 +52388,33 @@
     "source": "kind",
     "auto": true,
     "summary": "국내 기관 대상 NDR(Non-Deal Roadshow) · 서울"
+  },
+  {
+    "date": "2026-08-27",
+    "time": "09:00",
+    "category": "IR",
+    "title": "선익시스템 IR (기업설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "회사현황에 대한 투자자들의 이해증진 및 기업가치 제고 · 서울 여의도 등 기관투자자 회의실"
+  },
+  {
+    "date": "2026-08-27",
+    "time": "09:00",
+    "category": "IR",
+    "title": "스피어 IR (기업설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "- 회사에 대한 투자자 이해 증진 - 기업가치 제고 · 그랜드 하얏트 서울"
+  },
+  {
+    "date": "2026-08-27",
+    "time": "09:00",
+    "category": "IR",
+    "title": "아이티센글로벌 IR (기업설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "회사에 대한 투자자 이해 증진 및 기업가치 제고 · (NDR)서울 여의도, 강남, 종로 일대"
   },
   {
     "date": "2026-08-27",
@@ -52640,19 +52640,19 @@
     "date": "2026-08-28",
     "time": "10:00",
     "category": "IR",
-    "title": "에너토크 IR (기업설명회)",
+    "title": "한전KPS IR (실적 설명회)",
     "source": "kind",
     "auto": true,
-    "summary": "회사에 대한 투자자 이해 증진 및 기업가치 제고 · 서울 서초구 삼성금융캠퍼스 러닝홀"
+    "summary": "2026년 2분기 실적 관련 기업설명회 · 한전KPS 본사 IR 회의실"
   },
   {
     "date": "2026-08-28",
     "time": "10:00",
     "category": "IR",
-    "title": "한전KPS IR (실적 설명회)",
+    "title": "에너토크 IR (기업설명회)",
     "source": "kind",
     "auto": true,
-    "summary": "2026년 2분기 실적 관련 기업설명회 · 한전KPS 본사 IR 회의실"
+    "summary": "회사에 대한 투자자 이해 증진 및 기업가치 제고 · 서울 서초구 삼성금융캠퍼스 러닝홀"
   },
   {
     "date": "2026-08-28",
@@ -52969,15 +52969,6 @@
     "date": "2026-09-01",
     "time": "09:00",
     "category": "IR",
-    "title": "슈프리마 IR (기업설명회)",
-    "source": "kind",
-    "auto": true,
-    "summary": "투자자들의 회사에 대한 이해증진 및 기업가치 제고 · 여의도"
-  },
-  {
-    "date": "2026-09-01",
-    "time": "09:00",
-    "category": "IR",
     "title": "에이피알 IR (NDR)",
     "source": "kind",
     "auto": true,
@@ -53005,15 +52996,6 @@
     "date": "2026-09-01",
     "time": "09:00",
     "category": "IR",
-    "title": "티씨머티리얼즈 IR (NDR)",
-    "source": "kind",
-    "auto": true,
-    "summary": "투자자의 이해증진 및 기업가치 제고를 위한 기관투자자와 증권사 관계자 대상 NDR(Non-Deal Roadshow) 실시 · 서울특별시"
-  },
-  {
-    "date": "2026-09-01",
-    "time": "09:00",
-    "category": "IR",
     "title": "현대모비스 IR (컨퍼런스 참가)",
     "source": "kind",
     "auto": true,
@@ -53032,12 +53014,21 @@
   },
   {
     "date": "2026-09-01",
-    "time": "09:30",
+    "time": "09:00",
     "category": "IR",
-    "title": "가온전선 IR (기업설명회)",
+    "title": "슈프리마 IR (기업설명회)",
     "source": "kind",
     "auto": true,
-    "summary": "당사에 대한 이해 증진 및 기업가치 제고 · 여의도 금융투자교육원"
+    "summary": "투자자들의 회사에 대한 이해증진 및 기업가치 제고 · 여의도"
+  },
+  {
+    "date": "2026-09-01",
+    "time": "09:00",
+    "category": "IR",
+    "title": "티씨머티리얼즈 IR (NDR)",
+    "source": "kind",
+    "auto": true,
+    "summary": "투자자의 이해증진 및 기업가치 제고를 위한 기관투자자와 증권사 관계자 대상 NDR(Non-Deal Roadshow) 실시 · 서울특별시"
   },
   {
     "date": "2026-09-01",
@@ -53047,6 +53038,15 @@
     "source": "kind",
     "auto": true,
     "summary": "키움 Corporate Day 참석 · 여의도"
+  },
+  {
+    "date": "2026-09-01",
+    "time": "09:30",
+    "category": "IR",
+    "title": "가온전선 IR (기업설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "당사에 대한 이해 증진 및 기업가치 제고 · 여의도 금융투자교육원"
   },
   {
     "date": "2026-09-01",
@@ -53412,15 +53412,6 @@
     "date": "2026-09-03",
     "time": "09:00",
     "category": "IR",
-    "title": "스피어 IR (기업설명회)",
-    "source": "kind",
-    "auto": true,
-    "summary": "- 회사에 대한 투자자 이해 증진 - 기업가치 제고 · 싱가포르"
-  },
-  {
-    "date": "2026-09-03",
-    "time": "09:00",
-    "category": "IR",
     "title": "큐렉소 IR (기업설명회)",
     "source": "kind",
     "auto": true,
@@ -53434,6 +53425,15 @@
     "source": "kind",
     "auto": true,
     "summary": "- 2026년 2분기 경영실적 NDR · 서울 여의도, 종로, 강남"
+  },
+  {
+    "date": "2026-09-03",
+    "time": "09:00",
+    "category": "IR",
+    "title": "스피어 IR (기업설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "- 회사에 대한 투자자 이해 증진 - 기업가치 제고 · 싱가포르"
   },
   {
     "date": "2026-09-03",
@@ -54019,28 +54019,10 @@
     "date": "2026-09-09",
     "time": "09:00",
     "category": "IR",
-    "title": "압타바이오 IR (R&D 설명회)",
-    "source": "kind",
-    "auto": true,
-    "summary": "연구개발 현황에 대한 투자자들의 이해증진 및 기업가치 제고 · 서울소재 기관투자자 사무실"
-  },
-  {
-    "date": "2026-09-09",
-    "time": "09:00",
-    "category": "IR",
     "title": "클래시스 IR (기업설명회)",
     "source": "kind",
     "auto": true,
     "summary": "기업가치 및 투자가치 제고 · 서울"
-  },
-  {
-    "date": "2026-09-09",
-    "time": "09:00",
-    "category": "IR",
-    "title": "펨트론 IR (기업설명회)",
-    "source": "kind",
-    "auto": true,
-    "summary": "투자자들의 회사에 대한 이해 증진 및 기업가치 제고 · 서울 여의도 등(각 기관 투자자 회의실)"
   },
   {
     "date": "2026-09-09",
@@ -54071,6 +54053,42 @@
   },
   {
     "date": "2026-09-09",
+    "time": "09:00",
+    "category": "IR",
+    "title": "압타바이오 IR (R&D 설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "연구개발 현황에 대한 투자자들의 이해증진 및 기업가치 제고 · 서울소재 기관투자자 사무실"
+  },
+  {
+    "date": "2026-09-09",
+    "time": "09:00",
+    "category": "IR",
+    "title": "펨트론 IR (기업설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "투자자들의 회사에 대한 이해 증진 및 기업가치 제고 · 서울 여의도 등(각 기관 투자자 회의실)"
+  },
+  {
+    "date": "2026-09-09",
+    "time": "09:10",
+    "category": "IR",
+    "title": "씨에스윈드 IR (NDR)",
+    "source": "kind",
+    "auto": true,
+    "summary": "NDR(Non-Deal Roadshow) · 서울"
+  },
+  {
+    "date": "2026-09-09",
+    "time": "09:10",
+    "category": "IR",
+    "title": "와이씨 IR (기업설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "회사 소개 및 주요 사업현황에 대한 투자자 이해 증진 · 서울 여의도 등 각 기관 투자가 접견실"
+  },
+  {
+    "date": "2026-09-09",
     "time": "09:10",
     "category": "IR",
     "title": "LS마린솔루션 IR (기업설명회)",
@@ -54095,24 +54113,6 @@
     "source": "kind",
     "auto": true,
     "summary": "회사현황에 대한 투자자들의 이해증진 및 기업가치 제고 · 여의도 TP타워"
-  },
-  {
-    "date": "2026-09-09",
-    "time": "09:10",
-    "category": "IR",
-    "title": "씨에스윈드 IR (NDR)",
-    "source": "kind",
-    "auto": true,
-    "summary": "NDR(Non-Deal Roadshow) · 서울"
-  },
-  {
-    "date": "2026-09-09",
-    "time": "09:10",
-    "category": "IR",
-    "title": "와이씨 IR (기업설명회)",
-    "source": "kind",
-    "auto": true,
-    "summary": "회사 소개 및 주요 사업현황에 대한 투자자 이해 증진 · 서울 여의도 등 각 기관 투자가 접견실"
   },
   {
     "date": "2026-09-09",
@@ -54145,15 +54145,6 @@
     "date": "2026-09-09",
     "time": "09:30",
     "category": "IR",
-    "title": "세나테크놀로지 IR (기업설명회)",
-    "source": "kind",
-    "auto": true,
-    "summary": "주요 경영 현황 공유를 통한 당사 기업가치 제고 · 페어몬트 앰배서더 서울"
-  },
-  {
-    "date": "2026-09-09",
-    "time": "09:30",
-    "category": "IR",
     "title": "포스코인터내셔널 IR (컨퍼런스 참가)",
     "source": "kind",
     "auto": true,
@@ -54167,6 +54158,15 @@
     "source": "kind",
     "auto": true,
     "summary": "KB Korea Conference 2026 참가 · 서울 여의도"
+  },
+  {
+    "date": "2026-09-09",
+    "time": "09:30",
+    "category": "IR",
+    "title": "세나테크놀로지 IR (기업설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "주요 경영 현황 공유를 통한 당사 기업가치 제고 · 페어몬트 앰배서더 서울"
   },
   {
     "date": "2026-09-09",
@@ -54219,15 +54219,6 @@
     "date": "2026-09-09",
     "time": "14:00",
     "category": "IR",
-    "title": "FSN IR (기업설명회)",
-    "source": "kind",
-    "auto": true,
-    "summary": "1. 회사의 경영현황 및 주요 사업에 대한 주주 이해도 제고 2. 기업가치 제고를 위한 주요 추진방향 설명 및 의견 청취 · 서울시 강남구 학동로 231, 백영논현센터 3층 대회의실"
-  },
-  {
-    "date": "2026-09-09",
-    "time": "14:00",
-    "category": "IR",
     "title": "LG씨엔에스 IR (컨퍼런스 참가)",
     "source": "kind",
     "auto": true,
@@ -54268,6 +54259,15 @@
     "source": "kind",
     "auto": true,
     "summary": "'2026 KB Korea Conference' 참석 · 페어몬트 앰배서더 서울"
+  },
+  {
+    "date": "2026-09-09",
+    "time": "14:00",
+    "category": "IR",
+    "title": "FSN IR (기업설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "1. 회사의 경영현황 및 주요 사업에 대한 주주 이해도 제고 2. 기업가치 제고를 위한 주요 추진방향 설명 및 의견 청취 · 서울시 강남구 학동로 231, 백영논현센터 3층 대회의실"
   },
   {
     "date": "2026-09-09",
@@ -54590,19 +54590,19 @@
     "date": "2026-09-10",
     "time": "15:00",
     "category": "IR",
-    "title": "데브시스터즈 IR (기업설명회)",
+    "title": "롯데웰푸드 IR (컨퍼런스 참가)",
     "source": "kind",
     "auto": true,
-    "summary": "회사 경영현황에 대한 투자자들의 이해 증진 및 기업가치 제고 · 당사 본사(컨퍼런스콜)"
+    "summary": "당사 경영 현황에 대한 이해증진 ('2026 KB Korea conference' 참가) · 여의도"
   },
   {
     "date": "2026-09-10",
     "time": "15:00",
     "category": "IR",
-    "title": "롯데웰푸드 IR (컨퍼런스 참가)",
+    "title": "데브시스터즈 IR (기업설명회)",
     "source": "kind",
     "auto": true,
-    "summary": "당사 경영 현황에 대한 이해증진 ('2026 KB Korea conference' 참가) · 여의도"
+    "summary": "회사 경영현황에 대한 투자자들의 이해 증진 및 기업가치 제고 · 당사 본사(컨퍼런스콜)"
   },
   {
     "date": "2026-09-10",
@@ -54691,15 +54691,6 @@
     "date": "2026-09-11",
     "time": "14:20",
     "category": "IR",
-    "title": "선익시스템 IR (기업설명회)",
-    "source": "kind",
-    "auto": true,
-    "summary": "회사현황에 대한 투자자들의 이해증진 및 기업가치 제고 · 여의도 NH투자증권 본사(파크원 타워2)"
-  },
-  {
-    "date": "2026-09-11",
-    "time": "14:20",
-    "category": "IR",
     "title": "에코프로에이치엔 IR (기업설명회)",
     "source": "kind",
     "auto": true,
@@ -54713,6 +54704,15 @@
     "source": "kind",
     "auto": true,
     "summary": "신한 Premier Corporate Day 참석 · 여의도"
+  },
+  {
+    "date": "2026-09-11",
+    "time": "14:20",
+    "category": "IR",
+    "title": "선익시스템 IR (기업설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "회사현황에 대한 투자자들의 이해증진 및 기업가치 제고 · 여의도 NH투자증권 본사(파크원 타워2)"
   },
   {
     "date": "2026-09-11",
@@ -54924,15 +54924,6 @@
     "date": "2026-09-15",
     "time": "09:00",
     "category": "IR",
-    "title": "선익시스템 IR (기업설명회)",
-    "source": "kind",
-    "auto": true,
-    "summary": "회사현황에 대한 투자자들의 이해증진 및 기업가치 제고 · 여의도 동성빌딩 지하1층 라운지"
-  },
-  {
-    "date": "2026-09-15",
-    "time": "09:00",
-    "category": "IR",
     "title": "클래시스 IR (기업설명회)",
     "source": "kind",
     "auto": true,
@@ -54973,6 +54964,15 @@
     "source": "kind",
     "auto": true,
     "summary": "Hanwha Group Day 2026 참가 · 싱가포르, 홍콩"
+  },
+  {
+    "date": "2026-09-15",
+    "time": "09:00",
+    "category": "IR",
+    "title": "선익시스템 IR (기업설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "회사현황에 대한 투자자들의 이해증진 및 기업가치 제고 · 여의도 동성빌딩 지하1층 라운지"
   },
   {
     "date": "2026-09-15",
@@ -55108,15 +55108,6 @@
     "date": "2026-09-16",
     "time": "09:00",
     "category": "IR",
-    "title": "씨어스 IR (전략 발표)",
-    "source": "kind",
-    "auto": true,
-    "summary": "1. 글로벌 투자자 대상 사업모델 및 성장전략 이해도 제고 2. 중장기 비전 공유를 통한 해외 투자자 소통 및 투자자 기반 확대 · 싱가포르"
-  },
-  {
-    "date": "2026-09-16",
-    "time": "09:00",
-    "category": "IR",
     "title": "아이엠바이오로직스 IR (R&D 설명회)",
     "source": "kind",
     "auto": true,
@@ -55169,12 +55160,12 @@
   },
   {
     "date": "2026-09-16",
-    "time": "10:00",
+    "time": "09:00",
     "category": "IR",
-    "title": "디와이씨 IR (NDR)",
+    "title": "씨어스 IR (전략 발표)",
     "source": "kind",
     "auto": true,
-    "summary": "투자자의 이해증진 및 기업가치 제고를 위한 기관투자자와 증권사 관계자 대상 NDR(Non-Deal Roadshow) 실시 · 온라인"
+    "summary": "1. 글로벌 투자자 대상 사업모델 및 성장전략 이해도 제고 2. 중장기 비전 공유를 통한 해외 투자자 소통 및 투자자 기반 확대 · 싱가포르"
   },
   {
     "date": "2026-09-16",
@@ -55193,6 +55184,15 @@
     "source": "kind",
     "auto": true,
     "summary": "미국 셰일가스 자산 인수 관련 사업설명회"
+  },
+  {
+    "date": "2026-09-16",
+    "time": "10:00",
+    "category": "IR",
+    "title": "디와이씨 IR (NDR)",
+    "source": "kind",
+    "auto": true,
+    "summary": "투자자의 이해증진 및 기업가치 제고를 위한 기관투자자와 증권사 관계자 대상 NDR(Non-Deal Roadshow) 실시 · 온라인"
   },
   {
     "date": "2026-09-16",
@@ -55308,15 +55308,6 @@
     "date": "2026-09-17",
     "time": "09:00",
     "category": "IR",
-    "title": "선익시스템 IR (기업설명회)",
-    "source": "kind",
-    "auto": true,
-    "summary": "회사현황에 대한 투자자들의 이해증진 및 기업가치 제고 · 서울 여의도 등 기관투자자 회의실"
-  },
-  {
-    "date": "2026-09-17",
-    "time": "09:00",
-    "category": "IR",
     "title": "포스뱅크 IR (기업설명회)",
     "source": "kind",
     "auto": true,
@@ -55324,12 +55315,12 @@
   },
   {
     "date": "2026-09-17",
-    "time": "10:00",
+    "time": "09:00",
     "category": "IR",
-    "title": "씨이랩 IR (전략 발표)",
+    "title": "선익시스템 IR (기업설명회)",
     "source": "kind",
     "auto": true,
-    "summary": "당사 2026년 사업 현황 및 향후 전략 발표 · 여의도 금융투자교육원 건물 내 강의실"
+    "summary": "회사현황에 대한 투자자들의 이해증진 및 기업가치 제고 · 서울 여의도 등 기관투자자 회의실"
   },
   {
     "date": "2026-09-17",
@@ -55348,6 +55339,15 @@
     "source": "kind",
     "auto": true,
     "summary": "회사현황 소개 및 투자자 이해 증진 · 여의도"
+  },
+  {
+    "date": "2026-09-17",
+    "time": "10:00",
+    "category": "IR",
+    "title": "씨이랩 IR (전략 발표)",
+    "source": "kind",
+    "auto": true,
+    "summary": "당사 2026년 사업 현황 및 향후 전략 발표 · 여의도 금융투자교육원 건물 내 강의실"
   },
   {
     "date": "2026-09-17",
@@ -55445,7 +55445,7 @@
   {
     "date": "2026-09-18",
     "time": "10:00",
-    "category": "IR",
+    "category": "기업행사",
     "title": "휴젤 IR (전략 발표)",
     "source": "kind",
     "auto": true,
@@ -55509,15 +55509,6 @@
     "date": "2026-09-18",
     "time": "15:00",
     "category": "IR",
-    "title": "네패스 IR (기업설명회)",
-    "source": "kind",
-    "auto": true,
-    "summary": "회사소개, 주요 사업현황에 대한 투자자 이해도 증진 및 기업가치 제고 · 서울 여의도 금융투자교육원"
-  },
-  {
-    "date": "2026-09-18",
-    "time": "15:00",
-    "category": "IR",
     "title": "미스토홀딩스 IR (컨퍼런스 참가)",
     "source": "kind",
     "auto": true,
@@ -55531,6 +55522,15 @@
     "source": "kind",
     "auto": true,
     "summary": "국내 NDR (Non-Deal Roadshow) · 여의도"
+  },
+  {
+    "date": "2026-09-18",
+    "time": "15:00",
+    "category": "IR",
+    "title": "네패스 IR (기업설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "회사소개, 주요 사업현황에 대한 투자자 이해도 증진 및 기업가치 제고 · 서울 여의도 금융투자교육원"
   },
   {
     "date": "2026-09-18",
@@ -56512,15 +56512,6 @@
     "country": ""
   },
   {
-    "category": "자동차/배터리",
-    "title": "2026 인제 월드 투어링카 페스티벌",
-    "source": "ai_scan",
-    "auto": true,
-    "date": "2026-10-03",
-    "time": "",
-    "summary": "현대자동차 주관, 강원도 인제 스피디움 개최. FIA 국제자동차연맹 주최 'TCR 월드투어', 'TCR 아시아', '현대 N 페스티벌' 등 3개 경주 대회. 관련주: 현대자동차, 현대모비스, 관련 자동차 부품사"
-  },
-  {
     "date": "2026-10-04",
     "time": "10:00",
     "category": "IR",
@@ -56561,6 +56552,15 @@
   {
     "date": "2026-10-06",
     "time": "",
+    "category": "기업행사",
+    "title": "마벨(MRVL) 인베스터데이",
+    "source": "corp_events",
+    "auto": true,
+    "summary": "AI 칩 로드맵, Google 거래($120B), fiscal 2029 수익 목표 발표. 관련: 커스텀 AI 칩, 네트워킹, 메모리 인터커넥트 · 근거 기사: Marvell Technology stock heads into Investor Day on AI growth"
+  },
+  {
+    "date": "2026-10-06",
+    "time": "",
     "category": "방산",
     "title": "랜드포스 2026 (호주 지상방산전)",
     "source": "known",
@@ -56568,6 +56568,28 @@
     "endDate": "2026-10-08",
     "link": "https://landforces.com.au/",
     "summary": "레드백·AS9 호주 사업 — 한화에어로스페이스 등 K-방산주"
+  },
+  {
+    "date": "2026-10-06",
+    "time": "",
+    "category": "산업컨퍼런스",
+    "title": "코리아 프리미엄 위크 2주차 (외국인 대상 IR)",
+    "source": "known",
+    "auto": true,
+    "endDate": "2026-10-08",
+    "link": "https://www.fsc.go.kr/eng/pr010101/87713",
+    "summary": "금융위·거래소 주관 외국인 투자자 IR — 밸류업·코스닥 기업"
+  },
+  {
+    "date": "2026-10-06",
+    "time": "",
+    "category": "제약/바이오",
+    "title": "CPHI 밀라노 2026 (제약·CDMO 전시회)",
+    "source": "known",
+    "auto": true,
+    "endDate": "2026-10-08",
+    "link": "https://www.cphi.com/europe/",
+    "summary": "CDMO 수주 모멘텀 (삼성바이오로직스, SK바이오사이언스, 에스티팜 등)"
   },
   {
     "date": "2026-10-06",
@@ -56616,11 +56638,56 @@
   {
     "date": "2026-10-07",
     "time": "",
+    "category": "기업행사",
+    "title": "마이크로소프트(MSFT) 신제품공개이벤트",
+    "source": "corp_events",
+    "auto": true,
+    "summary": "로컬 AI 기능, Surface Laptop Ultra 공개. Windows 및 Nvidia RTX Spark 플랫폼 발표 · 근거 기사: Microsoft to detail local AI capabilities and Surface Laptop Ultra at October event"
+  },
+  {
+    "category": "방산",
+    "title": "누리호 5차 발사",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2026-10-07",
+    "time": "",
+    "summary": "한국형 발사체 누리호 5차 발사 (낮). 한반도 관찰용 초소형 군집위성과 국산 부품 큐브위성 탑재로 국내 우주 기술력 입증. 관련주: 한화에어로스페이스, LIG넥스론, 현대우로보틱스"
+  },
+  {
+    "date": "2026-10-07",
+    "time": "",
     "category": "한국실적",
     "title": "롯데렌탈 실적발표",
     "source": "kind",
     "auto": true,
     "summary": "경영실적 설명 및 투자자 이해도 제고 · 서울 여의도 등"
+  },
+  {
+    "date": "2026-10-07",
+    "time": "09:00",
+    "category": "IR",
+    "title": "강스템바이오텍 IR (NDR)",
+    "source": "kind",
+    "auto": true,
+    "summary": "NDR(Non-Deal Roadshow)을 통한 국내 기관투자자들의 당사 이해도 제고 · 서울 여의도"
+  },
+  {
+    "date": "2026-10-07",
+    "time": "09:00",
+    "category": "IR",
+    "title": "비나텍 IR (기업설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "- 코스닥 대표 상장기업과 기관투자자 간 소통 기회를 확대 - 2026년 2분기 사업 현황 및 향후 사업계획 설명을 통한 투자자의 이해 증진 · 한국거래소 2층 홍보관"
+  },
+  {
+    "date": "2026-10-07",
+    "time": "09:00",
+    "category": "IR",
+    "title": "올릭스 IR (기업설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "회사 소개 및 주요 사업현황에 대한 투자자 이해 증진 · 한국거래소 (서울 여의도)"
   },
   {
     "date": "2026-10-07",
@@ -56657,15 +56724,6 @@
     "source": "kind",
     "auto": true,
     "summary": "해외투자자 대상 C-Level Corporate Day 개최를 통한 기업가치 제고 · 싱가포르, 홍콩"
-  },
-  {
-    "date": "2026-10-07",
-    "time": "09:00",
-    "category": "IR",
-    "title": "강스템바이오텍 IR (NDR)",
-    "source": "kind",
-    "auto": true,
-    "summary": "NDR(Non-Deal Roadshow)을 통한 국내 기관투자자들의 당사 이해도 제고 · 서울 여의도"
   },
   {
     "date": "2026-10-07",
@@ -56716,6 +56774,15 @@
     "date": "2026-10-07",
     "time": "09:30",
     "category": "IR",
+    "title": "클래시스 IR (기업설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "기업가치 및 투자가치 제고 · 서울"
+  },
+  {
+    "date": "2026-10-07",
+    "time": "09:30",
+    "category": "IR",
     "title": "휴젤 IR (기업설명회)",
     "source": "kind",
     "auto": true,
@@ -56725,19 +56792,19 @@
     "date": "2026-10-07",
     "time": "13:00",
     "category": "IR",
-    "title": "성호전자 IR (기업설명회)",
+    "title": "펄어비스 IR (컨퍼런스 참가)",
     "source": "kind",
     "auto": true,
-    "summary": "1. 회사 주요 현황 설명을 통한 투자자 이해 증진 2. 기업가치 제고 · 한국거래소(KRX)컨퍼러스홀 및 홍보관(서울 여의도)"
+    "summary": "Korea Premium Weeks 2026 코스닥 IR데이 참석 - 일시 : 10/7(수), 13:00~17:00 · 한국거래소 서울사무소"
   },
   {
     "date": "2026-10-07",
     "time": "13:00",
     "category": "IR",
-    "title": "펄어비스 IR (컨퍼런스 참가)",
+    "title": "성호전자 IR (기업설명회)",
     "source": "kind",
     "auto": true,
-    "summary": "Korea Premium Weeks 2026 코스닥 IR데이 참석 - 일시 : 10/7(수), 13:00~17:00 · 한국거래소 서울사무소"
+    "summary": "1. 회사 주요 현황 설명을 통한 투자자 이해 증진 2. 기업가치 제고 · 한국거래소(KRX)컨퍼러스홀 및 홍보관(서울 여의도)"
   },
   {
     "date": "2026-10-07",
@@ -56765,6 +56832,24 @@
     "source": "kind",
     "auto": true,
     "summary": "회사소개 및 주요 사업현황에 대한 투자자 이해 제고 · 한국거래소 2층 홍보관 (서울 여의도)"
+  },
+  {
+    "date": "2026-10-07",
+    "time": "13:30",
+    "category": "IR",
+    "title": "큐리오시스 IR (기업설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "사업소개 및 주요 경영현황 설명 · 한국거래소 홍보관"
+  },
+  {
+    "date": "2026-10-07",
+    "time": "14:00",
+    "category": "IR",
+    "title": "코스텍시스 IR (기업설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "회사현황 소개 및 질의응답을 통한 투자자 이해 증진 · 온라인 컨퍼런스콜"
   },
   {
     "date": "2026-10-07",
@@ -56824,6 +56909,15 @@
     "summary": "- 회사 주요 현황 설명을 통한 투자자 이해 증진 - 기업가치 제고 · (주)스피어코퍼레이션 본사 (서울 여의도)"
   },
   {
+    "date": "2026-10-08",
+    "time": "19:00",
+    "category": "IR",
+    "title": "멕아이씨에스 IR (기업설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "투자자들의 회사에 대한 이해증진 및 향후 사업내용 설명 · 서울시 마포구 모래내로7길 12, MEK빌딩 7층"
+  },
+  {
     "date": "2026-10-09",
     "time": "",
     "category": "만기일",
@@ -56875,6 +56969,17 @@
     "date": "2026-10-12",
     "time": "",
     "category": "산업컨퍼런스",
+    "title": "코리아 프리미엄 위크 3주차 (코스닥 IR·글로벌 채권포럼)",
+    "source": "known",
+    "auto": true,
+    "endDate": "2026-10-16",
+    "link": "https://www.fsc.go.kr/eng/pr010101/87713",
+    "summary": "금융위·거래소 주관 외국인 투자자 IR — 밸류업·코스닥 기업"
+  },
+  {
+    "date": "2026-10-12",
+    "time": "",
+    "category": "산업컨퍼런스",
     "title": "OCP 글로벌 서밋 2026 (데이터센터)",
     "source": "known",
     "auto": true,
@@ -56894,6 +56999,28 @@
   },
   {
     "date": "2026-10-12",
+    "time": "",
+    "category": "자동차/배터리",
+    "title": "파리 모터쇼 2026",
+    "source": "known",
+    "auto": true,
+    "endDate": "2026-10-18",
+    "link": "https://www.mondial.paris/",
+    "summary": "현대차·기아 유럽 신차·EV 공개 · 2차전지 셀·소재주 (LG에너지솔루션, 삼성SDI, SK이노베이션, 에코프로비엠, 포스코퓨처엠 등)"
+  },
+  {
+    "date": "2026-10-12",
+    "time": "",
+    "category": "정치/외교",
+    "title": "IMF·세계은행 연차총회 (방콕)",
+    "source": "known",
+    "auto": true,
+    "endDate": "2026-10-18",
+    "link": "https://www.imf.org/en/meetings/2026/annual",
+    "summary": "세계 성장 전망·통화정책 논의"
+  },
+  {
+    "date": "2026-10-12",
     "time": "09:00",
     "category": "IR",
     "title": "한글과컴퓨터 IR (NDR)",
@@ -56902,12 +57029,30 @@
     "summary": "해외 NDR · 미국(뉴욕, 시카고)"
   },
   {
+    "date": "2026-10-12",
+    "time": "10:30",
+    "category": "IR",
+    "title": "NC IR (기업설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "2026년 10월 기업설명회 참석 · 미국(뉴욕, 보스턴, 샌프란시스코, 로스앤젤레스)"
+  },
+  {
     "date": "2026-10-13",
     "time": "",
     "category": "IPO/공모",
     "title": "디티에스(구.동양티에스) 공모청약 (10/13~10/14)",
     "source": "38cr",
     "auto": true
+  },
+  {
+    "date": "2026-10-13",
+    "time": "",
+    "category": "기업행사",
+    "title": "애플(AAPL) 신제품 공개·키노트",
+    "source": "corp_events",
+    "auto": true,
+    "summary": "근거 기사: Apple special event reportedly planned for October 13th"
   },
   {
     "date": "2026-10-13",
@@ -56981,6 +57126,15 @@
   },
   {
     "date": "2026-10-13",
+    "time": "",
+    "category": "한국실적",
+    "title": "BNK금융지주 실적발표",
+    "source": "kind",
+    "auto": true,
+    "summary": "2026년 2분기 경영실적 및 Value-up 2.0 설명 · 홍콩, 싱가포르 및 말레이시아"
+  },
+  {
+    "date": "2026-10-13",
     "time": "10:00",
     "category": "IR",
     "title": "현대백화점 IR (컨퍼런스 참가)",
@@ -56996,6 +57150,16 @@
     "source": "kind",
     "auto": true,
     "summary": "2026 대신증권 Corporate Day 참석 · 서울시 영등포구 여의나루로 67-8"
+  },
+  {
+    "date": "2026-10-13",
+    "time": "11:00",
+    "category": "경제지표",
+    "title": "IMF 세계경제전망(WEO) 발표",
+    "source": "known",
+    "auto": true,
+    "link": "https://www.imf.org/en/publications/weo/issues/2026/10/13/world-economic-outlook-october-2026",
+    "summary": "한국·세계 성장률 전망 수정"
   },
   {
     "date": "2026-10-14",
@@ -57147,6 +57311,33 @@
   },
   {
     "date": "2026-10-15",
+    "time": "13:10",
+    "category": "IR",
+    "title": "지슨 IR (기업설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "회사에 대한 이해증진 및 기업가치 제고 · 서울특별시 영등포구 여의나루로 67-8 금융투자교육원 7층 703호"
+  },
+  {
+    "date": "2026-10-15",
+    "time": "13:10",
+    "category": "한국실적",
+    "title": "에스엠씨지 실적발표",
+    "source": "kind",
+    "auto": true,
+    "summary": "- 2026 상반기 경영실적 설명 - 시설투자계획 설명 - 투자가치 및 기업가치 제고 · 서울시 영등포구 여의나루로67-8 금융투자교육원 7층"
+  },
+  {
+    "date": "2026-10-15",
+    "time": "14:20",
+    "category": "IR",
+    "title": "SCL사이언스 IR (R&D 설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "SCL사이언스 기업 현황 및 연구개발 진행사항 공유 · 서울시 영등포구 여의나루로 67-8 금융투자교육원 7층 703호"
+  },
+  {
+    "date": "2026-10-15",
     "time": "15:00",
     "category": "IR",
     "title": "큐리언트 IR (기업설명회)",
@@ -57175,6 +57366,16 @@
     "country": "🇺🇸",
     "importance": 1,
     "summary": "이전 1.2 · 포함: Retail Sales Control Group MoM, Retail Sales Ex Autos MoM, Retail Sales MoM"
+  },
+  {
+    "date": "2026-10-16",
+    "time": "01:00",
+    "category": "기업행사",
+    "title": "셈텍(SMTC) 데이터센터 Teach-in (장기 재무목표)",
+    "source": "known",
+    "auto": true,
+    "link": "https://secure.businesswire.com/news/home/20260814576040/en/",
+    "summary": "데이터센터 구리케이블(AEC)·광 인터커넥트 · 광통신·광트랜시버 관련주 (대한광통신, 오이솔루션, 쏠리드, 우리로 등)"
   },
   {
     "date": "2026-10-16",
@@ -57561,6 +57762,26 @@
     "summary": "이전 1.9 · 포함: Core Inflation Rate YoY, Inflation Rate YoY"
   },
   {
+    "date": "2026-10-24",
+    "time": "11:00",
+    "category": "IR",
+    "title": "멕아이씨에스 IR (기업설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "투자자들의 회사에 대한 이해증진 및 향후 사업내용 설명 · 서울시 마포구 모래내로7길12, MEK빌딩 7층"
+  },
+  {
+    "date": "2026-10-25",
+    "time": "",
+    "category": "산업컨퍼런스",
+    "title": "오라클 AI World 2026",
+    "source": "known",
+    "auto": true,
+    "endDate": "2026-10-28",
+    "link": "https://www.oracle.com/ai-world",
+    "summary": "오라클 클라우드·AI 데이터센터 증설 → 전력기기·HBM 수요"
+  },
+  {
     "date": "2026-10-26",
     "time": "",
     "category": "IPO/공모",
@@ -57619,6 +57840,15 @@
     "importance": 0,
     "summary": "Communist Party Fifth Plenum",
     "endDate": "2026-10-29"
+  },
+  {
+    "date": "2026-10-27",
+    "time": "",
+    "category": "기업행사",
+    "title": "셀레스티카(CLS) 인베스터데이",
+    "source": "corp_events",
+    "auto": true,
+    "summary": "기업 성장 전망, AI 인프라 사업 관련 투자자 설명회 · 근거 기사: Celestica to Host 2026 Investor and Analyst Day on October 27, 2026"
   },
   {
     "date": "2026-10-27",
@@ -57961,6 +58191,15 @@
   },
   {
     "date": "2026-10-29",
+    "time": "14:00",
+    "category": "한국실적",
+    "title": "삼성에스디에스 실적발표",
+    "source": "kind",
+    "auto": true,
+    "summary": "2026년 3분기 경영실적 설명회"
+  },
+  {
+    "date": "2026-10-29",
     "time": "21:30",
     "category": "경제지표",
     "title": "🇺🇸 GDP 성장률 속보치 (3분기)",
@@ -58053,6 +58292,17 @@
   {
     "date": "2026-10-30",
     "time": "",
+    "category": "산업컨퍼런스",
+    "title": "홍하이(폭스콘) 테크데이",
+    "source": "known",
+    "auto": true,
+    "endDate": "2026-10-31",
+    "link": "https://uanalyze.com.tw/articles/4425453960",
+    "summary": "AI 서버·CPO(광패키징)·EV 로드맵 — 서버 부품·기판주"
+  },
+  {
+    "date": "2026-10-30",
+    "time": "",
     "category": "통화정책",
     "title": "BOJ 금리 결정",
     "source": "fixed",
@@ -58082,16 +58332,14 @@
     "summary": "이전 50.1 · 포함: NBS Manufacturing PMI, NBS Non Manufacturing PMI"
   },
   {
-    "category": "제약/바이오",
-    "title": "오베시티위크(Obesity Week) 2026",
-    "source": "ai_scan",
-    "auto": true,
-    "month": "2026-11",
-    "undated": true,
     "date": "2026-11-01",
-    "endDate": "2026-11-30",
-    "unconfirmed": true,
-    "summary": "미국 개최 예상. 온코닉테라퓨틱스가 차세대 비만·대사질환 신약 후보 구두발표. 비만치료 및 관련 신약 임상결과 발표 플랫폼. 관련주: 온코닉테라퓨틱스, 대사질환 치료제 개발 바이오 기업"
+    "time": "",
+    "category": "에너지",
+    "title": "OPEC+ 8개국 월례회의 (12월 생산량 결정)",
+    "source": "known",
+    "auto": true,
+    "link": "https://www.opec.org/pr-detail/616-4-october-2026.html",
+    "summary": "유가 → 정유·항공·화학"
   },
   {
     "date": "2026-11-01",
@@ -58543,6 +58791,17 @@
   {
     "date": "2026-11-04",
     "time": "",
+    "category": "에너지",
+    "title": "BIXPO 2026 (한전 빛가람 국제전력기술엑스포)",
+    "source": "known",
+    "auto": true,
+    "endDate": "2026-11-06",
+    "link": "https://www.tradecommissioner.gc.ca/en/trade-events-training/2026/11/bitgaram-international-exposition-electric-power-technology-bixpo.html",
+    "summary": "전력망·원전 — 전력기기주 (HD현대일렉트릭, LS일렉트릭, 효성중공업 등)"
+  },
+  {
+    "date": "2026-11-04",
+    "time": "",
     "category": "제약/바이오",
     "title": "SITC 2026 (면역항암학회)",
     "source": "known",
@@ -58662,6 +58921,17 @@
     "summary": "회계분기 Sep/2026 · EPS 예상 $0.11 · 시총 $3B"
   },
   {
+    "date": "2026-11-05",
+    "time": "",
+    "category": "제약/바이오",
+    "title": "AASLD 2026 (미국간학회)",
+    "source": "known",
+    "auto": true,
+    "endDate": "2026-11-09",
+    "link": "https://www.aasld.org/tlm-26",
+    "summary": "MASH·간질환 파이프라인 (한미약품, 유한양행, 디앤디파마텍 등)"
+  },
+  {
     "date": "2026-11-06",
     "time": "",
     "category": "미국실적",
@@ -58693,6 +58963,17 @@
   },
   {
     "date": "2026-11-06",
+    "time": "",
+    "category": "제약/바이오",
+    "title": "AHA 2026 (미국심장학회)",
+    "source": "known",
+    "auto": true,
+    "endDate": "2026-11-09",
+    "link": "https://professional.heart.org/en/meetings/scientific-sessions",
+    "summary": "비만·심혈관 데이터 → 비만치료제 테마"
+  },
+  {
+    "date": "2026-11-06",
     "time": "22:30",
     "category": "경제지표",
     "title": "미국 비농업 고용 (10월)",
@@ -58710,6 +58991,17 @@
     "endDate": "2026-11-20",
     "link": "https://unfccc.int/cop31",
     "summary": "신재생·원전·수소 정책 (한화솔루션, 씨에스윈드, 두산에너빌리티 등)"
+  },
+  {
+    "date": "2026-11-09",
+    "time": "",
+    "category": "제약/바이오",
+    "title": "BIO-Europe 2026 (기술수출 파트너링)",
+    "source": "known",
+    "auto": true,
+    "endDate": "2026-11-11",
+    "link": "https://informaconnect.com/bioeurope/about-bio-europe/",
+    "summary": "L/O 협상 — 알테오젠, 리가켐바이오, 에이비엘바이오 등"
   },
   {
     "date": "2026-11-10",
@@ -58742,6 +59034,17 @@
   },
   {
     "date": "2026-11-10",
+    "time": "",
+    "category": "전시/박람회",
+    "title": "electronica 2026 (뮌헨 전자부품전)",
+    "source": "known",
+    "auto": true,
+    "endDate": "2026-11-13",
+    "link": "https://electronica.de/en/trade-fair/",
+    "summary": "MLCC·전력반도체·전장 (삼성전기 등)"
+  },
+  {
+    "date": "2026-11-10",
     "time": "22:30",
     "category": "경제지표",
     "title": "미국 CPI (10월)",
@@ -58767,6 +59070,16 @@
     "source": "fixed",
     "auto": false,
     "country": ""
+  },
+  {
+    "date": "2026-11-12",
+    "time": "",
+    "category": "만기일",
+    "title": "MSCI 11월 정기변경 발표 (KST 새벽)",
+    "source": "known",
+    "auto": true,
+    "link": "https://www.msci.com/eqb/pressreleases/archive/ir_dates.pdf",
+    "summary": "한국 종목 편출입 발표 → 11/30 리밸런싱 패시브 수급"
   },
   {
     "date": "2026-11-12",
@@ -58809,6 +59122,28 @@
     "summary": "회계분기 Sep/2026 · EPS 예상 $0.45 · 시총 $271B"
   },
   {
+    "date": "2026-11-14",
+    "time": "",
+    "category": "제약/바이오",
+    "title": "오베시티위크 2026 (비만학회)",
+    "source": "known",
+    "auto": true,
+    "endDate": "2026-11-17",
+    "link": "https://obesityweek.org",
+    "summary": "비만치료제 데이터 (한미약품, 펩트론, 디앤디파마텍 등)"
+  },
+  {
+    "date": "2026-11-15",
+    "time": "",
+    "category": "반도체",
+    "title": "SC26 슈퍼컴퓨팅 학회",
+    "source": "known",
+    "auto": true,
+    "endDate": "2026-11-20",
+    "link": "https://sc26.supercomputing.org/",
+    "summary": "엔비디아·AMD HPC 발표 → HBM (SK하이닉스, 삼성전자)"
+  },
+  {
     "date": "2026-11-16",
     "time": "",
     "category": "에너지",
@@ -58818,6 +59153,17 @@
     "endDate": "2026-11-19",
     "link": "https://www.re-plus.com/",
     "summary": "ESS·태양광 관련주 (LG에너지솔루션, 삼성SDI, 한화솔루션, HD현대에너지솔루션 등)"
+  },
+  {
+    "date": "2026-11-16",
+    "time": "",
+    "category": "제약/바이오",
+    "title": "CTAD 2026 (알츠하이머 임상학회)",
+    "source": "known",
+    "auto": true,
+    "endDate": "2026-11-19",
+    "link": "https://www.alzint.org/news-events/events/clinical-trials-on-alzheimers-disease-ctad-2026/",
+    "summary": "아리바이오 AR1001 3상 구두발표 예정 — 치매 치료제 관련주"
   },
   {
     "date": "2026-11-17",
@@ -58858,6 +59204,17 @@
     "auto": true,
     "country": "🇺🇸",
     "summary": "회계분기 Sep/2026 · EPS 예상 $1.05 · 시총 $29B"
+  },
+  {
+    "date": "2026-11-17",
+    "time": "",
+    "category": "산업컨퍼런스",
+    "title": "마이크로소프트 Ignite 2026",
+    "source": "known",
+    "auto": true,
+    "endDate": "2026-11-20",
+    "link": "https://moscone.com/events/microsoft-ignite-2026",
+    "summary": "애저 AI 인프라 → 데이터센터·HBM·전력기기"
   },
   {
     "date": "2026-11-18",
@@ -58938,6 +59295,16 @@
     "auto": true,
     "endDate": "2026-11-22",
     "link": "https://gstar.or.kr/"
+  },
+  {
+    "date": "2026-11-19",
+    "time": "",
+    "category": "만기일",
+    "title": "수능일 증시 1시간 지연 개장 (10:00~16:30)",
+    "source": "known",
+    "auto": true,
+    "link": "https://www.etoday.co.kr/news/view/2390974",
+    "summary": "매년 관례 — 거래소 공지 전 (통상 1주 전 공지)"
   },
   {
     "date": "2026-11-19",
@@ -59109,6 +59476,28 @@
     "source": "fixed",
     "auto": false,
     "country": "🇺🇸"
+  },
+  {
+    "date": "2026-12-07",
+    "time": "",
+    "category": "방산",
+    "title": "주하이 에어쇼 2026 (중국 국제항공우주박람회)",
+    "source": "known",
+    "auto": true,
+    "endDate": "2026-12-13",
+    "link": "https://www.globaltimes.cn/page/202607/1366720.shtml",
+    "summary": "중국 방산·우주항공 동향"
+  },
+  {
+    "date": "2026-12-08",
+    "time": "",
+    "category": "방산",
+    "title": "KADEX with DX KOREA 2026 (킨텍스 방산전)",
+    "source": "known",
+    "auto": true,
+    "endDate": "2026-12-11",
+    "link": "https://www.heraldk.com/article/2026070519364941464",
+    "summary": "K-방산주 (한화에어로스페이스, 현대로템, LIG넥스원, 한국항공우주 등)"
   },
   {
     "date": "2026-12-09",
@@ -59326,6 +59715,16 @@
     "auto": true,
     "endDate": "2027-01-09",
     "link": "https://www.ces.tech/"
+  },
+  {
+    "date": "2027-01-10",
+    "time": "",
+    "category": "정치/외교",
+    "title": "미중 무역휴전(부산 합의) 만료",
+    "source": "known",
+    "auto": true,
+    "link": "https://www.koreatimes.co.kr/world/20260924/us-china-agree-to-extend-trade-truce-by-two-months-work-on-bigger-deal-bessent-says",
+    "summary": "연장·확대 협상 여부 → 관세·반도체 수출규제"
   },
   {
     "date": "2027-01-11",

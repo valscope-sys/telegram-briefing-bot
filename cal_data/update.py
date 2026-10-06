@@ -50,7 +50,7 @@ def merge_events(existing: list[dict], new_events: list[dict]) -> list[dict]:
     동일 (date, category, normalized_title) → 소스 우선순위로 결정.
     """
     SOURCE_PRIORITY = {"holidays": 12, "fixed": 10, "known": 9, "fnguide": 8, "kind": 8, "tradingview": 7,
-                       "nasdaq": 7, "finnhub": 6, "tv_earnings": 6, "investing": 5, "38cr": 4, "news": 3,
+                       "nasdaq": 7, "finnhub": 6, "tv_earnings": 6, "investing": 5, "corp_events": 5, "38cr": 4, "news": 3,
                        "manual": 100}
 
     indexed = {}
@@ -113,6 +113,13 @@ def merge_events(existing: list[dict], new_events: list[dict]) -> list[dict]:
         and ev.get("category", "") in AI_BLACKLIST_CATEGORIES
     )]
 
+    # 국내 IR 중 인베스터데이·밸류업데이만 숨김 카테고리(IR)가 아닌 '기업행사'로 노출
+    # ("기업가치 제고"는 소형주 IR 상투 문구라 기준에서 제외). 매 실행 재판정 → 기준 변경 시 자동 복구
+    for ev in result:
+        if ev.get("source") == "kind" and ev.get("category") in ("IR", "기업행사"):
+            text = f"{ev.get('title', '')} {ev.get('summary', '')}"
+            ev["category"] = "기업행사" if _KR_INVESTOR_DAY.search(text) else "IR"
+
     # FnGuide 유상/무상증자·합병·액면분할/병합 — 수집 중단 후 기존 잔존분도 제거
     result = [ev for ev in result if not (
         ev.get("source") == "fnguide" and ev.get("category", "") == "기업이벤트"
@@ -126,6 +133,9 @@ def merge_events(existing: list[dict], new_events: list[dict]) -> list[dict]:
 
     result.sort(key=lambda e: (e.get("date", ""), e.get("time", ""), e.get("category", "")))
     return result
+
+
+_KR_INVESTOR_DAY = re.compile(r"investor\s*day|인베스터\s*데이|밸류업\s*데이|ceo\s*investor", re.I)
 
 
 def _dedupe_us_earnings(events: list[dict]) -> list[dict]:
@@ -336,6 +346,17 @@ def collect_all(from_date: datetime.date, to_date: datetime.date, skip_ai: bool 
         pass
     except Exception as e:
         print(f"[Calendar] IPO 실패: {e}")
+
+    # 4.4. 해외 기업 행사 — 인베스터데이·애널리스트데이·신제품 공개 (Bing 뉴스 + Claude/패턴 추출)
+    try:
+        from cal_data.collectors.corporate_events import fetch_corporate_events
+        from cal_data.collectors.industry_events import fetch_industry_events as _ind
+        from cal_data.collectors.news_events import fetch_known_events as _known
+        corp = fetch_corporate_events(existing_events=all_events + _ind(from_date, to_date) + _known(from_date, to_date))
+        print(f"[Calendar] 기업행사: {len(corp)}건")
+        all_events.extend(corp)
+    except Exception as e:
+        print(f"[Calendar] 기업행사 실패: {e}")
 
     # 4.5. 산업 이벤트 — 광통신·XR·배터리·디스플레이·반도체 학회·조선·방산·원전 전시 (공식 일정)
     try:

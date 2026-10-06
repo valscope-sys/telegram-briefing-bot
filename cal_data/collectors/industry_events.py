@@ -94,9 +94,10 @@ INDUSTRY_EVENTS_2026 = [
     # MSPO 2026 (폴란드 키엘체) — https://www.targikielce.pl/en/mspo
     {"date": "2026-09-08", "endDate": "2026-09-11", "title": "MSPO 2026 (폴란드 방산전)", "category": "방산",
      "link": "https://www.targikielce.pl/en/mspo", "summary": f"K2·K9·천무 폴란드 수출 · {_DEFENSE}"},
-    # DX KOREA 2026 (킨텍스) — https://v.daum.net/v/20260526103107456 (조직위 발표 보도)
-    {"date": "2026-09-16", "endDate": "2026-09-19", "title": "DX KOREA 2026 (대한민국방위산업전)", "category": "방산",
-     "link": "https://dxkorea.org/", "summary": _DEFENSE},
+    # DX KOREA 2026 → 7월 'KADEX with DX KOREA 2026'으로 통합되며 12/8~11 킨텍스로 연기
+    #   https://www.heraldk.com/article/2026070519364941464
+    {"date": "2026-12-08", "endDate": "2026-12-11", "title": "KADEX with DX KOREA 2026 (킨텍스 방산전)", "category": "방산",
+     "link": "https://www.heraldk.com/article/2026070519364941464", "summary": _DEFENSE},
     # Land Forces 2026 (퍼스 컨벤션센터) — https://www.australiandefence.com.au/yafevent/the-land-forces-international-land-defence-exposition-2026
     {"date": "2026-10-06", "endDate": "2026-10-08", "title": "랜드포스 2026 (호주 지상방산전)", "category": "방산",
      "link": "https://landforces.com.au/", "summary": "레드백·AS9 호주 사업 — 한화에어로스페이스 등 K-방산주"},
@@ -117,6 +118,84 @@ INDUSTRY_EVENTS_2026 = [
     # COP31 (튀르키예 안탈리아 EXPO) — https://unfccc.int/cop31/the-road-to-antalya
     {"date": "2026-11-09", "endDate": "2026-11-20", "title": "COP31 기후총회 (튀르키예 안탈리아)", "category": "에너지",
      "link": "https://unfccc.int/cop31", "summary": "신재생·원전·수소 정책 (한화솔루션, 씨에스윈드, 두산에너빌리티 등)"},
+
+    # ===== 2026-10-06 누락 점검 보완 (공식 출처 확인분) =====
+    # CPHI Milan (세계 최대 제약·CDMO 전시회) — https://www.cphi.com/europe/
+    {"date": "2026-10-06", "endDate": "2026-10-08", "title": "CPHI 밀라노 2026 (제약·CDMO 전시회)", "category": "제약/바이오",
+     "link": "https://www.cphi.com/europe/", "summary": "CDMO 수주 모멘텀 (삼성바이오로직스, SK바이오사이언스, 에스티팜 등)"},
+    # 코리아 프리미엄 위크 (금융위·한국거래소 외국인 대상 IR 주간) — https://www.fsc.go.kr/eng/pr010101/87713
+    {"date": "2026-10-06", "endDate": "2026-10-08", "title": "코리아 프리미엄 위크 2주차 (외국인 대상 IR)", "category": "산업컨퍼런스",
+     "link": "https://www.fsc.go.kr/eng/pr010101/87713", "summary": "금융위·거래소 주관 외국인 투자자 IR — 밸류업·코스닥 기업"},
+    {"date": "2026-10-12", "endDate": "2026-10-16", "title": "코리아 프리미엄 위크 3주차 (코스닥 IR·글로벌 채권포럼)", "category": "산업컨퍼런스",
+     "link": "https://www.fsc.go.kr/eng/pr010101/87713", "summary": "금융위·거래소 주관 외국인 투자자 IR — 밸류업·코스닥 기업"},
+    # IMF·세계은행 연차총회 (방콕) — https://www.imf.org/en/meetings/2026/annual
+    {"date": "2026-10-12", "endDate": "2026-10-18", "title": "IMF·세계은행 연차총회 (방콕)", "category": "정치/외교",
+     "link": "https://www.imf.org/en/meetings/2026/annual", "summary": "세계 성장 전망·통화정책 논의"},
+    # IMF 세계경제전망(WEO) 10월호 — 방콕 09:00 = KST 11:00
+    #   https://www.imf.org/en/publications/weo/issues/2026/10/13/world-economic-outlook-october-2026
+    {"date": "2026-10-13", "time": "11:00", "title": "IMF 세계경제전망(WEO) 발표", "category": "경제지표",
+     "link": "https://www.imf.org/en/publications/weo/issues/2026/10/13/world-economic-outlook-october-2026",
+     "summary": "한국·세계 성장률 전망 수정"},
+    # 파리 모터쇼 (프레스데이 10/12) — https://en.wikipedia.org/wiki/2026_Paris_Motor_Show (공식 mondial.paris)
+    {"date": "2026-10-12", "endDate": "2026-10-18", "title": "파리 모터쇼 2026", "category": "자동차/배터리",
+     "link": "https://www.mondial.paris/", "summary": f"현대차·기아 유럽 신차·EV 공개 · {_BATTERY}"},
+    # Semtech 데이터센터 Teach-in (장기 재무목표) 10/15 09:00 PT = 10/16 01:00 KST
+    #   https://secure.businesswire.com/news/home/20260814576040/en/
+    {"date": "2026-10-16", "time": "01:00", "title": "셈텍(SMTC) 데이터센터 Teach-in (장기 재무목표)", "category": "기업행사",
+     "link": "https://secure.businesswire.com/news/home/20260814576040/en/",
+     "summary": f"데이터센터 구리케이블(AEC)·광 인터커넥트 · {_OPTICAL}"},
+    # Oracle AI World 2026 (라스베이거스) — https://www.oracle.com/ai-world
+    {"date": "2026-10-25", "endDate": "2026-10-28", "title": "오라클 AI World 2026", "category": "산업컨퍼런스",
+     "link": "https://www.oracle.com/ai-world", "summary": "오라클 클라우드·AI 데이터센터 증설 → 전력기기·HBM 수요"},
+    # 홍하이(폭스콘) 테크데이 (타이베이) — https://uanalyze.com.tw/articles/4425453960
+    {"date": "2026-10-30", "endDate": "2026-10-31", "title": "홍하이(폭스콘) 테크데이", "category": "산업컨퍼런스",
+     "link": "https://uanalyze.com.tw/articles/4425453960", "summary": "AI 서버·CPO(광패키징)·EV 로드맵 — 서버 부품·기판주"},
+    # OPEC+ 8개국 월례회의 (12월 생산량) — https://www.opec.org/pr-detail/616-4-october-2026.html
+    {"date": "2026-11-01", "title": "OPEC+ 8개국 월례회의 (12월 생산량 결정)", "category": "에너지",
+     "link": "https://www.opec.org/pr-detail/616-4-october-2026.html", "summary": "유가 → 정유·항공·화학"},
+    # BIXPO 2026 (한전, 광주)
+    #   https://www.tradecommissioner.gc.ca/en/trade-events-training/2026/11/bitgaram-international-exposition-electric-power-technology-bixpo.html
+    {"date": "2026-11-04", "endDate": "2026-11-06", "title": "BIXPO 2026 (한전 빛가람 국제전력기술엑스포)", "category": "에너지",
+     "link": "https://www.tradecommissioner.gc.ca/en/trade-events-training/2026/11/bitgaram-international-exposition-electric-power-technology-bixpo.html",
+     "summary": "전력망·원전 — 전력기기주 (HD현대일렉트릭, LS일렉트릭, 효성중공업 등)"},
+    # AASLD 미국간학회 (덴버) — https://www.aasld.org/tlm-26
+    {"date": "2026-11-05", "endDate": "2026-11-09", "title": "AASLD 2026 (미국간학회)", "category": "제약/바이오",
+     "link": "https://www.aasld.org/tlm-26", "summary": "MASH·간질환 파이프라인 (한미약품, 유한양행, 디앤디파마텍 등)"},
+    # AHA 미국심장학회 (시카고) — https://professional.heart.org/en/meetings/scientific-sessions
+    {"date": "2026-11-06", "endDate": "2026-11-09", "title": "AHA 2026 (미국심장학회)", "category": "제약/바이오",
+     "link": "https://professional.heart.org/en/meetings/scientific-sessions", "summary": "비만·심혈관 데이터 → 비만치료제 테마"},
+    # BIO-Europe (쾰른, 기술수출 파트너링) — https://informaconnect.com/bioeurope/about-bio-europe/
+    {"date": "2026-11-09", "endDate": "2026-11-11", "title": "BIO-Europe 2026 (기술수출 파트너링)", "category": "제약/바이오",
+     "link": "https://informaconnect.com/bioeurope/about-bio-europe/", "summary": "L/O 협상 — 알테오젠, 리가켐바이오, 에이비엘바이오 등"},
+    # electronica 2026 (뮌헨) — https://electronica.de/en/trade-fair/
+    {"date": "2026-11-10", "endDate": "2026-11-13", "title": "electronica 2026 (뮌헨 전자부품전)", "category": "전시/박람회",
+     "link": "https://electronica.de/en/trade-fair/", "summary": "MLCC·전력반도체·전장 (삼성전기 등)"},
+    # MSCI 11월 정기변경 발표 (11/11 미국 장마감 후 = KST 11/12 새벽, 11/30 종가 반영)
+    #   https://www.msci.com/eqb/pressreleases/archive/ir_dates.pdf
+    {"date": "2026-11-12", "title": "MSCI 11월 정기변경 발표 (KST 새벽)", "category": "만기일",
+     "link": "https://www.msci.com/eqb/pressreleases/archive/ir_dates.pdf",
+     "summary": "한국 종목 편출입 발표 → 11/30 리밸런싱 패시브 수급"},
+    # 오베시티위크 2026 (내셔널하버) — https://obesityweek.org
+    {"date": "2026-11-14", "endDate": "2026-11-17", "title": "오베시티위크 2026 (비만학회)", "category": "제약/바이오",
+     "link": "https://obesityweek.org", "summary": "비만치료제 데이터 (한미약품, 펩트론, 디앤디파마텍 등)"},
+    # SC26 슈퍼컴퓨팅 학회 (시카고) — https://sc26.supercomputing.org/
+    {"date": "2026-11-15", "endDate": "2026-11-20", "title": "SC26 슈퍼컴퓨팅 학회", "category": "반도체",
+     "link": "https://sc26.supercomputing.org/", "summary": "엔비디아·AMD HPC 발표 → HBM (SK하이닉스, 삼성전자)"},
+    # CTAD 알츠하이머 임상학회 (보스턴) — https://www.alzint.org/news-events/events/clinical-trials-on-alzheimers-disease-ctad-2026/
+    #   아리바이오 AR1001 3상 구두발표 예정: https://en.sedaily.com/finance/2026/10/01/phase-3-data-approvals-licensing-deals-k-bio-faces-october
+    {"date": "2026-11-16", "endDate": "2026-11-19", "title": "CTAD 2026 (알츠하이머 임상학회)", "category": "제약/바이오",
+     "link": "https://www.alzint.org/news-events/events/clinical-trials-on-alzheimers-disease-ctad-2026/",
+     "summary": "아리바이오 AR1001 3상 구두발표 예정 — 치매 치료제 관련주"},
+    # Microsoft Ignite (샌프란시스코) — https://moscone.com/events/microsoft-ignite-2026
+    {"date": "2026-11-17", "endDate": "2026-11-20", "title": "마이크로소프트 Ignite 2026", "category": "산업컨퍼런스",
+     "link": "https://moscone.com/events/microsoft-ignite-2026", "summary": "애저 AI 인프라 → 데이터센터·HBM·전력기기"},
+    # 2027학년도 수능 (11/19) — 증시 1시간 지연 개장은 매년 관례, 거래소 공지는 통상 1주 전
+    #   https://www.etoday.co.kr/news/view/2390974
+    {"date": "2026-11-19", "title": "수능일 증시 1시간 지연 개장 (10:00~16:30)", "category": "만기일",
+     "link": "https://www.etoday.co.kr/news/view/2390974", "summary": "매년 관례 — 거래소 공지 전 (통상 1주 전 공지)"},
+    # 주하이 에어쇼 (공식 12/7~13 — 일정 사이트의 11월 표기는 구정보) — https://www.globaltimes.cn/page/202607/1366720.shtml
+    {"date": "2026-12-07", "endDate": "2026-12-13", "title": "주하이 에어쇼 2026 (중국 국제항공우주박람회)", "category": "방산",
+     "link": "https://www.globaltimes.cn/page/202607/1366720.shtml", "summary": "중국 방산·우주항공 동향"},
 ]
 
 
@@ -221,6 +300,11 @@ INDUSTRY_EVENTS_2027 = [
     # WNE 2027 세계원자력전시회 (파리 노르 빌팽트, 격년) — https://www.world-nuclear-exhibition.com/en-gb/the-show.html
     {"date": "2027-12-07", "endDate": "2027-12-09", "title": "세계원자력전시회 WNE 2027 (파리)", "category": "에너지",
      "link": "https://www.world-nuclear-exhibition.com/", "summary": _NUCLEAR},
+    # 미중 무역휴전('부산 합의') 만료 — 9월 합의로 11/10 → 2027-01-10 연장
+    #   https://www.koreatimes.co.kr/world/20260924/us-china-agree-to-extend-trade-truce-by-two-months-work-on-bigger-deal-bessent-says
+    {"date": "2027-01-10", "title": "미중 무역휴전(부산 합의) 만료", "category": "정치/외교",
+     "link": "https://www.koreatimes.co.kr/world/20260924/us-china-agree-to-extend-trade-truce-by-two-months-work-on-bigger-deal-bessent-says",
+     "summary": "연장·확대 협상 여부 → 관세·반도체 수출규제"},
 ]
 
 
@@ -238,7 +322,7 @@ def fetch_industry_events(from_date: datetime.date, to_date: datetime.date) -> l
 
         result = {
             "date": ev["date"],
-            "time": "",
+            "time": ev.get("time", ""),
             "category": ev["category"],
             "title": ev["title"],
             "source": "known",  # 하드코딩 스냅샷 (update.py SNAPSHOT_SOURCES)

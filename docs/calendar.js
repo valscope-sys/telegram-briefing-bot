@@ -3,7 +3,7 @@ const CAT_COLORS = {
     "한국실적":"var(--cat-kr)","한국실적(잠정)":"var(--cat-kr-prov)",
     "미국실적":"var(--cat-us)","경제지표":"var(--cat-econ)",
     "통화정책":"var(--cat-monetary)",
-    "IPO/공모":"var(--cat-ipo)","기업이벤트":"var(--cat-corp)","IR":"var(--cat-ir)",
+    "IPO/공모":"var(--cat-ipo)","기업행사":"var(--cat-corpday)","기업이벤트":"var(--cat-corp)","IR":"var(--cat-ir)",
     "정치/외교":"var(--cat-politics)","산업컨퍼런스":"var(--cat-conf)",
     "게임":"var(--cat-game)","반도체":"var(--cat-semi)",
     "자동차/배터리":"var(--cat-auto)","제약/바이오":"var(--cat-pharma)",
@@ -15,7 +15,7 @@ const CAT_COLORS = {
 const CAT_LABELS = {
     "한국실적":"실적(정식)","한국실적(잠정)":"실적(잠정)",
     "미국실적":"미국 실적","경제지표":"경제지표","통화정책":"통화정책",
-    "IPO/공모":"IPO/공모","기업이벤트":"기업이벤트","IR":"IR",
+    "IPO/공모":"IPO/공모","기업행사":"기업행사(인베스터데이·키노트)","기업이벤트":"배당·기업이벤트","IR":"IR",
     "정치/외교":"정치/외교","산업컨퍼런스":"산업컨퍼런스",
     "게임":"게임","반도체":"반도체","자동차/배터리":"자동차/배터리",
     "제약/바이오":"제약/바이오","에너지":"에너지","방산":"방산",
@@ -55,13 +55,16 @@ const ADMIN_HASH = "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a2
 // === THEME ===
 const THEMES = ["dark","light","blue","green"];
 const THEME_NAMES = {"dark":"다크","light":"라이트","blue":"블루","green":"그린"};
+// 기본 테마: 라이트. 키 버전을 올려 예전에 자동 저장된 "dark"는 1회 무시 (이후 사용자 선택은 유지)
+const THEME_STORAGE_KEY = "calendar_theme_v2";
 function initTheme() {
-    const saved = localStorage.getItem("calendar_theme") || "dark";
-    setTheme(saved);
+    let saved = null;
+    try { saved = localStorage.getItem(THEME_STORAGE_KEY); } catch {}
+    setTheme(THEMES.includes(saved) ? saved : "light");
 }
 function setTheme(theme) {
     document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("calendar_theme", theme);
+    try { localStorage.setItem(THEME_STORAGE_KEY, theme); } catch {}
     const btn = document.getElementById("theme-btn");
     if (btn) btn.textContent = THEME_NAMES[theme] || theme;
 }
