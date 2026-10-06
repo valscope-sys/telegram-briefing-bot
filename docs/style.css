@@ -6,7 +6,7 @@
     --border: #30363d; --border-light: #21262d;
     --text: #e6edf3; --dim: #8b949e; --accent: #58a6ff;
     --cat-kr: #4A90D9; --cat-kr-prov: #7AB8F5; --cat-us: #D94A4A; --cat-econ: #E6A817;
-    --cat-monetary: #C9A227; --cat-ipo: #50B83C; --cat-corp: #F49342; --cat-ir: #47C1BF;
+    --cat-monetary: #C9A227; --cat-ipo: #50B83C; --cat-corp: #F49342; --cat-ir: #47C1BF; --cat-corpday: #E040FB;
     --cat-politics: #FF6B6B; --cat-conf: #B07CD8; --cat-game: #9B6DD7;
     --cat-semi: #00B4D8; --cat-auto: #06D6A0; --cat-pharma: #EF476F;
     --cat-energy: #FF9F1C; --cat-defense: #8D99AE; --cat-expo: #C4A35A;
@@ -20,7 +20,7 @@
     --border: #d0d5dd; --border-light: #e4e7ec;
     --text: #1d2939; --dim: #667085; --accent: #2563eb;
     --cat-kr: #2563eb; --cat-kr-prov: #60a5fa; --cat-us: #dc2626; --cat-econ: #b45309;
-    --cat-monetary: #92710a; --cat-ipo: #16a34a; --cat-corp: #c2410c; --cat-ir: #0e7490;
+    --cat-monetary: #92710a; --cat-ipo: #16a34a; --cat-corp: #c2410c; --cat-ir: #0e7490; --cat-corpday: #a21caf;
     --cat-politics: #b91c1c; --cat-conf: #7c3aed; --cat-game: #6d28d9;
     --cat-semi: #0284c7; --cat-auto: #059669; --cat-pharma: #be123c;
     --cat-energy: #c2410c; --cat-defense: #475569; --cat-expo: #92710a;
@@ -34,7 +34,7 @@
     --border: #1e3a5f; --border-light: #162d4d;
     --text: #d4e4f7; --dim: #7a9cc6; --accent: #4da6ff;
     --cat-kr: #5ba8f5; --cat-kr-prov: #8ac4ff; --cat-us: #ff5c5c; --cat-econ: #ffc857;
-    --cat-monetary: #d4aa3a; --cat-ipo: #4cd97a; --cat-corp: #ff9f43; --cat-ir: #41d1c0;
+    --cat-monetary: #d4aa3a; --cat-ipo: #4cd97a; --cat-corp: #ff9f43; --cat-ir: #41d1c0; --cat-corpday: #e879f9;
     --cat-politics: #ff6b6b; --cat-conf: #b88aed; --cat-game: #a17adb;
     --cat-semi: #22c7e8; --cat-auto: #20dfa0; --cat-pharma: #f25c7a;
     --cat-energy: #ffa534; --cat-defense: #94a3b8; --cat-expo: #d4b040;
@@ -48,7 +48,7 @@
     --border: #1e4a2a; --border-light: #163d20;
     --text: #d4f0dc; --dim: #7ab88a; --accent: #4ade80;
     --cat-kr: #4da6f5; --cat-kr-prov: #7ac0ff; --cat-us: #f87171; --cat-econ: #fbbf24;
-    --cat-monetary: #d4aa3a; --cat-ipo: #4ade80; --cat-corp: #fb923c; --cat-ir: #2dd4bf;
+    --cat-monetary: #d4aa3a; --cat-ipo: #4ade80; --cat-corp: #fb923c; --cat-ir: #2dd4bf; --cat-corpday: #f0abfc;
     --cat-politics: #fb7185; --cat-conf: #c084fc; --cat-game: #a78bfa;
     --cat-semi: #22d3ee; --cat-auto: #34d399; --cat-pharma: #fb7185;
     --cat-energy: #fbbf24; --cat-defense: #94a3b8; --cat-expo: #d4b040;
