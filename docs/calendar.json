@@ -58566,23 +58566,23 @@
     "date": "2026-10-29",
     "time": "21:30",
     "category": "경제지표",
-    "title": "🇺🇸 GDP 성장률 속보치 (3분기)",
-    "source": "tradingview",
-    "auto": true,
-    "country": "🇺🇸",
-    "importance": 1,
-    "summary": "이전 2.2% · 포함: GDP Growth Rate QoQ Adv, GDP Price Index QoQ Adv"
-  },
-  {
-    "date": "2026-10-29",
-    "time": "21:30",
-    "category": "경제지표",
     "title": "🇺🇸 PCE 물가·개인소득/지출 (9월)",
     "source": "tradingview",
     "auto": true,
     "country": "🇺🇸",
     "importance": 1,
     "summary": "이전 0.2 · 포함: Core PCE Price Index MoM, Core PCE Price Index YoY, PCE Price Index MoM, PCE Price Index YoY, Personal Income MoM, Personal Spending MoM"
+  },
+  {
+    "date": "2026-10-29",
+    "time": "21:30",
+    "category": "경제지표",
+    "title": "🇺🇸 GDP 성장률 속보치 (3분기)",
+    "source": "tradingview",
+    "auto": true,
+    "country": "🇺🇸",
+    "importance": 1,
+    "summary": "이전 2.2% · 포함: GDP Growth Rate QoQ Adv, GDP Price Index QoQ Adv"
   },
   {
     "date": "2026-10-29",
@@ -59402,6 +59402,17 @@
     "endDate": "2026-11-11",
     "link": "https://informaconnect.com/bioeurope/about-bio-europe/",
     "summary": "L/O 협상 — 알테오젠, 리가켐바이오, 에이비엘바이오 등"
+  },
+  {
+    "date": "2026-11-09",
+    "time": "10:30",
+    "category": "경제지표",
+    "title": "🇨🇳 물가(CPI·PPI) (10월)",
+    "source": "tradingview",
+    "auto": true,
+    "country": "🇨🇳",
+    "importance": 1,
+    "summary": "포함: Inflation Rate MoM, Inflation Rate YoY, PPI YoY"
   },
   {
     "date": "2026-11-09",
@@ -61226,7 +61237,7 @@
     "source": "tv_earnings",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $2.26 · 시총 $172B"
+    "summary": "EPS 예상 $2.24 · 시총 $172B"
   },
   {
     "date": "2027-02-11",
