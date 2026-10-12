@@ -57091,6 +57091,15 @@
   },
   {
     "date": "2026-10-12",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "셀트리온 잠정실적발표",
+    "source": "fnguide",
+    "auto": true,
+    "summary": "3Q 영업이익 5,100억 (컨센 5,096억, +0.1%)"
+  },
+  {
+    "date": "2026-10-12",
     "time": "09:00",
     "category": "IR",
     "title": "에스피지 IR (기업설명회)",
@@ -57278,6 +57287,15 @@
   },
   {
     "date": "2026-10-13",
+    "time": "09:10",
+    "category": "IR",
+    "title": "파미셀 IR (NDR)",
+    "source": "kind",
+    "auto": true,
+    "summary": "SK증권 NDR(Non-Deal Roadshow) 참가 · 서울 여의도 등"
+  },
+  {
+    "date": "2026-10-13",
     "time": "10:00",
     "category": "IR",
     "title": "현대백화점 IR (컨퍼런스 참가)",
@@ -57427,7 +57445,7 @@
     "auto": true,
     "country": "🇨🇳",
     "importance": 1,
-    "summary": "예상 1.1% · 이전 0.8% · 포함: Inflation Rate MoM, Inflation Rate YoY, PPI YoY"
+    "summary": "예상 1% · 이전 0.8% · 포함: Inflation Rate MoM, Inflation Rate YoY, PPI YoY"
   },
   {
     "date": "2026-10-14",
@@ -57460,7 +57478,7 @@
     "auto": true,
     "country": "🇺🇸",
     "importance": 1,
-    "summary": "예상 3.6% · 이전 3.4% · 포함: CPI, CPI s.a, Core Inflation Rate MoM, Core Inflation Rate YoY, Inflation Rate MoM, Inflation Rate YoY"
+    "summary": "예상 3.7% · 이전 3.4% · 포함: CPI, CPI s.a, Core Inflation Rate MoM, Core Inflation Rate YoY, Inflation Rate MoM, Inflation Rate YoY"
   },
   {
     "date": "2026-10-15",
@@ -57578,6 +57596,15 @@
     "source": "kind",
     "auto": true,
     "summary": "회사 소개 및 주요 사업현황에 대한 투자자 이해 증진 · 대전광역시 유성구 테크노8로 13(용산동), (주)한독크린텍 라동 2층 대회의실"
+  },
+  {
+    "date": "2026-10-15",
+    "time": "15:30",
+    "category": "IR",
+    "title": "심플랫폼 IR (기업설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "- 회사소개 및 중요 사업 현황에 대한 투자자 이해증진 - 투자가치 및 기업가치 제고 · 여의도 금융투자교육원 7층"
   },
   {
     "date": "2026-10-15",
@@ -59465,12 +59492,25 @@
   },
   {
     "date": "2026-11-10",
+    "time": "12:00",
+    "category": "경제지표",
+    "title": "🇨🇳 수출입 (10월)",
+    "source": "tradingview",
+    "auto": true,
+    "country": "🇨🇳",
+    "importance": 1,
+    "summary": "포함: Balance of Trade, Balance of Trade Yuan, Exports YoY, Imports YoY"
+  },
+  {
+    "date": "2026-11-10",
     "time": "22:30",
     "category": "경제지표",
-    "title": "미국 CPI (10월)",
-    "source": "fixed",
-    "auto": false,
-    "country": "🇺🇸"
+    "title": "🇺🇸 소비자물가(CPI) (10월)",
+    "source": "tradingview",
+    "auto": true,
+    "country": "🇺🇸",
+    "importance": 1,
+    "summary": "포함: CPI, CPI s.a, Core Inflation Rate MoM, Core Inflation Rate YoY, Inflation Rate MoM, Inflation Rate YoY"
   },
   {
     "date": "2026-11-11",
