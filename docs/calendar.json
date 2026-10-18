@@ -58253,12 +58253,12 @@
     "date": "2026-10-20",
     "time": "10:15",
     "category": "통화정책",
-    "title": "🇨🇳 대출우대금리(LPR) 발표",
+    "title": "🇨🇳 대출우대금리(LPR) 발표 (10월)",
     "source": "tradingview",
     "auto": true,
     "country": "🇨🇳",
     "importance": 0,
-    "summary": "예상 3% · 이전 3% · 포함: Loan Prime Rate 1Y, Loan Prime Rate 5Y"
+    "summary": "예상 3.5% · 이전 3.5% · 포함: Loan Prime Rate 1Y, Loan Prime Rate 5Y"
   },
   {
     "date": "2026-10-20",
@@ -58766,7 +58766,7 @@
     "auto": true,
     "country": "🇰🇷",
     "importance": 0,
-    "summary": "이전 0.6% · 포함: GDP Growth Rate QoQ Adv, GDP Growth Rate YoY Adv"
+    "summary": "이전 3.7% · 포함: GDP Growth Rate QoQ Adv, GDP Growth Rate YoY Adv"
   },
   {
     "date": "2026-10-27",
@@ -60499,7 +60499,7 @@
     "auto": true,
     "country": "🇪🇺",
     "importance": -1,
-    "summary": "이전 0.6% · 포함: GDP Growth Rate QoQ 2nd Est, GDP Growth Rate YoY 2nd Est"
+    "summary": "이전 1.2% · 포함: GDP Growth Rate QoQ 2nd Est, GDP Growth Rate YoY 2nd Est"
   },
   {
     "date": "2026-11-13",
@@ -60647,7 +60647,7 @@
     "auto": true,
     "country": "🇺🇸",
     "importance": 1,
-    "summary": "포함: Retail Sales Control Group MoM, Retail Sales Ex Autos MoM, Retail Sales MoM"
+    "summary": "이전 0.8 · 포함: Retail Sales Control Group MoM, Retail Sales Ex Autos MoM, Retail Sales MoM"
   },
   {
     "date": "2026-11-18",
