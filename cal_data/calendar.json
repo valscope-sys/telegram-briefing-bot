@@ -58191,12 +58191,21 @@
   {
     "date": "2026-10-20",
     "time": "",
+    "category": "IPO/공모",
+    "title": "엘리스 신규상장",
+    "source": "fnguide",
+    "auto": true,
+    "summary": "공모가 90,500원"
+  },
+  {
+    "date": "2026-10-20",
+    "time": "",
     "category": "미국실적",
     "title": "GE에어로스페이스(GE) 실적발표 (장전)",
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $2.02 · 시총 $326B"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $2.02 · 시총 $323B"
   },
   {
     "date": "2026-10-20",
@@ -58206,7 +58215,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $0.82 · 시총 $294B"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $0.82 · 시총 $291B"
   },
   {
     "date": "2026-10-20",
@@ -58216,7 +58225,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $1.78 · 시총 $261B"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $1.78 · 시총 $259B"
   },
   {
     "date": "2026-10-20",
@@ -58226,17 +58235,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $2.13 · 시총 $151B"
-  },
-  {
-    "date": "2026-10-20",
-    "time": "",
-    "category": "미국실적",
-    "title": "노스롭그루먼(NOC) 실적발표 (장전)",
-    "source": "nasdaq",
-    "auto": true,
-    "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $7.22 · 시총 $74B"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $2.13 · 시총 $153B"
   },
   {
     "date": "2026-10-20",
@@ -58246,7 +58245,17 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $3.55 · 시총 $74B"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $3.55 · 시총 $73B"
+  },
+  {
+    "date": "2026-10-20",
+    "time": "",
+    "category": "미국실적",
+    "title": "노스롭그루먼(NOC) 실적발표 (장전)",
+    "source": "nasdaq",
+    "auto": true,
+    "country": "🇺🇸",
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $7.22 · 시총 $73B"
   },
   {
     "date": "2026-10-20",
@@ -58260,6 +58269,15 @@
   },
   {
     "date": "2026-10-20",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "LS에코에너지 잠정실적발표",
+    "source": "fnguide",
+    "auto": true,
+    "summary": "3Q 영업이익 222억 (컨센 204억, +8.4%)"
+  },
+  {
+    "date": "2026-10-20",
     "time": "09:00",
     "category": "IR",
     "title": "DH오토리드 IR (기업설명회)",
@@ -58269,7 +58287,7 @@
   },
   {
     "date": "2026-10-20",
-    "time": "10:15",
+    "time": "10:00",
     "category": "통화정책",
     "title": "🇨🇳 대출우대금리(LPR) 발표 (10월)",
     "source": "tradingview",
@@ -58303,7 +58321,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $6.54 · 시총 $1.81조"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $6.54 · 시총 $1.80조"
   },
   {
     "date": "2026-10-21",
@@ -58313,7 +58331,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $0.22 · 시총 $1.40조"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $0.22 · 시총 $1.45조"
   },
   {
     "date": "2026-10-21",
@@ -58323,7 +58341,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $2.17 · 시총 $330B"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $2.17 · 시총 $341B"
   },
   {
     "date": "2026-10-21",
@@ -58333,7 +58351,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $2.30 · 시총 $320B"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $2.30 · 시총 $313B"
   },
   {
     "date": "2026-10-21",
@@ -58343,17 +58361,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $2.03 · 시총 $276B"
-  },
-  {
-    "date": "2026-10-21",
-    "time": "",
-    "category": "미국실적",
-    "title": "써모피셔(TMO) 실적발표 (장전)",
-    "source": "nasdaq",
-    "auto": true,
-    "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $6.40 · 시총 $255B"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $2.03 · 시총 $278B"
   },
   {
     "date": "2026-10-21",
@@ -58369,11 +58377,21 @@
     "date": "2026-10-21",
     "time": "",
     "category": "미국실적",
+    "title": "써모피셔(TMO) 실적발표 (장전)",
+    "source": "nasdaq",
+    "auto": true,
+    "country": "🇺🇸",
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $6.40 · 시총 $251B"
+  },
+  {
+    "date": "2026-10-21",
+    "time": "",
+    "category": "미국실적",
     "title": "IBM(IBM) 실적발표 (장후)",
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $2.88 · 시총 $219B"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $2.88 · 시총 $223B"
   },
   {
     "date": "2026-10-21",
@@ -58383,7 +58401,25 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $1.42 · 시총 $181B"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $1.42 · 시총 $180B"
+  },
+  {
+    "date": "2026-10-21",
+    "time": "13:00",
+    "category": "IR",
+    "title": "바이오톡스텍 IR (기업설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "투자자들의 회사에 대한 이해증진 및 기업가치 제고 · 서울 소재 기관투자자 회의실"
+  },
+  {
+    "date": "2026-10-21",
+    "time": "14:00",
+    "category": "IR",
+    "title": "가온그룹 IR (기업설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "투자자들의 회사에 대한 이해증진 및 기업가치 제고 · 가온그룹(주) 본사 회의실(온라인 IR 진행)"
   },
   {
     "date": "2026-10-22",
@@ -58425,7 +58461,17 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $1.89 · 시총 $370B"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $1.89 · 시총 $367B"
+  },
+  {
+    "date": "2026-10-22",
+    "time": "",
+    "category": "미국실적",
+    "title": "웨스턴디지털(WDC) 실적발표 (장후)",
+    "source": "nasdaq",
+    "auto": true,
+    "country": "🇺🇸",
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $3.97 · 시총 $132B"
   },
   {
     "date": "2026-10-22",
@@ -58436,16 +58482,6 @@
     "auto": true,
     "country": "🇺🇸",
     "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $7.49 · 시총 $127B"
-  },
-  {
-    "date": "2026-10-22",
-    "time": "",
-    "category": "미국실적",
-    "title": "웨스턴디지털(WDC) 실적발표 (장후)",
-    "source": "nasdaq",
-    "auto": true,
-    "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $3.97 · 시총 $124B"
   },
   {
     "date": "2026-10-22",
@@ -58565,7 +58601,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $4.47 · 시총 $212B"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $4.47 · 시총 $214B"
   },
   {
     "date": "2026-10-23",
@@ -58605,6 +58641,15 @@
     "source": "kind",
     "auto": true,
     "summary": "2026년도 3분기 경영실적 발표 · 인터넷 영상 생중계"
+  },
+  {
+    "date": "2026-10-23",
+    "time": "16:00",
+    "category": "한국실적",
+    "title": "우리금융지주 실적발표",
+    "source": "kind",
+    "auto": true,
+    "summary": "2026년 3분기 경영실적 발표 · 오디오 인터넷 생중계 및 컨퍼런스콜"
   },
   {
     "date": "2026-10-24",
@@ -58651,7 +58696,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $1.60 · 시총 $88B"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $1.60 · 시총 $90B"
   },
   {
     "date": "2026-10-26",
@@ -58661,7 +58706,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $5.71 · 시총 $58B"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $5.71 · 시총 $59B"
   },
   {
     "date": "2026-10-26",
@@ -58729,7 +58774,7 @@
     "title": "셀레스티카(CLS) 인베스터데이",
     "source": "corp_events",
     "auto": true,
-    "summary": "Q3 2026 실적 발표와 2026 인베스터/애널리스트 데이 개최. AI 클라우드 수요 강조 · 근거 기사: Celestica to Hold Q3 2026 Financial Results and 2026 Investor and Analyst Day Conference Call"
+    "summary": "Q3 2026 실적발표 및 2026 인베스터데이 개최. AI 네트워킹 수요 전망 · 근거 기사: Celestica to Hold Q3 2026 Financial Results and 2026 Investor and Analyst Day Conference Call"
   },
   {
     "date": "2026-10-27",
@@ -58748,7 +58793,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $3.43 · 시총 $719B"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $3.43 · 시총 $720B"
   },
   {
     "date": "2026-10-27",
@@ -58758,7 +58803,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $0.87 · 시총 $404B"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $0.87 · 시총 $402B"
   },
   {
     "date": "2026-10-27",
@@ -58788,7 +58833,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $0.17 · 시총 $150B"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $0.17 · 시총 $151B"
   },
   {
     "date": "2026-10-27",
@@ -58798,7 +58843,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $7.11 · 시총 $146B"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $7.11 · 시총 $151B"
   },
   {
     "date": "2026-10-27",
@@ -58818,7 +58863,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $2.04 · 시총 $51B"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $2.04 · 시총 $52B"
   },
   {
     "date": "2026-10-27",
@@ -58851,12 +58896,30 @@
   },
   {
     "date": "2026-10-27",
+    "time": "10:00",
+    "category": "한국실적",
+    "title": "삼성카드 실적발표",
+    "source": "kind",
+    "auto": true,
+    "summary": "2026년 3분기 경영실적 발표"
+  },
+  {
+    "date": "2026-10-27",
     "time": "10:30",
     "category": "한국실적",
     "title": "ISC 실적발표",
     "source": "kind",
     "auto": true,
     "summary": "2026년 3분기 경영실적 발표 · 온라인"
+  },
+  {
+    "date": "2026-10-27",
+    "time": "14:00",
+    "category": "한국실적",
+    "title": "HD현대일렉트릭 실적발표",
+    "source": "kind",
+    "auto": true,
+    "summary": "2026년 3분기 경영실적 발표"
   },
   {
     "date": "2026-10-27",
@@ -58887,12 +58950,30 @@
   },
   {
     "date": "2026-10-27",
+    "time": "16:00",
+    "category": "한국실적",
+    "title": "iM금융지주 실적발표",
+    "source": "kind",
+    "auto": true,
+    "summary": "2026년도 3분기 경영실적 결과(잠정치) 발표"
+  },
+  {
+    "date": "2026-10-27",
     "time": "16:30",
     "category": "한국실적",
     "title": "한미약품 실적발표",
     "source": "kind",
     "auto": true,
     "summary": "2026년 3분기 경영실적 설명"
+  },
+  {
+    "date": "2026-10-27",
+    "time": "17:00",
+    "category": "한국실적",
+    "title": "JB금융지주 실적발표",
+    "source": "kind",
+    "auto": true,
+    "summary": "(주)JB금융지주 2026년 3분기 그룹 경영실적 발표 · 오디오 인터넷 생중계 및 Conference Call"
   },
   {
     "date": "2026-10-27",
@@ -58903,7 +58984,7 @@
     "auto": true,
     "country": "🇺🇸",
     "importance": 1,
-    "summary": "이전 0 · Durable Goods Orders MoM"
+    "summary": "이전 0% · Durable Goods Orders MoM"
   },
   {
     "date": "2026-10-28",
@@ -58920,7 +59001,7 @@
     "title": "애플(AAPL) 신제품 공개·키노트",
     "source": "corp_events",
     "auto": true,
-    "summary": "근거 기사: Apple Confirms The Pro And Tell Special Event For October 28"
+    "summary": "근거 기사: Apple sends invites out for 'Pro and Tell' special event on Oct. 28"
   },
   {
     "date": "2026-10-28",
@@ -58939,7 +59020,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $2.94 · 시총 $4.17조"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $2.94 · 시총 $4.21조"
   },
   {
     "date": "2026-10-28",
@@ -58949,7 +59030,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $4.71 · 시총 $3.93조"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $4.71 · 시총 $3.96조"
   },
   {
     "date": "2026-10-28",
@@ -58959,7 +59040,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $4.03 · 시총 $245B"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $4.03 · 시총 $242B"
   },
   {
     "date": "2026-10-28",
@@ -58969,7 +59050,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $2.86 · 시총 $171B"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $2.86 · 시총 $167B"
   },
   {
     "date": "2026-10-28",
@@ -58979,7 +59060,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $0.56 · 시총 $147B"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $0.56 · 시총 $150B"
   },
   {
     "date": "2026-10-28",
@@ -58999,7 +59080,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $3.24 · 시총 $69B"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $3.24 · 시총 $70B"
   },
   {
     "date": "2026-10-28",
@@ -59009,7 +59090,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $0.39 · 시총 $49B"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $0.39 · 시총 $48B"
   },
   {
     "category": "산업컨퍼런스",
@@ -59076,6 +59157,15 @@
   },
   {
     "date": "2026-10-28",
+    "time": "14:00",
+    "category": "한국실적",
+    "title": "SKC 실적발표",
+    "source": "kind",
+    "auto": true,
+    "summary": "2026년 3분기 경영실적 발표"
+  },
+  {
+    "date": "2026-10-28",
     "time": "15:30",
     "category": "한국실적",
     "title": "OCI 실적발표",
@@ -59095,11 +59185,19 @@
   {
     "date": "2026-10-29",
     "time": "",
+    "category": "IPO/공모",
+    "title": "티앤이코리아 신규상장",
+    "source": "38cr",
+    "auto": true
+  },
+  {
+    "date": "2026-10-29",
+    "time": "",
     "category": "기업행사",
     "title": "인텔(INTC) 실적발표",
     "source": "corp_events",
     "auto": true,
-    "summary": "장마감 후 Q3 2026 실적 발표 · 근거 기사: Intel to Report Third-Quarter 2026 Financial Results"
+    "summary": "3분기 2026 실적 발표 예정. Market close 직후 · 근거 기사: Intel to Report Third-Quarter 2026 Financial Results"
   },
   {
     "date": "2026-10-29",
@@ -59109,7 +59207,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $2.01 · 시총 $2.70조"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $2.01 · 시총 $2.83조"
   },
   {
     "date": "2026-10-29",
@@ -59119,7 +59217,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $5.38 · 시총 $1.18조"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $5.38 · 시총 $1.17조"
   },
   {
     "date": "2026-10-29",
@@ -59129,7 +59227,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $5.13 · 시총 $541B"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $5.13 · 시총 $540B"
   },
   {
     "date": "2026-10-29",
@@ -59139,7 +59237,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $0.28 · 시총 $475B"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $0.28 · 시총 $486B"
   },
   {
     "date": "2026-10-29",
@@ -59149,7 +59247,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $2.12 · 시총 $360B"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $2.12 · 시총 $354B"
   },
   {
     "date": "2026-10-29",
@@ -59159,7 +59257,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $6.95 · 시총 $336B"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $6.95 · 시총 $334B"
   },
   {
     "date": "2026-10-29",
@@ -59169,7 +59267,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $3.25 · 시총 $290B"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $3.25 · 시총 $291B"
   },
   {
     "date": "2026-10-29",
@@ -59179,17 +59277,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $4.52 · 시총 $230B"
-  },
-  {
-    "date": "2026-10-29",
-    "time": "",
-    "category": "미국실적",
-    "title": "길리어드(GILD) 실적발표 (장후)",
-    "source": "nasdaq",
-    "auto": true,
-    "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $2.16 · 시총 $194B"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $4.52 · 시총 $232B"
   },
   {
     "date": "2026-10-29",
@@ -59199,7 +59287,17 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $45.22 · 시총 $189B"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $45.22 · 시총 $199B"
+  },
+  {
+    "date": "2026-10-29",
+    "time": "",
+    "category": "미국실적",
+    "title": "길리어드(GILD) 실적발표 (장후)",
+    "source": "nasdaq",
+    "auto": true,
+    "country": "🇺🇸",
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $2.16 · 시총 $190B"
   },
   {
     "date": "2026-10-29",
@@ -59209,7 +59307,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $1.28 · 시총 $122B"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $1.28 · 시총 $120B"
   },
   {
     "date": "2026-10-29",
@@ -59219,7 +59317,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $0.72 · 시총 $111B"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $0.72 · 시총 $112B"
   },
   {
     "date": "2026-10-29",
@@ -59229,7 +59327,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $4.68 · 시총 $93B"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $4.68 · 시총 $91B"
   },
   {
     "date": "2026-10-29",
@@ -59239,7 +59337,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $6.80 · 시총 $60B"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $6.80 · 시총 $62B"
   },
   {
     "date": "2026-10-29",
@@ -59249,7 +59347,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $0.19 · 시총 $46B"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $0.19 · 시총 $44B"
   },
   {
     "date": "2026-10-29",
@@ -59259,7 +59357,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $1.04 · 시총 $21B"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $1.04 · 시총 $22B"
   },
   {
     "date": "2026-10-29",
@@ -59269,7 +59367,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $4.64 · 시총 $19B"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $4.64 · 시총 $18B"
   },
   {
     "date": "2026-10-29",
@@ -59308,6 +59406,15 @@
     "source": "kind",
     "auto": true,
     "summary": "2026년 3분기 경영실적 및 경영현황 설명 · 서울 여의도 외"
+  },
+  {
+    "date": "2026-10-29",
+    "time": "09:00",
+    "category": "IR",
+    "title": "SKC IR (실적 설명회)",
+    "source": "kind",
+    "auto": true,
+    "summary": "2026년 3분기 실적 및 경영현황 설명 · 서울 여의도 외"
   },
   {
     "date": "2026-10-29",
@@ -59365,6 +59472,15 @@
   },
   {
     "date": "2026-10-29",
+    "time": "15:00",
+    "category": "한국실적",
+    "title": "대한전선 실적발표",
+    "source": "kind",
+    "auto": true,
+    "summary": "'26.3분기 실적 발표 · 하나증권 본사 대회의실(서울 여의도)"
+  },
+  {
+    "date": "2026-10-29",
     "time": "15:30",
     "category": "한국실적",
     "title": "OCI홀딩스 실적발표",
@@ -59392,6 +59508,15 @@
   },
   {
     "date": "2026-10-29",
+    "time": "16:00",
+    "category": "한국실적",
+    "title": "두산로보틱스 실적발표",
+    "source": "kind",
+    "auto": true,
+    "summary": "2026년 3분기 경영실적 발표"
+  },
+  {
+    "date": "2026-10-29",
     "time": "16:30",
     "category": "한국실적",
     "title": "두산밥캣 실적발표",
@@ -59408,7 +59533,7 @@
     "auto": true,
     "country": "🇺🇸",
     "importance": 1,
-    "summary": "이전 0.2 · 포함: Core PCE Price Index MoM, Core PCE Price Index YoY, PCE Price Index MoM, PCE Price Index YoY, Personal Income MoM, Personal Spending MoM"
+    "summary": "이전 0.2% · 포함: Core PCE Price Index MoM, Core PCE Price Index YoY, PCE Price Index MoM, PCE Price Index YoY, Personal Income MoM, Personal Spending MoM"
   },
   {
     "date": "2026-10-29",
@@ -59433,6 +59558,22 @@
   {
     "date": "2026-10-30",
     "time": "",
+    "category": "IPO/공모",
+    "title": "크리에이츠 신규상장",
+    "source": "38cr",
+    "auto": true
+  },
+  {
+    "date": "2026-10-30",
+    "time": "",
+    "category": "IPO/공모",
+    "title": "인텔리빅스 신규상장",
+    "source": "38cr",
+    "auto": true
+  },
+  {
+    "date": "2026-10-30",
+    "time": "",
     "category": "IR",
     "title": "한화에어로스페이스 IR (실적 설명회)",
     "source": "kind",
@@ -59447,7 +59588,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $3.92 · 시총 $736B"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $3.92 · 시총 $733B"
   },
   {
     "date": "2026-10-30",
@@ -59457,7 +59598,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $3.76 · 시총 $504B"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $3.76 · 시총 $500B"
   },
   {
     "date": "2026-10-30",
@@ -59467,7 +59608,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $4.74 · 시총 $445B"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $4.74 · 시총 $443B"
   },
   {
     "date": "2026-10-30",
@@ -59487,7 +59628,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $4.14 · 시총 $93B"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $4.14 · 시총 $92B"
   },
   {
     "date": "2026-10-30",
@@ -59585,6 +59726,24 @@
   },
   {
     "date": "2026-10-30",
+    "time": "14:00",
+    "category": "한국실적",
+    "title": "현대건설 실적발표",
+    "source": "kind",
+    "auto": true,
+    "summary": "2026년 3분기 경영실적발표"
+  },
+  {
+    "date": "2026-10-30",
+    "time": "15:00",
+    "category": "한국실적",
+    "title": "현대오토에버 실적발표",
+    "source": "kind",
+    "auto": true,
+    "summary": "2026년 3분기 경영실적 발표"
+  },
+  {
+    "date": "2026-10-30",
     "time": "16:00",
     "category": "한국실적",
     "title": "SOOP 실적발표",
@@ -59659,7 +59818,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $2.00 · 시총 $5.01조"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $2.00 · 시총 $5.00조"
   },
   {
     "date": "2026-11-02",
@@ -59669,7 +59828,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $0.34 · 시총 $447B"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $0.34 · 시총 $466B"
   },
   {
     "date": "2026-11-02",
@@ -59709,7 +59868,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $1.19 · 시총 $13B"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $1.19 · 시총 $12B"
   },
   {
     "date": "2026-11-02",
@@ -59722,6 +59881,24 @@
   },
   {
     "date": "2026-11-02",
+    "time": "09:00",
+    "category": "IR",
+    "title": "제일기획 IR (NDR)",
+    "source": "kind",
+    "auto": true,
+    "summary": "국내 NDR 진행 · 서울"
+  },
+  {
+    "date": "2026-11-02",
+    "time": "09:00",
+    "category": "IR",
+    "title": "현대건설 IR (NDR)",
+    "source": "kind",
+    "auto": true,
+    "summary": "실적발표 NDR"
+  },
+  {
+    "date": "2026-11-02",
     "time": "10:45",
     "category": "경제지표",
     "title": "🇨🇳 RatingDog 제조업 PMI (10월)",
@@ -59730,6 +59907,15 @@
     "country": "🇨🇳",
     "importance": 1,
     "summary": "이전 52.1 · RatingDog Manufacturing PMI"
+  },
+  {
+    "date": "2026-11-02",
+    "time": "14:00",
+    "category": "한국실적",
+    "title": "포스코인터내셔널 실적발표",
+    "source": "kind",
+    "auto": true,
+    "summary": "2026년 3분기 기업설명회"
   },
   {
     "date": "2026-11-02",
@@ -59767,7 +59953,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "회계분기 Sep/2026 · EPS 예상 $0.11 · 시총 $1.98조"
+    "summary": "회계분기 Sep/2026 · EPS 예상 $0.11 · 시총 $2.01조"
   },
   {
     "date": "2026-11-03",
@@ -59777,17 +59963,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $1.67 · 시총 $863B"
-  },
-  {
-    "date": "2026-11-03",
-    "time": "",
-    "category": "미국실적",
-    "title": "암젠(AMGN) 실적발표 (장후)",
-    "source": "nasdaq",
-    "auto": true,
-    "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $5.72 · 시총 $234B"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $1.67 · 시총 $878B"
   },
   {
     "date": "2026-11-03",
@@ -59797,7 +59973,17 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $0.99 · 시총 $223B"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $0.99 · 시총 $231B"
+  },
+  {
+    "date": "2026-11-03",
+    "time": "",
+    "category": "미국실적",
+    "title": "암젠(AMGN) 실적발표 (장후)",
+    "source": "nasdaq",
+    "auto": true,
+    "country": "🇺🇸",
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $5.72 · 시총 $230B"
   },
   {
     "date": "2026-11-03",
@@ -59807,7 +59993,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $0.33 · 시총 $219B"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $0.33 · 시총 $222B"
   },
   {
     "date": "2026-11-03",
@@ -59817,7 +60003,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $0.72 · 시총 $169B"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $0.72 · 시총 $168B"
   },
   {
     "date": "2026-11-03",
@@ -59921,6 +60107,15 @@
     "date": "2026-11-03",
     "time": "16:00",
     "category": "한국실적",
+    "title": "지누스 실적발표",
+    "source": "kind",
+    "auto": true,
+    "summary": "2026년 3분기 경영실적 발표"
+  },
+  {
+    "date": "2026-11-03",
+    "time": "16:00",
+    "category": "한국실적",
     "title": "카카오페이 실적발표",
     "source": "kind",
     "auto": true,
@@ -59934,6 +60129,15 @@
     "source": "kind",
     "auto": true,
     "summary": "2026년 3분기 실적발표"
+  },
+  {
+    "date": "2026-11-03",
+    "time": "16:30",
+    "category": "한국실적",
+    "title": "LG생활건강 실적발표",
+    "source": "kind",
+    "auto": true,
+    "summary": "2026년 3분기 경영실적 발표"
   },
   {
     "date": "2026-11-04",
@@ -59959,7 +60163,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "회계분기 Sep/2026 · 시총 $254B"
+    "summary": "회계분기 Sep/2026 · 시총 $253B"
   },
   {
     "date": "2026-11-04",
@@ -59969,7 +60173,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $0.22 · 시총 $242B"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $0.22 · 시총 $243B"
   },
   {
     "date": "2026-11-04",
@@ -59979,7 +60183,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "회계분기 Sep/2026 · EPS 예상 $1.18 · 시총 $216B"
+    "summary": "회계분기 Sep/2026 · EPS 예상 $1.18 · 시총 $217B"
   },
   {
     "date": "2026-11-04",
@@ -59989,17 +60193,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "회계분기 Sep/2026 · EPS 예상 $1.46 · 시총 $181B"
-  },
-  {
-    "date": "2026-11-04",
-    "time": "",
-    "category": "미국실적",
-    "title": "노보노디스크(NVO) 실적발표",
-    "source": "nasdaq",
-    "auto": true,
-    "country": "🇺🇸",
-    "summary": "회계분기 Sep/2026 · EPS 예상 $0.81 · 시총 $172B"
+    "summary": "회계분기 Sep/2026 · EPS 예상 $1.46 · 시총 $182B"
   },
   {
     "date": "2026-11-04",
@@ -60015,11 +60209,21 @@
     "date": "2026-11-04",
     "time": "",
     "category": "미국실적",
+    "title": "노보노디스크(NVO) 실적발표",
+    "source": "nasdaq",
+    "auto": true,
+    "country": "🇺🇸",
+    "summary": "회계분기 Sep/2026 · EPS 예상 $0.81 · 시총 $170B"
+  },
+  {
+    "date": "2026-11-04",
+    "time": "",
+    "category": "미국실적",
     "title": "우버(UBER) 실적발표 (장전)",
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $0.94 · 시총 $144B"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $0.94 · 시총 $143B"
   },
   {
     "date": "2026-11-04",
@@ -60144,6 +60348,15 @@
     "date": "2026-11-04",
     "time": "14:00",
     "category": "한국실적",
+    "title": "에스엠 실적발표",
+    "source": "kind",
+    "auto": true,
+    "summary": "2026년 3분기 경영실적 발표 · 컨퍼런스 콜"
+  },
+  {
+    "date": "2026-11-04",
+    "time": "14:00",
+    "category": "한국실적",
     "title": "한화 실적발표",
     "source": "kind",
     "auto": true,
@@ -60198,7 +60411,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $2.86 · 시총 $176B"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $2.86 · 시총 $174B"
   },
   {
     "date": "2026-11-05",
@@ -60208,7 +60421,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $2.89 · 시총 $104B"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $2.89 · 시총 $105B"
   },
   {
     "date": "2026-11-05",
@@ -60218,7 +60431,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $0.08 · 시총 $6B"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $0.08 · 시총 $7B"
   },
   {
     "date": "2026-11-05",
@@ -60228,7 +60441,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $0.11 · 시총 $3B"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $0.11 · 시총 $2B"
   },
   {
     "date": "2026-11-05",
@@ -60357,7 +60570,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "회계분기 Sep/2026 · EPS 예상 $3.99 · 시총 $96B"
+    "summary": "회계분기 Sep/2026 · EPS 예상 $3.99 · 시총 $93B"
   },
   {
     "date": "2026-11-06",
@@ -60367,7 +60580,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $1.10 · 시총 $87B"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $1.10 · 시총 $91B"
   },
   {
     "date": "2026-11-06",
@@ -60377,7 +60590,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $2.86 · 시총 $51B"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $2.86 · 시총 $50B"
   },
   {
     "date": "2026-11-06",
@@ -60560,6 +60773,15 @@
   },
   {
     "date": "2026-11-10",
+    "time": "16:00",
+    "category": "한국실적",
+    "title": "크래프톤 실적발표",
+    "source": "kind",
+    "auto": true,
+    "summary": "2026년 3분기 경영실적 발표"
+  },
+  {
+    "date": "2026-11-10",
     "time": "22:30",
     "category": "경제지표",
     "title": "🇺🇸 소비자물가(CPI) (10월)",
@@ -60577,7 +60799,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "회계분기 Oct/2026 · EPS 예상 $1.15 · 시총 $423B"
+    "summary": "회계분기 Oct/2026 · EPS 예상 $1.15 · 시총 $420B"
   },
   {
     "date": "2026-11-12",
@@ -60638,7 +60860,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Oct/2026 · EPS 예상 $4.06 · 시총 $325B"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Oct/2026 · EPS 예상 $4.06 · 시총 $328B"
   },
   {
     "date": "2026-11-12",
@@ -60654,10 +60876,28 @@
     "date": "2026-11-12",
     "time": "09:00",
     "category": "한국실적",
+    "title": "NAVER 실적발표",
+    "source": "kind",
+    "auto": true,
+    "summary": "2026년 3분기 실적발표"
+  },
+  {
+    "date": "2026-11-12",
+    "time": "09:00",
+    "category": "한국실적",
     "title": "NC 실적발표",
     "source": "kind",
     "auto": true,
     "summary": "2026년도 3분기 실적발표"
+  },
+  {
+    "date": "2026-11-12",
+    "time": "09:00",
+    "category": "한국실적",
+    "title": "한화손해보험 실적발표",
+    "source": "kind",
+    "auto": true,
+    "summary": "2026년 3분기 경영실적 발표"
   },
   {
     "date": "2026-11-12",
@@ -60676,7 +60916,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "회계분기 Sep/2026 · EPS 예상 $0.45 · 시총 $260B"
+    "summary": "회계분기 Sep/2026 · EPS 예상 $0.45 · 시총 $257B"
   },
   {
     "date": "2026-11-13",
@@ -60687,7 +60927,7 @@
     "auto": true,
     "country": "🇪🇺",
     "importance": -1,
-    "summary": "이전 0.6% · 포함: GDP Growth Rate QoQ 2nd Est, GDP Growth Rate YoY 2nd Est"
+    "summary": "이전 1.2% · 포함: GDP Growth Rate QoQ 2nd Est, GDP Growth Rate YoY 2nd Est"
   },
   {
     "date": "2026-11-13",
@@ -60803,7 +61043,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $1.68 · 시총 $191B"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Sep/2026 · EPS 예상 $1.68 · 시총 $189B"
   },
   {
     "date": "2026-11-17",
@@ -60813,7 +61053,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "회계분기 Sep/2026 · EPS 예상 $2.60 · 시총 $115B"
+    "summary": "회계분기 Sep/2026 · EPS 예상 $2.60 · 시총 $116B"
   },
   {
     "date": "2026-11-17",
@@ -60850,12 +61090,20 @@
   {
     "date": "2026-11-18",
     "time": "",
+    "category": "IPO/공모",
+    "title": "에스에프씨(유가) 공모청약 (11/18~11/19)",
+    "source": "38cr",
+    "auto": true
+  },
+  {
+    "date": "2026-11-18",
+    "time": "",
     "category": "미국실적",
     "title": "엔비디아(NVDA) 실적발표",
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "회계분기 Oct/2026 · EPS 예상 $2.49 · 시총 $5.16조"
+    "summary": "회계분기 Oct/2026 · EPS 예상 $2.49 · 시총 $5.23조"
   },
   {
     "date": "2026-11-18",
@@ -60865,7 +61113,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "회계분기 Oct/2026 · EPS 예상 $0.52 · 시총 $280B"
+    "summary": "회계분기 Oct/2026 · EPS 예상 $0.52 · 시총 $284B"
   },
   {
     "date": "2026-11-18",
@@ -60945,7 +61193,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Oct/2026 · EPS 예상 $0.63 · 시총 $943B"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Oct/2026 · EPS 예상 $0.63 · 시총 $942B"
   },
   {
     "date": "2026-11-19",
@@ -61001,7 +61249,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "회계분기 Oct/2026 · EPS 예상 $6.41 · 시총 $287B"
+    "summary": "회계분기 Oct/2026 · EPS 예상 $6.41 · 시총 $290B"
   },
   {
     "date": "2026-11-24",
@@ -61011,7 +61259,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "회계분기 Sep/2026 · EPS 예상 $1.31 · 시총 $264B"
+    "summary": "회계분기 Sep/2026 · EPS 예상 $1.31 · 시총 $263B"
   },
   {
     "date": "2026-11-24",
@@ -61021,7 +61269,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "회계분기 Oct/2026 · EPS 예상 $3.89 · 시총 $192B"
+    "summary": "회계분기 Oct/2026 · EPS 예상 $3.89 · 시총 $191B"
   },
   {
     "date": "2026-11-25",
@@ -61031,7 +61279,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Oct/2026 · EPS 예상 $4.07 · 시총 $173B"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · 회계분기 Oct/2026 · EPS 예상 $4.07 · 시총 $169B"
   },
   {
     "date": "2026-11-26",
@@ -61106,7 +61354,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "회계분기 Oct/2026 · 시총 $233B"
+    "summary": "회계분기 Oct/2026 · 시총 $234B"
   },
   {
     "date": "2026-12-01",
@@ -61116,7 +61364,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "회계분기 Oct/2026 · EPS 예상 $0.79 · 시총 $200B"
+    "summary": "회계분기 Oct/2026 · EPS 예상 $0.79 · 시총 $208B"
   },
   {
     "date": "2026-12-01",
@@ -61155,7 +61403,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "회계분기 Oct/2026 · EPS 예상 $2.98 · 시총 $274B"
+    "summary": "회계분기 Oct/2026 · EPS 예상 $2.98 · 시총 $272B"
   },
   {
     "date": "2026-12-02",
@@ -61165,7 +61413,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "회계분기 Oct/2026 · EPS 예상 $2.41 · 시총 $198B"
+    "summary": "회계분기 Oct/2026 · EPS 예상 $2.41 · 시총 $200B"
   },
   {
     "date": "2026-12-02",
@@ -61175,7 +61423,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "회계분기 Oct/2026 · EPS 예상 $0.32 · 시총 $108B"
+    "summary": "회계분기 Oct/2026 · EPS 예상 $0.32 · 시총 $111B"
   },
   {
     "date": "2026-12-03",
@@ -61185,7 +61433,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "회계분기 Oct/2026 · EPS 예상 $1.16 · 시총 $73B"
+    "summary": "회계분기 Oct/2026 · EPS 예상 $1.16 · 시총 $74B"
   },
   {
     "date": "2026-12-04",
@@ -61236,7 +61484,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "회계분기 Nov/2026 · EPS 예상 $1.57 · 시총 $389B"
+    "summary": "회계분기 Nov/2026 · EPS 예상 $1.57 · 시총 $393B"
   },
   {
     "date": "2026-12-09",
@@ -61246,7 +61494,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "회계분기 Nov/2026 · EPS 예상 $5.11 · 시총 $95B"
+    "summary": "회계분기 Nov/2026 · EPS 예상 $5.11 · 시총 $96B"
   },
   {
     "date": "2026-12-09",
@@ -61271,6 +61519,14 @@
   {
     "date": "2026-12-10",
     "time": "",
+    "category": "IPO/공모",
+    "title": "씨아이에스케미칼 공모청약 (12/10~12/11)",
+    "source": "38cr",
+    "auto": true
+  },
+  {
+    "date": "2026-12-10",
+    "time": "",
     "category": "만기일",
     "title": "12월 선물옵션 동시만기 (쿼드러플위칭)",
     "source": "fixed",
@@ -61285,7 +61541,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "회계분기 Oct/2026 · EPS 예상 $3.45 · 시총 $1.57조"
+    "summary": "회계분기 Oct/2026 · EPS 예상 $3.45 · 시총 $1.60조"
   },
   {
     "date": "2026-12-10",
@@ -61295,7 +61551,7 @@
     "source": "nasdaq",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "회계분기 Nov/2026 · EPS 예상 $4.87 · 시총 $438B"
+    "summary": "회계분기 Nov/2026 · EPS 예상 $4.87 · 시총 $441B"
   },
   {
     "date": "2026-12-10",
@@ -61541,7 +61797,7 @@
     "source": "tv_earnings",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · EPS 예상 $5.88 · 시총 $887B"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · EPS 예상 $5.88 · 시총 $891B"
   },
   {
     "date": "2027-01-14",
@@ -61551,7 +61807,7 @@
     "source": "tv_earnings",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · EPS 예상 $2.95 · 시총 $280B"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · EPS 예상 $2.95 · 시총 $283B"
   },
   {
     "date": "2027-01-14",
@@ -61561,7 +61817,7 @@
     "source": "tv_earnings",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · EPS 예상 $1.87 · 시총 $246B"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · EPS 예상 $1.87 · 시총 $247B"
   },
   {
     "date": "2027-01-14",
@@ -61571,7 +61827,7 @@
     "source": "tv_earnings",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · EPS 예상 $2.33 · 시총 $204B"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · EPS 예상 $2.33 · 시총 $206B"
   },
   {
     "date": "2027-01-15",
@@ -61581,7 +61837,7 @@
     "source": "tv_earnings",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · EPS 예상 $1.12 · 시총 $349B"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · EPS 예상 $1.12 · 시총 $351B"
   },
   {
     "date": "2027-01-18",
@@ -61610,7 +61866,7 @@
     "source": "tv_earnings",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · EPS 예상 $15.79 · 시총 $255B"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · EPS 예상 $15.79 · 시총 $258B"
   },
   {
     "date": "2027-01-19",
@@ -61630,7 +61886,7 @@
     "source": "tv_earnings",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $2.27 · 시총 $365B"
+    "summary": "EPS 예상 $2.28 · 시총 $376B"
   },
   {
     "date": "2027-01-20",
@@ -61690,7 +61946,7 @@
     "source": "tv_earnings",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $15.37 · 시총 $183B"
+    "summary": "EPS 예상 $15.42 · 시총 $183B"
   },
   {
     "date": "2027-01-22",
@@ -61780,7 +62036,47 @@
     "source": "tv_earnings",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · EPS 예상 $2.91 · 시총 $612B"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · EPS 예상 $2.90 · 시총 $625B"
+  },
+  {
+    "date": "2027-01-26",
+    "time": "",
+    "category": "미국실적",
+    "title": "GE에어로스페이스(GE) 실적발표",
+    "source": "tv_earnings",
+    "auto": true,
+    "country": "🇺🇸",
+    "summary": "EPS 예상 $2.04 · 시총 $311B"
+  },
+  {
+    "date": "2027-01-26",
+    "time": "",
+    "category": "미국실적",
+    "title": "넷플릭스(NFLX) 실적발표",
+    "source": "tv_earnings",
+    "auto": true,
+    "country": "🇺🇸",
+    "summary": "EPS 예상 $0.73 · 시총 $286B"
+  },
+  {
+    "date": "2027-01-26",
+    "time": "",
+    "category": "미국실적",
+    "title": "RTX(RTX) 실적발표",
+    "source": "tv_earnings",
+    "auto": true,
+    "country": "🇺🇸",
+    "summary": "EPS 예상 $1.83 · 시총 $261B"
+  },
+  {
+    "date": "2027-01-26",
+    "time": "",
+    "category": "미국실적",
+    "title": "인튜이티브서지컬(ISRG) 실적발표",
+    "source": "tv_earnings",
+    "auto": true,
+    "country": "🇺🇸",
+    "summary": "EPS 예상 $2.85 · 시총 $155B"
   },
   {
     "date": "2027-01-26",
@@ -61886,6 +62182,16 @@
     "date": "2027-01-27",
     "time": "",
     "category": "미국실적",
+    "title": "GM(GM) 실적발표 (장전)",
+    "source": "tv_earnings",
+    "auto": true,
+    "country": "🇺🇸",
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · EPS 예상 $2.83 · 시총 $68B"
+  },
+  {
+    "date": "2027-01-27",
+    "time": "",
+    "category": "미국실적",
     "title": "애플(AAPL) 실적발표",
     "source": "finnhub",
     "auto": true,
@@ -61911,16 +62217,6 @@
     "auto": true,
     "country": "🇺🇸",
     "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $0.69"
-  },
-  {
-    "date": "2027-01-27",
-    "time": "",
-    "category": "미국실적",
-    "title": "GM(GM) 실적발표 (장후)",
-    "source": "finnhub",
-    "auto": true,
-    "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $2.88"
   },
   {
     "date": "2027-01-27",
@@ -62001,6 +62297,16 @@
     "auto": true,
     "country": "🇺🇸",
     "summary": "EPS 예상 $4.82"
+  },
+  {
+    "date": "2027-01-28",
+    "time": "",
+    "category": "미국실적",
+    "title": "노스롭그루먼(NOC) 실적발표",
+    "source": "tv_earnings",
+    "auto": true,
+    "country": "🇺🇸",
+    "summary": "EPS 예상 $7.96 · 시총 $76B"
   },
   {
     "date": "2027-01-28",
@@ -62576,7 +62882,7 @@
     "source": "tv_earnings",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $2.24 · 시총 $182B"
+    "summary": "EPS 예상 $2.24 · 시총 $183B"
   },
   {
     "date": "2027-02-11",
@@ -62827,6 +63133,16 @@
     "auto": true,
     "country": "🇺🇸",
     "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $2.25"
+  },
+  {
+    "date": "2027-02-25",
+    "time": "",
+    "category": "미국실적",
+    "title": "스페이스X(SPCX) 실적발표",
+    "source": "tv_earnings",
+    "auto": true,
+    "country": "🇺🇸",
+    "summary": "EPS 예상 $0.39 · 시총 $2.01조"
   },
   {
     "date": "2027-02-26",
