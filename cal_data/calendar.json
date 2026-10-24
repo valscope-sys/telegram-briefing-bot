@@ -58934,7 +58934,7 @@
     "title": "셀레스티카(CLS) 인베스터데이",
     "source": "corp_events",
     "auto": true,
-    "summary": "Q3 2026 실적 발표 및 2026 인베스터 애널리스트 데이. AI 네트워킹 수요 및 광학 패키징 솔루션 논의 예상 · 근거 기사: Celestica to Host 2026 Investor and Analyst Day on October 27, 2026"
+    "summary": "Q3 2026 실적 및 2026 인베스터·애널리스트데이 컨퍼런스콜. AI 네트워킹 수요 가속화 배경 · 근거 기사: Celestica to Hold Q3 2026 Financial Results and 2026 Investor and Analyst Day Conference Call"
   },
   {
     "date": "2026-10-27",
@@ -59034,7 +59034,7 @@
     "auto": true,
     "country": "🇰🇷",
     "importance": 0,
-    "summary": "예상 0.7% · 이전 0.6% · 포함: GDP Growth Rate QoQ Adv, GDP Growth Rate YoY Adv"
+    "summary": "예상 3% · 이전 3.7% · 포함: GDP Growth Rate QoQ Adv, GDP Growth Rate YoY Adv"
   },
   {
     "date": "2026-10-27",
@@ -59520,7 +59520,7 @@
     "title": "인텔(INTC) 실적발표",
     "source": "corp_events",
     "auto": true,
-    "summary": "Q3 2026 실적 발표 예정 · 근거 기사: Intel to Report Third-Quarter 2026 Financial Results"
+    "summary": "3분기 2026 실적 발표 (폐장 직후) · 근거 기사: Intel to Report Third-Quarter 2026 Financial Results"
   },
   {
     "date": "2026-10-29",
@@ -59910,7 +59910,7 @@
     "auto": true,
     "country": "🇺🇸",
     "importance": 1,
-    "summary": "예상 0.3% · 이전 0.2% · 포함: Core PCE Price Index MoM, Core PCE Price Index YoY, PCE Price Index MoM, PCE Price Index YoY, Personal Income MoM, Personal Spending MoM"
+    "summary": "예상 3.1% · 이전 3% · 포함: Core PCE Price Index MoM, Core PCE Price Index YoY, PCE Price Index MoM, PCE Price Index YoY, Personal Income MoM, Personal Spending MoM"
   },
   {
     "date": "2026-10-29",
@@ -59921,7 +59921,7 @@
     "auto": true,
     "country": "🇺🇸",
     "importance": 1,
-    "summary": "예상 3% · 이전 2.2% · 포함: GDP Growth Rate QoQ Adv, GDP Price Index QoQ Adv"
+    "summary": "예상 3.2% · 이전 2.2% · 포함: GDP Growth Rate QoQ Adv, GDP Price Index QoQ Adv"
   },
   {
     "date": "2026-10-29",
@@ -60202,7 +60202,7 @@
     "auto": true,
     "country": "🇨🇳",
     "importance": 1,
-    "summary": "이전 50.1 · 포함: NBS Manufacturing PMI, NBS Non Manufacturing PMI"
+    "summary": "예상 50.1 · 이전 50.1 · 포함: NBS Manufacturing PMI, NBS Non Manufacturing PMI"
   },
   {
     "category": "산업컨퍼런스",
@@ -62792,7 +62792,7 @@
     "source": "tv_earnings",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $8.47 · 시총 $139B"
+    "summary": "EPS 예상 $8.47 · 시총 $140B"
   },
   {
     "date": "2027-01-26",
@@ -62902,7 +62902,7 @@
     "source": "tv_earnings",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $2.35 · 시총 $288B"
+    "summary": "EPS 예상 $2.35 · 시총 $287B"
   },
   {
     "date": "2027-01-27",
@@ -62912,7 +62912,7 @@
     "source": "tv_earnings",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $4.63 · 시총 $239B"
+    "summary": "EPS 예상 $4.63 · 시총 $240B"
   },
   {
     "date": "2027-01-27",
@@ -64595,5 +64595,15 @@
     "auto": true,
     "country": "🇺🇸",
     "summary": "EPS 예상 $6.08"
+  },
+  {
+    "date": "2027-04-22",
+    "time": "",
+    "category": "미국실적",
+    "title": "P&G(PG) 실적발표",
+    "source": "finnhub",
+    "auto": true,
+    "country": "🇺🇸",
+    "summary": "EPS 예상 $1.71"
   }
 ]
