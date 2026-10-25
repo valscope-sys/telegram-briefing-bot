@@ -58934,7 +58934,7 @@
     "title": "셀레스티카(CLS) 인베스터데이",
     "source": "corp_events",
     "auto": true,
-    "summary": "Q3 2026 실적 및 2026 인베스터·애널리스트데이 컨퍼런스콜. AI 네트워킹 수요 가속화 배경 · 근거 기사: Celestica to Hold Q3 2026 Financial Results and 2026 Investor and Analyst Day Conference Call"
+    "summary": "Q3 2026 실적 및 2026 인베스터·애널리스트 데이 콘퍼런스콜 · 근거 기사: Celestica to Hold Q3 2026 Financial Results and 2026 Investor and Analyst Day Conference Call"
   },
   {
     "date": "2026-10-27",
@@ -59905,23 +59905,23 @@
     "date": "2026-10-29",
     "time": "21:30",
     "category": "경제지표",
-    "title": "🇺🇸 PCE 물가·개인소득/지출 (9월)",
-    "source": "tradingview",
-    "auto": true,
-    "country": "🇺🇸",
-    "importance": 1,
-    "summary": "예상 3.1% · 이전 3% · 포함: Core PCE Price Index MoM, Core PCE Price Index YoY, PCE Price Index MoM, PCE Price Index YoY, Personal Income MoM, Personal Spending MoM"
-  },
-  {
-    "date": "2026-10-29",
-    "time": "21:30",
-    "category": "경제지표",
     "title": "🇺🇸 GDP 성장률 속보치 (3분기)",
     "source": "tradingview",
     "auto": true,
     "country": "🇺🇸",
     "importance": 1,
     "summary": "예상 3.2% · 이전 2.2% · 포함: GDP Growth Rate QoQ Adv, GDP Price Index QoQ Adv"
+  },
+  {
+    "date": "2026-10-29",
+    "time": "21:30",
+    "category": "경제지표",
+    "title": "🇺🇸 PCE 물가·개인소득/지출 (9월)",
+    "source": "tradingview",
+    "auto": true,
+    "country": "🇺🇸",
+    "importance": 1,
+    "summary": "예상 3.1% · 이전 3% · 포함: Core PCE Price Index MoM, Core PCE Price Index YoY, PCE Price Index MoM, PCE Price Index YoY, Personal Income MoM, Personal Spending MoM"
   },
   {
     "date": "2026-10-29",
@@ -60037,6 +60037,16 @@
     "endDate": "2026-10-31",
     "link": "https://uanalyze.com.tw/articles/4425453960",
     "summary": "AI 서버·CPO(광패키징)·EV 로드맵 — 서버 부품·기판주"
+  },
+  {
+    "category": "산업컨퍼런스",
+    "title": "2026 Sea Farm Show 수산양식 박람회",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2026-10-30",
+    "time": "",
+    "unconfirmed": true,
+    "summary": "10월 30일~11월 1일 서울광장에서 개최되는 수산양식 박람회. 'AI가 여는 바다, 미래를 양식하다'라는 주제로 해양수산 양식 분야 혁신기술 및 미래 전망 소개. 관련주: 수산양식 관련 기업"
   },
   {
     "date": "2026-10-30",
@@ -62792,7 +62802,7 @@
     "source": "tv_earnings",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $8.47 · 시총 $140B"
+    "summary": "EPS 예상 $8.45 · 시총 $140B"
   },
   {
     "date": "2027-01-26",
@@ -63958,7 +63968,7 @@
     "source": "tv_earnings",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $0.41 · 시총 $1.98조"
+    "summary": "EPS 예상 $0.40 · 시총 $1.98조"
   },
   {
     "date": "2027-02-26",
@@ -64605,5 +64615,15 @@
     "auto": true,
     "country": "🇺🇸",
     "summary": "EPS 예상 $1.71"
+  },
+  {
+    "date": "2027-04-23",
+    "time": "",
+    "category": "미국실적",
+    "title": "다우(DOW) 실적발표",
+    "source": "finnhub",
+    "auto": true,
+    "country": "🇺🇸",
+    "summary": "EPS 예상 $0.29"
   }
 ]
