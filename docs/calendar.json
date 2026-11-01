@@ -61769,6 +61769,16 @@
     "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $2.56 · 시총 $11B"
   },
   {
+    "category": "산업컨퍼런스",
+    "title": "TechCrunch Founder Summit 2026 (보스턴)",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2026-11-04",
+    "time": "",
+    "unconfirmed": true,
+    "summary": "스타트업 및 벤처 생태계 행사. 뇌데이트를 통한 네트워킹. 관련주: 국내 벤처캐피탈, 핀테크·IT기업"
+  },
+  {
     "date": "2026-11-04",
     "time": "",
     "category": "산업컨퍼런스",
@@ -61778,16 +61788,6 @@
     "endDate": "2026-11-07",
     "link": "https://www.robotworld.or.kr/",
     "summary": "로봇·휴머노이드 관련주 (레인보우로보틱스, 두산로보틱스, 로보티즈, 에스피지 등)"
-  },
-  {
-    "category": "산업컨퍼런스",
-    "title": "TechCrunch Founder Summit 2026 (보스턴)",
-    "source": "ai_scan",
-    "auto": true,
-    "date": "2026-11-04",
-    "time": "",
-    "unconfirmed": true,
-    "summary": "스타트업 및 벤처 생태계 행사. 뇌데이트를 통한 네트워킹. 관련주: 국내 벤처캐피탈, 핀테크·IT기업"
   },
   {
     "date": "2026-11-04",
@@ -62115,6 +62115,15 @@
     "auto": true,
     "country": "🇺🇸",
     "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · 회계분기 Sep/2026 · EPS 예상 $0.11 · 시총 $3B"
+  },
+  {
+    "category": "산업컨퍼런스",
+    "title": "DB TECH SHOWCASE 2026 (도쿄)",
+    "source": "ai_scan",
+    "auto": true,
+    "date": "2026-11-05",
+    "time": "",
+    "summary": "일본 도쿄에서 열리는 데이터베이스 기술 전문 콘퍼런스. 국내 DBMS 전문기업 알티베이스가 골드 스폰서로 참여. 관련주: 알티베이스"
   },
   {
     "date": "2026-11-05",
@@ -63591,7 +63600,7 @@
     "auto": true,
     "country": "🇨🇳",
     "importance": 1,
-    "summary": "포함: NBS Manufacturing PMI, NBS Non Manufacturing PMI"
+    "summary": "이전 49.3 · 포함: NBS Manufacturing PMI, NBS Non Manufacturing PMI"
   },
   {
     "date": "2026-12-01",
@@ -63642,15 +63651,16 @@
     "country": "🇰🇷"
   },
   {
-    "date": "2026-12-01",
-    "time": "09:00",
-    "category": "경제지표",
-    "title": "🇰🇷 수출입 동향 (11월)",
-    "source": "tradingview",
+    "category": "제약/바이오",
+    "title": "비만치료제 임상결과 발표 예정",
+    "source": "ai_scan",
     "auto": true,
-    "country": "🇰🇷",
-    "importance": 0,
-    "summary": "포함: Balance of Trade, Exports YoY, Imports YoY"
+    "month": "2026-12",
+    "undated": true,
+    "date": "2026-12-01",
+    "endDate": "2026-12-31",
+    "unconfirmed": true,
+    "summary": "암젠, 화이자, 바이킹 테라퓨틱스 등이 월 1회 또는 격주 투여 방식의 새로운 비만치료제 임상 결과 발표 예정. 관련주: 유한양행, 한미약품, 셀트리온 등 국내 제약사"
   },
   {
     "date": "2026-12-01",
@@ -64620,7 +64630,7 @@
     "source": "tv_earnings",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $9.19 · 시총 $147B"
+    "summary": "EPS 예상 $9.19 · 시총 $148B"
   },
   {
     "date": "2027-01-27",
@@ -64660,7 +64670,7 @@
     "source": "tv_earnings",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · EPS 예상 $2.64 · 시총 $74B"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · EPS 예상 $2.60 · 시총 $74B"
   },
   {
     "date": "2027-01-27",
@@ -64899,7 +64909,7 @@
     "source": "tv_earnings",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $23.21 · 시총 $96B"
+    "summary": "EPS 예상 $24.25 · 시총 $96B"
   },
   {
     "date": "2027-01-30",
@@ -65190,7 +65200,7 @@
     "source": "tv_earnings",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $3.92 · 시총 $521B"
+    "summary": "EPS 예상 $3.91 · 시총 $521B"
   },
   {
     "date": "2027-02-03",
@@ -65330,7 +65340,7 @@
     "source": "tv_earnings",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $55.78 · 시총 $166B"
+    "summary": "EPS 예상 $55.95 · 시총 $166B"
   },
   {
     "date": "2027-02-04",
@@ -65616,7 +65626,7 @@
     "source": "tv_earnings",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $4.51 · 시총 $237B"
+    "summary": "EPS 예상 $4.51 · 시총 $236B"
   },
   {
     "date": "2027-02-11",
@@ -65646,7 +65656,7 @@
     "source": "tv_earnings",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $5.16 · 시총 $12B"
+    "summary": "EPS 예상 $5.19 · 시총 $12B"
   },
   {
     "date": "2027-02-11",
@@ -65976,7 +65986,7 @@
     "source": "tv_earnings",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $5.00 · 시총 $93B"
+    "summary": "EPS 예상 $5.01 · 시총 $94B"
   },
   {
     "date": "2027-02-25",
