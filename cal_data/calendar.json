@@ -60736,6 +60736,24 @@
   },
   {
     "date": "2026-10-30",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "한솔제지 잠정실적발표",
+    "source": "fnguide",
+    "auto": true,
+    "summary": "3Q 영업이익 -64억 (컨센 284억)"
+  },
+  {
+    "date": "2026-10-30",
+    "time": "",
+    "category": "한국실적(잠정)",
+    "title": "골프존 잠정실적발표",
+    "source": "fnguide",
+    "auto": true,
+    "summary": "3Q 영업이익 100억 (컨센 94억, +7.3%)"
+  },
+  {
+    "date": "2026-10-30",
     "time": "09:00",
     "category": "IR",
     "title": "두산밥캣 IR (NDR)",
@@ -61423,7 +61441,7 @@
     "auto": true,
     "country": "🇺🇸",
     "importance": 1,
-    "summary": "예상 54.7 · 이전 54.5 · ISM Manufacturing PMI"
+    "summary": "예상 54.6 · 이전 54.5 · ISM Manufacturing PMI"
   },
   {
     "date": "2026-11-03",
@@ -61671,6 +61689,15 @@
   {
     "date": "2026-11-04",
     "time": "",
+    "category": "기업행사",
+    "title": "코히런트(COHR) 실적발표",
+    "source": "corp_events",
+    "auto": true,
+    "summary": "Q1 FY2027(9월 30일 종료) 실적 발표 예정. AI 광학 수요 주목 · 근거 기사: Coherent has scheduled its results for the first quarter of fiscal 2027 — the quarter ended September 30 — for November 4, after the close of trading"
+  },
+  {
+    "date": "2026-11-04",
+    "time": "",
     "category": "미국실적",
     "title": "도요타(TM) 실적발표",
     "source": "nasdaq",
@@ -61819,7 +61846,7 @@
     "auto": true,
     "country": "🇺🇸",
     "importance": 1,
-    "summary": "예상 7.1 · 이전 7.079 · JOLTs Job Openings"
+    "summary": "예상 7.13 · 이전 7.079 · JOLTs Job Openings"
   },
   {
     "date": "2026-11-04",
@@ -62047,15 +62074,6 @@
     "country": "🇪🇺",
     "importance": 1,
     "summary": "예상 3.9% · 이전 3.8% · 포함: Core Inflation Rate YoY Flash, Inflation Rate MoM Flash, Inflation Rate YoY Flash"
-  },
-  {
-    "date": "2026-11-04",
-    "time": "21:00",
-    "category": "기업행사",
-    "title": "코히런트(COHR) 실적발표",
-    "source": "corp_events",
-    "auto": true,
-    "summary": "1분기 FY2027 실적 발표 (9월 30일 마감). 마감 후 · 근거 기사: Coherent Draws Fresh Scrutiny on AI Growth Bets After Sharp Pullback"
   },
   {
     "date": "2026-11-04",
@@ -62550,7 +62568,7 @@
     "auto": true,
     "country": "🇺🇸",
     "importance": 1,
-    "summary": "예상 47.3 · 이전 48 · Michigan Consumer Sentiment Prel"
+    "summary": "예상 48.2 · 이전 48 · Michigan Consumer Sentiment Prel"
   },
   {
     "date": "2026-11-09",
@@ -62690,6 +62708,15 @@
     "source": "kind",
     "auto": true,
     "summary": "컨퍼런스 · 맥쿼리 서울오피스"
+  },
+  {
+    "date": "2026-11-10",
+    "time": "",
+    "category": "기업행사",
+    "title": "AMD(AMD) 인베스터데이",
+    "source": "corp_events",
+    "auto": true,
+    "summary": "근거 기사: Cohu to Host Investor Day on November 10, 2026"
   },
   {
     "date": "2026-11-10",
@@ -63509,23 +63536,23 @@
     "date": "2026-11-25",
     "time": "22:30",
     "category": "경제지표",
-    "title": "🇺🇸 내구재 주문 (10월)",
-    "source": "tradingview",
-    "auto": true,
-    "country": "🇺🇸",
-    "importance": 1,
-    "summary": "이전 1.8 · Durable Goods Orders MoM"
-  },
-  {
-    "date": "2026-11-25",
-    "time": "22:30",
-    "category": "경제지표",
     "title": "🇺🇸 GDP 성장률 잠정치 (3분기)",
     "source": "tradingview",
     "auto": true,
     "country": "🇺🇸",
     "importance": 1,
     "summary": "예상 3.4% · 이전 2.2% · 포함: GDP Growth Rate QoQ 2nd Est, GDP Price Index QoQ 2nd Est"
+  },
+  {
+    "date": "2026-11-25",
+    "time": "22:30",
+    "category": "경제지표",
+    "title": "🇺🇸 내구재 주문 (10월)",
+    "source": "tradingview",
+    "auto": true,
+    "country": "🇺🇸",
+    "importance": 1,
+    "summary": "이전 1.8 · Durable Goods Orders MoM"
   },
   {
     "date": "2026-11-26",
@@ -63661,6 +63688,17 @@
     "endDate": "2026-12-31",
     "unconfirmed": true,
     "summary": "암젠, 화이자, 바이킹 테라퓨틱스 등이 월 1회 또는 격주 투여 방식의 새로운 비만치료제 임상 결과 발표 예정. 관련주: 유한양행, 한미약품, 셀트리온 등 국내 제약사"
+  },
+  {
+    "date": "2026-12-01",
+    "time": "09:00",
+    "category": "경제지표",
+    "title": "🇰🇷 수출입 동향 (11월)",
+    "source": "tradingview",
+    "auto": true,
+    "country": "🇰🇷",
+    "importance": 0,
+    "summary": "이전 93.7 · 포함: Balance of Trade, Exports YoY, Imports YoY"
   },
   {
     "date": "2026-12-01",
@@ -64194,16 +64232,6 @@
     "country": ""
   },
   {
-    "date": "2027-01-15",
-    "time": "",
-    "category": "미국실적",
-    "title": "뱅크오브아메리카(BAC) 실적발표 (장전)",
-    "source": "tv_earnings",
-    "auto": true,
-    "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · EPS 예상 $1.12 · 시총 $346B"
-  },
-  {
     "date": "2027-01-18",
     "time": "",
     "category": "만기일",
@@ -64250,7 +64278,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · EPS 예상 $1.88"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · EPS 예상 $1.87"
   },
   {
     "date": "2027-01-20",
@@ -64290,7 +64318,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $0.44"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $0.28"
   },
   {
     "date": "2027-01-20",
@@ -64359,7 +64387,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $0.03"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $-0.84"
   },
   {
     "date": "2027-01-25",
@@ -64369,7 +64397,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $8.00"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $8.01"
   },
   {
     "date": "2027-01-25",
@@ -64379,7 +64407,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $5.54"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $5.88"
   },
   {
     "date": "2027-01-25",
@@ -64389,7 +64417,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $8.67"
+    "summary": "EPS 예상 $9.37"
   },
   {
     "date": "2027-01-25",
@@ -64500,7 +64528,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $4.68"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $4.69"
   },
   {
     "date": "2027-01-26",
@@ -64510,7 +64538,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · EPS 예상 $6.39"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · EPS 예상 $6.61"
   },
   {
     "date": "2027-01-26",
@@ -64540,7 +64568,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $8.52"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $8.57"
   },
   {
     "date": "2027-01-26",
@@ -64550,7 +64578,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $1.19"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $1.10"
   },
   {
     "date": "2027-01-26",
@@ -64690,7 +64718,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $2.95"
+    "summary": "EPS 예상 $2.94"
   },
   {
     "date": "2027-01-27",
@@ -64700,7 +64728,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · EPS 예상 $7.08"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · EPS 예상 $6.73"
   },
   {
     "date": "2027-01-27",
@@ -64710,7 +64738,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $0.63"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $0.62"
   },
   {
     "date": "2027-01-27",
@@ -64720,7 +64748,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $2.47"
+    "summary": "EPS 예상 $2.48"
   },
   {
     "date": "2027-01-27",
@@ -64730,7 +64758,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $1.41"
+    "summary": "EPS 예상 $1.48"
   },
   {
     "date": "2027-01-27",
@@ -64740,7 +64768,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $8.37"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $8.29"
   },
   {
     "date": "2027-01-27",
@@ -64750,7 +64778,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $5.34"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $5.30"
   },
   {
     "date": "2027-01-27",
@@ -64760,7 +64788,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $54.25"
+    "summary": "EPS 예상 $57.76"
   },
   {
     "date": "2027-01-27",
@@ -64770,7 +64798,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $7.21"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $7.19"
   },
   {
     "date": "2027-01-27",
@@ -64790,7 +64818,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $5.88"
+    "summary": "EPS 예상 $5.93"
   },
   {
     "date": "2027-01-28",
@@ -64870,7 +64898,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $5.30"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $5.45"
   },
   {
     "date": "2027-01-28",
@@ -64880,7 +64908,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $19.67"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $23.79"
   },
   {
     "date": "2027-01-28",
@@ -64890,7 +64918,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $3.95"
+    "summary": "EPS 예상 $4.00"
   },
   {
     "date": "2027-01-28",
@@ -64930,7 +64958,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $4.41"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $4.43"
   },
   {
     "date": "2027-02-01",
@@ -64960,7 +64988,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $5.90"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $5.89"
   },
   {
     "date": "2027-02-01",
@@ -64980,7 +65008,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $2.00"
+    "summary": "EPS 예상 $1.99"
   },
   {
     "date": "2027-02-01",
@@ -65030,7 +65058,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $0.48"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $0.47"
   },
   {
     "date": "2027-02-01",
@@ -65040,7 +65068,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $1.12"
+    "summary": "EPS 예상 $1.16"
   },
   {
     "date": "2027-02-01",
@@ -65050,7 +65078,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $2.03"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $2.18"
   },
   {
     "date": "2027-02-02",
@@ -65060,7 +65088,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $3.46"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $3.32"
   },
   {
     "date": "2027-02-02",
@@ -65130,7 +65158,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $2.24"
+    "summary": "EPS 예상 $2.25"
   },
   {
     "date": "2027-02-02",
@@ -65150,7 +65178,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · EPS 예상 $10.20"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · EPS 예상 $11.16"
   },
   {
     "date": "2027-02-02",
@@ -65230,7 +65258,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $2.50"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $2.47"
   },
   {
     "date": "2027-02-03",
@@ -65240,7 +65268,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $1.64"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $1.53"
   },
   {
     "date": "2027-02-03",
@@ -65250,7 +65278,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $0.14"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $0.08"
   },
   {
     "date": "2027-02-03",
@@ -65270,7 +65298,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $5.30"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $5.22"
   },
   {
     "date": "2027-02-03",
@@ -65280,7 +65308,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $8.31"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $9.64"
   },
   {
     "date": "2027-02-04",
@@ -65399,7 +65427,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $0.78"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $0.74"
   },
   {
     "date": "2027-02-08",
@@ -65409,7 +65437,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · EPS 예상 $1.13"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · EPS 예상 $1.33"
   },
   {
     "date": "2027-02-08",
@@ -65419,7 +65447,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $0.40"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $0.38"
   },
   {
     "date": "2027-02-08",
@@ -65429,7 +65457,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $2.19"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $1.49"
   },
   {
     "date": "2027-02-08",
@@ -65439,7 +65467,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $0.61"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $0.62"
   },
   {
     "date": "2027-02-08",
@@ -65478,7 +65506,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $1.26"
+    "summary": "EPS 예상 $1.25"
   },
   {
     "date": "2027-02-09",
@@ -65518,7 +65546,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $2.82"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $2.81"
   },
   {
     "date": "2027-02-09",
@@ -65528,7 +65556,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $2.24"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $2.28"
   },
   {
     "date": "2027-02-09",
@@ -65597,7 +65625,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $4.82"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $4.77"
   },
   {
     "date": "2027-02-11",
@@ -65666,7 +65694,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $0.52"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $0.51"
   },
   {
     "date": "2027-02-11",
@@ -65766,7 +65794,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $2.07"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $2.27"
   },
   {
     "date": "2027-02-17",
@@ -65786,7 +65814,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $4.87"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $5.11"
   },
   {
     "date": "2027-02-17",
@@ -65836,7 +65864,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $3.16"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $3.08"
   },
   {
     "date": "2027-02-22",
@@ -65846,7 +65874,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $5.76"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $5.28"
   },
   {
     "date": "2027-02-23",
@@ -65926,7 +65954,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $10.00"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $8.83"
   },
   {
     "date": "2027-02-24",
@@ -65966,7 +65994,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $2.34"
+    "summary": "미국 장 마감 후 발표 (KST 익일 새벽) · EPS 예상 $2.07"
   },
   {
     "date": "2027-02-25",
@@ -66065,7 +66093,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $4.16"
+    "summary": "EPS 예상 $4.15"
   },
   {
     "date": "2027-03-02",
@@ -66075,7 +66103,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $1.64"
+    "summary": "EPS 예상 $1.65"
   },
   {
     "date": "2027-03-03",
@@ -66342,7 +66370,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $15.01"
+    "summary": "EPS 예상 $15.07"
   },
   {
     "date": "2027-04-12",
@@ -66352,7 +66380,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $3.30"
+    "summary": "EPS 예상 $3.32"
   },
   {
     "date": "2027-04-12",
@@ -66362,7 +66390,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $19.69"
+    "summary": "EPS 예상 $19.59"
   },
   {
     "date": "2027-04-12",
@@ -66372,7 +66400,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $2.70"
+    "summary": "EPS 예상 $2.69"
   },
   {
     "date": "2027-04-12",
@@ -66382,7 +66410,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $6.32"
+    "summary": "EPS 예상 $6.33"
   },
   {
     "date": "2027-04-13",
@@ -66392,7 +66420,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $3.65"
+    "summary": "EPS 예상 $3.66"
   },
   {
     "date": "2027-04-13",
@@ -66402,7 +66430,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $1.78"
+    "summary": "EPS 예상 $1.79"
   },
   {
     "date": "2027-04-14",
@@ -66412,7 +66440,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $1.26"
+    "summary": "EPS 예상 $1.24"
   },
   {
     "date": "2027-04-14",
@@ -66422,7 +66450,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · EPS 예상 $1.22"
+    "summary": "미국 장 시작 전 발표 (KST 당일 밤) · EPS 예상 $1.23"
   },
   {
     "date": "2027-04-14",
@@ -66472,7 +66500,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $2.90"
+    "summary": "EPS 예상 $2.91"
   },
   {
     "date": "2027-04-19",
@@ -66482,7 +66510,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $6.47"
+    "summary": "EPS 예상 $6.44"
   },
   {
     "date": "2027-04-19",
@@ -66492,7 +66520,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $1.81"
+    "summary": "EPS 예상 $1.83"
   },
   {
     "date": "2027-04-19",
@@ -66512,7 +66540,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $0.45"
+    "summary": "EPS 예상 $-0.18"
   },
   {
     "date": "2027-04-20",
@@ -66522,7 +66550,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $4.51"
+    "summary": "EPS 예상 $4.73"
   },
   {
     "date": "2027-04-20",
@@ -66532,7 +66560,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $2.14"
+    "summary": "EPS 예상 $2.17"
   },
   {
     "date": "2027-04-20",
@@ -66542,7 +66570,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $2.48"
+    "summary": "EPS 예상 $2.52"
   },
   {
     "date": "2027-04-20",
@@ -66552,7 +66580,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $1.18"
+    "summary": "EPS 예상 $1.14"
   },
   {
     "date": "2027-04-20",
@@ -66562,7 +66590,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $0.46"
+    "summary": "EPS 예상 $0.43"
   },
   {
     "date": "2027-04-20",
@@ -66572,7 +66600,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $2.53"
+    "summary": "EPS 예상 $2.63"
   },
   {
     "date": "2027-04-20",
@@ -66582,7 +66610,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $1.70"
+    "summary": "EPS 예상 $1.78"
   },
   {
     "date": "2027-04-21",
@@ -66612,7 +66640,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $2.18"
+    "summary": "EPS 예상 $2.13"
   },
   {
     "date": "2027-04-21",
@@ -66622,7 +66650,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $0.41"
+    "summary": "EPS 예상 $0.29"
   },
   {
     "date": "2027-04-21",
@@ -66632,7 +66660,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $7.31"
+    "summary": "EPS 예상 $7.36"
   },
   {
     "date": "2027-04-21",
@@ -66642,7 +66670,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $6.08"
+    "summary": "EPS 예상 $6.11"
   },
   {
     "date": "2027-04-22",
@@ -66652,7 +66680,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $1.71"
+    "summary": "EPS 예상 $1.68"
   },
   {
     "date": "2027-04-23",
@@ -66662,7 +66690,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $0.29"
+    "summary": "EPS 예상 $0.45"
   },
   {
     "date": "2027-04-26",
@@ -66672,7 +66700,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $0.54"
+    "summary": "EPS 예상 $0.53"
   },
   {
     "date": "2027-04-26",
@@ -66682,7 +66710,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $2.20"
+    "summary": "EPS 예상 $2.30"
   },
   {
     "date": "2027-04-26",
@@ -66692,7 +66720,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $3.40"
+    "summary": "EPS 예상 $3.21"
   },
   {
     "date": "2027-04-26",
@@ -66712,7 +66740,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $6.02"
+    "summary": "EPS 예상 $6.65"
   },
   {
     "date": "2027-04-26",
@@ -66722,7 +66750,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $4.00"
+    "summary": "EPS 예상 $4.09"
   },
   {
     "date": "2027-04-26",
@@ -66742,7 +66770,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $9.66"
+    "summary": "EPS 예상 $11.04"
   },
   {
     "date": "2027-04-26",
@@ -66752,7 +66780,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $2.52"
+    "summary": "EPS 예상 $2.45"
   },
   {
     "date": "2027-04-26",
@@ -66762,7 +66790,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $3.36"
+    "summary": "EPS 예상 $3.42"
   },
   {
     "date": "2027-04-26",
@@ -66772,7 +66800,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $3.74"
+    "summary": "EPS 예상 $3.71"
   },
   {
     "date": "2027-04-27",
@@ -66782,7 +66810,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $3.40"
+    "summary": "EPS 예상 $3.52"
   },
   {
     "date": "2027-04-27",
@@ -66792,7 +66820,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $2.38"
+    "summary": "EPS 예상 $2.36"
   },
   {
     "date": "2027-04-27",
@@ -66802,7 +66830,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $0.48"
+    "summary": "EPS 예상 $0.46"
   },
   {
     "date": "2027-04-27",
@@ -66812,7 +66840,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $4.44"
+    "summary": "EPS 예상 $4.47"
   },
   {
     "date": "2027-04-27",
@@ -66832,7 +66860,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $1.48"
+    "summary": "EPS 예상 $1.55"
   },
   {
     "date": "2027-04-27",
@@ -66842,7 +66870,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $7.98"
+    "summary": "EPS 예상 $7.62"
   },
   {
     "date": "2027-04-27",
@@ -66852,7 +66880,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $5.00"
+    "summary": "EPS 예상 $5.05"
   },
   {
     "date": "2027-04-27",
@@ -66872,7 +66900,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $13.39"
+    "summary": "EPS 예상 $15.75"
   },
   {
     "date": "2027-04-28",
@@ -66912,7 +66940,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $1.46"
+    "summary": "EPS 예상 $1.53"
   },
   {
     "date": "2027-04-28",
@@ -66922,7 +66950,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $6.44"
+    "summary": "EPS 예상 $6.50"
   },
   {
     "date": "2027-04-28",
@@ -66942,7 +66970,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $1.13"
+    "summary": "EPS 예상 $1.22"
   },
   {
     "date": "2027-04-28",
@@ -66952,7 +66980,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $5.38"
+    "summary": "EPS 예상 $5.03"
   },
   {
     "date": "2027-04-28",
@@ -66962,7 +66990,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $10.08"
+    "summary": "EPS 예상 $10.91"
   },
   {
     "date": "2027-04-28",
@@ -66972,7 +67000,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $5.30"
+    "summary": "EPS 예상 $5.32"
   },
   {
     "date": "2027-04-28",
@@ -66982,7 +67010,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $8.09"
+    "summary": "EPS 예상 $10.21"
   },
   {
     "date": "2027-04-28",
@@ -66992,7 +67020,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $3.52"
+    "summary": "EPS 예상 $3.57"
   },
   {
     "date": "2027-04-28",
@@ -67012,7 +67040,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $56.33"
+    "summary": "EPS 예상 $58.17"
   },
   {
     "date": "2027-04-28",
@@ -67022,7 +67050,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $5.57"
+    "summary": "EPS 예상 $6.84"
   },
   {
     "date": "2027-04-28",
@@ -67041,7 +67069,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $3.60"
+    "summary": "EPS 예상 $4.48"
   },
   {
     "date": "2027-04-29",
@@ -67051,7 +67079,7 @@
     "source": "finnhub",
     "auto": true,
     "country": "🇺🇸",
-    "summary": "EPS 예상 $2.21"
+    "summary": "EPS 예상 $2.17"
   },
   {
     "date": "2027-04-29",
@@ -67080,5 +67108,15 @@
     "source": "fixed",
     "auto": false,
     "country": "🇪🇺"
+  },
+  {
+    "date": "2027-04-30",
+    "time": "",
+    "category": "미국실적",
+    "title": "버크셔해서웨이(BRK.A) 실적발표",
+    "source": "finnhub",
+    "auto": true,
+    "country": "🇺🇸",
+    "summary": "EPS 예상 $8366.46"
   }
 ]
