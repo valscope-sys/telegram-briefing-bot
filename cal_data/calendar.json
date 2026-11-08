@@ -60961,6 +60961,18 @@
     "summary": "Nothing CEO Carl Pei가 12월 첫 AI 기기(스크린 없는 AI 기기) 출시 예정을 공개. 관련주: Nothing (해외 기업)"
   },
   {
+    "category": "산업컨퍼런스",
+    "title": "Anthropic IPO",
+    "source": "ai_scan",
+    "auto": true,
+    "month": "2026-11",
+    "undated": true,
+    "date": "2026-11-01",
+    "endDate": "2026-11-30",
+    "unconfirmed": true,
+    "summary": "AI 스타트업 Anthropic의 기업공개. 미국 AI 산업 동향과 공급망(반도체, 클라우드 인프라)에 영향. 관련주: 엔비디아, TSMC, 국내 반도체·AI 기업"
+  },
+  {
     "date": "2026-11-01",
     "time": "",
     "category": "에너지",
@@ -65145,6 +65157,18 @@
     "summary": "암젠, 화이자, 바이킹 테라퓨틱스 등이 월 1회 또는 격주 투여 방식의 새로운 비만치료제 임상 결과 발표 예정. 관련주: 유한양행, 한미약품, 셀트리온 등 국내 제약사"
   },
   {
+    "category": "제약/바이오",
+    "title": "미국 FDA 약품 승인 결정 (PDUFA 대기)",
+    "source": "ai_scan",
+    "auto": true,
+    "month": "2026-12",
+    "undated": true,
+    "date": "2026-12-01",
+    "endDate": "2026-12-31",
+    "unconfirmed": true,
+    "summary": "헤드라인에서 '심장이식 생존율', '대장암 재발 치료' 등 바이오 관련 뉴스 언급. 구체적 PDUFA 날짜는 명시되지 않았으나 12월 중 FDA 승인 결정 예상. 관련주: 국내 제약·바이오 기업 (한미약품 등)"
+  },
+  {
     "date": "2026-12-01",
     "time": "09:00",
     "category": "경제지표",
@@ -65346,6 +65370,17 @@
     "summary": "K-방산주 (한화에어로스페이스, 현대로템, LIG넥스원, 한국항공우주 등)"
   },
   {
+    "date": "2026-12-08",
+    "time": "12:00",
+    "category": "경제지표",
+    "title": "🇨🇳 수출입 (Nov. 2026)",
+    "source": "tradingview",
+    "auto": true,
+    "country": "🇨🇳",
+    "importance": 1,
+    "summary": "포함: Balance of Trade, Balance of Trade Yuan, Exports YoY, Exports YoY (CNY), Imports YoY, Imports YoY (CNY)"
+  },
+  {
     "date": "2026-12-09",
     "time": "",
     "category": "IPO/공모",
@@ -65402,6 +65437,17 @@
     "time": "",
     "unconfirmed": true,
     "summary": "Apple이 iOS 27.3 베타를 11월 4일 출시 예정, 정식 출시는 12월 예정. 중국 시장에서 Apple Intelligence 서비스 개시. 관련주: 애플, 삼성전자(부품 공급), SKC(디스플레이)"
+  },
+  {
+    "date": "2026-12-09",
+    "time": "08:00",
+    "category": "경제지표",
+    "title": "🇰🇷 GDP 성장률 확정치 (Q3 2026)",
+    "source": "tradingview",
+    "auto": true,
+    "country": "🇰🇷",
+    "importance": -1,
+    "summary": "이전 3.7% · 포함: GDP Growth Rate QoQ Final, GDP Growth Rate YoY Final"
   },
   {
     "date": "2026-12-10",
@@ -65734,26 +65780,6 @@
     "source": "fixed",
     "auto": false,
     "country": ""
-  },
-  {
-    "date": "2027-01-22",
-    "time": "",
-    "category": "미국실적",
-    "title": "셰브론(CVX) 실적발표",
-    "source": "tv_earnings",
-    "auto": true,
-    "country": "🇺🇸",
-    "summary": "EPS 예상 $5.49 · 시총 $415B"
-  },
-  {
-    "date": "2027-01-22",
-    "time": "",
-    "category": "미국실적",
-    "title": "아메리칸익스프레스(AXP) 실적발표",
-    "source": "tv_earnings",
-    "auto": true,
-    "country": "🇺🇸",
-    "summary": "EPS 예상 $4.31 · 시총 $215B"
   },
   {
     "date": "2027-01-22",
