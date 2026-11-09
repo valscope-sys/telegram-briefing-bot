@@ -4,7 +4,7 @@
 
 - 웹: https://valscope-sys.github.io/telegram-briefing-bot/
 - 리포: valscope-sys/telegram-briefing-bot (이름은 옛 브리핑봇 시절 그대로 — 바꾸면 웹 주소가 바뀜)
-- 시황 브리핑봇·이슈봇은 2026-09-28 폐기·삭제 (필요 시 git 기록에서 복원 가능)
+- 시황 브리핑봇·이슈봇은 2026-09-28 폐기·삭제, 2026-11-09 git 기록에서도 완전 삭제 (복원 불가)
 
 ## 구조
 ```
