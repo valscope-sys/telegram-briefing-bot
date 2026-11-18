@@ -2,7 +2,8 @@
 
 한국 투자자용 증시 일정 캘린더. 매일 자동 수집 → GitHub Pages 웹 캘린더로 공개.
 
-- 웹: https://valscope-sys.github.io/telegram-briefing-bot/
+- 웹: GitHub Pages는 2026-11-09에 끔. 매일 수집은 2026-11-18에 다시 켬 — 결과 `docs/calendar.json`만 쓴다
+- (옛 웹 주소: https://valscope-sys.github.io/telegram-briefing-bot/)
 - 리포: valscope-sys/telegram-briefing-bot (이름은 옛 브리핑봇 시절 그대로 — 바꾸면 웹 주소가 바뀜)
 - 시황 브리핑봇·이슈봇은 2026-09-28 폐기·삭제, 2026-11-09 git 기록에서도 완전 삭제 (복원 불가)
 
@@ -24,7 +25,7 @@ docs/                    # GitHub Pages 웹 캘린더 (index.html, calendar.js, 
 | 수집기 | 소스 | 내용 |
 |---|---|---|
 | us_earnings.py | Nasdaq(주, 키 불필요) → TradingView → Finnhub(원거리 보강) | 해외 실적. 워치리스트(finnhub.WATCHLIST, 한국 연관) + 시총 2,000억달러↑ 자동 |
-| fnguide.py | wcomp.fnguide.com (신버전) | 국내 잠정실적(발표 후, 컨센 대비 괴리율)·신규상장 |
+| fnguide.py | wcomp.fnguide.com (신버전) | **2026-11-18 수집 중단** (`update.py`의 `FNGUIDE_ENABLED`). 옛 용도: 국내 잠정실적·신규상장 |
 | kind_ir.py | KRX KIND IR 일정 | 국내 향후 실적발표(컨콜)·IR |
 | tradingview_economic.py | TradingView 경제 캘린더 | 경제지표 (핵심 지표 화이트리스트, KST, 중요도 ★) |
 | investing_economic.py | Investing.com | 경제지표 fallback (데이터센터 IP 429 차단 잦음) |
