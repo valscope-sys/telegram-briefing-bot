@@ -284,19 +284,14 @@ def collect_all(from_date: datetime.date, to_date: datetime.date, skip_ai: bool 
     except Exception as e:
         print(f"[Calendar] 고정이벤트 실패: {e}")
 
-    # 2. FnGuide — 2026-11-18 수집 중단(사용 환경에서 FnGuide 접근이 막혀 있어 다른 경로로 받지 않기로 함).
-    #    국내 일정은 KRX KIND IR로만 받는다. 다시 켜려면 아래 FNGUIDE_ENABLED를 True로.
-    FNGUIDE_ENABLED = False
-    if not FNGUIDE_ENABLED:
-        print("[Calendar] FnGuide: 수집 중단(설정)")
-    else:
-      try:
+    # 2. FnGuide
+    try:
         from cal_data.collectors.fnguide import fetch_fnguide_range
         # 신버전 FnGuide는 잠정실적을 '발표 후'에만 게시 → 06:00 실행 이후 발표분을 다음날 잡도록 14일 소급
         fnguide = fetch_fnguide_range(from_date - datetime.timedelta(days=14), to_date)
         print(f"[Calendar] FnGuide: {len(fnguide)}건")
         all_events.extend(fnguide)
-      except Exception as e:
+    except Exception as e:
         print(f"[Calendar] FnGuide 실패: {e}")
 
     # 2.5. KRX KIND IR 일정 — 국내 향후 실적발표(컨퍼런스콜) 일정의 주 소스
